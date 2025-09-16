@@ -122,6 +122,23 @@ body {
   font-weight: 400;
 }
 
+/* Background Gradient Utilities */
+.bg-gradient-subtle {
+  background: var(--gradient-subtle);
+}
+
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-hero {
+  background: var(--gradient-hero);
+}
+
+.bg-gradient-card {
+  background: var(--gradient-card);
+}
+
 /* Container & Layout System */
 .container-width {
   max-width: 1200px;
