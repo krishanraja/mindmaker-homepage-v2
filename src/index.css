@@ -139,6 +139,28 @@ body {
   background: var(--gradient-card);
 }
 
+/* Shadow Utilities */
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.shadow-strong {
+  box-shadow: var(--shadow-strong);
+}
+
+/* Typography Utilities */
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
 /* Container & Layout System */
 .container-width {
   max-width: 1200px;
@@ -153,17 +175,27 @@ body {
 
 /* Modern Card System */
 .card-modern {
-  background: var(--gradient-card);
-  backdrop-filter: blur(20px);
+  background: hsl(var(--card) / 0.9);
   border: 1px solid hsl(var(--border) / 0.3);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
   transition: var(--transition-smooth);
 }
 
+/* Special variant for Hero section with dark background */
+.hero-clouds .card-modern {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .card-modern:hover {
   transform: scale(1.01);
   box-shadow: var(--shadow-medium);
+}
+
+.hero-clouds .card-modern:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .card-metric {
