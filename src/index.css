@@ -10,23 +10,23 @@
     --background: 0 0% 100%;
     --foreground: 215 27% 12%;
 
-    /* AI-focused blue gradient palette */
-    --primary: 217 91% 25%;        /* Deep AI blue */
+    /* Sophisticated purple gradient palette */
+    --primary: 280 100% 20%;       /* Deep sophisticated purple */
     --primary-foreground: 0 0% 98%;
-    --primary-light: 217 91% 45%;  /* Lighter AI blue */
-    --primary-glow: 217 91% 65%;   /* Glow variant */
+    --primary-light: 290 85% 45%;  /* Elegant purple */
+    --primary-glow: 310 75% 65%;   /* Rose-purple glow */
 
-    /* Professional grays */
-    --secondary: 215 10% 97%;
-    --secondary-foreground: 215 27% 12%;
+    /* Professional charcoal and grays */
+    --secondary: 220 15% 97%;
+    --secondary-foreground: 220 25% 15%;
     
-    --muted: 215 16% 95%;
-    --muted-foreground: 215 13% 45%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 15% 45%;
 
-    /* Accent colors for highlights */
-    --accent: 142 76% 55%;         /* Success green for results */
+    /* Rose/mauve accent colors */
+    --accent: 320 60% 60%;         /* Sophisticated rose */
     --accent-foreground: 0 0% 98%;
-    --accent-glow: 142 76% 75%;
+    --accent-glow: 330 70% 75%;    /* Rose glow */
 
     /* Card and surface colors */
     --card: 0 0% 100%;
@@ -64,20 +64,20 @@
     --background: 215 28% 4%;
     --foreground: 0 0% 98%;
 
-    --primary: 217 91% 45%;
-    --primary-foreground: 215 28% 4%;
-    --primary-light: 217 91% 55%;
-    --primary-glow: 217 91% 75%;
+    --primary: 290 85% 55%;
+    --primary-foreground: 220 25% 8%;
+    --primary-light: 300 80% 65%;
+    --primary-glow: 310 75% 75%;
 
-    --secondary: 215 25% 12%;
+    --secondary: 220 25% 12%;
     --secondary-foreground: 0 0% 98%;
     
-    --muted: 215 25% 8%;
-    --muted-foreground: 215 15% 65%;
+    --muted: 220 25% 8%;
+    --muted-foreground: 220 15% 65%;
 
-    --accent: 142 76% 55%;
-    --accent-foreground: 215 28% 4%;
-    --accent-glow: 142 76% 75%;
+    --accent: 320 60% 65%;
+    --accent-foreground: 220 25% 8%;
+    --accent-glow: 330 70% 80%;
 
     --card: 215 28% 6%;
     --card-foreground: 0 0% 98%;

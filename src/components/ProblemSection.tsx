@@ -2,20 +2,20 @@ const ProblemSection = () => {
   const problems = [
     {
       stat: "88%",
-      description: "AI proof-of-concepts never reach production",
+      description: "of enterprises fail to scale AI beyond pilots due to leadership AI illiteracy"
     },
     {
       stat: "74%", 
-      description: "Companies fail to achieve meaningful AI value",
+      description: "of companies see no measurable value from AI investments without strategic frameworks"
     },
     {
-      stat: "60%",
-      description: "Workers need occupational transition by 2030",
+      stat: "67%",
+      description: "of executive teams lack confidence to make strategic AI decisions"
     },
     {
       stat: "Only 26%",
-      description: "Can scale AI beyond pilot purgatory",
-    },
+      description: "can escape pilot purgatory and achieve AI production scale"
+    }
   ];
 
   return (
@@ -24,7 +24,7 @@ const ProblemSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="section-title text-primary mb-6">
-              Stop Losing to AI-First Competitors
+              The Critical Enterprise Challenge
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Team AI literacy is the missing piece in enterprise AI adoption, whilst AI product 
@@ -52,10 +52,10 @@ const ProblemSection = () => {
 
           <div className="bg-primary/10 rounded-2xl p-8 md:p-12 text-center">
             <blockquote className="text-2xl md:text-3xl font-semibold text-primary mb-6">
-              "AI won't replace managers – but managers who understand AI will replace those who don't."
+              "Most worker talent fears AI extinction, not redundancy - but managers who understand AI will replace those who don't."
             </blockquote>
             <p className="text-xl text-muted-foreground">
-              The choice is simple: Transform your business before AI-first competitors transform your market.
+              Transform your leadership team's AI decision-making capabilities before competitors transform your market.
             </p>
           </div>
         </div>

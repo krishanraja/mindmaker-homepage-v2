@@ -19,14 +19,14 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-6 text-center text-white">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-6xl md:text-8xl font-black leading-tight mb-8">
-            Stop waiting for AI to{" "}
-            <span className="block text-accent-glow">happen to you</span>
+            AI Literacy to{" "}
+            <span className="block text-accent-glow">Strategy Excellence</span>
           </h1>
           
           <p className="text-xl md:text-2xl leading-relaxed mb-12 max-w-4xl mx-auto opacity-90">
-            While <strong>88% of enterprises fail</strong> to scale AI beyond pilots, 
-            industry leaders use our proven 4-phase methodology to build AI-first 
-            competitive advantages that drive <strong className="text-accent-glow">3-5x revenue growth</strong>.
+            Bridge the dangerous gap between AI hype and practical enterprise implementation. 
+            Transform your leadership team from <strong>AI-confused to AI-confident</strong> through our proven 
+            literacy-first methodology that delivers <strong className="text-accent-glow">measurable competitive advantage</strong>.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

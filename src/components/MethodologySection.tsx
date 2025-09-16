@@ -61,10 +61,10 @@ const MethodologySection = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="section-title">The Proven 4-Phase Transformation</h2>
+          <h2 className="section-title">Literacy-First Strategic Implementation</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Our modular advisory capabilities follow a proven sequence: <strong>Learn → Decide → Align → Sell</strong>. 
-            Each phase builds strategic AI advantages that create sustainable competitive moats.
+            Transform from AI-confused to AI-confident through systematic capability building.
           </p>
         </div>
 

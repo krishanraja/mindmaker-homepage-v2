@@ -2,15 +2,15 @@ const StatsSection = () => {
   const stats = [
     {
       number: "90+",
-      label: "AI-first product strategies delivered",
+      label: "AI product strategies delivered to media organizations",
     },
     {
       number: "50+", 
-      label: "Executive seminars & C-suite workshops",
+      label: "Executive seminars & keynotes on automation futures",
     },
     {
-      number: "12",
-      label: "AI automation advisories (last 3 months)",
+      number: "16",
+      label: "Years of proven expertise in tech & AI transformation",
     },
   ];
 
@@ -18,7 +18,7 @@ const StatsSection = () => {
     <section className="py-20 bg-secondary/30">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="section-title">Proven Results Across 100+ Enterprises</h2>
+          <h2 className="section-title">The Definitive AI Literacy & Strategic Advisory Firm</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto">
