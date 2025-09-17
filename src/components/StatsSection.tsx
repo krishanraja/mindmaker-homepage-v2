@@ -28,7 +28,7 @@ const StatsSection = () => {
         <div className="text-center mb-16 fade-in-up">
           <h2 className="display-lg mb-4">
             The Definitive AI Literacy &{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <span className="text-foreground bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Strategic Advisory
             </span>{" "}
             Firm
