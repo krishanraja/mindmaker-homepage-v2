@@ -60,7 +60,7 @@ const Navigation = () => {
             <Button 
               size="sm" 
               className="ml-4"
-              onClick={() => window.location.href = 'mailto:hello@mindmaker.ai?subject=Book a call'}
+              onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
             >
               Book a call
             </Button>
@@ -100,10 +100,10 @@ const Navigation = () => {
                   {item.label}
                 </a>
               ))}
-              <Button 
+               <Button 
                 size="sm" 
                 className="w-fit"
-                onClick={() => window.location.href = 'mailto:hello@mindmaker.ai?subject=Book a call'}
+                onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
               >
                 Book a call
               </Button>
