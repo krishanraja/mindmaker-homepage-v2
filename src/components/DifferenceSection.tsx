@@ -62,11 +62,11 @@ const DifferenceSection = () => {
                 </div>
               </div>
               
-              <h3 className="text-xl font-semibold mb-4 text-foreground">
+              <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-4">
                 {difference.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm font-normal leading-relaxed text-muted-foreground">
                 {difference.description}
               </p>
             </div>

@@ -91,27 +91,27 @@ const phases = [
                     {phase.number}
                   </div>
                   <div>
-                    <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">{phase.title}</h3>
-                    <p className="text-lg text-muted-foreground">{phase.subtitle}</p>
+                    <h3 className="text-sm font-bold uppercase tracking-wide">{phase.title}</h3>
+                    <p className="text-sm font-normal leading-relaxed text-muted-foreground">{phase.subtitle}</p>
                   </div>
                 </div>
                 
                 <div className="mb-6">
-                  <h4 className="text-xl font-semibold text-foreground mb-3">Goal:</h4>
-                  <p className="text-base md:text-lg leading-relaxed text-muted-foreground">{phase.goal}</p>
+                  <h4 className="text-sm font-bold uppercase tracking-wide text-foreground mb-3">Goal:</h4>
+                  <p className="text-sm font-normal leading-relaxed text-muted-foreground">{phase.goal}</p>
                 </div>
                 
-                <p className="text-base leading-relaxed text-muted-foreground mb-8">
+                <p className="text-sm font-normal leading-relaxed text-muted-foreground mb-8">
                   {phase.description}
                 </p>
                 
                 <div className="mb-8">
-                  <h4 className="text-lg font-semibold text-foreground mb-4">Key Benefits:</h4>
+                  <h4 className="text-sm font-bold uppercase tracking-wide text-foreground mb-4">Key Benefits:</h4>
                   <ul className="space-y-3">
                     {phase.benefits.map((benefit, benefitIndex) => (
                       <li key={benefitIndex} className="flex items-center gap-3">
                         <div className="w-2 h-2 bg-primary rounded-full" />
-                        <span className="text-muted-foreground">{benefit}</span>
+                        <span className="text-sm font-normal leading-relaxed text-muted-foreground">{benefit}</span>
                       </li>
                     ))}
                   </ul>
@@ -134,7 +134,7 @@ const phases = [
                     {phase.number}
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-foreground">
+                  <h3 className="text-sm font-bold uppercase tracking-wide text-foreground">
                     {phase.title}
                   </h3>
                 </div>

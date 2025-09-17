@@ -59,10 +59,10 @@ const CoachSection = () => {
                   <feature.icon className="h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                  <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-sm font-normal leading-relaxed text-muted-foreground">
                     {feature.description}
                   </p>
                 </div>

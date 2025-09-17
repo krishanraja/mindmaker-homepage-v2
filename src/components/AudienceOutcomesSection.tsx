@@ -66,13 +66,13 @@ const AudienceOutcomesSection = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white rounded-xl mb-4">
                   <outcome.icon className="h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-2">
                   {outcome.audience}
                 </h3>
                 <h4 className="text-2xl font-bold text-primary mb-4">
                   {outcome.outcome}
                 </h4>
-                <p className="text-muted-foreground leading-relaxed mb-6">
+                <p className="text-sm font-normal leading-relaxed text-muted-foreground mb-6">
                   {outcome.description}
                 </p>
               </div>
@@ -81,7 +81,7 @@ const AudienceOutcomesSection = () => {
                 {outcome.benefits.map((benefit, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm text-muted-foreground leading-relaxed">
+                    <span className="text-sm font-normal leading-relaxed text-muted-foreground">
                       {benefit}  
                     </span>
                   </div>
