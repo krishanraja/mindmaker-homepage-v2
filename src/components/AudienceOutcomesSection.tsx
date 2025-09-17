@@ -4,7 +4,7 @@ import mindmakerIconLight from "@/assets/mindmaker-icon-light.png";
 const AudienceOutcomesSection = () => {
   const outcomes = [
     {
-      audience: "Leaders",
+      audience: "Enterprise Leaders",
       outcome: "Run & Future Proof",
       description: "Transform from AI-anxious to AI-confident. Make strategic decisions with clarity and conviction.",
       benefits: [
