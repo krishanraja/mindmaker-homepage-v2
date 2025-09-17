@@ -61,8 +61,8 @@ const AudienceOutcomesSection = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {outcomes.map((outcome, index) => (
-            <div key={index} className="card p-8 fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <div className="text-center mb-8">
+            <div key={index} className="card p-8 fade-in-up flex flex-col h-full" style={{animationDelay: `${index * 0.1}s`}}>
+              <div className="text-center mb-8 min-h-[280px] flex flex-col">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white rounded-xl mb-4">
                   <img src={outcome.icon} alt="MindMaker Icon" className="h-8 w-8" />
                 </div>
@@ -72,12 +72,12 @@ const AudienceOutcomesSection = () => {
                 <h4 className="text-2xl font-bold text-primary mb-4">
                   {outcome.outcome}
                 </h4>
-                <p className="text-sm font-normal leading-relaxed text-muted-foreground mb-6">
+                <p className="text-sm font-normal leading-relaxed text-muted-foreground">
                   {outcome.description}
                 </p>
               </div>
               
-              <div className="space-y-3 mb-8">
+              <div className="space-y-3 mb-8 flex-1">
                 {outcome.benefits.map((benefit, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
@@ -89,7 +89,7 @@ const AudienceOutcomesSection = () => {
               </div>
               
               <Button 
-                className="w-full bg-primary hover:bg-primary-600 text-white"
+                className="w-full bg-primary hover:bg-primary-600 text-white mt-auto"
                 onClick={() => window.location.href = `mailto:krish@fractionl.ai?subject=${outcome.cta} - Let's Discuss`}
               >
                 {outcome.cta}
