@@ -20,7 +20,7 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8">
             <Sparkles size={16} className="text-white" />
-            <span className="text-sm font-medium">AI has learned our language. Now we must learn its way of thinking.</span>
+            <span className="text-sm font-medium">AI has learned our language. AI literacy helps us to move the other way.</span>
           </div>
 
           {/* Main Headline */}
