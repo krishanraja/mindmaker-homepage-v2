@@ -33,8 +33,10 @@ const Hero = () => {
           
           {/* Subheadline */}
           <p className="text-base md:text-lg leading-relaxed mb-4 max-w-4xl mx-auto opacity-90">
-            <strong className="text-white">The World's First AI Literacy Accelerator.</strong> Through proven educational methodologies and advanced cognitive frameworks, 
-            we help leaders develop the mental models to think, reason, and collaborate with AI systems effectively.
+            <strong className="text-white">The World's First AI Literacy Accelerator.</strong>
+          </p>
+          <p className="text-base md:text-lg leading-relaxed mb-4 max-w-4xl mx-auto opacity-90">
+            Through proven methodologies and cognitive frameworks, we help leaders develop the mental models to think, reason, and collaborate with AI systems effectively. Being AI literate is the critical pre-game before you become an AI orchestrator or AI leader.
           </p>
           
           {/* Urgency Statement */}
