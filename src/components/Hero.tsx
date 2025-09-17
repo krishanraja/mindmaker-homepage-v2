@@ -99,19 +99,20 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Founder CTA Button */}
-          <div className="flex justify-center mb-16">
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="glass-card-dark border-white/20 text-white hover:bg-white/10 font-medium px-6 md:px-8 py-3 md:py-4 text-base md:text-lg group"
-              onClick={() => window.open('https://www.krishraja.com', '_blank', 'noopener,noreferrer')}
-              aria-label="Visit Krishna Raja's personal website"
-            >
-              Check out our Founder
-              <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </Button>
-          </div>
+        </div>
+
+        {/* Founder CTA Button */}
+        <div className="flex justify-center mb-16">
+          <Button 
+            variant="outline" 
+            size="lg"
+            className="glass-card-dark border-white/20 text-white hover:bg-white/10 font-medium px-6 md:px-8 py-3 md:py-4 text-base md:text-lg group"
+            onClick={() => window.open('https://www.krishraja.com', '_blank', 'noopener,noreferrer')}
+            aria-label="Visit Krishna Raja's personal website"
+          >
+            Check out our Founder
+            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+          </Button>
         </div>
       </div>
       
