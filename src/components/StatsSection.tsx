@@ -6,19 +6,19 @@ const StatsSection = () => {
     {
       number: "Qualified",
       label: "Teacher & Educator",
-      description: "with proven enterprise data literacy programs",
+      description: "with certification",
       icon: GraduationCap,
     },
     {
       number: "Advanced", 
       label: "Academic Credentials",
-      description: "Linguistics, Computing & Psychology degrees",
+      description: "Linguistics, Computing & Psychology backgrounds",
       icon: BookOpen,
     },
     {
       number: "200+",
       label: "Minds Transformed",
-      description: "through AI literacy acceleration programs",
+      description: "through tech literacy acceleration programs",
       icon: Users,
     },
   ];
