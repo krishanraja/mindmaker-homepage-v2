@@ -6,10 +6,10 @@ const PathwaysSection = () => {
     <section className="py-20 bg-secondary/20">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="section-title">Choose Your Transformation Pathway</h2>
-          <p className="text-xl text-readable-secondary max-w-4xl mx-auto">
-            Whether you're transforming an enterprise or developing personal AI mastery, 
-            our battle-tested methodology accelerates your journey from AI-anxious to AI-advantaged.
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6 text-foreground">Choose Your AI Literacy Pathway</h2>
+          <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-4xl mx-auto">
+            End-to-end modular advisory capabilities that transform your organization from AI-confused to AI-confident. 
+            Our literacy-first approach builds internal champions and sustainable competitive advantage.
           </p>
         </div>
 
@@ -28,23 +28,23 @@ const PathwaysSection = () => {
 
             <div className="space-y-6">
               {/* Executive Leaders */}
-              <div className="bg-card rounded-xl p-6 shadow-soft hover:shadow-strong transition-all duration-300 group">
+              <div className="glass-card p-6 hover:scale-105 transition-all duration-300 group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <User className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-xl font-semibold text-primary mb-2">1A: EXECUTIVE LEADERS</h4>
-                    <p className="text-readable-muted mb-4">
-                      Strategic AI leadership for C-suite executives who need to make confident decisions that drive competitive advantage
+                    <h4 className="text-xl font-semibold text-primary mb-2">1A: EXECUTIVE LEADERSHIP</h4>
+                    <p className="text-muted-foreground mb-4">
+                      Strategic advisory sprints that deliver clear AI product strategy and confident decision-making frameworks for boardroom leadership
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">4-phase transformation methodology</span>
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Board-ready AI strategy</span>
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Competitive moat development</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Board-ready AI strategy</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">LEARN→DECIDE→ALIGN→SELL</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Competitive advantage</span>
                     </div>
                     <Button variant="outline" className="group">
-                      Take Leadership Assessment
+                      Strategic Advisory Sprint
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
@@ -52,24 +52,24 @@ const PathwaysSection = () => {
               </div>
 
               {/* Enterprise Teams */}
-              <div className="bg-card rounded-xl p-6 shadow-soft hover:shadow-strong transition-all duration-300 group">
+              <div className="glass-card p-6 hover:scale-105 transition-all duration-300 group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Building2 className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h4 className="text-xl font-semibold text-primary mb-2">1B: ENTERPRISE TEAMS</h4>
-                    <p className="text-readable-muted mb-4">
-                      Workforce transformation programs that move entire departments from AI-anxious to AI-advantaged
+                    <p className="text-muted-foreground mb-4">
+                      Executive seminars, market shift briefings, and strategic planning sessions that prepare leadership teams for 2030's AI-driven landscape
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Custom workshops</span>
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Workflow redesign</span>
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">AI usage playbooks</span>
-                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Adoption measurement</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Executive seminars</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Market briefings</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Strategic planning</span>
+                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Team literacy</span>
                     </div>
                     <Button variant="outline" className="group">
-                      Request Team Transformation Quote
+                      Executive Seminar Program
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
@@ -92,23 +92,23 @@ const PathwaysSection = () => {
 
             <div className="space-y-6">
               {/* Ideas to Blueprints */}
-              <div className="bg-card rounded-xl p-6 shadow-soft hover:shadow-strong transition-all duration-300 group">
+              <div className="glass-card p-6 hover:scale-105 transition-all duration-300 group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Lightbulb className="w-6 h-6 text-accent" />
                   </div>
                   <div className="flex-1">
                     <h4 className="text-xl font-semibold text-accent mb-2">2A: IDEAS-TO-BLUEPRINTS</h4>
-                    <p className="text-readable-muted mb-4">
-                      For entrepreneurs and innovators who want to transform business ideas into AI-powered solutions
+                    <p className="text-muted-foreground mb-4">
+                      Hands-on coaching modules, workflow redesign sessions, and practical AI tool implementation for operational teams
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">AI opportunity identification</span>
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Solution architecture</span>
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Implementation roadmap</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Workflow redesign</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Agent opportunities</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Tool implementation</span>
                     </div>
                     <Button variant="outline" className="group">
-                      Start Idea Assessment
+                      Operational Coaching
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
@@ -116,23 +116,23 @@ const PathwaysSection = () => {
               </div>
 
               {/* AI Literacy Mastery */}
-              <div className="bg-card rounded-xl p-6 shadow-soft hover:shadow-strong transition-all duration-300 group">
+              <div className="glass-card p-6 hover:scale-105 transition-all duration-300 group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <GraduationCap className="w-6 h-6 text-accent" />
                   </div>
                   <div className="flex-1">
                     <h4 className="text-xl font-semibold text-accent mb-2">2B: AI LITERACY MASTERY</h4>
-                    <p className="text-readable-muted mb-4">
-                      For professionals who want to develop comprehensive AI fluency and career-protection skills
+                    <p className="text-muted-foreground mb-4">
+                      Newsletter programs and gamified learning for ongoing development. Build internal AI champions and power users
                     </p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Personal readiness assessment</span>
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Strategic AI thinking</span>
-                      <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">Career future-proofing</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Coach the coaches</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Modular learning</span>
+                      <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">Sustained engagement</span>
                     </div>
                     <Button variant="outline" className="group">
-                      Take AI Literacy Assessment
+                      Literacy Development
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>

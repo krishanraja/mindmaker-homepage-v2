@@ -2,82 +2,79 @@ import { Button } from "@/components/ui/button";
 import { Search, Target, Rocket, TrendingUp, ArrowRight } from "lucide-react";
 
 const MethodologySection = () => {
-  const phases = [
-    {
-      number: "01",
-      title: "LEARN",
-      subtitle: "AI Literacy Foundation",
-      goal: "Transform your leadership from AI-confused to AI-confident",
-      description: "Build deep understanding of AI capabilities, limitations, and strategic implications through executive education and hands-on workshops.",
-      benefits: [
-        "Executive AI literacy program",
-        "Hands-on tool exploration", 
-        "Industry-specific use cases",
-        "Risk assessment framework"
-      ],
-      icon: Search,
-      cta: "Start Learning",
-    },
-    {
-      number: "02", 
-      title: "DECIDE",
-      subtitle: "Strategic Planning",
-      goal: "Create your comprehensive AI transformation roadmap",
-      description: "Develop a clear, actionable strategy that aligns AI initiatives with business objectives and delivers measurable ROI.",
-      benefits: [
-        "Custom AI strategy development",
-        "ROI projection modeling",
-        "Risk mitigation planning",
-        "Technology stack selection"
-      ],
-      icon: Target,
-      cta: "Build Strategy",
-    },
-    {
-      number: "03",
-      title: "ALIGN", 
-      subtitle: "Organizational Readiness",
-      goal: "Prepare your organization for successful AI implementation",
-      description: "Align stakeholders, optimize processes, and build the organizational foundation needed for AI success.",
-      benefits: [
-        "Change management program",
-        "Process optimization",
-        "Team skill development",
-        "Cultural transformation"
-      ],
-      icon: Rocket,
-      cta: "Align Teams",
-    },
-    {
-      number: "04",
-      title: "SCALE",
-      subtitle: "Implementation & Growth", 
-      goal: "Execute, measure, and scale your AI initiatives",
-      description: "Deploy AI solutions systematically, track performance metrics, and expand successful implementations across the organization.",
-      benefits: [
-        "Phased implementation plan",
-        "Performance monitoring",
-        "Continuous optimization", 
-        "Enterprise-wide scaling"
-      ],
-      icon: TrendingUp,
-      cta: "Scale Impact",
-    },
-  ];
+const phases = [
+  {
+    number: "01",
+    title: "LEARN", 
+    subtitle: "Discovery Sprint",
+    goal: "Comprehensive diagnostic across team capabilities, tech stack, and objectives",
+    description: "We assess your current AI literacy levels, technology infrastructure, and strategic objectives to identify gaps and opportunities for AI-driven competitive advantage.",
+    benefits: [
+      "Team AI literacy assessment",
+      "Technology stack evaluation",
+      "Market position analysis",
+      "Strategic AI opportunity mapping"
+    ],
+    icon: Search,
+    cta: "Start Learning Sprint"
+  },
+  {
+    number: "02", 
+    title: "DECIDE",
+    subtitle: "Product Strategy",
+    goal: "AI + data-led product planning aligned with corporate revenue strategy",
+    description: "Transform discovery insights into concrete AI product strategies that deliver measurable business outcomes and sustainable competitive advantages.",
+    benefits: [
+      "AI-first product roadmap",
+      "Revenue-aligned strategy framework",
+      "Competitive differentiation blueprint", 
+      "Investment prioritization matrix"
+    ],
+    icon: Target,
+    cta: "Build Strategy Framework"
+  },
+  {
+    number: "03",
+    title: "ALIGN",
+    subtitle: "Literacy & Operations", 
+    goal: "Team education paired with revenue operations and GTM planning",
+    description: "Build internal AI champions through comprehensive literacy programs while aligning operational processes for speed-to-market execution.",
+    benefits: [
+      "Executive and team AI education",
+      "Workflow redesign and automation",
+      "GTM process optimization",
+      "Internal capability development"
+    ],
+    icon: Rocket,
+    cta: "Align Your Teams"
+  },
+  {
+    number: "04",
+    title: "SELL",
+    subtitle: "GTM Excellence",
+    goal: "Agentic AI pricing, monetization, and automated sales & marketing systems",
+    description: "Deploy AI-powered go-to-market systems that automate sales processes, optimize pricing strategies, and create scalable revenue generation engines.",
+    benefits: [
+      "AI-powered pricing optimization",
+      "Automated sales and marketing systems", 
+      "Revenue generation at scale",
+      "Measurable ROI and growth metrics"
+    ],
+    icon: TrendingUp,
+    cta: "Launch GTM Excellence"
+  }
+];
 
   return (
     <section className="section-padding bg-muted">
       <div className="container-width">
         <div className="text-center mb-20 fade-in-up">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            Our Proven{" "}
-            <span className="text-primary">
-              4-Phase Methodology
-            </span>
+            LEARN → DECIDE → ALIGN → SELL
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto">
-            The systematic approach that has delivered 3-5x revenue growth for 100+ enterprises. 
-            From AI literacy to strategic excellence in 90 days.
+            Our proven literacy-first methodology transforms leadership teams from AI-confused to AI-confident. 
+            Each phase builds strategic capability while delivering measurable business outcomes.
           </p>
         </div>
 
@@ -128,7 +125,7 @@ const MethodologySection = () => {
               
               {/* Visual */}
               <div className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                <div className="card p-12 text-center">
+                <div className="glass-card p-12 text-center">
                   <div className="inline-flex items-center justify-center w-24 h-24 bg-primary text-white rounded-2xl mb-8">
                     <phase.icon className="h-12 w-12" />
                   </div>

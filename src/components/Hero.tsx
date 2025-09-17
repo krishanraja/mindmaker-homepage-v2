@@ -15,17 +15,17 @@ const Hero = () => {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight mb-6 leading-tight">
-            Transform Your Business with
+            AI Literacy &
             <span className="block text-white">
-              Strategic AI Implementation
+              Strategic Advisory
             </span>
           </h1>
           
           {/* Subheadline */}
           <p className="text-base md:text-lg leading-relaxed mb-12 max-w-4xl mx-auto opacity-90">
-            Break free from AI pilot purgatory. Our proven 4-phase methodology has delivered 
-            <strong className="text-white"> 3-5x revenue growth</strong> for 100+ enterprises. 
-            Move from AI hype to measurable competitive advantage.
+            Bridge the dangerous gap between AI hype and practical enterprise implementation. 
+            Our proven literacy-first methodology transforms leadership teams into confident AI decision-makers. 
+            <strong className="text-white">16 years of expertise.</strong> 90+ product strategies delivered.
           </p>
           
           {/* CTA Buttons */}
@@ -34,43 +34,43 @@ const Hero = () => {
               size="lg" 
               className="bg-primary text-white hover:bg-primary-600 focus:ring-2 focus:ring-ring font-semibold px-8 py-4 text-lg group"
             >
-              Get Your AI Readiness Assessment
+              AI Readiness Assessment
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <Button 
               variant="outline" 
               size="lg"
-              className="border border-border text-foreground hover:bg-muted font-medium px-8 py-4 text-lg"
+              className="glass-card-dark border-white/20 text-white hover:bg-white/10 font-medium px-8 py-4 text-lg"
             >
-              Watch Success Stories
+              Executive Seminars
             </Button>
           </div>
 
           {/* Proof Points */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div className="card text-center p-6">
+            <div className="glass-card-dark text-center p-6">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-lg mb-4">
                 <Target className="h-6 w-6 text-white" />
               </div>
-              <div className="text-2xl font-bold text-white mb-2">100+</div>
-              <div className="text-white/80 text-sm">Enterprises Transformed</div>
+              <div className="text-2xl font-bold text-white mb-2">90+</div>
+              <div className="text-white/80 text-sm">Product Strategies Delivered</div>
             </div>
             
-            <div className="card text-center p-6">
+            <div className="glass-card-dark text-center p-6">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-lg mb-4">
                 <TrendingUp className="h-6 w-6 text-white" />
               </div>
-              <div className="text-2xl font-bold text-white mb-2">3-5x</div>
-              <div className="text-white/80 text-sm">Revenue Growth</div>
+              <div className="text-2xl font-bold text-white mb-2">50+</div>
+              <div className="text-white/80 text-sm">Executive Seminars & Keynotes</div>
             </div>
             
-            <div className="card text-center p-6">
+            <div className="glass-card-dark text-center p-6">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-lg mb-4">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <div className="text-2xl font-bold text-white mb-2">90%</div>
-              <div className="text-white/80 text-sm">Success Rate</div>
+              <div className="text-2xl font-bold text-white mb-2">16</div>
+              <div className="text-white/80 text-sm">Years of Proven Expertise</div>
             </div>
           </div>
         </div>

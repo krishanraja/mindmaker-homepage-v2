@@ -4,18 +4,18 @@ import { ArrowRight, Clock, TrendingUp, Zap } from "lucide-react";
 const CTASection = () => {
   const urgencyStats = [
     {
-      number: "6 months",
-      description: "Until AI literacy becomes table stakes in most sectors",
+      number: "12",
+      description: "AI advisories delivered in last 3 months alone",
       icon: Clock,
     },
     {
-      number: "90 days", 
-      description: "Typical transformation timeline with our methodology",
+      number: "90+", 
+      description: "New product strategies delivered to media organizations",
       icon: Zap,
     },
     {
-      number: "3-5x",
-      description: "Average revenue growth from AI-first strategies", 
+      number: "50+",
+      description: "Executive seminars and keynotes on data & automation futures", 
       icon: TrendingUp,
     },
   ];
@@ -29,12 +29,12 @@ const CTASection = () => {
 
       <div className="container-width relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">The Strategic Imperative</h2>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">The AI Literacy Gap</h2>
           <blockquote className="text-xl md:text-2xl font-semibold mb-8 max-w-4xl mx-auto opacity-90">
-            "AI won't replace managers – but managers who understand AI will replace those who don't."
+            "Team AI literacy is the missing piece in enterprise AI adoption, whilst AI product strategy usually goes missing - creating opportunity for emerging competitors to displace incumbents."
           </blockquote>
           <p className="text-base md:text-lg leading-relaxed opacity-80 max-w-3xl mx-auto">
-            The window for building AI-first competitive advantages is closing rapidly.
+            Transform from AI-confused to AI-confident before your competitors do.
           </p>
         </div>
 
@@ -59,18 +59,19 @@ const CTASection = () => {
             <div className="mb-8">
               <h3 className="text-3xl font-bold mb-4">AI Mindmaker</h3>
               <p className="text-base md:text-lg leading-relaxed opacity-90">
-                AI literacy to strategy - transforming enterprises from pilot purgatory to production-ready AI advantages.
+                Literacy to Strategy - Bridge the gap between AI hype and practical enterprise implementation. 
+                16 years of proven expertise in tech, data, and AI transformation.
               </p>
             </div>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Button className="bg-accent text-white hover:bg-accent-400 focus:ring-2 focus:ring-ring group">
-                Start Your AI Transformation
+                AI Readiness Assessment
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10">
-                Schedule Strategic Consultation
+                Executive Consultation
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
