@@ -70,12 +70,21 @@ const phases = [
       <div className="container-width">
         <div className="text-center mb-20 fade-in-up">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            ASSESS → ABSORB → APPLY → ACCELERATE
+            From <span className="text-primary">AI-Confused</span> to <span className="text-primary">AI-Confident</span>
           </h2>
-          <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto">
-            Our proven cognitive learning methodology transforms teams from AI-confused to AI-confident through structured literacy development. 
+          <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto mb-4">
+            Our proven cognitive learning methodology transforms teams through structured literacy development. 
             Each phase builds deep understanding while cultivating practical AI reasoning capabilities.
           </p>
+          <div className="flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
+            <span className="text-primary font-semibold">ASSESS</span>
+            <ArrowRight className="h-4 w-4" />
+            <span className="text-primary font-semibold">ABSORB</span>
+            <ArrowRight className="h-4 w-4" />
+            <span className="text-primary font-semibold">APPLY</span>
+            <ArrowRight className="h-4 w-4" />
+            <span className="text-primary font-semibold">ACCELERATE</span>
+          </div>
         </div>
 
         <div className="space-y-24">
