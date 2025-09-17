@@ -85,23 +85,24 @@ const PathwaysSection = () => {
     const isLeadership = module.track === "LEADERSHIP";
     
     return (
-      <div key={module.id} className={`glass-card p-6 hover:scale-105 transition-all duration-300 group h-full ${!isCoreModule ? 'opacity-75' : ''}`}>
-        {isCoreModule && (
-          <div className="flex justify-end mb-2">
-            <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
-              Start Here
-            </span>
+      <div key={module.id} className={`glass-card p-6 hover:scale-105 transition-all duration-300 group flex flex-col h-full ${!isCoreModule ? 'opacity-75' : ''}`}>
+        {/* Header Section - Fixed Height */}
+        <div className="min-h-[120px] flex flex-col">
+          {/* Badge */}
+          <div className="flex justify-end mb-4">
+            {isCoreModule ? (
+              <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">
+                Start Here
+              </span>
+            ) : (
+              <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-xs font-medium">
+                Unlock Later
+              </span>
+            )}
           </div>
-        )}
-        {!isCoreModule && (
-          <div className="flex justify-end mb-2">
-            <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-xs font-medium">
-              Unlock Later
-            </span>
-          </div>
-        )}
-        <div className="flex items-start gap-4 h-full flex-col">
-          <div className="flex items-center justify-between w-full mb-2">
+          
+          {/* Icon and Credits */}
+          <div className="flex items-center justify-between w-full mb-4">
             <div className={`w-12 h-12 ${isLeadership ? 'bg-primary/10' : 'bg-accent/10'} rounded-lg flex items-center justify-center flex-shrink-0`}>
               <IconComponent className={`w-6 h-6 ${isLeadership ? 'text-primary' : 'text-accent'}`} />
             </div>
@@ -115,18 +116,24 @@ const PathwaysSection = () => {
               <span className="text-xs text-muted-foreground">credits</span>
             </div>
           </div>
-          <div className="flex-1">
-            <h4 className={`text-sm font-bold uppercase tracking-wide ${isLeadership ? 'text-primary' : 'text-accent'} mb-3`}>
-              {module.title}
-            </h4>
-            <p className="text-sm font-normal leading-relaxed text-muted-foreground mb-4">
-              {module.description}
-            </p>
-            <Button variant="outline" size="sm" className="group w-full">
-              Learn More
-              <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </div>
+          
+          {/* Title */}
+          <h4 className={`text-sm font-bold uppercase tracking-wide ${isLeadership ? 'text-primary' : 'text-accent'} mb-3`}>
+            {module.title}
+          </h4>
+        </div>
+        
+        {/* Content Section - Flexible Height */}
+        <div className="flex-1 flex flex-col">
+          <p className="text-sm font-normal leading-relaxed text-muted-foreground mb-6 flex-1">
+            {module.description}
+          </p>
+          
+          {/* Button Section - Bottom Aligned */}
+          <Button variant="outline" size="sm" className="group w-full mt-auto">
+            Learn More
+            <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
       </div>
     );
