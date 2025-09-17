@@ -32,11 +32,8 @@ const Hero = () => {
           </h1>
           
           {/* Subheadline */}
-          <p className="text-sm md:text-base lg:text-lg leading-relaxed mb-3 md:mb-4 max-w-4xl mx-auto opacity-90 px-4">
-            <strong className="text-white">The World's First AI Literacy Accelerator.</strong>
-          </p>
           <p className="text-sm md:text-base lg:text-lg leading-relaxed mb-8 md:mb-12 max-w-4xl mx-auto opacity-90 px-4">
-            Being AI literate is the critical pre-game before you become an AI orchestrator or AI leader.
+            <strong className="text-white">The World's First AI Literacy Accelerator.</strong>
           </p>
           
           {/* CTA Buttons */}

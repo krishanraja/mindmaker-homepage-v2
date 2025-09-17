@@ -34,7 +34,7 @@ const StatsSection = () => {
             </span>
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto">
-            Combining qualified teaching credentials with advanced cognitive science to transform how leaders think about AI
+            Being AI literate is the critical pre-game before you become an AI orchestrator or AI leader.
           </p>
         </div>
         
