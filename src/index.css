@@ -7,7 +7,7 @@
 
 /* 2025 Editorial Design System - Single Source of Truth */
 @layer base {
-:root {
+  :root {
   /* Base */
   --background: 0 0% 100%;
   --foreground: 222 47% 11%;
@@ -50,24 +50,25 @@
   /* Design System Custom Properties - Bulletproof Styles */
   --hero-text-shimmer: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 0.9) 100%);
   --brand-gradient: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  }
+
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+    --muted: 222 32% 12%;
+    --muted-foreground: 215 20% 75%;
+    --card: 222 47% 9%;
+    --card-foreground: var(--foreground);
+    --border: 222 28% 18%;
+    --ring: 262 100% 63%;
+    --input: 222 28% 18%;
+    --popover: 222 47% 9%;
+    --popover-foreground: var(--foreground);
+    --secondary: 222 32% 12%;
+    --secondary-foreground: var(--foreground);
+  }
 }
 
-.dark {
-  --background: 222 47% 7%;
-  --foreground: 210 40% 98%;
-  --muted: 222 32% 12%;
-  --muted-foreground: 215 20% 75%;
-  --card: 222 47% 9%;
-  --card-foreground: var(--foreground);
-  --border: 222 28% 18%;
-  --ring: 262 100% 63%;
-  --input: 222 28% 18%;
-  --popover: 222 47% 9%;
-  --popover-foreground: var(--foreground);
-  --secondary: 222 32% 12%;
-  --secondary-foreground: var(--foreground);
-}
-}
 
 * {
   border-color: hsl(var(--border));
