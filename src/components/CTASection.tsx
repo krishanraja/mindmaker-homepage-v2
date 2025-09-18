@@ -34,7 +34,7 @@ const CTASection = () => {
                 "Businesses that master AI literacy at each level will transform rapidly.<br />
                 Those that don't will be forced to fight the ones that do."
               </p>
-              <p className="text-accent font-semibold text-base mt-4">— Krish</p>
+              <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
             </div>
           </div>
 
