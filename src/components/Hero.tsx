@@ -14,8 +14,8 @@ const Hero = () => {
         />
       </div>
       
-      {/* Background Layer 2: Semi-transparent Purple Overlay */}
-      <div className="absolute inset-0 z-1 bg-gradient-to-br from-[#5b21b6]/75 to-[#7c3aed]/85 backdrop-blur-sm"></div>
+      {/* Background Layer 2: Sophisticated Purple Gradient Overlay */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-br from-[#4c1d95]/90 via-[#7c3aed]/90 to-[#a855f7]/95"></div>
       
       {/* Content Layer */} 
       <div className="container-width relative z-10 text-center">
