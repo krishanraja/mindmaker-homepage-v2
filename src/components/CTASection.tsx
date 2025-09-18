@@ -23,44 +23,42 @@ const CTASection = () => {
               ⚡ Limited Availability • Q1 2025 Cohorts Filling Fast
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white leading-tight">
-              Your Competitors Are Already<br />
-              <span className="text-accent">Building AI Advantage</span>
+              Don't Let Your Competition<br />
+              <span className="text-accent">Leave You Behind</span>
             </h2>
           </div>
           
-          <div className="mb-12 max-w-3xl mx-auto">
-            <p className="text-lg md:text-xl leading-relaxed text-white/90 mb-6">
+          <div className="mb-12 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl leading-relaxed text-white/90 mb-8">
               While others debate AI's future, industry leaders are securing competitive dominance. 
               <strong className="text-white"> Don't let hesitation cost you market position.</strong>
             </p>
-            <div className="bg-white/10 border border-white/20 rounded-xl p-6 mb-8">
-              <div className="flex items-center justify-center mb-4">
-                <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                  <span className="text-2xl">🎯</span>
-                </div>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-1 h-12 bg-accent rounded-full"></div>
               </div>
-              <p className="text-white font-medium text-lg">
-                "Companies that master AI integration in 2025 will dominate their markets. 
-                Those that don't will become footnotes."
+              <p className="text-white font-medium text-lg leading-relaxed">
+                "Businesses that master AI literacy at each level will transform rapidly.<br />
+                Those that don't will be forced to fight the ones that do."
               </p>
-              <p className="text-white/80 text-sm mt-2">— Harvard Business Review, 2024</p>
+              <p className="text-accent font-semibold text-base mt-4">— Krish</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-4 mb-8 max-w-md mx-auto">
-            <Button asChild className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-4 text-lg group w-full shadow-2xl transform hover:scale-105 transition-all duration-200">
+            <Button asChild className="bg-gradient-to-r from-white to-white/95 text-primary hover:from-white/95 hover:to-white font-bold px-8 py-5 text-lg group w-full shadow-[0_8px_30px_rgb(255,255,255,0.12)] transform hover:scale-[1.02] hover:shadow-[0_12px_40px_rgb(255,255,255,0.16)] transition-all duration-300 rounded-xl">
               <a href="https://calendly.com/krish-raja/mindmaker-meeting" target="_blank" rel="noopener noreferrer">
-                <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                Secure Your AI Advantage
+                <Mail className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+                Secure Your Competitive Edge
               </a>
             </Button>
             
             <Button 
               onClick={scrollToOutcomes}
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 font-medium px-8 py-4 text-base group w-full"
+              className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/40 font-medium px-8 py-4 text-base group w-full backdrop-blur-sm rounded-xl transition-all duration-300"
             >
-              <ArrowUp className="mr-2 h-4 w-4 group-hover:-translate-y-1 transition-transform" />
+              <ArrowUp className="mr-2 h-4 w-4 group-hover:-translate-y-1 transition-transform duration-200" />
               Or Choose a Pathway Above
             </Button>
           </div>
