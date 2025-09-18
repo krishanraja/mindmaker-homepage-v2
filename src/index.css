@@ -11,16 +11,21 @@
   --muted: 210 40% 96%;
   --muted-foreground: 215 28% 25%;
 
-  /* Brand purple system */
-  --primary: 262 100% 63%;         /* #6C40FF */
-  --primary-100: 262 100% 97%;
-  --primary-200: 262 100% 90%;
-  --primary-400: 262 100% 70%;
-  --primary-600: 260 100% 55%;
+  /* Professional brand system */
+  --primary: 217 91% 60%;          /* Professional blue #2563eb */
+  --primary-100: 217 91% 97%;
+  --primary-200: 217 91% 90%;
+  --primary-400: 217 91% 70%;
+  --primary-600: 217 91% 45%;
 
-  /* Accents */
-  --accent: 286 90% 66%;
-  --accent-400: 286 85% 60%;
+  /* Enterprise accents */
+  --accent: 226 71% 40%;           /* Deep navy #1e40af */
+  --accent-400: 226 71% 50%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Professional gradients */
+  --gradient-professional: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  --gradient-subtle: linear-gradient(135deg, hsl(var(--primary-200)) 0%, hsl(var(--primary-400)) 100%);
   --destructive: 0 84% 60%;
 
   /* Surfaces */
@@ -76,6 +81,11 @@ body {
   max-width: 1200px; 
   margin: 0 auto; 
   padding: 0 1.5rem; 
+}
+
+/* Mobile viewport utilities */
+.pt-safe-top {
+  padding-top: max(1rem, env(safe-area-inset-top));
 }
 
 /* Card patterns */

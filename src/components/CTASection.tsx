@@ -10,10 +10,10 @@ const CTASection = () => {
   };
 
   return (
-    <section className="section-padding bg-primary text-white relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden" style={{background: 'linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(226 71% 40%) 100%)'}}>
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_70%)]" />
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_70%)]" />
       </div>
 
       <div className="container-width relative z-10">
@@ -45,7 +45,7 @@ const CTASection = () => {
           
           <div className="text-center">
             <p className="text-xl font-medium text-white mb-2">
-              Contact: <a href="mailto:krish@fractionl.ai" className="text-accent hover:text-accent-400 transition-colors underline decoration-2">krish@fractionl.ai</a>
+              Contact: <a href="mailto:krish@fractionl.ai" className="text-white hover:text-white/80 transition-colors underline decoration-2 underline-offset-4">krish@fractionl.ai</a>
             </p>
             <p className="text-base opacity-80">
               16 years of proven expertise in tech, data, and AI transformation

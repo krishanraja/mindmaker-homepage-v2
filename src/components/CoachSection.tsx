@@ -30,16 +30,18 @@ const CoachSection = () => {
     <section className="section-padding bg-muted/30">
       <div className="container-width">
         <div className="text-center mb-16 fade-in-up">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
+          <div className="mb-6">
+            <div className="flex items-center justify-center mb-4">
+              <Badge variant="secondary" className="text-xs font-semibold px-4 py-2 rounded-full">
+                Coming Soon
+              </Badge>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-center">
               AI-Enabled{" "}
               <span className="text-primary">
                 Coach & Advisor
               </span>
             </h2>
-            <Badge variant="secondary" className="text-xs font-semibold px-3 py-1">
-              Coming Soon
-            </Badge>
           </div>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto mb-8">
             Soon, we'll be your AI-augmented advisory team that will combine human expertise 

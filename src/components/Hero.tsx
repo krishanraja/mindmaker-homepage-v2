@@ -4,23 +4,27 @@ import mindmakerLogo from "@/assets/mindmaker-logo.png";
 
 const Hero = () => {
   return (
-    <section className="hero-clouds min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="hero-clouds min-h-[100dvh] flex items-center justify-center relative overflow-hidden">
       {/* Content */}
       <div className="container-width relative z-10 text-center text-white">
-        <div className="max-w-6xl mx-auto fade-in-up pt-12 md:pt-16 lg:pt-20 pb-16 md:pb-20">
+        <div className="max-w-6xl mx-auto fade-in-up pt-safe-top pb-16 md:pb-20 px-4">
           {/* Logo */}
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8 mt-8 md:mt-12">
             <img 
               src={mindmakerLogo} 
               alt="MindMaker" 
-              className="h-16 w-auto mx-auto mb-6"
+              className="h-12 md:h-16 w-auto mx-auto"
             />
           </div>
           
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 md:px-4 py-2 mb-6 md:mb-8">
-            <Sparkles size={16} className="text-white" aria-hidden="true" />
-            <span className="text-xs md:text-sm font-medium">AI has learned our language. AI literacy helps us to move the other way.</span>
+          {/* Professional Badge */}
+          <div className="max-w-lg mx-auto mb-6 md:mb-8">
+            <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 md:px-6 py-3">
+              <span className="text-sm md:text-base font-medium leading-tight text-center">
+                AI has learned our language.<br className="md:hidden" />
+                <span className="hidden md:inline"> </span>AI literacy helps us move the other way.
+              </span>
+            </div>
           </div>
 
           {/* Main Headline */}
@@ -104,7 +108,7 @@ const Hero = () => {
       </div>
       
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
           <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse" />
         </div>
