@@ -160,14 +160,7 @@ const PathwaysSection = () => {
     <section className="section-padding bg-secondary/20">
       <div className="container-width">
         <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-4 sm:mb-6 text-foreground">Program Modules</h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground max-w-4xl mx-auto mb-6 sm:mb-8">
-            <strong>Agentic AI Sprints for Commercial Product Strategy Team Literacy</strong><br/>
-            Personalized AI literacy → product strategy sprints with decades of media industry experience
-          </p>
-          <div className="bg-primary/10 text-primary px-3 sm:px-4 py-2 rounded-full inline-block text-xs sm:text-sm font-medium mb-6 sm:mb-8">
-            Start with Core Pillars • Build Your Foundation First
-          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-4 sm:mb-6 text-foreground">AI Literacy-to-Strategy Sprints</h2>
         </div>
 
         {/* All Program Modules */}
