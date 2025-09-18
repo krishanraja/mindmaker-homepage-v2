@@ -11,20 +11,20 @@
   --muted: 210 40% 96%;
   --muted-foreground: 215 28% 25%;
 
-  /* Professional brand system */
-  --primary: 217 91% 60%;          /* Professional blue #2563eb */
-  --primary-100: 217 91% 97%;
-  --primary-200: 217 91% 90%;
-  --primary-400: 217 91% 70%;
-  --primary-600: 217 91% 45%;
+  /* Original brand system - Purple/Violet */
+  --primary: 248 73% 67%;          /* Original brand purple #667eea */
+  --primary-100: 248 73% 97%;
+  --primary-200: 248 73% 90%;
+  --primary-400: 248 73% 75%;
+  --primary-600: 248 73% 55%;
 
-  /* Enterprise accents */
-  --accent: 226 71% 40%;           /* Deep navy #1e40af */
-  --accent-400: 226 71% 50%;
+  /* Brand accent */
+  --accent: 264 35% 46%;           /* Original brand accent #764ba2 */
+  --accent-400: 264 35% 56%;
   --accent-foreground: 0 0% 100%;
 
-  /* Professional gradients */
-  --gradient-professional: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  /* Brand gradients */
+  --gradient-brand: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
   --gradient-subtle: linear-gradient(135deg, hsl(var(--primary-200)) 0%, hsl(var(--primary-400)) 100%);
   --destructive: 0 84% 60%;
 
@@ -114,12 +114,11 @@ body {
   box-shadow: 0 8px 32px hsl(var(--primary) / 0.1);
 }
 
-/* Safe gradient background utility */
+/* Brand gradient background utility */
 .bg-brand-gradient {
   background-image: linear-gradient(135deg,
-    hsl(var(--primary-200)) 0%,
-    hsl(var(--primary-400)) 50%,
-    hsl(var(--accent-400)) 100%);
+    hsl(var(--primary)) 0%,
+    hsl(var(--accent)) 100%);
 }
 
 /* Animation keyframes */
