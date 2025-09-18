@@ -20,34 +20,19 @@ const Hero = () => {
       {/* Content Layer */} 
       <div className="container-width relative z-10 text-center">
         <div className="max-w-6xl mx-auto fade-in-up pt-safe-top pb-16 md:pb-20 px-4">
-          {/* Logo */}
-          <div className="mb-6 md:mb-8 mt-8 md:mt-12">
+          {/* Logo - Enlarged */}
+          <div className="mb-8 md:mb-12 mt-8 md:mt-16">
             <img 
               src={mindmakerLogo} 
               alt="MindMaker" 
-              className="h-12 md:h-16 w-auto mx-auto"
+              className="h-20 md:h-28 lg:h-32 w-auto mx-auto"
             />
           </div>
           
-          {/* Professional Badge */}
-          <div className="max-w-lg mx-auto mb-6 md:mb-8">
-            <div className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 md:px-6 py-3">
-              <span className="text-sm md:text-base font-medium leading-tight text-center text-white">
-                AI has learned our language.<br className="md:hidden" />
-                <span className="hidden md:inline"> </span>AI literacy helps us move the other way.
-              </span>
-            </div>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight mb-4 md:mb-6 leading-tight hero-text-shimmer">
-            Transform How You Think About AI
+          {/* Main Tagline - Enlarged */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-12 md:mb-16 leading-tight max-w-5xl mx-auto px-4 text-white">
+            The World's First AI Literacy Accelerator.
           </h1>
-          
-          {/* Subheadline */}
-          <p className="text-sm md:text-base lg:text-lg leading-relaxed mb-8 md:mb-12 max-w-4xl mx-auto opacity-90 px-4 text-white">
-            <strong className="text-white">The World's First AI Literacy Accelerator.</strong>
-          </p>
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-12 md:mb-16 px-4">
