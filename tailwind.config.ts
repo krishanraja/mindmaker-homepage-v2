@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        gobold: ['Gobold', 'Impact', 'Arial Black', 'sans-serif'],
       },
       colors: {
         background: "hsl(var(--background))",

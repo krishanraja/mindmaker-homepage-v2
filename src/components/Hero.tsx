@@ -20,18 +20,18 @@ const Hero = () => {
       {/* Content Layer */} 
       <div className="container-width relative z-10 text-center">
         <div className="max-w-6xl mx-auto fade-in-up pt-safe-top pb-16 md:pb-20 px-4">
-          {/* Logo - Enlarged */}
+          {/* Logo - Half Size */}
           <div className="mb-8 md:mb-12 mt-8 md:mt-16">
             <img 
               src={mindmakerLogo} 
               alt="MindMaker" 
-              className="h-20 md:h-28 lg:h-32 w-auto mx-auto"
+              className="h-10 md:h-14 lg:h-16 w-auto mx-auto"
             />
           </div>
           
-          {/* Main Tagline - Enlarged */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-12 md:mb-16 leading-tight max-w-5xl mx-auto px-4 text-white">
-            The World's First AI Literacy Accelerator.
+          {/* Main Tagline - Enlarged with Gobold Font */}
+          <h1 className="font-gobold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-[0.15em] mb-12 md:mb-16 leading-tight max-w-5xl mx-auto px-4 text-white uppercase">
+            ai literacy
           </h1>
           
           {/* CTA Buttons */}
