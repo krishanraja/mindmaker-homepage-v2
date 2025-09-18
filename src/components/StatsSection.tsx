@@ -34,7 +34,7 @@ const StatsSection = () => {
             </span>
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto">
-            Being AI literate is the critical pre-game before you become an AI orchestrator or AI leader.
+            Becoming AI literate is the essential pre-game before you become an AI orchestrator or AI leader. We're here to help you level up.
           </p>
         </div>
         
