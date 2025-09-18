@@ -24,19 +24,12 @@ const CTASection = () => {
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white leading-tight">
               Don't Let Your Competition<br />
-              <span className="text-accent">Leave You Behind</span>
+              <span className="text-white/80">Leave You Behind</span>
             </h2>
           </div>
           
           <div className="mb-12 max-w-2xl mx-auto">
-            <p className="text-lg md:text-xl leading-relaxed text-white/90 mb-8">
-              While others debate AI's future, industry leaders are securing competitive dominance. 
-              <strong className="text-white"> Don't let hesitation cost you market position.</strong>
-            </p>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-1 h-12 bg-accent rounded-full"></div>
-              </div>
               <p className="text-white font-medium text-lg leading-relaxed">
                 "Businesses that master AI literacy at each level will transform rapidly.<br />
                 Those that don't will be forced to fight the ones that do."
