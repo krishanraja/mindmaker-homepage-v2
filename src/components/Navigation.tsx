@@ -20,7 +20,7 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-[70] bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 w-full z-[100] bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-width">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -67,7 +67,7 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-2 visible" style={{display: 'flex', visibility: 'visible'}}>
             <Button
               variant="ghost"
               size="sm"

@@ -227,12 +227,12 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
   const timerConfigs = [
     {
       key: 'aiTrainingSearches',
-      updateInterval: 1500, // Fixed 1.5 seconds for consistent visual updates
+      updateInterval: 1000, // 1 second for real-time visual updates
       callback: updateAiTrainingSearches
     },
     {
       key: 'aiReplaceSearches',
-      updateInterval: 2000, // Fixed 2 seconds for consistent visual updates
+      updateInterval: 1000, // 1 second for real-time visual updates
       callback: updateAiReplaceSearches
     },
     {

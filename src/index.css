@@ -86,6 +86,11 @@ body {
   color: hsl(var(--foreground));
   font-family: 'Inter', system-ui, sans-serif;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 /* Component Layer - Design System Classes */
@@ -206,7 +211,7 @@ body {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: hero-text-shimmer 3.5s ease-in-out infinite;
+    animation: hero-text-shimmer 8s linear infinite;
     will-change: background-position;
   }
 

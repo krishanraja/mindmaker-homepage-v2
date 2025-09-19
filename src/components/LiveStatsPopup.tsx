@@ -47,7 +47,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-fade-in">
-      <div className="glass-card p-2 sm:p-6 w-[calc(100vw-2rem)] max-w-[280px] sm:max-w-80 border border-border/50 shadow-2xl overflow-hidden">
+      <div className="glass-card p-1 sm:p-4 w-[min(260px,calc(100vw-2rem))] max-w-[260px] border border-border/50 shadow-2xl overflow-hidden" style={{boxSizing: 'border-box'}}>
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -85,7 +85,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
                 
                 <div className="flex-1 min-w-0 overflow-hidden">
                   <div className="flex items-center gap-2">
-                    <span className={`text-sm sm:text-lg font-bold ${stat.color} transition-all duration-500 truncate number-update break-all`}>
+                    <span className={`text-xs sm:text-sm font-bold ${stat.color} transition-all duration-500 truncate number-update`}>
                       {stat.key === 'unpreparedPercentage' ? stat.value : stat.value.toLocaleString()}{stat.suffix || ''}
                     </span>
                     <TrendingUp className="h-3 w-3 text-destructive opacity-60 flex-shrink-0" />
