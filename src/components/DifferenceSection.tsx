@@ -45,7 +45,7 @@ const DifferenceSection = () => {
             </span>
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto">
-            AI literacy is more than just prompting. Each worker needs<br className="sm:hidden" /> a mindset shift to become a 10X orchestrator. We bridge the gap<br className="sm:hidden" /> between casual AI usage and real implementation.
+            AI literacy isn't just prompting. Shifting your mental model is step 1 to becoming a 10X orchestrator that uses AI for work, not just casual ideas. We bridge that gap.
           </p>
         </div>
         
