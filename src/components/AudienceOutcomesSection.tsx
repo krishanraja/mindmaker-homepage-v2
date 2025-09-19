@@ -55,7 +55,7 @@ const AudienceOutcomesSection = () => {
             </span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto px-4">
-            AI literacy - essential to be an AI orchestrator or leader.<br className="sm:hidden" /> We're here to help you.
+            AI literacy - essential to be an AI orchestrator or leader. We're here to help you.
           </p>
         </div>
         
