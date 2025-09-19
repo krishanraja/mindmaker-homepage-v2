@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ArrowRight, Users, Megaphone, Target, Cog, Search, Hammer, UserCheck, GamepadIcon, Workflow, Telescope, Users2, PenTool } from "lucide-react";
 import { useState } from "react";
 
@@ -122,7 +121,11 @@ const PathwaysSection = () => {
   };
 
   const toggleLevel3 = (moduleId: string) => {
-    setExpandedLevel3(prev => prev === moduleId ? null : moduleId);
+    console.log('toggleLevel3 called with:', moduleId);
+    console.log('current expandedLevel3:', expandedLevel3);
+    const newValue = expandedLevel3 === moduleId ? null : moduleId;
+    console.log('setting expandedLevel3 to:', newValue);
+    setExpandedLevel3(newValue);
   };
 
   const renderLevel3Module = (level3Module: any) => {
@@ -314,11 +317,23 @@ const PathwaysSection = () => {
               </div>
               
               {/* Level 3 Content - Appears below grid when expanded */}
-              {expandedLevel3 && level3Modules[expandedLevel3 as keyof typeof level3Modules] && (
-                <div className="animate-fade-in">
-                  {renderLevel3Module(level3Modules[expandedLevel3 as keyof typeof level3Modules])}
-                </div>
-              )}
+              {(() => {
+                console.log('Level 3 render check:');
+                console.log('- expandedLevel3:', expandedLevel3);
+                console.log('- has level3Module:', expandedLevel3 ? !!level3Modules[expandedLevel3 as keyof typeof level3Modules] : false);
+                console.log('- level3Modules keys:', Object.keys(level3Modules));
+                
+                if (expandedLevel3 && level3Modules[expandedLevel3 as keyof typeof level3Modules]) {
+                  console.log('Rendering Level 3 module for:', expandedLevel3);
+                  return (
+                    <div className="animate-fade-in mt-6">
+                      {renderLevel3Module(level3Modules[expandedLevel3 as keyof typeof level3Modules])}
+                    </div>
+                  );
+                }
+                console.log('Not rendering Level 3 content');
+                return null;
+              })()}
             </div>
           )}
         </div>
