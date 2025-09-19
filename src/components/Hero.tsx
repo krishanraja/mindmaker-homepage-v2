@@ -94,7 +94,7 @@ const Hero = () => {
           </div>
 
           {/* Interactive AI Timeline */}
-          <div>
+          <div className="mt-16 md:mt-20 lg:mt-24">
             <InteractiveTimeline />
           </div>
 
