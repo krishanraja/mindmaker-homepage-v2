@@ -31,7 +31,9 @@ const CTASection = () => {
           <div className="mb-12 max-w-2xl mx-auto">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
               <p className="text-white font-medium text-lg leading-relaxed">
-                "Businesses that master AI literacy at each level will transform rapidly.<br className="sm:hidden" />
+                "Businesses that master AI literacy at each level will transform rapidly.
+                <br className="block sm:hidden" />
+                <span className="hidden sm:inline"> </span>
                 Those that don't will be forced to fight the ones that do."
               </p>
               <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
