@@ -179,11 +179,22 @@ body {
 }
 
 @keyframes hero-text-shimmer {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
+  0% { 
     background-position: -200% center;
+    opacity: 0.7;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% { 
+    background-position: 200% center;
+    opacity: 0.7;
   }
 }
 
@@ -192,21 +203,21 @@ body {
   opacity: 0;
 }
 
-  /* Bulletproof Text Effects - Cannot be overridden by utilities */
+  /* Enhanced Hero Text Shimmer - More Dramatic Animation */
   .hero-text-shimmer {
     background: linear-gradient(
       90deg,
-      #ffffff 0%,
-      #ffffff 40%,
-      rgba(255, 255, 255, 0.3) 50%,
-      #ffffff 60%,
-      #ffffff 100%
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(240, 230, 255, 0.8) 20%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(230, 220, 255, 0.8) 80%,
+      rgba(255, 255, 255, 0.6) 100%
     ) !important;
-    background-size: 200% auto !important;
+    background-size: 200% 100% !important;
     background-clip: text !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    animation: hero-text-shimmer 3s linear infinite !important;
+    animation: hero-text-shimmer 3.5s ease-in-out infinite !important;
   }
 
   /* Brand gradient background utility */
