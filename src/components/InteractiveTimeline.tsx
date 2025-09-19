@@ -25,7 +25,7 @@ const InteractiveTimeline = () => {
       title: "AI is Born",
       description: "The term 'Artificial Intelligence' is coined at Dartmouth Conference",
       impact: "What this means for you:",
-      meaning: "You're living in the age AI was always meant to reach - mass adoption.",
+      meaning: "You're living in the age AI was always meant to reach.",
       icon: Brain,
       gradientStep: 0
     },
@@ -43,7 +43,7 @@ const InteractiveTimeline = () => {
       title: "Watson Wins Jeopardy!",
       description: "IBM's Watson defeats human champions at complex trivia",
       impact: "What this means for you:",
-      meaning: "AI processes information instantly - your value is in interpretation and wisdom.",
+      meaning: "AI processes information instantly - your value is interpretation and wisdom.",
       icon: Lightbulb,
       gradientStep: 2
     },
@@ -61,7 +61,7 @@ const InteractiveTimeline = () => {
       title: "GPT-3 Revolution",
       description: "AI begins writing, coding, and creating at human-level quality",
       impact: "What this means for you:",
-      meaning: "AI is your creative partner - focus on prompting, editing, and strategic direction.",
+      meaning: "AI is your creative partner - focus on prompting, editing, and strategy.",
       icon: Rocket,
       gradientStep: 4
     },
@@ -88,7 +88,7 @@ const InteractiveTimeline = () => {
       title: "Your AI Literacy Journey",
       description: "You decide how AI shapes your future - starting today",
       impact: "What this means for you:",
-      meaning: "Right now, you have the power to shape how AI impacts your life and career.",
+      meaning: "You have the power to shape how AI impacts your life and career.",
       icon: Star,
       gradientStep: 7
     }
@@ -199,15 +199,35 @@ const InteractiveTimeline = () => {
   const getProportionalPositions = () => {
     const gaps = getYearGaps();
     const totalYears = gaps.reduce((sum, gap) => sum + gap, 0);
-    const positions = [0];
+    const rawPositions = [0];
     let cumulative = 0;
     
     gaps.forEach(gap => {
       cumulative += gap;
-      positions.push((cumulative / totalYears) * 100);
+      rawPositions.push((cumulative / totalYears) * 100);
     });
     
-    return positions;
+    // Apply hybrid spacing with minimum distance constraints
+    const minSpacing = 8; // Minimum 8% spacing between dots
+    const adjustedPositions = [rawPositions[0]];
+    
+    for (let i = 1; i < rawPositions.length; i++) {
+      const prevPos = adjustedPositions[i - 1];
+      const currentPos = rawPositions[i];
+      const requiredPos = prevPos + minSpacing;
+      
+      // Use larger of proportional position or minimum required position
+      adjustedPositions.push(Math.max(currentPos, requiredPos));
+    }
+    
+    // Normalize to ensure last position doesn't exceed 100%
+    const maxPos = Math.max(...adjustedPositions);
+    if (maxPos > 100) {
+      const scale = 95 / maxPos; // Leave 5% margin
+      return adjustedPositions.map(pos => pos * scale);
+    }
+    
+    return adjustedPositions;
   };
 
   const dotPositions = getProportionalPositions();
@@ -274,12 +294,14 @@ const InteractiveTimeline = () => {
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className="absolute transition-all duration-500 transform -translate-x-1/2"
+                className="absolute transition-all duration-500 transform -translate-x-1/2 p-3 -m-3"
                 style={{ 
                   left: `${dotPositions[index]}%`,
                   transform: `translateX(-50%) scale(${
                     index === activeItem ? 1.4 : index < activeItem ? 1.1 : 0.9
                   })`,
+                  minWidth: '44px',
+                  minHeight: '44px',
                 }}
                 aria-label={`Go to ${item.year}: ${item.title}`}
               >
@@ -345,7 +367,7 @@ const InteractiveTimeline = () => {
               <h4 className="text-white/90 font-bold mb-3 text-sm sm:text-base text-center tracking-widest uppercase">
                 {currentItem.impact}
               </h4>
-              <p className="text-white text-base sm:text-lg md:text-xl font-semibold leading-relaxed text-center tracking-wide drop-shadow-sm">
+              <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-relaxed text-center tracking-wide drop-shadow-sm line-clamp-1 overflow-hidden text-ellipsis whitespace-nowrap px-2">
                 {currentItem.meaning}
               </p>
             </div>
