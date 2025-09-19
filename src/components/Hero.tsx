@@ -57,8 +57,8 @@ const Hero = () => {
               }}
               aria-label="Take AI Literacy Assessment"
             >
-              <span className="sm:hidden">AI Assessment</span>
-              <span className="hidden sm:inline">AI Literacy Assessment</span>
+              <span className="sm:hidden">Assess in 2 min</span>
+              <span className="hidden sm:inline">Assess your literacy in 2 min</span>
               <ArrowRight className="ml-2 h-4 md:h-5 w-4 md:w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Button>
             
@@ -74,8 +74,8 @@ const Hero = () => {
               }}
               aria-label="View Educational Seminars"
             >
-              <span className="sm:hidden">Seminars</span>
-              <span className="hidden sm:inline">Educational Seminars</span>
+              <span className="sm:hidden">Explore Seminars</span>
+              <span className="hidden sm:inline">Explore Seminars</span>
             </Button>
           </div>
 
