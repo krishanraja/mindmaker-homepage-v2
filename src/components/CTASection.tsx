@@ -31,7 +31,7 @@ const CTASection = () => {
           <div className="mb-12 max-w-2xl mx-auto">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
               <p className="text-white font-medium text-lg leading-relaxed">
-                "Businesses that master AI literacy at each level will transform rapidly.<br />
+                "Businesses that master AI literacy at each level will transform rapidly.<br className="sm:hidden" />
                 Those that don't will be forced to fight the ones that do."
               </p>
               <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
@@ -58,18 +58,18 @@ const CTASection = () => {
           </div>
           
           <div className="text-center border-t border-white/20 pt-8">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-4">
-              <div className="text-center">
-                <div className="text-2xl font-semibold text-white">90+</div>
-                <div className="text-sm text-white/80">Strategic Plans</div>
+            <div className="flex flex-row items-center justify-center gap-3 sm:gap-8 mb-4">
+              <div className="text-center flex-1">
+                <div className="text-xl sm:text-2xl font-semibold text-white">90+</div>
+                <div className="text-xs sm:text-sm text-white/80">Strategic Plans</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-semibold text-white">50+</div>
-                <div className="text-sm text-white/80">Executive Sessions</div>
+              <div className="text-center flex-1">
+                <div className="text-xl sm:text-2xl font-semibold text-white">50+</div>
+                <div className="text-xs sm:text-sm text-white/80">Executive Sessions</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-semibold text-white">12</div>
-                <div className="text-sm text-white/80">Recent AI Advisories</div>
+              <div className="text-center flex-1">
+                <div className="text-xl sm:text-2xl font-semibold text-white">12</div>
+                <div className="text-xs sm:text-sm text-white/80">Recent AI Advisories</div>
               </div>
             </div>
             <p className="text-base text-white/80">
