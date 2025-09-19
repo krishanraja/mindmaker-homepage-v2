@@ -41,7 +41,7 @@ const TrustSection = () => {
                 className="flex flex-col items-center justify-center p-6 rounded-lg bg-card/30 backdrop-blur-sm border border-border/20 hover:border-primary/20 transition-all duration-300 hover:scale-105"
               >
                 <IconComponent className="h-8 w-8 text-primary mb-3" />
-                <span className="text-sm font-medium text-foreground/80">{item.label}</span>
+                <span className="text-sm font-medium text-foreground/80 whitespace-nowrap">{item.label}</span>
               </div>
             );
           })}

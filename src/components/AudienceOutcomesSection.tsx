@@ -32,7 +32,7 @@ const AudienceOutcomesSection = () => {
     {
       audience: "Teams", 
       outcome: "10x Your Value",
-      description: "Turn AI anxiety into career acceleration. Become the talent companies fight to keep.",
+      description: "Turn AI anxiety into career acceleration.<br />Become the talent companies fight to keep.",
       benefits: [
         "Future-proof skill development plan",
         "AI-augmented productivity mastery",
@@ -71,8 +71,7 @@ const AudienceOutcomesSection = () => {
                 <h4 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4">
                   {outcome.outcome}
                 </h4>
-                <p className="text-sm sm:text-sm font-normal leading-relaxed text-muted-foreground">
-                  {outcome.description}
+                <p className="text-sm sm:text-sm font-normal leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: outcome.description }}>
                 </p>
               </div>
               
