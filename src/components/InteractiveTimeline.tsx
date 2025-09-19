@@ -254,10 +254,10 @@ const InteractiveTimeline = () => {
       const t = (x - 400) / 200;
       return Math.pow(1-t, 2) * 32 + 2 * (1-t) * t * 44 + Math.pow(t, 2) * 32;
     } else {
-      // T800,20 - smooth continuation curving upward
+      // Q700,28 800,8 - sharp exponential uptick at the end
       const t = (x - 600) / 200;
-      // Control point is reflection: (700,20) for upward curve
-      return Math.pow(1-t, 2) * 32 + 2 * (1-t) * t * 20 + Math.pow(t, 2) * 20;
+      // Quadratic curve from (600,32) through control (700,28) to (800,8)
+      return Math.pow(1-t, 2) * 32 + 2 * (1-t) * t * 28 + Math.pow(t, 2) * 8;
     }
   };
 
@@ -297,7 +297,7 @@ const InteractiveTimeline = () => {
             
             {/* Background wavy path */}
             <path
-              d="M0,32 Q100,20 200,32 T400,32 Q500,44 600,32 T800,20"
+              d="M0,32 Q100,20 200,32 T400,32 Q500,44 600,32 Q700,28 800,8"
               stroke="url(#pathGradient)"
               strokeWidth="3"
               fill="none"
@@ -306,7 +306,7 @@ const InteractiveTimeline = () => {
             
             {/* Active progress path */}
             <path
-              d="M0,32 Q100,20 200,32 T400,32 Q500,44 600,32 T800,20"
+              d="M0,32 Q100,20 200,32 T400,32 Q500,44 600,32 Q700,28 800,8"
               stroke="url(#progressGradient)"
               strokeWidth="3"
               fill="none"
