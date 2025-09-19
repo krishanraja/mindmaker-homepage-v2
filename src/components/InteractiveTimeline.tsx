@@ -189,7 +189,8 @@ const InteractiveTimeline = () => {
   return (
     <div 
       ref={containerRef}
-      className="w-full max-w-4xl mx-auto mb-12 px-4 sm:px-6 select-none"
+      className="w-full mx-auto mb-12 px-4 sm:px-6 select-none"
+      style={{ width: '896px', maxWidth: '100%' }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -198,10 +199,10 @@ const InteractiveTimeline = () => {
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="mobile-text-xl font-bold text-white mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">
           The AI Revolution Timeline
         </h2>
-        <p className="text-white/70 mobile-text-sm">
+        <p className="text-white/70 text-base sm:text-lg font-medium tracking-wide">
           Tap, swipe, or click to explore each milestone
         </p>
       </div>
@@ -260,34 +261,34 @@ const InteractiveTimeline = () => {
           tabIndex={0}
           aria-label="Tap to advance to next milestone"
         >
-          <div className="h-full flex flex-col justify-between p-6 sm:p-8">
+          <div className="h-full flex flex-col justify-between p-6 sm:p-8" style={{ width: '100%' }}>
             {/* Top Section - Icon and Year */}
-            <div className="flex flex-col items-center text-center space-y-6">
+            <div className="flex flex-col items-center text-center space-y-6" style={{ height: '140px' }}>
               <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-all duration-700">
                 <currentItem.icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
               </div>
               
-              <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white transition-all duration-700">
+              <div className="font-gobold text-4xl sm:text-5xl md:text-6xl text-white transition-all duration-700 tracking-wider drop-shadow-lg">
                 {currentItem.year}
               </div>
             </div>
 
             {/* Middle Section - Title and Description */}
-            <div className="flex-1 flex flex-col justify-center text-center space-y-4 max-w-3xl mx-auto">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight transition-all duration-700">
+            <div className="flex-1 flex flex-col justify-center text-center space-y-6 px-4" style={{ minHeight: '180px' }}>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight transition-all duration-700 tracking-tight drop-shadow-md">
                 {currentItem.title}
               </h3>
-              <p className="text-white/80 text-base sm:text-lg md:text-xl leading-relaxed transition-all duration-700">
+              <p className="text-white/85 text-base sm:text-lg md:text-xl leading-relaxed transition-all duration-700 font-medium tracking-wide max-w-2xl mx-auto">
                 {currentItem.description}
               </p>
             </div>
 
             {/* Bottom Section - Impact */}
-            <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-xl p-4 sm:p-6 border border-white/10 transition-all duration-700">
-              <h4 className="text-white/90 font-semibold mb-3 text-sm sm:text-base text-center">
+            <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-xl p-4 sm:p-6 border border-white/10 transition-all duration-700" style={{ minHeight: '120px' }}>
+              <h4 className="text-white/90 font-bold mb-3 text-sm sm:text-base text-center tracking-widest uppercase">
                 {currentItem.impact}
               </h4>
-              <p className="text-white text-base sm:text-lg md:text-xl font-medium leading-relaxed text-center">
+              <p className="text-white text-base sm:text-lg md:text-xl font-semibold leading-relaxed text-center tracking-wide drop-shadow-sm">
                 {currentItem.meaning}
               </p>
             </div>
