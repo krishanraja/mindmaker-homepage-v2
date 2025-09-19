@@ -86,7 +86,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
                 <div className="flex-1 min-w-0 overflow-hidden">
                   <div className="flex items-center gap-2">
                     <span className={`text-sm sm:text-lg font-bold ${stat.color} transition-all duration-500 truncate number-update break-all`}>
-                      {formatNumber(stat.value)}{stat.suffix || ''}
+                      {stat.key === 'unpreparedPercentage' ? stat.value : stat.value.toLocaleString()}{stat.suffix || ''}
                     </span>
                     <TrendingUp className="h-3 w-3 text-destructive opacity-60 flex-shrink-0" />
                   </div>
