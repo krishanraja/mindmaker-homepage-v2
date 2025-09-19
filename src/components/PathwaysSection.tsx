@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, Megaphone, Target, Cog, Search, Hammer, UserCheck, GamepadIcon } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ArrowRight, Users, Megaphone, Target, Cog, Search, Hammer, UserCheck, GamepadIcon, Workflow, Telescope, Users2, PenTool } from "lucide-react";
+import { useState } from "react";
 
 const PathwaysSection = () => {
+  const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({});
+
   const coreModules = [
     {
       id: "align-leaders",
@@ -80,9 +84,165 @@ const PathwaysSection = () => {
     }
   ];
 
+  // Level 3 modules - Advanced specialized content
+  const level3Modules = {
+    "formalize-ops": {
+      id: "workflow-redesign-mastery",
+      title: "WORKFLOW REDESIGN MASTERY",
+      credits: 25,
+      description: "Master the art of identifying inefficient processes and redesigning them with AI-first thinking for maximum business impact",
+      icon: Workflow,
+      track: "IMPLEMENTATION"
+    },
+    "get-building": {
+      id: "competitive-intelligence-bootcamp", 
+      title: "COMPETITIVE INTELLIGENCE BOOTCAMP",
+      credits: 30,
+      description: "Transform market research and competitor analysis using AI tools to gain strategic advantages and spot opportunities faster",
+      icon: Telescope,
+      track: "IMPLEMENTATION"
+    },
+    "coach-the-coaches": {
+      id: "internal-champion-development",
+      title: "INTERNAL CHAMPION DEVELOPMENT", 
+      credits: 35,
+      description: "Build a network of AI champions across departments who can drive adoption, training, and continuous improvement initiatives",
+      icon: Users2,
+      track: "LEADERSHIP"
+    },
+    "gamify-learning": {
+      id: "ai-powered-content-strategy",
+      title: "AI-POWERED CONTENT STRATEGY",
+      credits: 20, 
+      description: "Create systematic content workflows using AI for consistent, high-quality output across all marketing and communication channels",
+      icon: PenTool,
+      track: "IMPLEMENTATION"
+    }
+  };
+
+  const toggleModule = (moduleId: string) => {
+    setExpandedModules(prev => ({
+      ...prev,
+      [moduleId]: !prev[moduleId]
+    }));
+  };
+
+  const renderLevel3Module = (level3Module: any) => {
+    const IconComponent = level3Module.icon;
+    const isLeadership = level3Module.track === "LEADERSHIP";
+    
+    return (
+      <div className="ml-4 mt-4 glass-card p-4 sm:p-6 rounded-xl border-l-4 border-primary/20">
+        <div className="flex items-center justify-between w-full mb-3 sm:mb-4">
+          <div className={`w-8 sm:w-10 h-8 sm:h-10 ${isLeadership ? 'bg-primary/10' : 'bg-accent/10'} rounded-lg flex items-center justify-center flex-shrink-0`}>
+            <IconComponent className={`w-4 sm:w-5 h-4 sm:h-5 ${isLeadership ? 'text-primary' : 'text-accent'}`} />
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <span className={`text-xs ${isLeadership ? 'bg-primary/10 text-primary' : 'bg-accent/10 text-accent'} px-2 py-1 rounded-full font-medium`}>
+              {level3Module.track}
+            </span>
+            <span className={`text-sm sm:text-base font-bold ${isLeadership ? 'text-primary' : 'text-accent'}`}>
+              {level3Module.credits}
+            </span>
+            <span className="text-xs text-muted-foreground">credits</span>
+          </div>
+        </div>
+        
+        <h4 className={`text-xs sm:text-sm font-bold uppercase tracking-wide ${isLeadership ? 'text-primary' : 'text-accent'} mb-2 sm:mb-3`}>
+          {level3Module.title}
+        </h4>
+        
+        <p className="text-xs sm:text-sm font-normal leading-relaxed text-muted-foreground mb-4 sm:mb-6">
+          {level3Module.description}
+        </p>
+        
+        <Button 
+          asChild
+          variant="outline" 
+          size="sm" 
+          className="group w-full min-h-[36px] sm:min-h-[40px] text-xs sm:text-sm"
+        >
+          <a 
+            href="https://calendly.com/krish-raja/mindmaker-advanced-module"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book Advanced Session
+            <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </Button>
+      </div>
+    );
+  };
+
   const renderModule = (module: any, isCoreModule: boolean = false) => {
     const IconComponent = module.icon;
     const isLeadership = module.track === "LEADERSHIP";
+    const isExpanded = expandedModules[module.id];
+    const hasLevel3 = !isCoreModule && level3Modules[module.id as keyof typeof level3Modules];
+    
+    if (!isCoreModule && hasLevel3) {
+      return (
+        <Collapsible key={module.id} open={isExpanded} onOpenChange={() => toggleModule(module.id)}>
+          <div className={`glass-card p-4 sm:p-6 hover:scale-105 transition-all duration-300 group flex flex-col h-full rounded-xl opacity-75`}>
+            {/* Header Section - Fixed Height */}
+            <div className="min-h-[100px] sm:min-h-[120px] flex flex-col">
+              {/* Badge */}
+              <div className="flex justify-end mb-3 sm:mb-4">
+                <span className="bg-muted text-muted-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium">
+                  Unlock Later
+                </span>
+              </div>
+              
+              {/* Icon and Credits */}
+              <div className="flex items-center justify-between w-full mb-3 sm:mb-4">
+                <div className={`w-10 sm:w-12 h-10 sm:h-12 ${isLeadership ? 'bg-primary/10' : 'bg-accent/10'} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                  <IconComponent className={`w-5 sm:w-6 h-5 sm:h-6 ${isLeadership ? 'text-primary' : 'text-accent'}`} />
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className={`text-xs ${isLeadership ? 'bg-primary/10 text-primary' : 'bg-accent/10 text-accent'} px-2 py-1 rounded-full font-medium`}>
+                    {module.track}
+                  </span>
+                  <span className={`text-base sm:text-lg font-bold ${isLeadership ? 'text-primary' : 'text-accent'}`}>
+                    {module.credits}
+                  </span>
+                  <span className="text-xs text-muted-foreground">credits</span>
+                </div>
+              </div>
+              
+              {/* Title */}
+              <h4 className={`text-xs sm:text-sm font-bold uppercase tracking-wide ${isLeadership ? 'text-primary' : 'text-accent'} mb-2 sm:mb-3`}>
+                {module.title}
+              </h4>
+            </div>
+            
+            {/* Content Section - Flexible Height */}
+            <div className="flex-1 flex flex-col">
+              <p className="text-xs sm:text-sm font-normal leading-relaxed text-muted-foreground mb-4 sm:mb-6 flex-1">
+                {module.description}
+              </p>
+              
+              {/* Button Section - Bottom Aligned */}
+              <CollapsibleTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="group w-full mt-auto min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm animate-pulse"
+                >
+                  {isExpanded ? 'Collapse' : 'Unlock'}
+                  <ArrowRight className={`ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            
+            {/* Level 3 Module */}
+            <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+              {renderLevel3Module(level3Modules[module.id as keyof typeof level3Modules])}
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      );
+    }
     
     return (
       <div key={module.id} className={`glass-card p-4 sm:p-6 hover:scale-105 transition-all duration-300 group flex flex-col h-full rounded-xl ${!isCoreModule ? 'opacity-75' : ''}`}>
