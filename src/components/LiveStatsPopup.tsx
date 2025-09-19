@@ -46,11 +46,11 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-fade-in">
-      <div className="glass-card p-1 sm:p-4 w-[min(260px,calc(100vw-2rem))] max-w-[260px] border border-border/50 shadow-2xl overflow-hidden" style={{boxSizing: 'border-box'}}>
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-stats-enter">
+      <div className="glass-card p-4 w-[min(280px,calc(100vw-2rem))] max-w-[280px] border border-border/50 shadow-2xl overflow-hidden" style={{boxSizing: 'border-box'}}>
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
-          <div>
+          <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <div className="w-2 h-2 bg-destructive rounded-full animate-pulse"></div>
               <span className="text-xs font-medium text-muted-foreground">LIVE STATS</span>
@@ -64,7 +64,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
             variant="ghost" 
             size="sm" 
             onClick={onClose}
-            className="h-6 w-6 p-0 hover:bg-muted"
+            className="h-6 w-6 p-0 hover:bg-muted ml-2 flex-shrink-0"
           >
             <X className="h-3 w-3" />
           </Button>
@@ -79,13 +79,13 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
                 key={stat.key} 
                 className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors group"
               >
-                <div className={`p-2 rounded-lg ${stat.bgColor} group-hover:scale-110 transition-transform`}>
+                <div className={`p-2 rounded-lg ${stat.bgColor} group-hover:scale-110 transition-transform flex-shrink-0`}>
                   <IconComponent className={`h-4 w-4 ${stat.color}`} />
                 </div>
                 
                 <div className="flex-1 min-w-0 overflow-hidden">
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs sm:text-sm font-bold ${stat.color} transition-all duration-500 truncate number-update`}>
+                    <span className={`text-sm font-bold ${stat.color} transition-all duration-500 truncate number-update`}>
                       {stat.key === 'unpreparedPercentage' ? stat.value : stat.value.toLocaleString()}{stat.suffix || ''}
                     </span>
                     <TrendingUp className="h-3 w-3 text-destructive opacity-60 flex-shrink-0" />
@@ -103,7 +103,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
         <div className="border-t border-border/30 pt-3 space-y-2">
           {marketSentiment.newsContext && marketSentiment.newsContext !== 'Standard market conditions' && (
             <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5"></div>
+              <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0"></div>
               <div className="text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">AI Impact:</span> {marketSentiment.newsContext}
               </div>

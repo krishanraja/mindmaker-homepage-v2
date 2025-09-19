@@ -223,16 +223,47 @@ html {
     animation: subtle-glow 0.5s ease-out;
   }
 
-  @keyframes subtle-glow {
-    0%, 100% { 
-      transform: scale(1);
-      filter: brightness(1);
-    }
-    50% { 
-      transform: scale(1.02);
-      filter: brightness(1.1);
-    }
+  /* Stats popup animations */
+  .animate-stats-enter {
+    animation: stats-fade-in 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .animate-stats-exit {
+    animation: stats-fade-out 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+@keyframes subtle-glow {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes stats-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stats-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
+  }
+}
 }
 
 
