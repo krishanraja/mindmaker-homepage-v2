@@ -49,7 +49,7 @@ const TrustSection = () => {
         
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            Testimonials and case studies available on request
+            Testimonials and case studies<br className="sm:hidden" /> available upon request
           </p>
         </div>
       </div>

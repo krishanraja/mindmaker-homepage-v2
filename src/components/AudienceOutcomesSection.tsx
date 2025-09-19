@@ -54,7 +54,7 @@ const AudienceOutcomesSection = () => {
             </span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto px-4">
-            Different audiences, different outcomes.<br className="sm:hidden" /> Same proven methodology that delivers results.
+            Different audiences, different outcomes.<br className="sm:hidden" /> Same proven methodology<br className="sm:hidden" /> that delivers results.
           </p>
         </div>
         

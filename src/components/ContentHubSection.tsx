@@ -55,7 +55,8 @@ const ContentHubSection = () => {
           </Button>
           
           <p className="text-sm text-muted-foreground mt-4">
-            Free access • No signup required • Updated weekly
+            <span className="whitespace-nowrap">Free access • No signup required</span><br className="sm:hidden" />
+            <span className="hidden sm:inline"> • </span><span className="whitespace-nowrap">Updated weekly</span>
           </p>
         </div>
       </div>
