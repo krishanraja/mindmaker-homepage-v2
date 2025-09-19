@@ -272,15 +272,15 @@ const InteractiveTimeline = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 tracking-tight">
+      <div className="text-center mb-4 sm:mb-8">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-6 tracking-tight">
           Explore your AI journey
         </h2>
         <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto"></div>
       </div>
 
       {/* Organic Journey Visualization */}
-      <div className="mb-8">
+      <div className="mb-4 sm:mb-8">
         <div className="relative h-16">
           {/* Wavy progress track */}
           <svg className="w-full h-full overflow-visible" viewBox="0 0 800 64" preserveAspectRatio="none">
@@ -364,7 +364,7 @@ const InteractiveTimeline = () => {
       </div>
 
       {/* Fixed Height Content Container */}
-      <div className="relative h-[400px] sm:h-[450px] mb-8">
+      <div className="relative h-[240px] sm:h-[400px] mb-4 sm:mb-8">
         <div 
           className="glass-card-dark h-full transition-all duration-700 ease-out transform hover:scale-[1.02] overflow-hidden relative"
           style={getGradientStyle(currentItem.gradientStep)}
@@ -390,36 +390,36 @@ const InteractiveTimeline = () => {
               →
             </div>
           </button>
-          <div className="flex flex-col h-full p-6 sm:p-8">
+          <div className="flex flex-col h-full p-3 sm:p-6 md:p-8">
             {/* Top Section - Icon and Year */}
-            <div className="flex flex-col items-center text-center h-24 sm:h-28 justify-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-all duration-700 mb-2">
-                <currentItem.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            <div className="flex flex-col items-center text-center h-16 sm:h-24 md:h-28 justify-center">
+              <div className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 transition-all duration-700 mb-1 sm:mb-2">
+                <currentItem.icon className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
               </div>
               
-              <div className="font-gobold text-2xl sm:text-3xl md:text-4xl text-white transition-all duration-700 tracking-wider drop-shadow-lg">
+              <div className="font-gobold text-lg sm:text-2xl md:text-3xl lg:text-4xl text-white transition-all duration-700 tracking-wider drop-shadow-lg">
                 {currentItem.year}
               </div>
             </div>
 
             {/* Middle Section - Title and Description */}
-            <div className="flex flex-col text-center h-32 sm:h-36 justify-center overflow-hidden">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white leading-tight transition-all duration-700 tracking-tight drop-shadow-md mb-2 sm:mb-3">
+            <div className="flex flex-col text-center h-20 sm:h-32 md:h-36 justify-center overflow-hidden">
+              <h3 className="text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight transition-all duration-700 tracking-tight drop-shadow-md mb-1 sm:mb-2 md:mb-3">
                 {currentItem.title}
               </h3>
-              <p className="text-white/85 text-sm sm:text-base md:text-lg leading-tight transition-all duration-700 font-medium tracking-wide max-w-2xl mx-auto overflow-hidden">
+              <p className="text-white/85 text-xs sm:text-sm md:text-base lg:text-lg leading-tight transition-all duration-700 font-medium tracking-wide max-w-2xl mx-auto overflow-hidden">
                 {currentItem.description}
               </p>
             </div>
 
             {/* Bottom Section - Impact */}
             <div className="flex-1 flex flex-col justify-center">
-              <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-xl p-3 sm:p-4 border border-white/10 transition-all duration-700 h-full flex flex-col justify-center overflow-hidden">
-                <h4 className="text-white/90 font-bold mb-2 text-xs sm:text-sm text-center tracking-widest uppercase">
+              <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-white/10 transition-all duration-700 h-full flex flex-col justify-center overflow-hidden">
+                <h4 className="text-white/90 font-bold mb-1 sm:mb-2 text-[10px] sm:text-xs md:text-sm text-center tracking-widest uppercase">
                   {currentItem.impact}
                 </h4>
-                <div className="max-w-xs sm:max-w-sm mx-auto px-2 overflow-hidden"> 
-                  <p className="text-white text-xs sm:text-sm font-semibold leading-tight text-center tracking-wide drop-shadow-sm text-balance">
+                <div className="max-w-xs sm:max-w-sm mx-auto px-1 sm:px-2 overflow-hidden"> 
+                  <p className="text-white text-[10px] sm:text-xs md:text-sm font-semibold leading-tight text-center tracking-wide drop-shadow-sm text-balance">
                     {currentItem.meaning}
                   </p>
                 </div>
