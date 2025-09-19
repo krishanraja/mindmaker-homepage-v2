@@ -53,7 +53,7 @@ const AudienceOutcomesSection = () => {
               Pick a Pathway
             </span>
           </h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto px-4">
+          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto px-4 whitespace-nowrap">
             Different audiences, different outcomes. Same proven methodology that delivers results.
           </p>
         </div>
