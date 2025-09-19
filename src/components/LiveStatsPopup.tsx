@@ -46,8 +46,8 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 animate-fade-in">
-      <div className="glass-card p-3 sm:p-6 w-full max-w-xs sm:max-w-80 border border-border/50 shadow-2xl mx-auto overflow-hidden">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-fade-in">
+      <div className="glass-card p-2 sm:p-6 w-[calc(100vw-2rem)] max-w-[280px] sm:max-w-80 border border-border/50 shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -83,9 +83,9 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
                   <IconComponent className={`h-4 w-4 ${stat.color}`} />
                 </div>
                 
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 overflow-hidden">
                   <div className="flex items-center gap-2">
-                    <span className={`text-sm sm:text-lg font-bold ${stat.color} transition-all duration-500 truncate number-update`}>
+                    <span className={`text-sm sm:text-lg font-bold ${stat.color} transition-all duration-500 truncate number-update break-all`}>
                       {formatNumber(stat.value)}{stat.suffix || ''}
                     </span>
                     <TrendingUp className="h-3 w-3 text-destructive opacity-60 flex-shrink-0" />

@@ -252,14 +252,15 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
     configs: timerConfigs
   });
 
-  // Format numbers for display
+  // Format numbers for display - prioritize brevity for mobile
   const formatNumber = useCallback((num: number): string => {
     if (num >= 1000000) {
       return (num / 1000000).toFixed(1) + 'M';
     } else if (num >= 1000) {
-      return Math.round(num).toLocaleString();
+      return (num / 1000).toFixed(1) + 'K';
+    } else {
+      return num.toString();
     }
-    return (Math.round(num * 10) / 10).toString();
   }, []);
 
   // Return formatted counter data
@@ -267,7 +268,7 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
     {
       key: 'aiTrainingSearches',
       value: counters.aiTrainingSearches,
-      label: 'People searching "AI training" right now',
+      label: 'AI training searches now',
       icon: 'Search', // Will be mapped to actual icon in component
       color: 'text-destructive',
       bgColor: 'bg-destructive/10',
@@ -276,7 +277,7 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
     {
       key: 'aiReplaceSearches',
       value: counters.aiReplaceSearches,
-      label: '"Will AI replace me?" searches this hour',
+      label: '"Will AI replace me" searches',
       icon: 'Search',
       color: 'text-primary',
       bgColor: 'bg-primary/10',
@@ -285,7 +286,7 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
     {
       key: 'unpreparedPercentage',
       value: counters.unpreparedPercentage,
-      label: '% unprepared for AI transformation',
+      label: 'Workers unprepared for AI',
       icon: 'Brain',
       color: 'text-accent',
       bgColor: 'bg-accent/10',
