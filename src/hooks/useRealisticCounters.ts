@@ -216,12 +216,12 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
       setCounters(savedState);
     }
     checkHourlyReset();
-  }, [loadSavedState, checkHourlyReset]);
+  }, []); // Empty dependency - only run once on mount
 
   // Save state whenever counters change
   useEffect(() => {
     saveState(counters);
-  }, [counters, saveState]);
+  }, [counters]); // Only depend on counters, not saveState function
 
   // Set up timers with consistent 1-2 second intervals for visual impact
   const timerConfigs = [

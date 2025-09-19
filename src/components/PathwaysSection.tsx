@@ -227,7 +227,7 @@ const PathwaysSection = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="group w-full mt-auto min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm animate-pulse pointer-events-none"
+                  className="group w-full mt-auto min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm animate-pulse"
                 >
                   {isExpanded ? 'Collapse' : 'Unlock'}
                   <ArrowRight className={`ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
@@ -237,7 +237,7 @@ const PathwaysSection = () => {
           </CollapsibleTrigger>
           
           {/* Level 3 Module - Outside the card */}
-          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+          <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
             {renderLevel3Module(level3Modules[module.id as keyof typeof level3Modules])}
           </CollapsibleContent>
         </Collapsible>
