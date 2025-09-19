@@ -53,7 +53,7 @@ const ContentHubSection = () => {
           </ResponsiveCardGrid>
           
           <Button asChild variant="cta" size="lg">
-            <a href="https://learning.fractionl.ai/" target="_blank" rel="noopener noreferrer" className="group">
+            <a href="https://content.themindmaker.ai/" target="_blank" rel="noopener noreferrer" className="group">
               Access Content Hub
               <ExternalLink className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </a>
