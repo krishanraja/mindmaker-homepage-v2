@@ -264,7 +264,7 @@ const InteractiveTimeline = () => {
   return (
     <div 
       ref={containerRef}
-      className="w-full max-w-4xl mx-auto mb-12 px-4 sm:px-6 select-none"
+      className="w-full max-w-4xl mx-auto mb-16 md:mb-20 px-4 sm:px-6 select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -272,7 +272,7 @@ const InteractiveTimeline = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Header */}
-      <div className="text-center mb-4 sm:mb-8">
+      <div className="text-center mb-3 sm:mb-6">
         <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-6 tracking-tight">
           Explore your AI journey
         </h2>
