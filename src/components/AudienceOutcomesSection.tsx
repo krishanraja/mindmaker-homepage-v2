@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import mindmakerIconLight from "@/assets/mindmaker-icon-light.png";
+import { Users, Briefcase, Zap } from "lucide-react";
 import ResponsiveCardGrid from "@/components/ResponsiveCardGrid";
 
 const AudienceOutcomesSection = () => {
@@ -7,40 +7,25 @@ const AudienceOutcomesSection = () => {
     {
       audience: "Enterprise Leaders",
       outcome: "Run & Future Proof",
-      description: "Transform from AI-anxious to AI-confident. Make strategic decisions with clarity and conviction.",
-      benefits: [
-        "Strategic AI roadmap for business",
-        "Confident decision framework", 
-        "Effective risk mitigation strategies",
-        "Team AI priority alignment"
-      ],
-      icon: mindmakerIconLight,
+      quote: "Transform from AI-anxious to AI-confident. Make strategic decisions with clarity and conviction.",
+      reality: "Strategic AI roadmap, confident decision framework, effective risk mitigation, and team alignment",
+      icon: Users,
       cta: "Executive Assessment"
     },
     {
       audience: "High Growth SMB",
       outcome: "Reclaim Purpose", 
-      description: "Stop chasing AI shiny objects. Focus on what matters: sustainable competitive advantage.",
-      benefits: [
-        "AI-integrated product-market fit",
-        "Competitive differentiation plan",
-        "ROI-driven resource allocation",
-        "Strong investor AI narrative"
-      ],
-      icon: mindmakerIconLight,
+      quote: "Stop chasing AI shiny objects. Focus on what matters: sustainable competitive advantage.",
+      reality: "AI-integrated product-market fit, competitive differentiation, ROI-driven allocation, strong investor narrative",
+      icon: Briefcase,
       cta: "High Growth Sprint"
     },
     {
       audience: "Teams", 
       outcome: "10x Your Value",
-      description: "Turn AI anxiety into career acceleration.<br />Become the talent companies fight to keep.",
-      benefits: [
-        "Future-proof skill development",
-        "AI productivity mastery",
-        "AI-first economy positioning", 
-        "AI leadership confidence"
-      ],
-      icon: mindmakerIconLight,
+      quote: "Turn AI anxiety into career acceleration. Become the talent companies fight to keep.",
+      reality: "Future-proof skills, AI productivity mastery, AI-first economy positioning, leadership confidence",
+      icon: Zap,
       cta: "Team Program"
     },
   ];
@@ -50,7 +35,7 @@ const AudienceOutcomesSection = () => {
       <div className="container-width">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-10 fade-in-up">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-4 sm:mb-5 lg:mb-4">
-            <span className="text-primary">
+            <span className="text-success">
               Pick a Pathway
             </span>
           </h2>
@@ -60,40 +45,35 @@ const AudienceOutcomesSection = () => {
         </div>
         
         <ResponsiveCardGrid 
-          desktopGridClass="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-6"
-          mobileCardHeight="h-[550px]"
+          desktopGridClass="grid grid-cols-1 md:grid-cols-3 gap-8"
+          mobileCardHeight="h-[420px]"
         >
           {outcomes.map((outcome, index) => (
-            <div key={index} className="card p-6 sm:p-8 lg:p-6 fade-in-up flex flex-col h-full rounded-xl" style={{animationDelay: `${index * 0.1}s`}}>
-              <div className="text-center mb-5 sm:mb-6 lg:mb-5 flex flex-col">
-                <div className="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-primary text-white rounded-xl mb-4 mx-auto">
-                  <img src={outcome.icon} alt="MindMaker Icon" className="max-h-7 max-w-7 sm:max-h-8 sm:max-w-8 object-contain" />
-                </div>
-                <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wide text-foreground mb-2">
-                  {outcome.audience}
-                </h3>
-                <h4 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4 lg:mb-3">
-                  {outcome.outcome}
-                </h4>
-                <p className="text-sm sm:text-sm font-normal leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: outcome.description }}>
-                </p>
+            <div key={index} className="card p-8 fade-in-up h-full flex flex-col" style={{animationDelay: `${index * 0.1}s`}}>
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-success text-white rounded-xl mb-6">
+                <outcome.icon className="h-8 w-8" />
               </div>
               
-              <div className="space-y-3 mb-5 sm:mb-6 lg:mb-5 flex-1">
-                {outcome.benefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-sm font-normal leading-relaxed text-muted-foreground">
-                      {benefit}  
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                {outcome.audience}
+              </h3>
+              
+              <h4 className="text-lg font-medium text-success mb-4">
+                {outcome.outcome}
+              </h4>
+              
+              <blockquote className="text-sm text-muted-foreground italic mb-4 leading-relaxed">
+                "{outcome.quote}"
+              </blockquote>
+              
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                <strong>Reality:</strong> {outcome.reality}
+              </p>
               
               <Button 
                 asChild
                 size="lg"
-                className="w-full bg-primary hover:bg-primary-600 text-white mt-auto min-h-[48px] text-sm sm:text-base font-semibold rounded-lg"
+                className="w-full bg-success hover:bg-success/90 text-white mt-auto min-h-[48px] text-sm sm:text-base font-semibold rounded-lg"
               >
                 <a 
                   href={

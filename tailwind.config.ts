@@ -48,6 +48,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "white",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "white",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
