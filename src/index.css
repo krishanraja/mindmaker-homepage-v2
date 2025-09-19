@@ -168,6 +168,24 @@ html {
   box-shadow: 0 8px 32px hsl(var(--primary) / 0.1);
 }
 
+/* Hero Text Shimmer - Inside Components Layer */
+.hero-text-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.8) 20%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.8) 80%,
+    rgba(255, 255, 255, 0.4) 100%
+  ) !important;
+  background-size: 400% 100% !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: hero-text-shimmer 10s linear 2s 1 !important;
+  animation-fill-mode: forwards !important;
+}
+
 
 /* Animation keyframes */
 @keyframes fade-in-up {
@@ -194,25 +212,6 @@ html {
   animation: fade-in-up 0.6s ease-out forwards;
   opacity: 0;
 }
-
-  /* Enhanced Hero Text Shimmer - Plays Once */
-  .hero-text-shimmer {
-    color: white !important;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.8) 20%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.8) 80%,
-      rgba(255, 255, 255, 0.4) 100%
-    );
-    background-size: 400% 100%;
-    background-clip: text !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    animation: hero-text-shimmer 10s linear 2s 1;
-    animation-fill-mode: forwards;
-  }
 
   /* Brand gradient background utility */
   .bg-brand-gradient {
