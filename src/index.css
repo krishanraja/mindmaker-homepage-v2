@@ -197,6 +197,7 @@ html {
 
   /* Enhanced Hero Text Shimmer - Plays Once */
   .hero-text-shimmer {
+    color: white !important;
     background: linear-gradient(
       90deg,
       rgba(255, 255, 255, 0.4) 0%,
@@ -206,9 +207,9 @@ html {
       rgba(255, 255, 255, 0.4) 100%
     );
     background-size: 400% 100%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
     animation: hero-text-shimmer 10s linear 2s 1;
     animation-fill-mode: forwards;
   }
