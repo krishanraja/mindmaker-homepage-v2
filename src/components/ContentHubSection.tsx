@@ -26,7 +26,7 @@ const ContentHubSection = () => {
             desktopGridClass="grid md:grid-cols-3 gap-6 mb-8"
             className="mb-8"
           >
-            <div className="glass-card p-6 text-center">
+            <div className="glass-card p-6 text-center h-full flex flex-col">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="w-5 h-5 text-primary" />
               </div>
@@ -34,7 +34,7 @@ const ContentHubSection = () => {
               <p className="text-sm text-muted-foreground">Latest AI adoption trends and market insights</p>
             </div>
             
-            <div className="glass-card p-6 text-center">
+            <div className="glass-card p-6 text-center h-full flex flex-col">
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Target className="w-5 h-5 text-accent" />
               </div>
@@ -42,7 +42,7 @@ const ContentHubSection = () => {
               <p className="text-sm text-muted-foreground">Proven methodologies for AI implementation</p>
             </div>
             
-            <div className="glass-card p-6 text-center">
+            <div className="glass-card p-6 text-center h-full flex flex-col">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Lightbulb className="w-5 h-5 text-primary" />
               </div>

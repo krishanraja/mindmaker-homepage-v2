@@ -34,13 +34,15 @@ const ResponsiveCardGrid = ({
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-2 md:-ml-4">
+          <CarouselContent className="-ml-2 md:-ml-4 items-stretch">
             {children.map((child, index) => (
               <CarouselItem 
                 key={index} 
-                className="pl-2 md:pl-4 basis-[85%] sm:basis-[70%]"
+                className="pl-2 md:pl-4 basis-[85%] sm:basis-[70%] h-full"
               >
-                {child}
+                <div className="h-full min-h-[320px]">
+                  {child}
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
