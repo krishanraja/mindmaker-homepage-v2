@@ -11,7 +11,7 @@ const PathwaysSection = () => {
       id: "align-leaders",
       title: "ALIGN LEADERS",
       credits: 15,
-      description: "Exec Team primer on AI literacy, market shifts, and how media leaders are preparing teams for 2030",
+      description: "Exec Team primer on AI literacy, market shifts, and how media leaders are preparing for 2030",
       icon: Users,
       track: "LEADERSHIP",
       recommended: true
@@ -20,7 +20,7 @@ const PathwaysSection = () => {
       id: "inspire-staff", 
       title: "INSPIRE STAFF",
       credits: 10,
-      description: "All Hands keynote on the future of work in 2030 & principles required to thrive",
+      description: "All Hands keynote on the future of work & principles to thrive",
       icon: Megaphone,
       track: "LEADERSHIP",
       recommended: true
@@ -29,7 +29,7 @@ const PathwaysSection = () => {
       id: "product-strategy",
       title: "PRODUCT STRATEGY", 
       credits: 25,
-      description: "Map AI capabilities to your Product Strategy to future-proof the business or develop a new revenue line",
+      description: "Map AI capabilities to your product roadmap or new revenue lines",
       icon: Target,
       track: "LEADERSHIP",
       recommended: true
@@ -38,7 +38,7 @@ const PathwaysSection = () => {
       id: "agent-opp-spotter",
       title: "AGENT OPP SPOTTER",
       credits: 5,
-      description: "Learn to spot Agent opportunities, workflow redesign jam session with one team",
+      description: "Workflow redesign jam: spot agent opportunities",
       icon: Search,
       track: "IMPLEMENTATION",
       recommended: true
@@ -50,7 +50,7 @@ const PathwaysSection = () => {
       id: "formalize-ops",
       title: "FORMALIZE OPS",
       credits: 20, 
-      description: "Production and training of an internal AI usage playbook",
+      description: "Produce & train an internal AI usage playbook",
       icon: Cog,
       track: "LEADERSHIP",
       unlockable: true
@@ -59,7 +59,7 @@ const PathwaysSection = () => {
       id: "get-building",
       title: "GET BUILDING", 
       credits: 20,
-      description: "Deep dive inspiration session on AI usage patterns, build a lightweight internal tool with one team and track it to a chosen KPI",
+      description: "Deep dive: build a lightweight tool with one team and track KPIs",
       icon: Hammer,
       track: "IMPLEMENTATION",
       unlockable: true
@@ -68,7 +68,7 @@ const PathwaysSection = () => {
       id: "coach-the-coaches",
       title: "COACH THE COACHES",
       credits: 20,
-      description: "Coach the coach: 1-1 AI literacy coaching for power users",
+      description: "1-1 coaching for power users to scale literacy",
       icon: UserCheck,
       track: "IMPLEMENTATION",
       unlockable: true
@@ -77,7 +77,7 @@ const PathwaysSection = () => {
       id: "gamify-learning",
       title: "GAMIFY LEARNING",
       credits: 15,
-      description: '"No time - no problem" internal newsletter: produce tailored digital mini-lessons and score cards to distribute via email',
+      description: "Mini-lessons + scorecards delivered via email/newsletter",
       icon: GamepadIcon,
       track: "IMPLEMENTATION",
       unlockable: true
@@ -90,23 +90,23 @@ const PathwaysSection = () => {
       id: "workflow-redesign-mastery",
       title: "WORKFLOW REDESIGN MASTERY",
       credits: 25,
-      description: "Master the art of identifying inefficient processes and redesigning them with AI-first thinking for maximum business impact",
+      description: "Advanced process redesign with AI-first thinking",
       icon: Workflow,
       track: "IMPLEMENTATION"
     },
     {
       id: "competitive-intelligence-bootcamp", 
       title: "COMPETITIVE INTELLIGENCE BOOTCAMP",
-      credits: 30,
-      description: "Transform market research and competitor analysis using AI tools to gain strategic advantages and spot opportunities faster",
+      credits: 40,
+      description: "Transform market research using AI",
       icon: Telescope,
       track: "IMPLEMENTATION"
     },
     {
       id: "internal-champion-development",
       title: "INTERNAL CHAMPION DEVELOPMENT", 
-      credits: 35,
-      description: "Build a network of AI champions across departments who can drive adoption, training, and continuous improvement initiatives",
+      credits: 45,
+      description: "Build a network of AI champions across the org",
       icon: Users2,
       track: "LEADERSHIP"
     },
@@ -114,7 +114,7 @@ const PathwaysSection = () => {
       id: "ai-powered-content-strategy",
       title: "AI-POWERED CONTENT STRATEGY",
       credits: 20, 
-      description: "Create systematic content workflows using AI for consistent, high-quality output across all marketing and communication channels",
+      description: "Create systematic AI-driven content workflows",
       icon: PenTool,
       track: "IMPLEMENTATION"
     }
@@ -150,7 +150,7 @@ const PathwaysSection = () => {
               </span>
             ) : (
               <span className="bg-muted text-muted-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-medium">
-                Advanced
+                Intermediate
               </span>
             )}
           </div>
@@ -253,7 +253,7 @@ const PathwaysSection = () => {
               onClick={() => setShowSpecializedModules(!showSpecializedModules)}
               className="group min-h-[48px] px-8"
             >
-              {showSpecializedModules ? 'Hide Advanced Modules' : 'Unlock Advanced Modules'}
+              {showSpecializedModules ? 'Hide Intermediate Modules' : 'Unlock Intermediate Modules'}
               <ArrowRight className={`ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform ${showSpecializedModules ? 'rotate-90' : ''}`} />
             </Button>
           </div>
