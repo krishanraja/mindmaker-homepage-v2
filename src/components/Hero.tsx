@@ -76,8 +76,8 @@ const Hero = () => {
                 }}
                 aria-label="Take 2-Minute Diagnostic Assessment"
               >
-                <span className="sm:hidden">2-Min Diagnostic</span>
-                <span className="hidden sm:inline">Take 2-Min Diagnostic → Custom Pathway</span>
+                <span className="sm:hidden">2 Min Literacy Test</span>
+                <span className="hidden sm:inline">2 Min Literacy Test</span>
                 <ArrowRight className="ml-2 h-3 md:h-4 w-3 md:w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Button>
               
