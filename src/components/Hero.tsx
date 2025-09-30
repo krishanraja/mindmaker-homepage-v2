@@ -15,6 +15,9 @@ const Hero = () => {
           src="/mindmaker-background.gif"
           alt=""
           className="w-full h-full object-cover object-center"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
       </div>
       
@@ -30,6 +33,9 @@ const Hero = () => {
               src={mindmakerLogo} 
               alt="MindMaker" 
               className="h-8 sm:h-10 md:h-14 lg:h-16 w-auto mx-auto"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
           </div>
           
