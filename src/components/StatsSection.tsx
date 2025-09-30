@@ -5,22 +5,19 @@ import ResponsiveCardGrid from "@/components/ResponsiveCardGrid";
 const StatsSection = () => {
   const credentialHighlights = [
     {
-      audience: "Enterprise",
       problem: "Real-World Experience",
       quote: "Big Tech, telco, broadcaster, enterprise, and scale-up environments",
       pain: "Practical insights from implementing AI across diverse business contexts",
       icon: GraduationCap,
     },
     {
-      audience: "5 Disciplines", 
       problem: "Multidisciplinary Expert",
       quote: "Certified in Teaching, Linguistics, Psychology, Computing, and Business",
       pain: "Comprehensive expertise bridging technical complexity with human learning",
       icon: BookOpen,
     },
     {
-      audience: "100+",
-      problem: "Data, Automation & AI Seminars", 
+      problem: "100+ Engagements", 
       quote: "Leading enterprise teams through practical AI transformation workshops",
       pain: "Proven results from executives and teams now driving AI-led innovation",
       icon: Users,
@@ -49,13 +46,9 @@ const StatsSection = () => {
                 <item.icon className="h-8 w-8" />
               </div>
               
-              <h3 className="text-lg font-semibold text-foreground mb-1.5">
-                {item.audience}
-              </h3>
-              
-              <h4 className="text-base font-medium text-success mb-3">
+              <h3 className="text-lg font-semibold text-success mb-3">
                 {item.problem}
-              </h4>
+              </h3>
               
               <blockquote className="text-sm text-muted-foreground italic mb-3 leading-snug">
                 "{item.quote}"
