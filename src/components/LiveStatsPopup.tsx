@@ -30,7 +30,7 @@ const LiveStatsPopup: React.FC<LiveStatsPopupProps> = ({ isVisible, onClose }) =
     return () => {
       clearTimeout(autoDismiss);
     };
-  }, [isVisible, onClose]);
+  }, [isVisible]);
 
   // Map icon names to components
   const iconMap = {
