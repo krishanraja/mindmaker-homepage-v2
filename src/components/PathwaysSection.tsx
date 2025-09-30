@@ -275,7 +275,7 @@ const PathwaysSection = () => {
               </ResponsiveCardGrid>
               
               {/* Show/Hide Level 3 Modules Button */}
-              <div className="text-center mb-8">
+              <div className="text-center mt-8 sm:mt-12 mb-8">
                 <Button
                   variant="outline"
                   size="lg"
