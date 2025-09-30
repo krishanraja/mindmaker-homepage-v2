@@ -2,7 +2,7 @@ import { AlertTriangle, Clock, DollarSign, Users } from "lucide-react";
 import { useScrollTrigger } from "@/hooks/useScrollTrigger";
 import LiveStatsPopup from "@/components/LiveStatsPopup";
 import ResponsiveCardGrid from "@/components/ResponsiveCardGrid";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const ProblemSection = () => {
   const { elementRef, isVisible } = useScrollTrigger({ threshold: 0.4 });
@@ -14,6 +14,11 @@ const ProblemSection = () => {
       setShowPopup(true);
     }
   }, [isVisible]);
+
+  // Memoize onClose callback to prevent recreation
+  const handleClosePopup = useCallback(() => {
+    setShowPopup(false);
+  }, []);
 
   const audienceProblems = [
     {
@@ -101,7 +106,7 @@ const ProblemSection = () => {
       {/* Live Stats Popup */}
       <LiveStatsPopup 
         isVisible={showPopup} 
-        onClose={() => setShowPopup(false)} 
+        onClose={handleClosePopup} 
       />
     </section>
   );
