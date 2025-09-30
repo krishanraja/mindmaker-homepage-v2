@@ -18,6 +18,9 @@ export default {
         gobold: ['Gobold', 'Impact', 'Arial Black', 'sans-serif'],
       },
       colors: {
+        // Keep ALL default Tailwind colors (slate, gray, purple, etc.)
+        ...require("tailwindcss/defaultTheme").colors,
+        // Add custom design system colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         muted: "hsl(var(--muted))",
