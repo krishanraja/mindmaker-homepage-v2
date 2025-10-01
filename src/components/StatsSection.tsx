@@ -10,7 +10,7 @@ const StatsSection = () => {
   const handleCredentialsToggle = (open: boolean) => {
     if (!open && isCredentialsOpen) {
       // Scroll to top of section when closing
-      const section = document.getElementById('ready-to-help');
+      const section = document.getElementById('access-unique-expertise');
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -21,7 +21,7 @@ const StatsSection = () => {
   const handleMethodologyToggle = (open: boolean) => {
     if (!open && isMethodologyOpen) {
       // Scroll to top of section when closing
-      const section = document.getElementById('ready-to-help');
+      const section = document.getElementById('access-unique-expertise');
       if (section) {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -102,13 +102,13 @@ const StatsSection = () => {
   ];
 
   return (
-    <section id="ready-to-help" className="section-padding bg-muted">
+    <section id="access-unique-expertise" className="section-padding bg-muted">
       <div className="container-width">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 fade-in-up">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-3 sm:mb-4">
-            Ready To Help{" "}
+            Access Unique{" "}
             <span className="text-primary">
-              You
+              Expertise
             </span>
           </h2>
         </div>

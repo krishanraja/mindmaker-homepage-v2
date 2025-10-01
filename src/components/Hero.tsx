@@ -93,8 +93,8 @@ const Hero = () => {
                 }}
                 aria-label="View Educational Seminars"
               >
-                <span className="sm:hidden">Explore Seminars</span>
-                <span className="hidden sm:inline">Explore Seminars</span>
+                <span className="sm:hidden">Explore Modules</span>
+                <span className="hidden sm:inline">Explore Modules</span>
               </Button>
             </div>
           </div>
