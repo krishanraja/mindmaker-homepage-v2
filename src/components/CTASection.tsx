@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUp, Mail } from "lucide-react";
+import krishHeadshot from "@/assets/krish-headshot.png";
 
 const CTASection = () => {
   const scrollToOutcomes = () => {
@@ -37,15 +38,29 @@ const CTASection = () => {
           </div>
           
           <div className="mb-12 max-w-2xl mx-auto">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
-              <p className="text-white font-medium text-base leading-relaxed italic">
-                "Businesses that master AI literacy at each level will transform rapidly.
-                <br className="sm:hidden" />
-                <br className="sm:hidden" />
-                <span className="hidden sm:inline"> </span>
-                Those that don't will be forced to fight the ones that do."
-              </p>
-              <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 mb-8 backdrop-blur-sm">
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
+                {/* Headshot */}
+                <div className="flex-shrink-0">
+                  <img 
+                    src={krishHeadshot} 
+                    alt="Krish Raja, AI Strategy Expert"
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover shadow-lg shadow-primary/20"
+                  />
+                </div>
+                
+                {/* Quote Content */}
+                <div className="flex-1 text-center sm:text-left">
+                  <p className="text-white font-medium text-base leading-relaxed italic">
+                    "Businesses that master AI literacy at each level will transform rapidly.
+                    <br className="sm:hidden" />
+                    <br className="sm:hidden" />
+                    <span className="hidden sm:inline"> </span>
+                    Those that don't will be forced to fight the ones that do."
+                  </p>
+                  <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
+                </div>
+              </div>
             </div>
           </div>
 
