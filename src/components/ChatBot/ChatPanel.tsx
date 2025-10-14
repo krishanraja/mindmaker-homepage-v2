@@ -13,10 +13,10 @@ interface ChatPanelProps {
 }
 
 const quickReplies = [
-  "Tell me about AI strategy",
-  "How can you help my organization?",
-  "What is MindMaker?",
-  "Book a consultation",
+  "I want to assess our AI readiness",
+  "I need help with AI strategy",
+  "Tell me about MindMaker",
+  "I'm ready to book a call",
 ];
 
 export const ChatPanel = ({ onClose }: ChatPanelProps) => {
