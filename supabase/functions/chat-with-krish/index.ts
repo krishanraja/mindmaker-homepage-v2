@@ -42,9 +42,11 @@ Routing logic:
 Response format for routing:
 "Based on what you've shared, I'd recommend [CLEAR RECOMMENDATION]. [ONE SENTENCE WHY].
 
-[If Test]: Take our 2-minute AI Literacy Test to assess your organization's readiness - it'll give you a personalized roadmap.
+IMPORTANT: Always format links as markdown [text](url):
 
-[If Call]: Let's book a time to discuss your specific situation: https://calendly.com/krish-raja/mindmaker-meeting
+[If Test]: [Take the 2-Minute AI Literacy Test](https://ce33b9ef-a970-44f3-91e3-5c37cfff48cf.lovableproject.com/coaching#pathways) to assess your organization's readiness and get a personalized roadmap.
+
+[If Call]: [Book a Call with Krish](https://calendly.com/krish-raja/mindmaker-meeting) to discuss your specific situation.
 
 Which would work better for you?"
 

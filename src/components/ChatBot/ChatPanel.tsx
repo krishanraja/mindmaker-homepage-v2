@@ -3,9 +3,11 @@ import { X, Send, Loader2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { ChatMessage } from './ChatMessage';
 import { useChatBot } from './useChatBot';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { useIsMobile } from '@/hooks/use-mobile';
 import krishHeadshot from '@/assets/krish-headshot.png';
 
 interface ChatPanelProps {
@@ -20,6 +22,7 @@ const quickReplies = [
 ];
 
 export const ChatPanel = ({ onClose }: ChatPanelProps) => {
+  const isMobile = useIsMobile();
   const [inputValue, setInputValue] = useState('');
   const { messages, isLoading, error, sendMessage, clearHistory } = useChatBot();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -60,8 +63,8 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
     }
   };
 
-  return (
-    <div className="fixed bottom-4 right-4 w-[380px] h-[600px] glass-card flex flex-col shadow-xl z-50 animate-scale-in">
+  const chatContent = (
+    <>
       {/* Header */}
       <div className="flex items-center gap-3 p-4 border-b border-border bg-card/50">
         <Avatar className="h-10 w-10">
@@ -138,7 +141,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
       )}
 
       {/* Input */}
-      <div className="p-4 border-t border-border bg-card/50">
+      <div className="p-4 border-t border-border bg-card/50 pb-safe-bottom">
         <div className="flex gap-2">
           <Input
             ref={inputRef}
@@ -162,6 +165,25 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
           </Button>
         </div>
       </div>
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Sheet open onOpenChange={(open) => !open && onClose()}>
+        <SheetContent 
+          side="bottom" 
+          className="h-[85vh] p-0 flex flex-col border-t-2"
+        >
+          {chatContent}
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <div className="fixed bottom-4 right-4 w-[380px] h-[600px] glass-card flex flex-col shadow-xl z-50 animate-scale-in">
+      {chatContent}
     </div>
   );
 };
