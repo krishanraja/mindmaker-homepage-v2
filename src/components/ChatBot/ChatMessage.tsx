@@ -1,5 +1,6 @@
 import { Message } from './useChatBot';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import krishHeadshot from '@/assets/krish-headshot.png';
 
 interface ChatMessageProps {
@@ -8,6 +9,56 @@ interface ChatMessageProps {
 
 export const ChatMessage = ({ message }: ChatMessageProps) => {
   const isAssistant = message.role === 'assistant';
+
+  const renderMessageContent = (content: string) => {
+    const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g;
+    const parts: (string | JSX.Element)[] = [];
+    let lastIndex = 0;
+    let match;
+    
+    while ((match = linkRegex.exec(content)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(content.substring(lastIndex, match.index));
+      }
+      
+      const linkText = match[1];
+      const linkUrl = match[2];
+      
+      if (linkUrl.includes('calendly.com')) {
+        parts.push(
+          <Button
+            key={match.index}
+            variant="hero-primary"
+            size="sm"
+            onClick={() => window.open(linkUrl, '_blank')}
+            className="my-1 inline-flex"
+          >
+            {linkText}
+          </Button>
+        );
+      } else {
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline hover:text-primary/80"
+          >
+            {linkText}
+          </a>
+        );
+      }
+      
+      lastIndex = match.index + match[0].length;
+    }
+    
+    if (lastIndex < content.length) {
+      parts.push(content.substring(lastIndex));
+    }
+    
+    return parts.length > 0 ? parts : content;
+  };
 
   return (
     <div className={`flex gap-3 ${isAssistant ? '' : 'flex-row-reverse'} fade-in-up`}>
@@ -30,7 +81,9 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
               : 'bg-primary text-primary-foreground'
           }`}
         >
-          <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
+          <div className="text-sm whitespace-pre-wrap break-words">
+            {renderMessageContent(message.content)}
+          </div>
         </div>
         <span className="text-xs text-muted-foreground mt-1">
           {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

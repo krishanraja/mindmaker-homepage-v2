@@ -53,7 +53,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
     inputRef.current?.focus();
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -144,7 +144,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
             ref={inputRef}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             placeholder="Ask me anything..."
             disabled={isLoading}
             className="flex-1"
