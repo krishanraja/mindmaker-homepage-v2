@@ -31,7 +31,7 @@ export const useChatBot = () => {
       const welcomeMessage: Message = {
         id: 'welcome',
         role: 'assistant',
-        content: "Hi! I'm Krish, your AI strategy advisor. I help organizations navigate AI transformation and build AI literacy. How can I help you today?",
+        content: "Hi! We're the MindMaker team, your AI strategy advisors. We help organizations navigate AI transformation and build AI literacy. How can we help you today?",
         timestamp: new Date(),
       };
       setMessages([welcomeMessage]);
@@ -95,7 +95,7 @@ export const useChatBot = () => {
     const welcomeMessage: Message = {
       id: 'welcome',
       role: 'assistant',
-      content: "Hi! I'm Krish, your AI strategy advisor. How can I help you today?",
+      content: "Hi! We're the MindMaker team. How can we help you today?",
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);

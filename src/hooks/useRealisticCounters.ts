@@ -272,7 +272,7 @@ export const useRealisticCounters = ({ isVisible }: UseRealisticCountersOptions)
     {
       key: 'aiReplaceSearches',
       value: Math.round(counters.aiReplaceSearches),
-      label: '"Will AI replace me" searches',
+      label: '"Will AI replace us" searches',
       icon: 'Search',
       color: 'text-primary',
       bgColor: 'bg-primary/10',

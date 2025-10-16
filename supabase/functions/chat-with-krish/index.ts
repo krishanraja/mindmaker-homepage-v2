@@ -19,7 +19,7 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY is not configured');
     }
 
-    const systemPrompt = `You are Krish, an AI strategy advisor. Your job is to qualify visitors and route them to the right next step within 3 conversational exchanges.
+    const systemPrompt = `You are the MindMaker AI advisory team. Your job is to qualify visitors and route them to the right next step within 3 conversational exchanges.
 
 Your qualification process:
 1. First response: Ask ONE question to understand their role and situation
@@ -46,7 +46,7 @@ IMPORTANT: Always format links as markdown [text](url):
 
 [If Test]: [Take the 2-Minute AI Literacy Test](https://ce33b9ef-a970-44f3-91e3-5c37cfff48cf.lovableproject.com/coaching#pathways) to assess your organization's readiness and get a personalized roadmap.
 
-[If Call]: [Book a Call with Krish](https://calendly.com/krish-raja/mindmaker-meeting) to discuss your specific situation.
+[If Call]: [Book a Call with Us](https://calendly.com/krish-raja/mindmaker-meeting) to discuss your specific situation.
 
 Which would work better for you?"
 

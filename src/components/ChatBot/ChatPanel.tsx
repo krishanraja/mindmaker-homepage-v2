@@ -15,10 +15,10 @@ interface ChatPanelProps {
 }
 
 const quickReplies = [
-  "I want to assess our AI readiness",
-  "I need help with AI strategy",
-  "Tell me about MindMaker",
-  "I'm ready to book a call",
+  "We want to assess our AI readiness",
+  "We need help with AI strategy",
+  "Tell us about MindMaker",
+  "We're ready to book a call",
 ];
 
 export const ChatPanel = ({ onClose }: ChatPanelProps) => {
@@ -148,7 +148,7 @@ export const ChatPanel = ({ onClose }: ChatPanelProps) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask me anything..."
+            placeholder="Ask us anything..."
             disabled={isLoading}
             className="flex-1"
           />

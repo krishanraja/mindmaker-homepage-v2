@@ -38,7 +38,7 @@ const ProblemSection = () => {
     {
       audience: "Teams",
       problem: "Job displacement anxiety", 
-      quote: "Will I still be relevant in an AI world? How do I future-proof my career?",
+      quote: "Will we still be relevant in an AI world? How do we future-proof our careers?",
       pain: "Career stagnation as AI-literate peers advance, missing AI leadership opportunities",
       icon: Clock,
     },
