@@ -2,7 +2,7 @@
   font-family: 'Gobold';
   src: url('/fonts/Gobold_Bold.otf') format('opentype');
   font-weight: bold;
-  font-display: swap;
+  font-display: optional;
   font-size-adjust: 0.9;
 }
 
