@@ -9,14 +9,11 @@ const Navigation = () => {
   const { theme, setTheme } = useTheme();
 
   const navItems = [
-    { label: "How We Help", href: "#difference" },
-    { label: "AI MindMaker", href: "#pathways" },
-    { label: "Creds", href: "#stats" },
-    { label: "Outcomes", href: "#outcomes" },
-    { label: "Work", href: "#methodology" },
-    { label: "Journey", href: "#coach" },
-    { label: "Strategic Advisor", href: "#cta" },
-    { label: "Contact", href: "#cta" },
+    { label: "System", href: "#system" },
+    { label: "Pathways", href: "#pathways" },
+    { label: "AI Index", href: "#ai-leadership-index" },
+    { label: "Partner Program", href: "#outcomes" },
+    { label: "Founder", href: "#access-unique-expertise" },
   ];
 
   return (
@@ -50,7 +47,7 @@ const Navigation = () => {
               className="ml-4"
               onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
             >
-              Book a call
+              Start Sprint
             </Button>
           </div>
 
@@ -94,7 +91,7 @@ const Navigation = () => {
                 className="w-fit"
                 onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
               >
-                Book a call
+                Start Sprint
               </Button>
             </div>
           </div>

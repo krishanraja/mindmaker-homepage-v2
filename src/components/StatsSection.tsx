@@ -105,12 +105,19 @@ const StatsSection = () => {
     <section id="access-unique-expertise" className="section-padding bg-muted">
       <div className="container-width">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 fade-in-up">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-3 sm:mb-4">
-            Unique{" "}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
+            System{" "}
             <span className="text-primary">
-              Expertise
+              + Founder Credibility
             </span>
           </h2>
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            After 90+ leadership systems and 50+ executive keynotes, the pattern became clear: 
+            leaders don't need more AI courses. They need <strong>infrastructure</strong> that turns literacy into compounding performance.
+          </p>
+          <p className="text-sm md:text-base text-primary font-semibold mt-4">
+            Creator of the Mindmaker Method™ and AI Leadership Index™
+          </p>
         </div>
         
         {/* Credentials Collapsible */}

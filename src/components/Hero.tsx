@@ -40,30 +40,35 @@ const Hero = () => {
           </div>
           
           {/* Main Tagline - Mobile-First Typography */}
-          <h1 className={`${goboldLoaded ? 'font-gobold' : 'font-black'} text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-[0.1em] sm:tracking-[0.15em] mb-4 md:mb-6 leading-[1.1] sm:leading-tight max-w-5xl mx-auto uppercase hero-text-shimmer transition-[font-family] duration-200 ${goboldLoading ? 'opacity-80' : 'opacity-100'}`}>
-            ai literacy
+          <h1 className={`${goboldLoaded ? 'font-gobold' : 'font-black'} text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4 md:mb-6 leading-[1.1] sm:leading-tight max-w-5xl mx-auto hero-text-shimmer transition-[font-family] duration-200 ${goboldLoading ? 'opacity-80' : 'opacity-100'}`}>
+            The AI hype is over.<br />Leadership starts now.
           </h1>
           
           {/* Supporting Tagline - Mobile Optimized */}
-          <p className="text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-medium tracking-wide mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto text-white/95">
-            The future foundation of work.
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium tracking-wide mb-3 md:mb-4 leading-relaxed max-w-3xl mx-auto text-white/95">
+            Not about learning AI — about leading with it.
+          </p>
+          
+          <p className="text-sm sm:text-base md:text-lg font-normal mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto text-white/80">
+            Mindmaker builds the human capability that sits between algorithms and outcomes.
           </p>
           
           {/* CTA Buttons - Mobile-First Design */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4 md:gap-6 mb-8 md:mb-12 max-w-lg sm:max-w-none mx-auto">
-            {/* Primary CTA - Book a Call */}
+            {/* Primary CTA */}
             <Button 
               variant="hero-primary"
               size="lg" 
-              className="px-6 md:px-8 py-4 md:py-4 text-sm sm:text-base md:text-lg font-semibold group w-full sm:w-auto min-h-[48px] sm:min-h-[44px] rounded-lg sm:rounded-md order-1 sm:order-1"
+              className="px-6 md:px-8 py-4 md:py-4 text-sm sm:text-base md:text-lg font-semibold group w-full sm:w-auto min-h-[48px] sm:min-h-[44px] rounded-lg sm:rounded-md"
               onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
-              aria-label="Book a strategic consultation call"
+              aria-label="Start your AI alignment sprint"
             >
-              Book a Call
+              Start Your AI Alignment Sprint
+              <ArrowRight className="ml-2 h-4 md:h-5 w-4 md:w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Button>
             
             {/* Secondary CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 order-2 sm:order-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button 
                 variant="hero-secondary"
                 size="sm"
@@ -74,11 +79,10 @@ const Hero = () => {
                     outcomesSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                aria-label="Take 2-Minute Diagnostic Assessment"
+                aria-label="Explore partner program"
               >
-                <span className="sm:hidden">2 Min Literacy Test</span>
-                <span className="hidden sm:inline">2 Min Literacy Test</span>
-                <ArrowRight className="ml-2 h-3 md:h-4 w-3 md:w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                <span className="sm:hidden">Partner Program</span>
+                <span className="hidden sm:inline">Explore Partner Program</span>
               </Button>
               
               <Button 
@@ -86,18 +90,23 @@ const Hero = () => {
                 size="sm"
                 className="px-4 md:px-6 py-3 md:py-3 text-xs sm:text-sm md:text-base font-medium w-full sm:w-auto min-h-[44px] sm:min-h-[40px] rounded-lg sm:rounded-md"
                 onClick={() => {
-                  const pathwaysSection = document.getElementById('pathways');
-                  if (pathwaysSection) {
-                    pathwaysSection.scrollIntoView({ behavior: 'smooth' });
+                  const systemSection = document.getElementById('system');
+                  if (systemSection) {
+                    systemSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                aria-label="View Educational Seminars"
+                aria-label="See the framework"
               >
-                <span className="sm:hidden">Explore Modules</span>
-                <span className="hidden sm:inline">Explore Modules</span>
+                <span className="sm:hidden">See Framework</span>
+                <span className="hidden sm:inline">See the Framework</span>
               </Button>
             </div>
           </div>
+          
+          {/* Value Prop */}
+          <p className="text-xs sm:text-sm text-white/70 max-w-4xl mx-auto mb-8">
+            Leaders save 5-10 hrs/week. Investors halve failed pilot spend. Partners unlock new revenue.
+          </p>
 
           {/* Interactive AI Timeline */}
           <div className="mt-20 md:mt-28 lg:mt-32">

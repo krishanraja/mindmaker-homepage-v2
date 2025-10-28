@@ -1,117 +1,146 @@
 import { Button } from "@/components/ui/button";
-import mindmakerIconLight from "@/assets/mindmaker-icon-light.png";
-import ResponsiveCardGrid from "@/components/ResponsiveCardGrid";
+import { Target, TrendingUp, Users, ArrowRight } from "lucide-react";
 
 const AudienceOutcomesSection = () => {
   const outcomes = [
     {
-      audience: "Enterprise Leaders",
-      outcome: "Run & Future Proof",
-      description: "Transform from anxious to AI-confident. Use AI as your strategic thinking partner.",
+      audience: "Leaders/Founders",
+      title: "AI Alignment Sprint",
+      timeline: "30 Days",
+      investment: "$5-10K",
+      outcome: "Build AI-forward leadership confidence and speed of decision",
       benefits: [
-        "Accelerated AI adoption without wasted pilots",
-        "Strategic roadmap for measurable ROI", 
-        "Confident decision-making framework",
-        "Leadership literacy that drives business outcomes"
+        "Diagnose AI readiness across your org",
+        "Align leadership team on AI strategy",
+        "Design leverage points for measurable ROI",
+        "Safe space to practice agentic thinking on real work",
+        "Result: Save 5-10 hrs/week per leader"
       ],
-      icon: mindmakerIconLight,
-      cta: "Executive Assessment"
+      icon: Target,
+      gradient: "from-primary to-primary-600",
+      cta: "Start Your Sprint"
     },
     {
-      audience: "High Growth SMB",
-      outcome: "Reclaim Purpose", 
-      description: "Stop chasing hype. Turn AI literacy into sustainable competitive advantage.",
+      audience: "Investors",
+      title: "Portfolio License",
+      timeline: "Annual Program",
+      investment: "$20-50K/year",
+      outcome: "Raise AI literacy across portfolios to de-risk funding",
       benefits: [
-        "Revenue growth through literacy-driven workflows",
-        "Competitive advantage with modular, flexible learning",
-        "Choose what you need, when you need it",
-        "Fast-track innovation with practical business outcomes"
+        "Portfolio-wide AI Leadership Index™ dashboard",
+        "License to deploy sprints across companies",
+        "Quarterly performance tracking",
+        "Halve failed pilot spend",
+        "Partner revenue share model"
       ],
-      icon: mindmakerIconLight,
-      cta: "High Growth Sprint"
+      icon: TrendingUp,
+      gradient: "from-accent to-accent-400",
+      cta: "Explore Partner Program"
     },
     {
-      audience: "Teams", 
-      outcome: "10x Your Value",
-      description: "Turn AI anxiety into career acceleration.<br />Master GenAI as your thinking partner and become indispensable talent.",
+      audience: "Consultants/Educators",
+      title: "Framework Partnership",
+      timeline: "License Model",
+      investment: "Custom",
+      outcome: "Integrate the Mindmaker framework to accelerate transformation",
       benefits: [
-        "Future-proof skill development",
-        "AI productivity mastery",
-        "AI-first economy positioning", 
-        "AI leadership confidence"
+        "License Mindmaker Method™ and Literacy-to-Leverage Loop™",
+        "White-label sprint delivery frameworks",
+        "Partner revenue share model",
+        "Unlock new revenue streams",
+        "Full partner enablement program"
       ],
-      icon: mindmakerIconLight,
-      cta: "Team Program"
+      icon: Users,
+      gradient: "from-primary to-accent",
+      cta: "Become a Partner"
     },
   ];
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-16 bg-background">
+    <section id="outcomes" className="section-padding bg-muted/30">
       <div className="container-width">
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-10 fade-in-up">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-4 sm:mb-5 lg:mb-4">
-            <span className="text-primary">
-              Pick a Pathway
-            </span>
+        <div className="text-center mb-16 fade-in-up">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+            <span className="text-foreground">Three Distinct Paths.</span>
+            <br />
+            <span className="text-primary">One Performance System.</span>
           </h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mx-auto px-4">
-            Interactive, gamified learning designed to transform GenAI from overwhelming threat to strategic thinking partner. Choose your pathway.
+          <p className="text-lg md:text-xl leading-relaxed text-muted-foreground max-w-3xl mx-auto">
+            Choose the engagement that fits your needs — from 30-day sprints to annual partnerships.
           </p>
         </div>
         
-        <ResponsiveCardGrid 
-          desktopGridClass="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-6"
-        >
-          {outcomes.map((outcome, index) => (
-            <div key={index} className="card p-4 sm:p-6 lg:p-8 fade-in-up flex flex-col justify-between h-full rounded-xl" style={{animationDelay: `${index * 0.1}s`}}>
-              <div className="flex flex-col flex-1">
-                <div className="text-center mb-5 sm:mb-6 lg:mb-5 flex flex-col">
-                  <div className="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-primary text-white rounded-xl mb-4 mx-auto">
-                    <img src={outcome.icon} alt="MindMaker Icon" className="h-8 w-8 sm:h-10 sm:w-10 object-contain" loading="lazy" decoding="async" />
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wide text-foreground mb-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {outcomes.map((outcome, index) => {
+            const IconComponent = outcome.icon;
+            return (
+              <div 
+                key={index}
+                className="glass-card p-8 fade-in-up hover:scale-105 transition-all duration-300 flex flex-col"
+                style={{animationDelay: `${index * 0.15}s`}}
+              >
+                {/* Header */}
+                <div className="mb-6">
+                  <div className="text-xs font-bold text-primary/60 tracking-wider mb-3">
                     {outcome.audience}
+                  </div>
+                  <div className={`w-12 h-12 bg-gradient-to-br ${outcome.gradient} rounded-lg flex items-center justify-center mb-4`}>
+                    <IconComponent className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-3">
+                    {outcome.title}
                   </h3>
-                  <h4 className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-4 lg:mb-3">
+                  <p className="text-sm text-muted-foreground mb-4">
                     {outcome.outcome}
-                  </h4>
-                  <p className="text-sm sm:text-sm font-normal leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: outcome.description }}>
                   </p>
                 </div>
-                
-                <div className="space-y-3 mb-5 sm:mb-6 lg:mb-5">
-                  {outcome.benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-sm font-normal leading-relaxed text-muted-foreground">
-                        {benefit}  
-                      </span>
-                    </div>
-                  ))}
+
+                {/* Timeline & Investment */}
+                <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-1">Timeline</div>
+                    <div className="text-sm font-semibold text-foreground">{outcome.timeline}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-muted-foreground mb-1">Investment</div>
+                    <div className="text-sm font-semibold text-primary">{outcome.investment}</div>
+                  </div>
                 </div>
-              </div>
-              
-              <Button 
-                asChild
-                size="lg"
-                className="w-full bg-primary hover:bg-primary-600 text-white mt-auto min-h-[48px] text-sm sm:text-base font-semibold rounded-lg"
-              >
-                <a 
-                  href={
-                    outcome.cta === 'Executive Assessment' ? 'https://leaders.themindmaker.ai' :
-                    outcome.cta === 'High Growth Sprint' ? 'https://smb.themindmaker.ai' :
-                    outcome.cta === 'Team Program' ? 'https://teams.themindmaker.ai' :
-                    '#'
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
+
+                {/* Benefits */}
+                <div className="flex-grow mb-6">
+                  <div className="text-sm font-semibold text-foreground mb-3">What You Get:</div>
+                  <ul className="space-y-2">
+                    {outcome.benefits.map((benefit, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="text-primary mt-0.5">•</span>
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* CTA */}
+                <Button 
+                  variant="hero-primary" 
+                  size="lg" 
+                  className="w-full group"
+                  onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
                 >
                   {outcome.cta}
-                </a>
-              </Button>
-            </div>
-          ))}
-        </ResponsiveCardGrid>
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom Note */}
+        <div className="text-center fade-in-up" style={{animationDelay: '0.5s'}}>
+          <p className="text-sm text-muted-foreground">
+            All pathways include access to AI Leadership Index™ performance tracking
+          </p>
+        </div>
       </div>
     </section>
   );

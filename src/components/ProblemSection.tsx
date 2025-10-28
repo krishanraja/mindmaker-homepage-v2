@@ -48,13 +48,13 @@ const ProblemSection = () => {
     <section ref={elementRef} className="section-padding bg-background">
       <div className="container-width">
         <div className="text-center mb-16 fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            The Existential<br className="sm:hidden" /> <span className="text-destructive">
-              Human Challenge
-            </span>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+            <span className="text-destructive">70% of GenAI pilots stall</span>
+            <br />
+            <span className="text-foreground">because leadership operates from hype, not capability</span>
           </h2>
-          <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto">
-            3 in 5 workers must rethink their roles this decade as AI automation reshapes productivity.
+          <p className="text-lg md:text-xl leading-relaxed text-muted-foreground max-w-3xl mx-auto">
+            You've been over-sold on AI literacy and under-delivered on AI leadership infrastructure.
           </p>
         </div>
         
@@ -88,17 +88,14 @@ const ProblemSection = () => {
         </ResponsiveCardGrid>
 
         {/* Quote Section */}
-        <div className="card p-8 max-w-4xl mx-auto text-center fade-in-up">
-          <blockquote className="text-base md:text-lg leading-relaxed italic text-muted-foreground mb-6">
-            "The gap between GenAI hype and practical implementation is costing enterprises millions. 
-            Without proper literacy and strategic direction, even the best tools become expensive experiments."
+        <div className="glass-card p-8 md:p-12 max-w-4xl mx-auto text-center fade-in-up">
+          <blockquote className="text-xl md:text-2xl font-bold text-foreground mb-6">
+            "Most teams sit through demos that fade."
           </blockquote>
-          
-          <div className="text-center">
-            <p className="font-semibold text-foreground">
-              That's why we created the AI Mindmaker methodology - to bridge this dangerous gap.
-            </p>
-          </div>
+          <p className="text-base md:text-lg text-muted-foreground">
+            The market doesn't need more AI courses — it needs leaders who can lead with AI.
+            That's why we built the Mindmaker system.
+          </p>
         </div>
       </div>
 

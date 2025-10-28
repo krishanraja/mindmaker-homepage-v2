@@ -2,14 +2,16 @@ import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import ProblemSection from "@/components/ProblemSection";
-import DifferenceSection from "@/components/DifferenceSection";
+import MindmakerSystemSection from "@/components/MindmakerSystemSection";
 import TrustSection from "@/components/TrustSection";
 import AudienceOutcomesSection from "@/components/AudienceOutcomesSection";
+import AILeadershipIndexSection from "@/components/AILeadershipIndexSection";
+import SimplifiedPathwaysSection from "@/components/SimplifiedPathwaysSection";
+import WhyThisWorksSection from "@/components/WhyThisWorksSection";
 import StatsSection from "@/components/StatsSection";
 import CTASection from "@/components/CTASection";
 
 // Lazy load below-the-fold components
-const PathwaysSection = lazy(() => import("@/components/PathwaysSection"));
 const ContentHubSection = lazy(() => import("@/components/ContentHubSection"));
 const Footer = lazy(() => import("@/components/Footer"));
 
@@ -27,15 +29,24 @@ const Index = () => {
       </section>
 
       <ProblemSection />
-      <DifferenceSection />
+
+      <section id="system" aria-label="Mindmaker System">
+        <MindmakerSystemSection />
+      </section>
 
       <section aria-label="Audience Outcomes" id="outcomes">
         <AudienceOutcomesSection />
       </section>
 
-      <Suspense fallback={<div className="min-h-[400px]" />}>
-        <PathwaysSection />
-      </Suspense>
+      <section aria-label="AI Leadership Index">
+        <AILeadershipIndexSection />
+      </section>
+
+      <SimplifiedPathwaysSection />
+
+      <section aria-label="Why This Works">
+        <WhyThisWorksSection />
+      </section>
 
       <Suspense fallback={<div className="min-h-[300px]" />}>
         <section aria-label="Content Hub">
@@ -43,7 +54,7 @@ const Index = () => {
         </section>
       </Suspense>
 
-      <section aria-label="Founder Credentials and Methodology">
+      <section aria-label="Founder Credentials and System">
         <StatsSection />
       </section>
 

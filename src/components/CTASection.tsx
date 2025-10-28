@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowUp, Mail } from "lucide-react";
+import { ArrowUp, Target, TrendingUp, Users } from "lucide-react";
 import krishHeadshot from "@/assets/krish-headshot.png";
 
 const CTASection = () => {
@@ -23,17 +23,16 @@ const CTASection = () => {
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm text-white/90 px-6 py-3 rounded-full text-sm font-medium mb-6 gap-3 border border-white/20 text-left">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse shadow-lg shadow-amber-500/50"></div>
-                <span className="font-semibold">Limited Availability</span>
+                <span className="font-semibold">Q1 2026 Sprint Cohorts</span>
               </div>
               <span className="text-white/40 text-xs">•</span>
               <div className="flex items-center gap-1 text-xs sm:text-sm">
-                <span className="whitespace-nowrap">Q1 2025 Cohorts</span>
-                <span className="whitespace-nowrap font-semibold text-amber-200">Filling&nbsp;Fast</span>
+                <span className="whitespace-nowrap font-semibold text-amber-200">6 spots remaining</span>
               </div>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-6 text-white leading-tight">
-              Don't Let Your Competition<br />
-              <span className="text-white/80">Leave You Behind</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white leading-tight">
+              The AI hype is over.<br />
+              <span className="text-white/90">Leadership starts now.</span>
             </h2>
           </div>
           
@@ -52,36 +51,62 @@ const CTASection = () => {
                 {/* Quote Content */}
                 <div className="flex-1 text-center sm:text-left">
                   <p className="text-white font-medium text-base leading-relaxed italic">
-                    "Businesses that master AI literacy at each level will transform rapidly.
-                    <br className="sm:hidden" />
-                    <br className="sm:hidden" />
-                    <span className="hidden sm:inline"> </span>
-                    Those that don't will be forced to fight the ones that do."
+                    "After 90+ product strategies and 50+ executive keynotes, the pattern became clear: 
+                    leaders don't need more AI courses. They need infrastructure that turns literacy into compounding performance."
                   </p>
-                  <p className="text-white/70 font-semibold text-base mt-4">— Krish</p>
+                  <p className="text-white/70 font-semibold text-base mt-4">— Krish Raja, Creator of Mindmaker Method™</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 mb-8 max-w-md mx-auto">
-            <Button asChild variant="hero-primary" size="xl" className="w-full">
-              <a href="https://calendly.com/krish-raja/mindmaker-meeting" target="_blank" rel="noopener noreferrer" className="group">
-                <Mail className="mr-3 h-5 w-5" />
-                Secure Your Competitive Edge
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
+            <Button 
+              asChild 
+              variant="hero-primary" 
+              size="lg" 
+              className="w-full group"
+            >
+              <a href="https://calendly.com/krish-raja/mindmaker-meeting" target="_blank" rel="noopener noreferrer">
+                <Target className="mr-2 h-5 w-5" />
+                Start Your 30-Day Sprint
               </a>
             </Button>
             
             <Button 
-              onClick={scrollToOutcomes}
-              variant="hero-secondary"
-              size="lg"
+              asChild 
+              variant="hero-primary" 
+              size="lg" 
               className="w-full group"
             >
-              <ArrowUp className="mr-2 h-4 w-4 group-hover:-translate-y-1 transition-transform duration-200" />
-              Or Choose an Interactive Pathway Above
+              <a href="https://calendly.com/krish-raja/mindmaker-meeting" target="_blank" rel="noopener noreferrer">
+                <TrendingUp className="mr-2 h-5 w-5" />
+                License for Portfolio
+              </a>
+            </Button>
+            
+            <Button 
+              asChild 
+              variant="hero-primary" 
+              size="lg" 
+              className="w-full group"
+            >
+              <a href="https://calendly.com/krish-raja/mindmaker-meeting" target="_blank" rel="noopener noreferrer">
+                <Users className="mr-2 h-5 w-5" />
+                Become a Partner
+              </a>
             </Button>
           </div>
+          
+          <Button 
+            onClick={scrollToOutcomes}
+            variant="hero-secondary"
+            size="sm"
+            className="group"
+          >
+            <ArrowUp className="mr-2 h-4 w-4 group-hover:-translate-y-1 transition-transform duration-200" />
+            Or Explore Pathways Above
+          </Button>
         </div>
       </div>
     </section>
