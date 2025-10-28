@@ -20,26 +20,26 @@ const ProblemSection = () => {
     setShowPopup(false);
   }, []);
 
-  const audienceProblems = [
+  const infrastructureGaps = [
     {
-      audience: "Leaders",
-      problem: "Drowning in AI noise",
-      quote: "I know AI will change everything, but I don't know where to start or who to trust",
-      pain: "Revenue at risk from poor AI investments, competitors advancing through effective AI",
+      gap: "Capability Infrastructure",
+      problem: "Operating from Hype, Not Capability",
+      impact: "70% of GenAI pilots stall because teams lack the fundamental infrastructure to execute",
+      solution: "Build leadership capability systems, not just awareness",
       icon: Users,
     },
     {
-      audience: "Founders", 
-      problem: "Existential competition fear",
-      quote: "Every competitor seems to be 'AI-powered' - am I already too late?",
-      pain: "Cash burn on ineffective AI tools while missing real competitive advantages, losing market position to AI-literate competitors",
+      gap: "Performance System", 
+      problem: "No Way to Measure AI Leadership",
+      impact: "Organizations invest in AI training but have no metrics to track leadership effectiveness",
+      solution: "Deploy AI Leadership Index™ to baseline and track real progress",
       icon: AlertTriangle,
     },
     {
-      audience: "Teams",
-      problem: "Job displacement anxiety", 
-      quote: "Will we still be relevant in an AI world? How do we future-proof our careers?",
-      pain: "Career stagnation as AI-literate peers advance, missing AI leadership opportunities",
+      gap: "Compounding Framework",
+      problem: "One-Off Interventions Don't Scale", 
+      impact: "Training fades within weeks. Pilots don't compound into capabilities",
+      solution: "Integrate Literacy-to-Leverage Loop™ into daily operations",
       icon: Clock,
     },
   ];
@@ -62,26 +62,26 @@ const ProblemSection = () => {
           desktopGridClass="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
           className="mb-16"
         >
-          {audienceProblems.map((item, index) => (
+          {infrastructureGaps.map((item, index) => (
             <div key={index} className="card p-4 sm:p-6 lg:p-8 fade-in-up h-full flex flex-col" style={{animationDelay: `${index * 0.1}s`}}>
               <div className="inline-flex items-center justify-center w-16 h-16 bg-destructive text-white rounded-xl mb-6">
                 <item.icon className="h-8 w-8" />
               </div>
               
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                {item.audience}
+              <h3 className="text-xs font-bold text-destructive/60 tracking-wider mb-2 uppercase">
+                {item.gap}
               </h3>
               
-              <h4 className="text-lg font-medium text-destructive mb-4">
+              <h4 className="text-xl font-bold text-foreground mb-4">
                 {item.problem}
               </h4>
               
-              <blockquote className="text-sm text-muted-foreground italic mb-4 leading-relaxed">
-                "{item.quote}"
-              </blockquote>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                <strong className="text-destructive">Impact:</strong> {item.impact}
+              </p>
               
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>Reality:</strong> {item.pain}
+              <p className="text-sm text-foreground leading-relaxed mt-auto pt-4 border-t border-border">
+                <strong>Solution:</strong> {item.solution}
               </p>
             </div>
           ))}

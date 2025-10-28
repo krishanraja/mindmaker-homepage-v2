@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 import ProblemSection from "@/components/ProblemSection";
 import MindmakerSystemSection from "@/components/MindmakerSystemSection";
 import TrustSection from "@/components/TrustSection";
-import AudienceOutcomesSection from "@/components/AudienceOutcomesSection";
 import AILeadershipIndexSection from "@/components/AILeadershipIndexSection";
 import SimplifiedPathwaysSection from "@/components/SimplifiedPathwaysSection";
 import WhyThisWorksSection from "@/components/WhyThisWorksSection";
@@ -32,10 +31,6 @@ const Index = () => {
 
       <section id="system" aria-label="Mindmaker System">
         <MindmakerSystemSection />
-      </section>
-
-      <section aria-label="Audience Outcomes" id="outcomes">
-        <AudienceOutcomesSection />
       </section>
 
       <section aria-label="AI Leadership Index">

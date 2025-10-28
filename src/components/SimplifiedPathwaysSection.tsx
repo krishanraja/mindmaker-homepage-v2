@@ -5,16 +5,17 @@ const SimplifiedPathwaysSection = () => {
   const pathways = [
     {
       track: "FOUNDATION",
+      audience: "Leaders/Founders",
       title: "AI Alignment Sprint",
       timeline: "30 Days",
       investment: "$5-10K",
-      description: "Diagnose → Align → Design",
+      description: "Build AI-forward leadership confidence and speed of decision",
       deliverables: [
-        "Leadership alignment workshop",
-        "AI readiness diagnosis",
-        "Leverage point mapping",
-        "Safe practice framework",
-        "5-10 hrs/week time savings per leader"
+        "Diagnose AI readiness across your org",
+        "Align leadership team on AI strategy",
+        "Design leverage points for measurable ROI",
+        "Safe practice framework on real work",
+        "Result: Save 5-10 hrs/week per leader"
       ],
       credits: "50 Credits",
       icon: Target,
@@ -24,16 +25,17 @@ const SimplifiedPathwaysSection = () => {
     },
     {
       track: "PERFORMANCE",
+      audience: "Leaders/Founders",
       title: "AI Strategy Accelerator",
       timeline: "6-12 Weeks",
       investment: "Custom",
-      description: "Turn literacy into measurable ROI",
+      description: "Turn literacy into measurable ROI and competitive advantage",
       deliverables: [
         "Quarterly performance dashboard",
         "Innovation pipeline setup",
         "Capability playbook development",
-        "AI Leadership Index™ baseline",
-        "Measurable ROI tracking"
+        "AI Leadership Index™ baseline & tracking",
+        "Measurable ROI and speed metrics"
       ],
       credits: "150 Credits",
       icon: Rocket,
@@ -43,18 +45,19 @@ const SimplifiedPathwaysSection = () => {
     },
     {
       track: "SCALE",
+      audience: "Investors/Consultants/Educators",
       title: "Partner Program License",
       timeline: "Annual Program",
       investment: "$20-50K/year",
-      description: "Deploy framework across portfolio/clients",
+      description: "Deploy framework across portfolio/clients at scale",
       deliverables: [
-        "Licensed Mindmaker Method™ IP",
-        "White-label sprint frameworks",
-        "Portfolio-wide dashboard access",
+        "Licensed Mindmaker Method™ and Literacy-to-Leverage Loop™",
+        "White-label sprint delivery frameworks",
+        "Portfolio-wide AI Leadership Index™ dashboard",
         "Partner revenue share model",
-        "Quarterly partner enablement"
+        "Quarterly partner enablement program"
       ],
-      credits: "Custom",
+      credits: "Custom Credits",
       icon: Clock,
       gradient: "from-primary to-accent",
       cta: "Become a Partner",
@@ -87,8 +90,13 @@ const SimplifiedPathwaysSection = () => {
               >
                 {/* Header */}
                 <div className="mb-6">
-                  <div className="text-xs font-bold text-primary/60 tracking-wider mb-2">
-                    {pathway.track}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="text-xs font-bold text-primary/60 tracking-wider">
+                      {pathway.track}
+                    </div>
+                    <div className="text-xs font-medium text-muted-foreground/80">
+                      {pathway.audience}
+                    </div>
                   </div>
                   <div className={`w-12 h-12 bg-gradient-to-br ${pathway.gradient} rounded-lg flex items-center justify-center mb-4`}>
                     <IconComponent className="h-6 w-6 text-white" />
