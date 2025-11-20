@@ -56,12 +56,12 @@ const ExecTeams = () => {
                 </div>
                 <CardTitle className="text-3xl mb-2">Request Received</CardTitle>
                 <CardDescription className="text-lg">
-                  Thank you for your interest in aligning your executive team on AI strategy.
+                  Thank you for your interest in executive team literacy alignment.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground text-center">
-                  We'll review your submission and reach out within <strong className="text-primary">24 hours</strong> to schedule your team assessment call.
+                  We'll review your submission and reach out within <strong className="text-primary">24 hours</strong> to send your team pre-work and schedule the alignment session.
                 </p>
                 <p className="text-sm text-muted-foreground text-center">
                   In the meantime, we've sent a confirmation email with next steps.
@@ -90,17 +90,17 @@ const ExecTeams = () => {
         <div className="container-width max-w-3xl">
           <div className="text-center mb-12 fade-in-up">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              Align Your Executive Team on AI Strategy
+              Executive Team Literacy Alignment
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Most AI initiatives fail because leadership teams aren't aligned. Let's change that. Fill out this quick form to book your team assessment call.
+              Most teams talk about AI but operate from completely different mental models. This leads to expensive misalignment. Surface where your team actually stands—before you spend a dollar on pilots.
             </p>
           </div>
 
           <Card className="glass-card fade-in-up">
             <CardHeader>
-              <CardTitle>Executive Team Discovery</CardTitle>
-              <CardDescription>Help us understand your team's needs so we can prepare a tailored assessment</CardDescription>
+              <CardTitle>Team Diagnostic Request</CardTitle>
+              <CardDescription>You don't need another AI demo. You need your team thinking from the same mental operating system.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -139,27 +139,27 @@ const ExecTeams = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="aiMaturity">Current AI Maturity Level *</Label>
+                  <Label htmlFor="aiMaturity">Where is your team's AI literacy currently? *</Label>
                   <select 
                     id="aiMaturity" 
                     {...register("aiMaturity")} 
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">Select...</option>
-                    <option value="exploring">Exploring - Early conversations</option>
-                    <option value="piloting">Piloting - Running experiments</option>
-                    <option value="scaling">Scaling - Moving to production</option>
-                    <option value="leading">Leading - AI integrated across ops</option>
+                    <option value="exploring">Fragmented - Everyone has different mental models</option>
+                    <option value="piloting">Emerging - Some shared language but gaps remain</option>
+                    <option value="scaling">Aligned - Common frameworks for AI decisions</option>
+                    <option value="leading">Fluent - Team can challenge assumptions confidently</option>
                   </select>
                   {errors.aiMaturity && <p className="text-sm text-destructive">{errors.aiMaturity.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="challenges">What challenges is your team facing with AI? *</Label>
+                  <Label htmlFor="challenges">What's the biggest thinking gap in your leadership team around AI? *</Label>
                   <Textarea 
                     id="challenges" 
                     {...register("challenges")} 
-                    placeholder="e.g., Leadership isn't aligned on priorities, pilots aren't scaling, can't measure ROI, etc."
+                    placeholder="e.g., We don't agree on what AI even means, Can't separate hype from real value, No shared language for AI decisions, etc."
                     rows={4}
                     className="resize-none"
                   />
@@ -169,12 +169,12 @@ const ExecTeams = () => {
 
                 <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                   <p className="text-sm text-muted-foreground">
-                    <strong className="text-foreground">What happens next:</strong> We'll review your submission and schedule a 30-minute team assessment call to explore alignment gaps and recommend a path forward.
+                    <strong className="text-foreground">What happens next:</strong> We'll review your submission and send a pre-work diagnostic for your team, then schedule a 90-minute alignment session to surface tensions and build shared literacy.
                   </p>
                 </div>
 
                 <Button type="submit" variant="hero-primary" size="lg" className="w-full group">
-                  Request Team Assessment
+                  Request Team Diagnostic
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </form>

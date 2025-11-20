@@ -17,14 +17,14 @@ const DifferenceSection = () => {
     },
     {
       number: "03",
-      title: "Modular Credit System",
-      description: "Choose what you need, when you need it. Interactive, flexible learning with 5-45 credit options. Pay-as-you-go for real business outcomes.",
+      title: "Flexible Engagement Model",
+      description: "Choose what you need, when you need it. From focused diagnostics to comprehensive literacy programs. Designed for real business outcomes.",
       icon: CheckCircle,
     },
     {
       number: "04",
-      title: "AI-Enabled Coaching",
-      description: "Human expertise augmented by intelligent tools - not just another consultant",
+      title: "Practice-Based Framework",
+      description: "Not another slide deck. Structured practice on real scenarios until thinking clearly about AI becomes instinct.",
       icon: Zap,
     },
     {
@@ -41,11 +41,11 @@ const DifferenceSection = () => {
         <div className="text-center mb-16 fade-in-up">
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
             <span className="text-primary">
-              Interactive & Engaging Approach
+              The Mindmaker Difference
             </span>
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-3xl mx-auto">
-            Our gamified, interactive methodology transforms AI literacy into engaging experiences with measurable outcomes.
+            A structured literacy system that gives leaders the mental infrastructure to stay sharp, sceptical, and in control as AI reshapes work.
           </p>
         </div>
         

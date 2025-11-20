@@ -50,7 +50,7 @@ const Hero = () => {
           </p>
           
           <p className="text-sm sm:text-base md:text-lg font-normal mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto text-white/80">
-            Mindmaker builds the human capability that sits between algorithms and outcomes.
+            Mindmaker is the AI literacy infrastructure that lets leaders stay sharp, sceptical, and in control—not just skilled at prompts.
           </p>
           
           {/* Primary CTA - Mobile-First Design */}
@@ -74,9 +74,9 @@ const Hero = () => {
               size="sm"
               className="px-4 md:px-6 py-3 text-xs sm:text-sm font-medium w-full sm:w-auto min-h-[44px] rounded-lg"
               onClick={() => window.location.href = '/leaders'}
-              aria-label="Free 2-minute AI leadership benchmark for individual executives"
+              aria-label="Free AI literacy diagnostic for individual leaders"
             >
-              Take 2-Min Assessment
+              Take 2-Min Diagnostic
             </Button>
             
             <Button 
@@ -84,9 +84,9 @@ const Hero = () => {
               size="sm"
               className="px-4 md:px-6 py-3 text-xs sm:text-sm font-medium w-full sm:w-auto min-h-[44px] rounded-lg"
               onClick={() => window.location.href = '/exec-teams'}
-              aria-label="Configure 4-hour AI bootcamp for your executive team"
+              aria-label="Request executive team literacy alignment session"
             >
-              Configure Team Bootcamp
+              Request Team Alignment
             </Button>
             
             <Button 
@@ -94,15 +94,15 @@ const Hero = () => {
               size="sm"
               className="px-4 md:px-6 py-3 text-xs sm:text-sm font-medium w-full sm:w-auto min-h-[44px] rounded-lg"
               onClick={() => window.location.href = '/partners-interest'}
-              aria-label="Assess 1-10 portfolio companies with our scoring tool"
+              aria-label="Access portfolio literacy diagnostic tool for partners"
             >
-              Score Your Portfolio
+              Access Portfolio Tool
             </Button>
           </div>
           
           {/* Value Prop */}
           <p className="text-xs sm:text-sm text-white/70 max-w-4xl mx-auto mb-8">
-            Individual leaders: Get your AI readiness score in 2 minutes. Executive teams: Configure custom bootcamps. Partners: Score up to 10 portfolio companies.
+            Individual leaders: Map your AI thinking. Executive teams: Align your cognitive infrastructure. Partners: De-risk portfolio AI spend.
           </p>
 
           {/* Interactive AI Timeline */}
