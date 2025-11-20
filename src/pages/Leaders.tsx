@@ -71,35 +71,56 @@ const Leaders = () => {
                 <div className="flex justify-center mb-4">
                   <CheckCircle2 className="h-16 w-16 text-primary" />
                 </div>
-                <CardTitle className="text-3xl mb-2">Your AI Leadership Score</CardTitle>
-                <div className="text-6xl font-bold text-primary my-6">{score}/100</div>
-                <CardDescription className="text-lg">
-                  {score < 40 && "You're in the early stages of AI leadership development. A Sprint can accelerate your journey."}
-                  {score >= 40 && score < 70 && "You're building momentum. Ready to turn pilots into measurable ROI?"}
-                  {score >= 70 && "You're well-positioned. Consider the Accelerator to maximize competitive advantage."}
+                <CardTitle className="text-3xl mb-2">Your AI Literacy Profile</CardTitle>
+                <CardDescription className="text-lg mt-4">
+                  This isn't a quiz. It's a map of how you think about AI right now.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground text-center">
-                  Based on your assessment, we recommend starting with the <strong className="text-primary">AI Alignment Sprint</strong> to build a solid foundation.
-                </p>
-                <Button 
-                  variant="hero-primary" 
-                  size="lg" 
-                  className="w-full group"
-                  onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
-                >
-                  Book Your Strategy Call
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="w-full"
-                  onClick={() => window.location.href = '/'}
-                >
-                  Return to Homepage
-                </Button>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground">Key Tensions Identified:</h4>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-muted rounded-lg">
+                      <p className="text-sm font-medium text-foreground mb-1">Cognitive Scaffolding</p>
+                      <p className="text-sm text-muted-foreground">
+                        {score < 40 && "You're operating primarily from vendor claims and media hype. Building mental models for evaluation is the first step."}
+                        {score >= 40 && score < 70 && "You have baseline awareness but need sharper frameworks to separate theatre from substance in AI conversations."}
+                        {score >= 70 && "You're thinking clearly about AI, but may benefit from structured practice to compound this into daily decision-making."}
+                      </p>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <p className="text-sm font-medium text-foreground mb-1">Decision Infrastructure</p>
+                      <p className="text-sm text-muted-foreground">Most leaders lack the vocabulary to challenge AI claims confidently. You need practice evaluating vendors and pilots.</p>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <p className="text-sm font-medium text-foreground mb-1">Mental Models</p>
+                      <p className="text-sm text-muted-foreground">Understanding how to work alongside AI—not just use tools—will be crucial as agents reshape work structures.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Ready to build the cognitive infrastructure? The Sprint gives you practice on real scenarios until it's instinct.
+                  </p>
+                  <Button 
+                    variant="hero-primary" 
+                    size="lg" 
+                    className="w-full group mb-3"
+                    onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
+                  >
+                    Book Strategy Call
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full"
+                    onClick={() => window.location.href = '/'}
+                  >
+                    Return to Homepage
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -116,17 +137,17 @@ const Leaders = () => {
         <div className="container-width max-w-3xl">
           <div className="text-center mb-12 fade-in-up">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              Assess Your AI Leadership Baseline
+              AI Literacy Diagnostic for Leaders
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Answer 7 quick questions to discover where you stand and what path forward makes sense.
+              A structured diagnostic to map how you currently think and decide when AI is involved. Surfaces tensions, blind spots, and leverage points in 5 minutes.
             </p>
           </div>
 
           <Card className="glass-card fade-in-up">
             <CardHeader>
-              <CardTitle>Leadership Benchmark Assessment</CardTitle>
-              <CardDescription>Your responses help us recommend the right pathway</CardDescription>
+              <CardTitle>Cognitive Baseline Diagnostic</CardTitle>
+              <CardDescription>This isn't a quiz. It's a map of how you think about AI right now.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -155,55 +176,55 @@ const Leaders = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="aiMaturity">Where is your organization with AI? *</Label>
+                  <Label htmlFor="aiMaturity">How do you currently engage with AI in your work? *</Label>
                   <select 
                     id="aiMaturity" 
                     {...register("aiMaturity")} 
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">Select...</option>
-                    <option value="exploring">Exploring - We're just starting to learn</option>
-                    <option value="piloting">Piloting - Running early experiments</option>
-                    <option value="scaling">Scaling - Moving successful pilots to production</option>
-                    <option value="leading">Leading - AI is integrated across operations</option>
+                    <option value="exploring">Observing - Following trends, not yet hands-on</option>
+                    <option value="piloting">Experimenting - Using tools occasionally</option>
+                    <option value="scaling">Practicing - Regular use for specific tasks</option>
+                    <option value="leading">Integrating - AI is part of my decision-making process</option>
                   </select>
                   {errors.aiMaturity && <p className="text-sm text-destructive">{errors.aiMaturity.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="primaryChallenge">What's your biggest AI challenge? *</Label>
+                  <Label htmlFor="primaryChallenge">What's your biggest AI decision-making challenge? *</Label>
                   <select 
                     id="primaryChallenge" 
                     {...register("primaryChallenge")} 
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">Select...</option>
-                    <option value="literacy">Team doesn't know where to start</option>
-                    <option value="alignment">Leadership not aligned on strategy</option>
-                    <option value="roi">Can't measure real ROI or impact</option>
-                    <option value="scaling">Pilots stall before they scale</option>
-                    <option value="confidence">Lack confidence in AI decisions</option>
+                    <option value="literacy">Can't separate hype from real value</option>
+                    <option value="alignment">Lack vocabulary to challenge vendor claims</option>
+                    <option value="roi">Unsure how AI will impact my role long-term</option>
+                    <option value="scaling">Don't know how to evaluate AI pilots</option>
+                    <option value="confidence">Worried about outsourcing judgment to AI</option>
                   </select>
                   {errors.primaryChallenge && <p className="text-sm text-destructive">{errors.primaryChallenge.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="decisionSpeed">How fast do you make AI-related decisions? *</Label>
+                  <Label htmlFor="decisionSpeed">Confidence level when AI is part of strategic conversations? *</Label>
                   <select 
                     id="decisionSpeed" 
                     {...register("decisionSpeed")} 
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">Select...</option>
-                    <option value="slow">Slow - We overthink and delay</option>
-                    <option value="moderate">Moderate - Takes a few weeks</option>
-                    <option value="fast">Fast - We decide and move quickly</option>
+                    <option value="slow">Low - I often defer to others</option>
+                    <option value="moderate">Moderate - I contribute but not confidently</option>
+                    <option value="fast">High - I can challenge assumptions and ask sharp questions</option>
                   </select>
                   {errors.decisionSpeed && <p className="text-sm text-destructive">{errors.decisionSpeed.message}</p>}
                 </div>
 
                 <Button type="submit" variant="hero-primary" size="lg" className="w-full group">
-                  Calculate My Score
+                  Complete Diagnostic
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </form>

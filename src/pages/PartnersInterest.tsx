@@ -54,31 +54,31 @@ const PartnersInterest = () => {
                 <div className="flex justify-center mb-4">
                   <CheckCircle2 className="h-16 w-16 text-primary" />
                 </div>
-                <CardTitle className="text-3xl mb-2">Welcome to the Partner Program</CardTitle>
+                <CardTitle className="text-3xl mb-2">Access Request Received</CardTitle>
                 <CardDescription className="text-lg">
-                  Your interest in the Mindmaker Partner Program has been registered.
+                  Your request for portfolio diagnostic tool access has been registered.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground text-center">
-                  We'll send your <strong className="text-primary">Partner Enablement Pack</strong> within <strong>48 hours</strong>, including:
+                  We'll send your <strong className="text-primary">Portfolio Tool Access Pack</strong> within <strong>48 hours</strong>, including:
                 </p>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">✓</span>
-                    <span>Program structure and licensing terms</span>
+                    <span>Access credentials to portfolio diagnostic tool</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">✓</span>
-                    <span>Revenue share model details</span>
+                    <span>Heat map visualization guide for cognitive readiness</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">✓</span>
-                    <span>Portfolio dashboard demo and access info</span>
+                    <span>Co-delivery framework and partnership terms</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">✓</span>
-                    <span>Next steps and enablement calendar</span>
+                    <span>Onboarding session scheduling details</span>
                   </li>
                 </ul>
                 <p className="text-sm text-muted-foreground text-center mt-4">
@@ -108,17 +108,17 @@ const PartnersInterest = () => {
         <div className="container-width max-w-3xl">
           <div className="text-center mb-12 fade-in-up">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              Join the Mindmaker Partner Program
+              Portfolio Literacy Diagnostic for Partners
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              License the Mindmaker Method, roll up portfolio AI Leadership Index scores, and co-deliver Sprints at scale. Register your interest below.
+              Most partners watch portfolio companies waste capital on AI pilots that don't compound. The real gap isn't tools—it's leadership teams without the cognitive scaffolding to make good AI decisions. Assess 1-10 companies, see the heat map, de-risk their AI spend.
             </p>
           </div>
 
           <Card className="glass-card fade-in-up">
             <CardHeader>
-              <CardTitle>Partner Program Registration</CardTitle>
-              <CardDescription>Tell us about your organization and we'll send the full enablement pack</CardDescription>
+              <CardTitle>Portfolio Diagnostic Tool Access</CardTitle>
+              <CardDescription>Get access to our portfolio cognitive diagnostic tool to assess leadership literacy across your companies.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -191,12 +191,12 @@ const PartnersInterest = () => {
 
                 <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
                   <p className="text-sm text-muted-foreground">
-                    <strong className="text-foreground">What you'll receive:</strong> Full program structure, licensing terms, revenue share model, portfolio dashboard demo, and enablement calendar.
+                    <strong className="text-foreground">What you'll receive:</strong> Access to portfolio diagnostic tool, heat map visualization of cognitive readiness across your companies, co-delivery guide, and partnership terms.
                   </p>
                 </div>
 
                 <Button type="submit" variant="hero-primary" size="lg" className="w-full group">
-                  Register Partner Interest
+                  Request Portfolio Tool Access
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </form>

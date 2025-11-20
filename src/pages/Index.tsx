@@ -1,13 +1,13 @@
 import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import TrustSection from "@/components/TrustSection";
 import ProblemSection from "@/components/ProblemSection";
 import MindmakerSystemSection from "@/components/MindmakerSystemSection";
-import TrustSection from "@/components/TrustSection";
-import AILeadershipIndexSection from "@/components/AILeadershipIndexSection";
-import SimplifiedPathwaysSection from "@/components/SimplifiedPathwaysSection";
+import DifferenceSection from "@/components/DifferenceSection";
+import WhatThisIsNotSection from "@/components/WhatThisIsNotSection";
 import AssessmentPreviewSection from "@/components/AssessmentPreviewSection";
-import WhyThisWorksSection from "@/components/WhyThisWorksSection";
+import SimplifiedPathwaysSection from "@/components/SimplifiedPathwaysSection";
 import StatsSection from "@/components/StatsSection";
 import CTASection from "@/components/CTASection";
 
@@ -24,32 +24,16 @@ const Index = () => {
         <Hero />
       </header>
 
-      <section aria-label="Trust Indicators">
-        <TrustSection />
-      </section>
-
+      <TrustSection />
       <ProblemSection />
-
-      <section id="system" aria-label="Mindmaker System">
-        <MindmakerSystemSection />
-      </section>
-
-      <section aria-label="AI Leadership Index">
-        <AILeadershipIndexSection />
-      </section>
-
+      <MindmakerSystemSection />
+      <DifferenceSection />
+      <WhatThisIsNotSection />
       <AssessmentPreviewSection />
-
       <SimplifiedPathwaysSection />
-
-      <section aria-label="Why This Works">
-        <WhyThisWorksSection />
-      </section>
-
+      
       <Suspense fallback={<div className="min-h-[300px]" />}>
-        <section aria-label="Content Hub">
-          <ContentHubSection />
-        </section>
+        <ContentHubSection />
       </Suspense>
 
       <section aria-label="Founder Credentials and System">

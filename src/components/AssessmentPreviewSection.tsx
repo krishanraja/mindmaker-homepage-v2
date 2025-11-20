@@ -5,24 +5,24 @@ const AssessmentPreviewSection = () => {
   const assessments = [
     {
       audience: "Individual Leaders",
-      title: "AI Leadership Benchmark",
-      process: "2-min benchmark → 7-dimension score → 90-day roadmap",
+      title: "Literacy Diagnostic",
+      process: "2-min diagnostic → cognitive baseline → 90-day literacy roadmap",
       icon: Target,
       gradient: "from-primary to-primary-600",
       link: "/leaders"
     },
     {
       audience: "Executive Teams",
-      title: "Team Bootcamp Configurator",
-      process: "4-hour bootcamp configurator → team baseline → pilot charter",
+      title: "Team Alignment",
+      process: "Team diagnostic → tension mapping → alignment charter",
       icon: Users,
       gradient: "from-accent to-accent-400",
       link: "/exec-teams"
     },
     {
       audience: "Partners & Investors",
-      title: "Portfolio Scoring Tool",
-      process: "Portfolio scoring → heatmap for 1-10 companies → co-delivery plan",
+      title: "Portfolio Tool",
+      process: "Portfolio diagnostic → readiness heat map → de-risk plan",
       icon: TrendingUp,
       gradient: "from-primary-400 to-accent",
       link: "/partners-interest"
@@ -40,10 +40,10 @@ const AssessmentPreviewSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             <span className="text-foreground">Not Ready to Commit?</span>
             <br />
-            <span className="text-primary">Start With a Free Assessment</span>
+            <span className="text-primary">Start With a Free Diagnostic</span>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose your path and get immediate, actionable insights tailored to your role.
+            Understand how you think about AI right now—before making any investment decisions.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ const AssessmentPreviewSection = () => {
             className="group"
             onClick={scrollToPathways}
           >
-            View Full Engagement Options
+            View Full Pathways
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
