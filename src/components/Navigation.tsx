@@ -2,18 +2,25 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-import mindmakerIcon from "@/assets/mindmaker-icon-black.png";
+import mindmakerLogo from "@/assets/mindmaker-logo-new.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   const navItems = [
-    { label: "About", href: "#system" },
-    { label: "Diagnostic", href: "#outcomes" },
-    { label: "For Teams", href: "/exec-teams" },
-    { label: "For Partners", href: "/partners-interest" },
-    { label: "Founder", href: "#access-unique-expertise" },
+    { label: "Builder Session", href: "/builder-session" },
+    { 
+      label: "Programs", 
+      href: "/builder-sprint",
+      dropdown: [
+        { label: "30-Day Sprint", href: "/builder-sprint" },
+        { label: "AI Leadership Lab", href: "/leadership-lab" },
+        { label: "Partner Program", href: "/partner-program" },
+      ]
+    },
+    { label: "Builder Economy", href: "/builder-economy" },
+    { label: "FAQ", href: "/faq" },
   ];
 
   return (
@@ -22,11 +29,13 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <img 
-              src={mindmakerIcon} 
-              alt="MindMaker" 
-              className="h-8 w-auto"
-            />
+            <a href="/">
+              <img 
+                src={mindmakerLogo} 
+                alt="Mindmaker" 
+                className="h-7 w-auto"
+              />
+            </a>
           </div>
 
           {/* Desktop Navigation */}
@@ -45,9 +54,9 @@ const Navigation = () => {
             <Button 
               size="sm" 
               className="ml-4"
-              onClick={() => window.location.href = '/leaders'}
+              onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
             >
-              Get Your Baseline
+              Book Session
             </Button>
           </div>
 
@@ -89,9 +98,9 @@ const Navigation = () => {
                <Button 
                 size="sm" 
                 className="w-fit"
-                onClick={() => window.location.href = '/leaders'}
+                onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
               >
-                Get Your Baseline
+                Book Session
               </Button>
             </div>
           </div>

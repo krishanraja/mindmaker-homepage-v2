@@ -17,7 +17,7 @@ const FAQ = () => {
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Frequently asked questions about Mindmaker—how to think clearly about AI, make better decisions, and stop wasting money on vendor theatre.");
+      metaDescription.setAttribute("content", "Frequently asked questions about Mindmaker—turn non-technical leaders into no-code AI builders.");
     }
 
     const script = document.createElement('script');
@@ -47,39 +47,43 @@ const FAQ = () => {
   const faqItems = [
     {
       question: "What is Mindmaker?",
-      answer: "Most leaders feel pressure to 'do something with AI'—but don't know how to separate real opportunities from vendor hype. Mindmaker helps you see clearly, so you can make better decisions and stop wasting money on theatre."
-    },
-    {
-      question: "How does the diagnostic work?",
-      answer: "It takes 2 minutes. You answer a few questions about how you currently think about AI. We show you where the gaps are—and what to do about them. No scoring, no judgment, just clarity."
+      answer: "Mindmaker turns non-technical leaders into no-code AI builders. We help CEOs, GMs, and executives build working AI systems around their real work—without writing code or waiting for IT."
     },
     {
       question: "Who is this for?",
-      answer: "Leaders making AI decisions but not sure what to actually do. If you're nodding along in vendor demos, funding pilots that go nowhere, or watching your team all think differently about AI—this is for you. Works for individual execs, leadership teams, or partners with portfolios."
+      answer: "CEO, GM, CCO, CPO, CMO, CRO, COO—leaders with P&L responsibility who need to design the future, not delegate it. If you're tired of vendor theatre and want to build real systems, this is for you."
+    },
+    {
+      question: "What's a Builder Session?",
+      answer: "A 60-minute live session with Krish where you bring one real leadership problem. You leave with an AI friction map, 1-2 draft systems, and a written follow-up with prompts you can use immediately."
+    },
+    {
+      question: "What's the 30-Day Builder Sprint?",
+      answer: "A structured 4-week program where you build 3-5 working AI systems around your actual work. Includes intake mapping, live sessions, a Builder Dossier, metrics dashboard, and optional clips for your team. Investment: $5-8K USD."
+    },
+    {
+      question: "How is the AI Leadership Lab different?",
+      answer: "The Lab is for executive teams (6-12 people). It's a 4-hour intensive where you run 2 real decisions: old way vs AI-enabled way. You leave with a 90-day pilot charter, exec summary deck, and team snapshot. Investment: $10-20K USD."
+    },
+    {
+      question: "What's the Partner Program?",
+      answer: "For VCs, advisors, and consultants managing portfolios. We run a phased implementation: portfolio scan → first wave (3-5 companies) → standing program → benchmark rollout. Pricing is retainer or revenue share, custom to your portfolio."
+    },
+    {
+      question: "What's The Builder Economy?",
+      answer: "The Builder Economy is our community flywheel: podcast episodes, live sessions, and weekly briefings. It's how we share what's working in real portfolios, not vendor hype. Join at mindmaker.ai/builder-economy."
+    },
+    {
+      question: "How is this different from AI training?",
+      answer: "Training fades. Consulting tells you what to do. Tools do it for you. We build the system so you can think for yourself—design systems, run decisions, and stop wasting money on vendor theatre."
     },
     {
       question: "What do I actually get?",
-      answer: "A way to see where you stand. Frameworks to evaluate AI claims. Questions you'll use when vendors pitch you. Practice on your real decisions until it sticks. Confidence to make calls without second-guessing yourself."
+      answer: "Working systems you can use tomorrow. Not slides, not theory—prompts, workflows, and frameworks built around your real work. Plus ongoing access to The Builder Economy for as long as you need it."
     },
     {
-      question: "How is this different from AI training or consulting?",
-      answer: "Training fades after a few weeks. Consulting tells you what to do but doesn't upgrade how you think. Tools do the work for you. We build the system so you can think for yourself—spot theatre, make better calls, stop wasting money."
-    },
-    {
-      question: "What's the investment?",
-      answer: "Free diagnostics to start—see where you stand before committing. 12-week Sprint is $6,500. 90-day Accelerator is $18,000. Portfolio partnerships are custom. Real question: what's the cost of another failed pilot because you couldn't tell substance from sales pitch?"
-    },
-    {
-      question: "What if my team isn't aligned on AI?",
-      answer: "That's exactly what we fix. Most teams have people excited, people skeptical, and everyone using different words. Our Team Alignment tool surfaces those gaps, builds shared vocabulary, and gets everyone on the same page. You can't execute on AI when your team doesn't agree on what AI even means."
-    },
-    {
-      question: "How long does it take to see results?",
-      answer: "You'll have better questions for vendors within the first week. Ways to evaluate pilots by week 3. Making decisions faster by week 8. It sticks—doesn't fade like workshops. Leaders report making AI decisions 3x faster with more confidence after the Sprint."
-    },
-    {
-      question: "Can I try before committing to a full program?",
-      answer: "Yes. Start with a free diagnostic (2 minutes for individuals, 15 minutes for teams). You'll see where you stand, what's missing, and whether the full Sprint makes sense. No pressure, no sales pitch. Just clarity."
+      question: "How do I start?",
+      answer: "Book a Builder Session. Bring one real problem, leave with systems. If you want the full 30-Day Sprint or Leadership Lab after that, we'll map it out together. No pressure, just clarity."
     }
   ];
 
@@ -101,7 +105,7 @@ const FAQ = () => {
               Frequently Asked Questions
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to know about thinking clearly about AI and making better decisions.
+              Everything you need to know about turning leaders into no-code AI builders.
             </p>
           </header>
 
@@ -110,11 +114,11 @@ const FAQ = () => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="glass-card border-none fade-in-up"
+                className="editorial-card fade-in-up"
                 style={{animationDelay: `${index * 0.05}s`}}
               >
                 <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
-                  <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <span className="font-semibold text-foreground group-hover:text-mint transition-colors">
                     {item.question}
                   </span>
                 </AccordionTrigger>
@@ -125,20 +129,20 @@ const FAQ = () => {
             ))}
           </Accordion>
 
-          <div className="glass-card p-8 md:p-12 text-center mt-16 fade-in-up">
+          <div className="editorial-card p-8 md:p-12 text-center mt-16 fade-in-up">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Still Have Questions?
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Book a call to talk through your situation and what makes sense for you.
+              Book a Builder Session to talk through your situation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                variant="hero-primary" 
+                variant="default" 
                 size="lg"
                 onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
               >
-                Book a Call
+                Book a Builder Session
               </Button>
               <Button 
                 variant="outline" 

@@ -11,30 +11,42 @@ const Footer = () => {
               </p>
             </div>
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 flex-wrap justify-center">
+              <a 
+                href="/builder-session" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Builder Session
+              </a>
+              <a 
+                href="/builder-sprint" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                30-Day Sprint
+              </a>
+              <a 
+                href="/leadership-lab" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Leadership Lab
+              </a>
+              <a 
+                href="/partner-program" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Partners
+              </a>
+              <a 
+                href="/builder-economy" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Builder Economy
+              </a>
               <a 
                 href="/faq" 
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                How It Works
-              </a>
-              <a 
-                href="/leaders" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                For Leaders
-              </a>
-              <a 
-                href="/exec-teams" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                For Teams
-              </a>
-              <a 
-                href="/partners-interest" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                For Partners
+                FAQ
               </a>
               <a 
                 href="/privacy" 
