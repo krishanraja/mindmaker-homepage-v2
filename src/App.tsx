@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { ChatBot } from "@/components/ChatBot";
-import NewIndex from "./pages/NewIndex";
+import Index from "./pages/Index";
 import BuilderSession from "./pages/BuilderSession";
 import BuilderSprint from "./pages/BuilderSprint";
 import LeadershipLab from "./pages/LeadershipLab";
@@ -26,7 +26,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<NewIndex />} />
+            <Route path="/" element={<Index />} />
             <Route path="/builder-session" element={<BuilderSession />} />
             <Route path="/builder-sprint" element={<BuilderSprint />} />
             <Route path="/leadership-lab" element={<LeadershipLab />} />

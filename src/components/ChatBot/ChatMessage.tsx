@@ -21,7 +21,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
       if (isCalendly) {
         return (
           <Button
-            variant="hero-primary"
+            variant="mint"
             size="sm"
             onClick={() => window.open(href, '_blank')}
             className="my-1 inline-flex"

@@ -1,52 +1,45 @@
-import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import TrustSection from "@/components/TrustSection";
-import ProblemSection from "@/components/ProblemSection";
-import MindmakerSystemSection from "@/components/MindmakerSystemSection";
-import DifferenceSection from "@/components/DifferenceSection";
-import WhatThisIsNotSection from "@/components/WhatThisIsNotSection";
-import AssessmentPreviewSection from "@/components/AssessmentPreviewSection";
-import SimplifiedPathwaysSection from "@/components/SimplifiedPathwaysSection";
-import StatsSection from "@/components/StatsSection";
-import CTASection from "@/components/CTASection";
-
-// Lazy load below-the-fold components
-const ContentHubSection = lazy(() => import("@/components/ContentHubSection"));
-const Footer = lazy(() => import("@/components/Footer"));
+import NewHero from "@/components/NewHero";
+import WhoThisIsFor from "@/components/WhoThisIsFor";
+import TheProblem from "@/components/TheProblem";
+import ProductLadder from "@/components/ProductLadder";
+import HowItsDifferent from "@/components/HowItsDifferent";
+import BuilderEconomyConnection from "@/components/BuilderEconomyConnection";
+import SimpleCTA from "@/components/SimpleCTA";
+import Footer from "@/components/Footer";
+import { ChatBot } from "@/components/ChatBot";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Navigation />
-      {/* SEO-optimized structure */}
-      <header>
-        <Hero />
-      </header>
-
-      <TrustSection />
-      <ProblemSection />
-      <MindmakerSystemSection />
-      <DifferenceSection />
-      <WhatThisIsNotSection />
-      <AssessmentPreviewSection />
-      <SimplifiedPathwaysSection />
       
-      <Suspense fallback={<div className="min-h-[300px]" />}>
-        <ContentHubSection />
-      </Suspense>
-
-      <section aria-label="Founder Credentials and System">
-        <StatsSection />
-      </section>
-
-      <section aria-label="Call to Action">
-        <CTASection />
-      </section>
+      {/* Hero Section */}
+      <NewHero />
       
-      <Suspense fallback={<div className="min-h-[200px]" />}>
-        <Footer />
-      </Suspense>
+      {/* Who This Is For */}
+      <WhoThisIsFor />
+      
+      {/* The Problem */}
+      <TheProblem />
+      
+      {/* Product Ladder */}
+      <ProductLadder />
+      
+      {/* How It's Different */}
+      <HowItsDifferent />
+      
+      {/* Builder Economy Connection */}
+      <BuilderEconomyConnection />
+      
+      {/* Simple CTA */}
+      <SimpleCTA />
+      
+      {/* Footer */}
+      <Footer />
+      
+      {/* ChatBot */}
+      <ChatBot />
     </main>
   );
 };
