@@ -1,7 +1,8 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { TrendingUp, CheckCircle } from "lucide-react";
-import { ConsultationBooking } from "@/components/ConsultationBooking";
+import { TrendingUp, CheckCircle, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const PartnerProgram = () => {
   const phases = [
@@ -119,7 +120,26 @@ const PartnerProgram = () => {
           </div>
           
           {/* CTA */}
-          <ConsultationBooking variant="default" />
+          <Card className="p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Ready to Explore?</h2>
+            <p className="text-foreground mb-6 leading-relaxed">
+              Let's talk about how this could work for your portfolio or client base.
+            </p>
+            <Button 
+              size="lg"
+              className="bg-mint text-ink hover:bg-mint/90 font-bold text-lg"
+              asChild
+            >
+              <a 
+                href="https://calendly.com/krish-mindmaker/mindmaker-intro-call" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Schedule a Conversation
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+          </Card>
         </div>
       </section>
       
