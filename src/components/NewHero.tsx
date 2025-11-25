@@ -41,7 +41,7 @@ const NewHero = () => {
       {/* Content */}
       <div className="container-width relative z-10 py-12 sm:py-16 md:py-20">
         {/* Logo */}
-        <div className="flex justify-start mb-12 sm:mb-16 md:mb-24 fade-in-up -ml-6">
+        <div className="flex justify-start mb-12 sm:mb-16 md:mb-24 fade-in-up">
           <img 
             src={mindmakerIconDark} 
             alt="Mindmaker" 

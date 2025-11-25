@@ -1,25 +1,38 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+
+type Category = "Technical" | "Commercial" | "Organizational" | "Competitive";
 
 interface Concept {
   id: number;
   label: string;
-  category: "Input" | "Processing" | "Output" | "Feedback";
+  category: Category;
 }
 
 const concepts: Concept[] = [
-  { id: 1, label: "Prompt Engineering", category: "Input" },
-  { id: 2, label: "Context Windows", category: "Input" },
-  { id: 3, label: "LLMs", category: "Processing" },
-  { id: 4, label: "Fine-tuning", category: "Processing" },
-  { id: 5, label: "RAG Systems", category: "Processing" },
-  { id: 6, label: "Embeddings", category: "Processing" },
-  { id: 7, label: "API Calls", category: "Output" },
-  { id: 8, label: "Automation", category: "Output" },
-  { id: 9, label: "Human Review", category: "Feedback" },
-  { id: 10, label: "Model Selection", category: "Input" },
-  { id: 11, label: "Tokens", category: "Processing" },
-  { id: 12, label: "Chain of Thought", category: "Input" },
+  // Technical (4)
+  { id: 1, label: "Context windows", category: "Technical" },
+  { id: 2, label: "Tokens", category: "Technical" },
+  { id: 3, label: "RAG", category: "Technical" },
+  { id: 4, label: "Prompt engineering", category: "Technical" },
+  
+  // Commercial (4)
+  { id: 5, label: "Vendor overpromises", category: "Commercial" },
+  { id: 6, label: "ROI fog", category: "Commercial" },
+  { id: 7, label: "Pilot purgatory", category: "Commercial" },
+  { id: 8, label: "Integration debt", category: "Commercial" },
+  
+  // Organizational (4)
+  { id: 9, label: "Misaligned teams", category: "Organizational" },
+  { id: 10, label: "Rogue AI experiments", category: "Organizational" },
+  { id: 11, label: "Change fatigue", category: "Organizational" },
+  { id: 12, label: "Shadow IT", category: "Organizational" },
+  
+  // Competitive (4)
+  { id: 13, label: "Competitor noise", category: "Competitive" },
+  { id: 14, label: "Board pressure", category: "Competitive" },
+  { id: 15, label: "Fear of betting wrong", category: "Competitive" },
+  { id: 16, label: "Rapid obsolescence", category: "Competitive" },
 ];
 
 const ChaosToClarity = () => {
@@ -29,74 +42,95 @@ const ChaosToClarity = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
-
+      
       const rect = sectionRef.current.getBoundingClientRect();
       const sectionHeight = rect.height;
       const windowHeight = window.innerHeight;
-
-      // Calculate how much of the section has scrolled through viewport
+      
+      // Calculate scroll progress through section
       const scrolled = windowHeight - rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight + windowHeight)));
-
+      
       setScrollProgress(progress);
     };
-
+    
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial calculation
-
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Map scroll progress to organization level
+  // Faster animation: 0.15-0.5 instead of 0.2-0.8
   const organizationLevel = 
-    scrollProgress < 0.2 ? 0 : 
-    scrollProgress > 0.8 ? 1 : 
-    (scrollProgress - 0.2) / 0.6;
+    scrollProgress < 0.15 ? 0 : 
+    scrollProgress > 0.5 ? 1 : 
+    (scrollProgress - 0.15) / 0.35;
 
-  // Generate chaotic positions (consistent per concept using ID as seed)
+  // Chaotic random positions
   const getRandomPosition = (id: number) => {
-    const seed = id * 9999;
-    const pseudoRandom = (Math.sin(seed) * 10000) % 1;
-    const angle = pseudoRandom * Math.PI * 2;
-    const radius = 100 + (Math.abs(Math.cos(seed)) * 150);
+    const seed = id * 123.456;
+    const randX = (Math.sin(seed) * 10000) % 1;
+    const randY = (Math.cos(seed * 1.5) * 10000) % 1;
     
     return {
-      x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius,
+      x: 10 + randX * 80,
+      y: 10 + randY * 80,
+      rotation: (randX - 0.5) * 30,
     };
   };
 
-  // Generate organized positions based on category
+  // Organized 2x2 grid positions
   const getOrganizedPosition = (concept: Concept, index: number) => {
-    const categoryPositions: Record<Concept["category"], { x: number; y: number }> = {
-      Input: { x: -200, y: -100 },
-      Processing: { x: 0, y: -100 },
-      Output: { x: 200, y: -100 },
-      Feedback: { x: 0, y: 100 },
+    const categoryPositions = {
+      Technical: { baseX: 20, baseY: 25 },
+      Commercial: { baseX: 60, baseY: 25 },
+      Organizational: { baseX: 20, baseY: 65 },
+      Competitive: { baseX: 60, baseY: 65 },
     };
 
-    const basePos = categoryPositions[concept.category];
-    const categoryIndex = concepts.filter(c => c.category === concept.category).indexOf(concept);
-    
+    const categoryIndex = concepts
+      .filter(c => c.category === concept.category)
+      .findIndex(c => c.id === concept.id);
+
+    const base = categoryPositions[concept.category];
+    const offsetX = (categoryIndex % 2) * 15;
+    const offsetY = Math.floor(categoryIndex / 2) * 8;
+
     return {
-      x: basePos.x + (categoryIndex % 2 === 0 ? -60 : 60),
-      y: basePos.y + Math.floor(categoryIndex / 2) * 60,
+      x: base.baseX + offsetX - 10,
+      y: base.baseY + offsetY - 4,
+      rotation: 0,
     };
   };
 
-  // Interpolate between chaos and organized positions
-  const getPosition = (concept: Concept) => {
+  // Interpolate between chaos and clarity
+  const getPosition = (concept: Concept, index: number) => {
     const chaos = getRandomPosition(concept.id);
-    const clarity = getOrganizedPosition(concept, concept.id);
-
+    const clarity = getOrganizedPosition(concept, index);
+    
     return {
       x: chaos.x + (clarity.x - chaos.x) * organizationLevel,
       y: chaos.y + (clarity.y - chaos.y) * organizationLevel,
+      rotation: chaos.rotation * (1 - organizationLevel),
     };
   };
 
-  // Category labels
-  const categories = ["Input", "Processing", "Output", "Feedback"] as const;
+  // Dynamic headline based on organization level
+  const getHeadline = () => {
+    if (organizationLevel < 0.3) return "AI feels like chaos";
+    if (organizationLevel < 0.7) return "Organizing your acceleration plan...";
+    return "Your individualized acceleration plan";
+  };
+
+  const getCategoryColor = (category: Category) => {
+    const colors = {
+      Technical: "text-muted-foreground",
+      Commercial: "text-amber-600 dark:text-amber-400",
+      Organizational: "text-red-600 dark:text-red-400",
+      Competitive: "text-purple-600 dark:text-purple-400",
+    };
+    return colors[category];
+  };
 
   return (
     <section 
@@ -105,97 +139,85 @@ const ChaosToClarity = () => {
     >
       <div className="container-width">
         {/* Dynamic Headline */}
-        <div className="text-center mb-16 space-y-4">
-          <motion.h2 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground"
-            animate={{
-              opacity: 1,
-              fontWeight: organizationLevel < 0.5 ? 400 : 700,
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 transition-all duration-500"
+            style={{
+              fontWeight: 300 + (organizationLevel * 600),
+              opacity: 0.7 + (organizationLevel * 0.3),
             }}
-            transition={{ duration: 0.3 }}
           >
-            {organizationLevel < 0.3 
-              ? "AI feels like chaos" 
-              : organizationLevel < 0.7
-              ? "AI organizing into clarity"
-              : "AI becomes a clear framework"}
-          </motion.h2>
+            {getHeadline()}
+          </h2>
           <motion.p 
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            animate={{ opacity: organizationLevel > 0.5 ? 1 : 0.6 }}
+            animate={{ opacity: organizationLevel > 0.7 ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            {organizationLevel < 0.7
-              ? "Scattered concepts, overwhelming terminology, no clear path forward."
-              : "Organized into Input → Processing → Output → Feedback. A system that makes sense."}
+            We transform the overwhelming complexity into a clear, actionable roadmap.
           </motion.p>
-        </div>
+        </motion.div>
 
-        {/* Visualization Container */}
-        <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
-          {/* Category Labels (fade in as organized) */}
-          {categories.map((category) => {
-            const positions: Record<typeof category, { x: string; y: string }> = {
-              Input: { x: "15%", y: "30%" },
-              Processing: { x: "45%", y: "30%" },
-              Output: { x: "75%", y: "30%" },
-              Feedback: { x: "45%", y: "70%" },
-            };
+        {/* Category Labels - fade in when organized */}
+        <motion.div 
+          className="grid grid-cols-2 gap-8 max-w-4xl mx-auto mb-8"
+          animate={{ opacity: organizationLevel > 0.5 ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {["Technical", "Commercial", "Organizational", "Competitive"].map((cat) => (
+            <div 
+              key={cat} 
+              className={`text-sm font-bold uppercase tracking-wider text-center ${getCategoryColor(cat as Category)}`}
+            >
+              {cat}
+            </div>
+          ))}
+        </motion.div>
 
+        {/* Concepts Visualization */}
+        <div className="relative h-[500px] md:h-[600px] max-w-4xl mx-auto">
+          {concepts.map((concept, index) => {
+            const pos = getPosition(concept, index);
+            
             return (
               <motion.div
-                key={category}
-                className="absolute text-sm font-bold text-mint uppercase tracking-wide"
-                style={{
-                  left: positions[category].x,
-                  top: positions[category].y,
-                  transform: "translate(-50%, -50%)",
-                }}
+                key={concept.id}
+                className={`absolute px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border whitespace-nowrap
+                  ${organizationLevel > 0.7 ? 'bg-mint/10 border-mint/30 text-foreground' : 'bg-muted/50 border-border text-muted-foreground'}`}
                 animate={{
-                  opacity: organizationLevel > 0.5 ? 1 : 0,
-                  scale: organizationLevel > 0.5 ? 1 : 0.8,
+                  left: `${pos.x}%`,
+                  top: `${pos.y}%`,
+                  rotate: pos.rotation,
+                  opacity: 0.6 + (organizationLevel * 0.4),
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 20,
+                  mass: 0.5,
+                }}
+                style={{
+                  transform: 'translate(-50%, -50%)',
+                }}
               >
-                {category}
+                {concept.label}
               </motion.div>
             );
           })}
-
-          {/* Concepts */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            {concepts.map((concept) => {
-              const position = getPosition(concept);
-              
-              return (
-                <motion.div
-                  key={concept.id}
-                  className="absolute px-3 py-2 bg-muted/80 backdrop-blur-sm border border-border rounded-md text-xs md:text-sm font-medium text-foreground whitespace-nowrap"
-                  animate={{
-                    x: position.x,
-                    y: position.y,
-                    opacity: organizationLevel < 0.2 ? 0.6 : 1,
-                    rotate: organizationLevel < 0.5 ? (concept.id % 3 - 1) * 15 : 0,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 50,
-                    damping: 20,
-                  }}
-                >
-                  {concept.label}
-                </motion.div>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Bottom Message */}
+        {/* Final Message */}
         <motion.div 
-          className="text-center mt-12"
-          animate={{ opacity: organizationLevel > 0.7 ? 1 : 0 }}
+          className="text-center mt-16"
+          animate={{ opacity: organizationLevel > 0.8 ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <p className="text-sm text-muted-foreground italic">
-            This is what we do: turn chaos into clarity through systems thinking.
+          <p className="text-lg text-mint font-semibold">
+            Clear. Structured. Actionable.
           </p>
         </motion.div>
       </div>
