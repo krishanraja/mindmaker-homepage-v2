@@ -141,7 +141,7 @@ const Navigation = () => {
                     href={item.href}
                     className="text-sm font-semibold text-ink dark:text-white 
                       hover:text-mint transition-colors py-2 px-3 rounded-md 
-                      hover:bg-mint/5"
+                      hover:bg-mint/5 flex items-center"
                   >
                     {item.label}
                   </a>

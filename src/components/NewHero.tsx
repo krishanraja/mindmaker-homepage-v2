@@ -42,9 +42,9 @@ const NewHero = () => {
         <div className="max-w-4xl">
           <div className="space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
-              Become the next version of yourself:{" "}
+              Become the next version of yourself with{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 text-mint animate-pulse" style={{animationDuration: '2s'}}>a systems builder.</span>
+                <span className="relative z-10 text-mint animate-pulse" style={{animationDuration: '2s'}}>AI literacy for leaders</span>
                 <span className="absolute bottom-0 left-0 w-full h-4 bg-mint/30 -z-10 animate-expandWidth blur-sm"></span>
               </span>
             </h1>
