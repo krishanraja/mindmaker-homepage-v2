@@ -37,7 +37,9 @@ const Footer = () => {
                 Partners
               </a>
               <a 
-                href="/builder-economy" 
+                href="https://thebuildereconomy.com/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Builder Economy
