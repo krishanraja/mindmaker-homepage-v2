@@ -30,27 +30,27 @@ const BeforeAfterSplit = () => {
             <div className="space-y-4 text-sm text-muted-foreground">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>47 browser tabs open about "AI strategy"</p>
+                <p>47 browser tabs about "AI strategy"</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>Conflicting vendor whitepapers promising everything</p>
+                <p>Conflicting vendor promises everywhere</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>Scattered notes across 5 different apps</p>
+                <p>Scattered notes across 5 apps</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>Calendar packed with "AI alignment meetings" going nowhere</p>
+                <p>Endless AI meetings going nowhere</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>Team asking "Did you see this AI news?" every day</p>
+                <p>Team asking about AI news daily</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0" />
-                <p>Zero working prototypes. Zero conviction.</p>
+                <p>Zero prototypes. Zero conviction.</p>
               </div>
             </div>
 
@@ -77,19 +77,19 @@ const BeforeAfterSplit = () => {
             <div className="space-y-4 text-sm text-foreground">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
-                <p>Single organized decision framework (that actually makes sense)</p>
+                <p>Clear decision framework that makes sense</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
-                <p>Clear vendor evaluation criteria (no BS detector built-in)</p>
+                <p>Vendor evaluation criteria with BS detector</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
-                <p>Working prototype in production (real users, real feedback)</p>
+                <p>Working prototype in production</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
-                <p>Calendar: "AI Wins" blocks replacing endless alignment</p>
+                <p>Confident narrative and boardroom prep</p>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
@@ -98,10 +98,6 @@ const BeforeAfterSplit = () => {
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
                 <p>Confidence to say "no" to shiny objects</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-mint mt-2 flex-shrink-0" />
-                <p>Boss the Boardroom with data-driven AI insights</p>
               </div>
             </div>
 
