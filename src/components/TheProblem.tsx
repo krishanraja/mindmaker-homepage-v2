@@ -104,8 +104,8 @@ const TheProblem = () => {
 
   const renderDialogContent = () => {
     const aiDisclaimer = (
-      <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg">
-        <p className="text-xs text-amber-900 dark:text-amber-200">
+      <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <p className="text-xs text-red-900 dark:text-red-200">
           <strong>AI-Powered Sample:</strong> This tool uses AI trained on decades of proprietary data, decision-making frameworks, and cognitive research. However, this is an AI response for exploration purposes. Consultation with Krish is the next step for personalized guidance.
         </p>
       </div>
@@ -200,9 +200,9 @@ const TheProblem = () => {
               animate={isVisible ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-mint/10 border border-mint/30 rounded-lg text-sm">
-                <Sparkles className="w-4 h-4 text-mint flex-shrink-0" />
-                <span className="text-muted-foreground">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-mint/10 border border-mint/30 rounded-lg">
+                <Sparkles className="w-3.5 h-3.5 text-mint flex-shrink-0" />
+                <span className="text-muted-foreground text-[0.7rem]">
                   <strong className="text-foreground">Sample tools for exploration.</strong> Actual tool recommendations and strategies are delivered through our Sprint services.
                 </span>
               </div>
