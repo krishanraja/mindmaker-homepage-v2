@@ -144,7 +144,14 @@ async function getAccessToken(serviceAccount: any): Promise<string> {
 // Extract content from Vertex AI response with guards
 function extractContent(response: any): string {
   try {
-    const content = response?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const candidate = response?.candidates?.[0];
+    const content = candidate?.content?.parts?.[0]?.text;
+    
+    // Check if model hit token limit before generating content
+    if (candidate?.finishReason === 'MAX_TOKENS' && (!content || content.trim() === '')) {
+      console.warn('Model hit MAX_TOKENS before generating content');
+      return FALLBACK_MESSAGE;
+    }
     
     if (!content || typeof content !== 'string' || content.trim() === '') {
       console.warn('Empty or invalid content in Vertex AI response:', JSON.stringify(response));
@@ -191,7 +198,7 @@ async function callVertexAI(messages: any[], accessToken: string, isTryItWidget:
     },
     generation_config: {
       temperature: 0.8,
-      max_output_tokens: isTryItWidget ? 400 : 800,
+      max_output_tokens: isTryItWidget ? 1024 : 2048,
     },
   };
 
