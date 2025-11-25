@@ -13,7 +13,7 @@ interface AINewsResponse {
 }
 
 const CACHE_KEY = 'ai_news_cache';
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
 export const useAINewsTicker = () => {
   const [headlines, setHeadlines] = useState<NewsHeadline[]>([]);
@@ -61,12 +61,16 @@ export const useAINewsTicker = () => {
         
         // Use fallback headlines
         const fallbackHeadlines: NewsHeadline[] = [
-          { title: "OpenAI announces major advancement in reasoning capabilities", source: "OpenAI" },
-          { title: "Google DeepMind's Gemini 2.0 achieves breakthrough performance", source: "Google DeepMind" },
-          { title: "Anthropic's Claude 4 sets new standard for AI safety", source: "Anthropic" },
-          { title: "Microsoft integrates advanced AI across enterprise suite", source: "Microsoft" },
-          { title: "Meta releases open-source model rivaling proprietary systems", source: "Meta AI" },
-          { title: "AI adoption accelerates across Fortune 500 companies", source: "Industry Report" }
+          { title: "GPT-5 demonstrates breakthrough in reasoning and planning", source: "OpenAI" },
+          { title: "Gemini 3.0 Pro achieves new benchmark in multimodal AI", source: "Google DeepMind" },
+          { title: "Claude 4 sets new standard for AI safety and accuracy", source: "Anthropic" },
+          { title: "Microsoft Copilot integration drives enterprise productivity gains", source: "Microsoft" },
+          { title: "Meta's Llama 4 challenges proprietary AI models", source: "Meta AI" },
+          { title: "AI adoption surges across Fortune 500 with 80% implementation rate", source: "Industry Report" },
+          { title: "Midjourney V7 revolutionizes creative AI with photorealistic generation", source: "Midjourney" },
+          { title: "Amazon Bedrock expands AI capabilities for enterprises", source: "AWS" },
+          { title: "AI agents automate complex workflows across industries", source: "McKinsey Research" },
+          { title: "Regulatory frameworks evolve as AI deployment accelerates", source: "Policy Update" }
         ];
         
         setHeadlines(fallbackHeadlines);

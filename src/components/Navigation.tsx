@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon, ChevronDown, ExternalLink } from "lucide-react";
 import { useTheme } from "next-themes";
 import mindmakerFavicon from "/mindmaker-favicon.png";
+import { LightningLessons } from "@/components/LightningLessons";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ const Navigation = () => {
     { 
       label: "Content", 
       dropdown: [
-        { label: "The Builder Economy", href: "https://thebuilderseconomy.com", external: true, comingSoon: true },
+        { label: "The Builder Economy", href: "https://www.thebuildereconomy.com", external: true, comingSoon: true, allowClick: true },
         { label: "Blog", href: "https://content.themindmaker.ai", external: true },
       ]
     },
@@ -119,11 +120,13 @@ const Navigation = () => {
                             role="menuitem"
                             className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-md mx-2
                               transition-colors ${
-                              subItem.comingSoon 
+                              subItem.comingSoon && !subItem.allowClick
                                 ? 'text-muted-foreground/50 cursor-not-allowed' 
                                 : 'text-ink dark:text-white hover:bg-mint/10 hover:text-ink dark:hover:text-white'
                             }`}
-                            onClick={(e) => subItem.comingSoon && e.preventDefault()}
+                            onClick={(e) => {
+                              if (subItem.comingSoon && !subItem.allowClick) e.preventDefault();
+                            }}
                           >
                             <span>{subItem.label}</span>
                             {subItem.comingSoon && (
@@ -150,10 +153,15 @@ const Navigation = () => {
               </div>
             ))}
 
+            {/* Lightning Lessons */}
+            <div className="ml-4">
+              <LightningLessons />
+            </div>
+
             {/* Premium CTA Button */}
             <Button 
               size="sm" 
-              className="ml-6 relative touch-target"
+              className="ml-4 relative touch-target"
               onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
             >
               <span className="absolute -top-1 -right-1 w-2 h-2 bg-mint rounded-full animate-pulse" />
