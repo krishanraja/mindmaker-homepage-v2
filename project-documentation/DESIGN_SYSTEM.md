@@ -258,6 +258,14 @@ All colors, spacing, typography defined as CSS variables and Tailwind extensions
 - ✅ `bg-mint`, `text-ink`, `border-muted`
 - ❌ `bg-[#7ef4c2]`, `text-[#0e1a2b]`
 
+### Critical Contrast Rules
+- **NEVER use `text-mint` on white/light backgrounds** - insufficient contrast
+- Mint should only appear as:
+  - Background color for CTAs (`bg-mint`)
+  - Text color on dark backgrounds like ink sections (`text-mint` on `bg-ink`)
+  - Accent elements on dark surfaces
+- On white/light backgrounds, always use `text-foreground`, `text-ink`, or `text-muted-foreground`
+
 ---
 
 **End of DESIGN_SYSTEM**

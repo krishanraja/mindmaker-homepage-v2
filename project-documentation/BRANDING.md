@@ -209,9 +209,20 @@ mindmaker.ai
 - Minimum size: 120px width
 
 ### Color Application
-- **Mint:** Sparingly, for highlights and CTAs
+- **Mint:** Sparingly, for highlights and CTAs on dark backgrounds, never as text on white
 - **Ink:** Primary for text and structure
 - **White space:** Generous, never cramped
+
+### Contrast Rule (Critical)
+**Never use mint text on white/light backgrounds.** Poor contrast = poor accessibility.
+
+Mint usage:
+- ✅ Background for CTAs (`bg-mint`)
+- ✅ Text on dark backgrounds (`text-mint` on `bg-ink`)
+- ✅ Accent highlights in dark sections
+- ❌ Text on white backgrounds (`text-mint` on `bg-background`)
+
+On white backgrounds, use `text-foreground` or `text-ink` for proper readability.
 
 ### Photography
 - Real people, not stock photos

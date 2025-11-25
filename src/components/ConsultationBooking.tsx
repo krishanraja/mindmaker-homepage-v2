@@ -96,7 +96,7 @@ export const ConsultationBooking = ({ variant = 'default', preselectedProgram }:
   }
 
   return (
-    <Card className="p-6 md:p-8 max-w-2xl mx-auto">
+    <Card className="p-6 md:p-8">
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-mint/20 mb-4">
           <DollarSign className="w-8 h-8 text-mint" />
@@ -145,7 +145,7 @@ export const ConsultationBooking = ({ variant = 'default', preselectedProgram }:
           <div className="flex items-start gap-2 text-sm">
             <span className="text-lg">⚡</span>
             <div>
-              <span className="font-semibold text-mint">Holiday rates available</span>
+              <span className="font-semibold text-foreground">Holiday rates available</span>
               <span className="text-muted-foreground"> through December</span>
             </div>
           </div>
