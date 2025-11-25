@@ -179,8 +179,7 @@ const ChaosToClarity = () => {
               transition={{ duration: 0.6 }}
               className="text-base md:text-lg text-foreground/70 mt-4 leading-relaxed"
             >
-              Built for leaders navigating complexity. Grounded in your commercial reality. 
-              Designed to turn chaos into competitive advantage.
+              This is the critical missing piece before you deploy a six-figure consultant, and improves your confidence and decision making - ready for when you embark on a full AI strategy or transformation.
             </motion.p>
           )}
           </h2>
