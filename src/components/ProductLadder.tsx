@@ -39,7 +39,7 @@ const JourneySlider = () => {
   const currentOffering = offerings[currentIndex];
 
   return (
-    <div className="premium-card h-full flex flex-col">
+    <div className="premium-card h-full flex flex-col min-h-[440px]">
       <div className="inline-block bg-mint text-ink text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-lg w-fit">
         ⭐ RECOMMENDED
       </div>
@@ -162,11 +162,11 @@ const ProductLadder = () => {
                 {track.useSlider ? (
                   <JourneySlider />
                 ) : (
-                  <div className="space-y-4 flex-1 flex flex-col">
+                  <div className="h-full flex flex-col">
                     {track.offerings?.map((offering, offeringIndex) => (
                       <div 
                         key={offeringIndex}
-                        className="minimal-card flex flex-col"
+                        className="minimal-card h-full flex flex-col min-h-[440px]"
                       >
                         <h4 className="text-lg font-bold text-foreground mb-2">
                           {offering.name}
@@ -175,24 +175,26 @@ const ProductLadder = () => {
                           {offering.duration}
                         </div>
                         
-                        <p className="text-sm leading-relaxed mb-3 text-foreground">
+                        <p className="text-sm leading-relaxed mb-4 text-foreground">
                           {offering.description}
                         </p>
                         
                         {offering.image && (
-                          <div className="mb-3 overflow-hidden rounded-lg transition-all duration-300 hover:scale-[2.5] hover:z-50 hover:shadow-2xl cursor-zoom-in origin-center h-20">
-                            <img 
-                              src={offering.image} 
-                              alt={offering.name}
-                              className="w-full h-full object-cover transition-transform duration-300"
-                            />
+                          <div className="mb-4 flex-1 flex items-center justify-center overflow-visible relative group">
+                            <div className="w-full h-32 rounded-lg overflow-hidden border border-border/50 transition-all duration-300 group-hover:scale-[2] group-hover:z-50 group-hover:shadow-2xl cursor-zoom-in bg-background">
+                              <img 
+                                src={offering.image} 
+                                alt={offering.name}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
                           </div>
                         )}
                         
                         <Button
                           size="lg"
                           variant="default"
-                          className="w-full touch-target"
+                          className="w-full touch-target mt-auto"
                           onClick={() => window.location.href = offering.link}
                         >
                           {offering.cta}
