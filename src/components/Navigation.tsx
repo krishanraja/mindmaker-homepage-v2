@@ -25,7 +25,7 @@ const Navigation = () => {
     { 
       label: "Content", 
       dropdown: [
-        { label: "The Builder Economy", href: "https://www.thebuildereconomy.com", external: true, comingSoon: true, allowClick: true },
+        { label: "The Builder Economy", href: "https://thebuildereconomy.com/", external: true, comingSoon: true, allowClick: true },
         { label: "Blog", href: "https://content.themindmaker.ai", external: true },
       ]
     },
