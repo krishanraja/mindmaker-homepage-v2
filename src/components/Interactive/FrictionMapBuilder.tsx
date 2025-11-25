@@ -50,13 +50,13 @@ via https://themindmaker.ai
 
   if (frictionMap) {
     return (
-      <Card className="p-6 sm:p-8 bg-card/50 dark:bg-card/30 border border-border/50 dark:border-border/30 backdrop-blur-sm animate-in fade-in duration-500">
+      <Card className="p-6 sm:p-8 -mt-4 bg-white dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 shadow-lg animate-in fade-in duration-500">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold flex items-center gap-2 text-foreground dark:text-foreground">
-            <Sparkles className="h-5 w-5 text-mint" />
+          <h3 className="text-xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
+            <Sparkles className="h-5 w-5 text-mint dark:text-mint" />
             Your AI Friction Map
           </h3>
-          <Button variant="ghost" size="sm" onClick={clearFrictionMap}>
+          <Button variant="ghost" size="sm" onClick={clearFrictionMap} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             Build Another
           </Button>
         </div>
@@ -64,44 +64,44 @@ via https://themindmaker.ai
         <div className="space-y-6">
           {/* Problem */}
           <div>
-            <div className="text-xs font-bold text-muted-foreground mb-2">YOUR PROBLEM</div>
-            <div className="text-lg font-semibold">{frictionMap.problem}</div>
+            <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">YOUR PROBLEM</div>
+            <div className="text-lg font-semibold text-gray-900 dark:text-white">{frictionMap.problem}</div>
           </div>
 
           {/* States Comparison */}
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-muted/30 border border-border">
-              <div className="text-xs font-bold text-muted-foreground mb-2">CURRENT STATE</div>
-              <p className="text-sm">{frictionMap.currentState}</p>
+            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">CURRENT STATE</div>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{frictionMap.currentState}</p>
             </div>
-            <div className="p-4 rounded-lg bg-mint/10 border border-mint/20">
-              <div className="text-xs font-bold text-mint mb-2">AI-ENABLED STATE</div>
-              <p className="text-sm">{frictionMap.aiEnabledState}</p>
+            <div className="p-4 rounded-lg bg-mint/10 dark:bg-mint/20 border border-mint/30 dark:border-mint/40">
+              <div className="text-xs font-bold text-mint dark:text-mint mb-2">AI-ENABLED STATE</div>
+              <p className="text-sm text-gray-900 dark:text-white">{frictionMap.aiEnabledState}</p>
             </div>
           </div>
 
           {/* Time Saved */}
-          <div className="flex items-center justify-center gap-8 py-4 bg-background rounded-lg">
+          <div className="flex items-center justify-center gap-8 py-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg">
             <div className="text-center">
               <Clock className="h-6 w-6 text-mint mx-auto mb-2" />
-              <div className="text-2xl font-bold">{frictionMap.timeSaved}h</div>
-              <div className="text-xs text-muted-foreground">Saved per week</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">{frictionMap.timeSaved}h</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Saved per week</div>
             </div>
-            <ArrowRight className="h-6 w-6 text-muted-foreground" />
+            <ArrowRight className="h-6 w-6 text-gray-400 dark:text-gray-500" />
             <div className="text-center">
               <Zap className="h-6 w-6 text-mint mx-auto mb-2" />
-              <div className="text-2xl font-bold">{frictionMap.timeSaved * 52}h</div>
-              <div className="text-xs text-muted-foreground">Saved per year</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">{frictionMap.timeSaved * 52}h</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Saved per year</div>
             </div>
           </div>
 
           {/* Tool Recommendations */}
           <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3">RECOMMENDED TOOLS</div>
+            <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-3">RECOMMENDED TOOLS</div>
             <div className="space-y-2">
               {frictionMap.toolRecommendations.map((tool, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm">
-                  <div className="w-6 h-6 rounded-full bg-mint/20 text-mint flex items-center justify-center text-xs font-bold">
+                <div key={i} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                  <div className="w-6 h-6 rounded-full bg-mint/20 dark:bg-mint/30 text-mint flex items-center justify-center text-xs font-bold">
                     {i + 1}
                   </div>
                   {tool}
@@ -129,7 +129,7 @@ via https://themindmaker.ai
   }
 
   return (
-    <Card className="p-6 sm:p-8 bg-card/50 dark:bg-card/30 backdrop-blur-sm border border-border/50 dark:border-mint/30 hover:border-mint transition-colors">
+    <Card className="p-6 sm:p-8 -mt-4 bg-white dark:bg-gray-900/90 backdrop-blur-sm border border-gray-200 dark:border-gray-700 hover:border-mint dark:hover:border-mint transition-colors shadow-lg">
       <div className="mb-4">
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-mint animate-pulse" />
