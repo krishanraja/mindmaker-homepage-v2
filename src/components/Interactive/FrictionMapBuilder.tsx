@@ -70,12 +70,12 @@ via https://themindmaker.ai
 
           {/* States Comparison */}
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20">
-              <div className="text-xs font-bold text-destructive mb-2">CURRENT STATE</div>
+            <div className="p-4 rounded-lg bg-muted/30 border border-border">
+              <div className="text-xs font-bold text-muted-foreground mb-2">CURRENT STATE</div>
               <p className="text-sm">{frictionMap.currentState}</p>
             </div>
-            <div className="p-4 rounded-lg bg-success/10 border border-success/20">
-              <div className="text-xs font-bold text-success mb-2">AI-ENABLED STATE</div>
+            <div className="p-4 rounded-lg bg-mint/10 border border-mint/20">
+              <div className="text-xs font-bold text-mint mb-2">AI-ENABLED STATE</div>
               <p className="text-sm">{frictionMap.aiEnabledState}</p>
             </div>
           </div>
@@ -89,7 +89,7 @@ via https://themindmaker.ai
             </div>
             <ArrowRight className="h-6 w-6 text-muted-foreground" />
             <div className="text-center">
-              <Zap className="h-6 w-6 text-gold mx-auto mb-2" />
+              <Zap className="h-6 w-6 text-mint mx-auto mb-2" />
               <div className="text-2xl font-bold">{frictionMap.timeSaved * 52}h</div>
               <div className="text-xs text-muted-foreground">Saved per year</div>
             </div>
