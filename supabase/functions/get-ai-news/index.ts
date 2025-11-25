@@ -37,11 +37,11 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are an AI news curator. Generate realistic, impactful AI news headlines that sound like they could be from today. Focus on major developments from companies like OpenAI, Google (Gemini), Anthropic (Claude), Microsoft, Meta, etc. Make them sound professional and newsworthy.'
+            content: 'You are an AI news curator. Generate realistic, impactful AI news headlines that sound like they could be from today. Focus on major developments from companies like OpenAI, Google (Gemini), Anthropic (Claude), Microsoft, Meta, etc. Make them sound professional and newsworthy. Ensure all information is current and avoid referencing outdated model names or old events.'
           },
           {
             role: 'user',
-            content: 'Generate 6 major AI news headlines from today that would matter to business leaders. Format as JSON array with "title" and "source" fields. Examples: "ChatGPT Operator impresses with autonomous web browsing capabilities" (OpenAI), "Gemini 2.0 sets new benchmark in multimodal reasoning" (Google DeepMind), "Claude 4 achieves breakthrough in coding accuracy" (Anthropic).'
+            content: 'Generate 10-12 major AI news headlines from today that would matter to business leaders. Format as JSON array with "title" and "source" fields. Focus on recent developments and avoid outdated references. Examples: "GPT-5 demonstrates breakthrough reasoning capabilities" (OpenAI), "Gemini 3.0 sets new benchmark in multimodal understanding" (Google DeepMind), "Claude 4 achieves breakthrough in coding and analysis" (Anthropic).'
           }
         ],
         temperature: 0.8,
@@ -74,7 +74,7 @@ serve(async (req) => {
     // Validate and ensure we have proper format
     const validHeadlines = headlines
       .filter(h => h.title && h.source)
-      .slice(0, 6);
+      .slice(0, 12);
 
     if (validHeadlines.length === 0) {
       throw new Error('No valid headlines generated');
@@ -97,12 +97,16 @@ serve(async (req) => {
     
     // Return fallback headlines on error
     const fallbackHeadlines: NewsHeadline[] = [
-      { title: "OpenAI announces major advancement in reasoning capabilities", source: "OpenAI" },
-      { title: "Google DeepMind's Gemini 2.0 achieves breakthrough performance", source: "Google DeepMind" },
-      { title: "Anthropic's Claude 4 sets new standard for AI safety", source: "Anthropic" },
-      { title: "Microsoft integrates advanced AI across enterprise suite", source: "Microsoft" },
-      { title: "Meta releases open-source model rivaling proprietary systems", source: "Meta AI" },
-      { title: "AI adoption accelerates across Fortune 500 companies", source: "Industry Report" }
+      { title: "GPT-5 demonstrates breakthrough in reasoning and planning", source: "OpenAI" },
+      { title: "Gemini 3.0 Pro achieves new benchmark in multimodal AI", source: "Google DeepMind" },
+      { title: "Claude 4 sets new standard for AI safety and accuracy", source: "Anthropic" },
+      { title: "Microsoft Copilot integration drives enterprise productivity gains", source: "Microsoft" },
+      { title: "Meta's Llama 4 challenges proprietary AI models", source: "Meta AI" },
+      { title: "AI adoption surges across Fortune 500 with 80% implementation rate", source: "Industry Report" },
+      { title: "Midjourney V7 revolutionizes creative AI with photorealistic generation", source: "Midjourney" },
+      { title: "Amazon Bedrock expands AI capabilities for enterprises", source: "AWS" },
+      { title: "AI agents automate complex workflows across industries", source: "McKinsey Research" },
+      { title: "Regulatory frameworks evolve as AI deployment accelerates", source: "Policy Update" }
     ];
 
     return new Response(

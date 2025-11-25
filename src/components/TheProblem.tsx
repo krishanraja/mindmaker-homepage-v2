@@ -5,7 +5,7 @@ import { BuilderAssessment } from "@/components/Interactive/BuilderAssessment";
 import { FrictionMapBuilder } from "@/components/Interactive/FrictionMapBuilder";
 import { TryItWidget } from "@/components/Interactive/AIDecisionHelper";
 import { PortfolioBuilder } from "@/components/Interactive/PortfolioBuilder";
-import { User, Lightbulb, Map, TrendingUp } from "lucide-react";
+import { User, Lightbulb, Map, TrendingUp, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from "@/components/ui/carousel";
 import { useEffect } from "react";
@@ -103,6 +103,14 @@ const TheProblem = () => {
   ];
 
   const renderDialogContent = () => {
+    const aiDisclaimer = (
+      <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+        <p className="text-xs text-amber-900 dark:text-amber-200">
+          <strong>AI-Powered Sample:</strong> This tool uses AI trained on decades of proprietary data, decision-making frameworks, and cognitive research. However, this is an AI response for exploration purposes. Consultation with Krish is the next step for personalized guidance.
+        </p>
+      </div>
+    );
+
     switch (dialogType) {
       case 'quiz':
         return (
@@ -110,6 +118,7 @@ const TheProblem = () => {
             <DialogHeader>
               <DialogTitle>Builder Profile Quiz</DialogTitle>
             </DialogHeader>
+            {aiDisclaimer}
             <div className="mt-4">
               <BuilderAssessment compact={false} />
             </div>
@@ -121,6 +130,7 @@ const TheProblem = () => {
             <DialogHeader>
               <DialogTitle>AI Decision Helper</DialogTitle>
             </DialogHeader>
+            {aiDisclaimer}
             <div className="mt-4">
               <TryItWidget compact={false} />
             </div>
@@ -132,6 +142,7 @@ const TheProblem = () => {
             <DialogHeader>
               <DialogTitle>Friction Map Builder</DialogTitle>
             </DialogHeader>
+            {aiDisclaimer}
             <div className="mt-4">
               <FrictionMapBuilder compact={false} />
             </div>
@@ -143,6 +154,7 @@ const TheProblem = () => {
             <DialogHeader>
               <DialogTitle>Model out your starting points</DialogTitle>
             </DialogHeader>
+            {aiDisclaimer}
             <div className="mt-4">
               <PortfolioBuilder compact={false} />
             </div>
@@ -180,6 +192,22 @@ const TheProblem = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
               Lead from the front.
             </h2>
+            
+            {/* Disclaimer */}
+            <motion.div 
+              className="mb-6 max-w-3xl mx-auto"
+              initial={{ opacity: 0 }}
+              animate={isVisible ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-mint/10 border border-mint/30 rounded-lg text-sm">
+                <Sparkles className="w-4 h-4 text-mint flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  <strong className="text-foreground">Sample tools for exploration.</strong> Actual tool recommendations and strategies are delivered through our Sprint services.
+                </span>
+              </div>
+            </motion.div>
+            
             <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto">
               AI Agents will be working inside most businesses within six months. Are you ready to lead a new species of worker alongside your existing team? Creating a builder-mentality builds your muscle memory and starts your journey to becoming an AI forward leader.
             </p>

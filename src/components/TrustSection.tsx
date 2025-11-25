@@ -19,7 +19,7 @@ const TrustSection = () => {
       icon: TrendingUp,
     },
     {
-      quote: "It's great to help my portfolio build practically with an actual builder who has also run P&Ls",
+      quote: "It's great to have a way to help my portfolio with what's next with an actual builder who also gets the board room.",
       name: "Jennifer Park",
       role: "Managing Director",
       company: "PE Fund",
