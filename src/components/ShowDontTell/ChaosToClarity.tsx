@@ -181,7 +181,7 @@ const ChaosToClarity = () => {
             
             // Category label position (above its group)
             const labelPos = organizationLevel > 0.5 
-              ? { x: categoryPos.x, y: categoryPos.y - 12, rotation: 0 }
+              ? { x: categoryPos.x, y: categoryPos.y - 8, rotation: 0 }
               : getRandomPosition(categoryPieces[0].id - 100);
             
             return (
