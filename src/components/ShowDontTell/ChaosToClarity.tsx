@@ -116,15 +116,15 @@ const ChaosToClarity = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     
     const categoryPositions = isMobile ? {
-      Technical: { baseX: 20, baseY: 15 },
-      Commercial: { baseX: 80, baseY: 15 },
-      Organizational: { baseX: 20, baseY: 58 },
-      Competitive: { baseX: 80, baseY: 58 },
+      Technical: { baseX: 25, baseY: 15, anchor: 'center' },
+      Commercial: { baseX: 98, baseY: 15, anchor: 'right' },
+      Organizational: { baseX: 25, baseY: 58, anchor: 'center' },
+      Competitive: { baseX: 98, baseY: 58, anchor: 'right' },
     } : {
-      Technical: { baseX: 18, baseY: 22 },
-      Commercial: { baseX: 62, baseY: 22 },
-      Organizational: { baseX: 18, baseY: 62 },
-      Competitive: { baseX: 62, baseY: 62 },
+      Technical: { baseX: 18, baseY: 22, anchor: 'center' },
+      Commercial: { baseX: 62, baseY: 22, anchor: 'center' },
+      Organizational: { baseX: 18, baseY: 62, anchor: 'center' },
+      Competitive: { baseX: 62, baseY: 62, anchor: 'center' },
     };
 
     const categoryIndex = concepts
@@ -139,6 +139,7 @@ const ChaosToClarity = () => {
       x: base.baseX,
       y: base.baseY + offsetY,
       rotation: 0,
+      anchor: base.anchor,
     };
   };
 
@@ -235,7 +236,7 @@ const ChaosToClarity = () => {
               <div key={category}>
                 {/* Category Label */}
                 <motion.div
-                  className={`absolute text-xs md:text-sm font-bold uppercase tracking-wider md:whitespace-nowrap ${getCategoryColor(cat, true)}`}
+                  className={`absolute text-xs md:text-sm font-bold uppercase tracking-wider whitespace-nowrap ${getCategoryColor(cat, true)}`}
                   animate={{
                     left: `${labelPos.x}%`,
                     top: `${labelPos.y}%`,
@@ -249,7 +250,9 @@ const ChaosToClarity = () => {
                     mass: 0.8,
                   }}
                   style={{
-                    transform: 'translate(-50%, -50%)',
+                    transform: categoryPos.anchor === 'right' 
+                      ? 'translate(-100%, -50%)' 
+                      : 'translate(-50%, -50%)',
                   }}
                 >
                   {category}
@@ -258,11 +261,12 @@ const ChaosToClarity = () => {
                 {/* Category Concepts */}
                 {categoryPieces.map((concept, index) => {
                   const pos = getPosition(concept, index);
+                  const organizedPos = getOrganizedPosition(concept, index);
                   
                   return (
                     <motion.div
                       key={concept.id}
-                      className={`absolute px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border md:whitespace-nowrap max-w-[40vw] md:max-w-none text-center transition-colors duration-300
+                      className={`absolute px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border whitespace-nowrap transition-colors duration-300
                         ${organizationLevel > 0.7 
                           ? 'bg-muted/30 border-border text-foreground' 
                           : 'bg-muted/50 border-border text-muted-foreground'}`}
@@ -279,7 +283,9 @@ const ChaosToClarity = () => {
                         mass: 0.8,
                       }}
                       style={{
-                        transform: 'translate(-50%, -50%)',
+                        transform: organizedPos.anchor === 'right' 
+                          ? 'translate(-100%, -50%)' 
+                          : 'translate(-50%, -50%)',
                         zIndex: 1,
                       }}
                     >
