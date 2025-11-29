@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Clock, CheckCircle } from "lucide-react";
 import { ConsultationBooking } from "@/components/ConsultationBooking";
 import { SEO } from "@/components/SEO";
+import { ModuleExplorer } from "@/components/ModuleExplorer";
 
 const BuilderSession = () => {
   const seoData = {
@@ -120,6 +121,9 @@ const BuilderSession = () => {
               <li>• Are considering the 30-Day Sprint or Leadership Lab</li>
             </ul>
           </div>
+          
+          {/* Module Explorer */}
+          <ModuleExplorer context="individual" />
           
           {/* CTA */}
           <ConsultationBooking variant="default" preselectedProgram="builder-session" />

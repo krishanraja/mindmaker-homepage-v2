@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Calendar, CheckCircle } from "lucide-react";
 import { ConsultationBooking } from "@/components/ConsultationBooking";
 import { SEO } from "@/components/SEO";
+import { ModuleExplorer } from "@/components/ModuleExplorer";
 
 const BuilderSprint = () => {
   const seoData = {
@@ -166,6 +167,9 @@ const BuilderSprint = () => {
               <li>• A clear story you can tell the board about where this is going</li>
             </ul>
           </div>
+          
+          {/* Module Explorer */}
+          <ModuleExplorer context="individual" />
           
           {/* CTA */}
           <ConsultationBooking variant="default" />
