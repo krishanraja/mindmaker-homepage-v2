@@ -4,6 +4,7 @@ import { TrendingUp, CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SEO } from "@/components/SEO";
+import { ModuleExplorer } from "@/components/ModuleExplorer";
 
 const PartnerProgram = () => {
   const seoData = {
@@ -145,6 +146,9 @@ const PartnerProgram = () => {
               ))}
             </div>
           </div>
+          
+          {/* Module Explorer */}
+          <ModuleExplorer context="partner" />
           
           {/* CTA */}
           <Card className="p-8 text-center">

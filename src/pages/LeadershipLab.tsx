@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Users, CheckCircle } from "lucide-react";
 import { ConsultationBooking } from "@/components/ConsultationBooking";
 import { SEO } from "@/components/SEO";
+import { ModuleExplorer } from "@/components/ModuleExplorer";
 
 const LeadershipLab = () => {
   const seoData = {
@@ -154,6 +155,9 @@ const LeadershipLab = () => {
               ))}
             </div>
           </div>
+          
+          {/* Module Explorer */}
+          <ModuleExplorer context="team" />
           
           {/* CTA */}
           <ConsultationBooking variant="default" />
