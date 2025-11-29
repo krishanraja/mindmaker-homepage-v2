@@ -64,7 +64,7 @@ const NewHero = () => {
             </h1>
       
             <p className="text-base sm:text-lg md:text-xl lg:text-xl text-white/90 max-w-3xl font-light leading-relaxed">
-              AI Agents will be working inside most businesses within six months. Are you ready to lead a new species of worker alongside your existing team? Creating a builder-mentality builds your muscle memory and starts your journey to becoming an AI forward leader.
+              Most leaders feel behind on AI, but don't know what to actually do about it. Level up with a tailored, outcomes-focused accelerator - so you can outlive the unpredictable changes that lie ahead.
             </p>
               
             {/* Trust Bar */}
