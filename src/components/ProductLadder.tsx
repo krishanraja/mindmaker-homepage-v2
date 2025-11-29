@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { User, Users, TrendingUp } from "lucide-react";
+import { User, Users, TrendingUp, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import peerComparisonMatrix from "@/assets/peer-comparison-matrix.png";
 import battleTestStrategy from "@/assets/battle-test-strategy.png";
 import { InitialConsultModal } from "@/components/InitialConsultModal";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
 const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void }) => {
   const [journeyStage, setJourneyStage] = useState([0]);
@@ -88,8 +90,10 @@ const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void
 };
 
 const ProductLadder = () => {
+  const isMobile = useIsMobile();
   const [consultModalOpen, setConsultModalOpen] = useState(false);
   const [preselectedProgram, setPreselectedProgram] = useState<string | undefined>();
+  const [expandedTrack, setExpandedTrack] = useState<number | null>(0);
 
   // Auto-open modal when #book hash is present
   useEffect(() => {
@@ -165,76 +169,168 @@ const ProductLadder = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 sm:px-0">
-          {tracks.map((track, trackIndex) => {
-            const IconComponent = track.icon;
-            return (
-              <div key={trackIndex} className="fade-in-up flex flex-col" style={{animationDelay: `${trackIndex * 0.1}s`}}>
-                {/* Track Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-ink text-white rounded-md flex items-center justify-center flex-shrink-0">
-                    <IconComponent className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-muted-foreground">
-                      {track.label}
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">
-                      {track.title}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Track Content */}
-                {track.useSlider ? (
-                  <JourneySlider onBookClick={handleBookClick} />
-                ) : (
-                  <div className="h-full flex flex-col">
-                    {track.offerings?.map((offering, offeringIndex) => (
-                      <div 
-                        key={offeringIndex}
-                        className="minimal-card h-full flex flex-col min-h-[440px]"
-                      >
-                        <h4 className="text-lg font-bold text-foreground mb-2">
-                          {offering.name}
-                        </h4>
-                        <div className="text-xs text-muted-foreground mb-3">
-                          {offering.duration}
+        {isMobile ? (
+          // Mobile: Collapsible Accordion
+          <div className="space-y-4 px-4">
+            {tracks.map((track, trackIndex) => {
+              const IconComponent = track.icon;
+              const isExpanded = expandedTrack === trackIndex;
+              
+              return (
+                <Collapsible
+                  key={trackIndex}
+                  open={isExpanded}
+                  onOpenChange={(open) => setExpandedTrack(open ? trackIndex : null)}
+                  className="fade-in-up"
+                  style={{animationDelay: `${trackIndex * 0.1}s`}}
+                >
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex items-center justify-between p-4 bg-card rounded-lg border border-border hover:border-border/60 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-ink text-white rounded-md flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="h-5 w-5" />
                         </div>
-                        
-                        <p className="text-sm leading-relaxed mb-4 text-foreground">
-                          {offering.description}
-                        </p>
-                        
-                        {offering.image && (
-                          <div className="mb-4 flex-1 flex items-center justify-center overflow-visible relative group">
-                            <div className="w-full h-32 rounded-lg overflow-hidden border border-border/50 transition-all duration-300 md:group-hover:scale-[2] md:group-hover:z-50 md:group-hover:shadow-2xl md:cursor-zoom-in bg-background">
-                              <img 
-                                src={offering.image} 
-                                alt={offering.name}
-                                className="w-full h-full object-contain"
-                                loading="eager"
-                              />
-                            </div>
+                        <div className="text-left">
+                          <div className="text-xs font-bold text-muted-foreground">
+                            {track.label}
                           </div>
-                        )}
-                        
-                        <Button
-                          size="lg"
-                          variant="default"
-                          className="w-full touch-target mt-auto"
-                          onClick={() => handleBookClick(offering.program)}
-                        >
-                          {offering.cta}
-                        </Button>
+                          <h3 className="text-lg font-bold text-foreground">
+                            {track.title}
+                          </h3>
+                        </div>
                       </div>
-                    ))}
+                      <ChevronDown 
+                        className={`h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${
+                          isExpanded ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </div>
+                  </CollapsibleTrigger>
+                  
+                  <CollapsibleContent className="pt-4">
+                    {track.useSlider ? (
+                      <JourneySlider onBookClick={handleBookClick} />
+                    ) : (
+                      <div className="h-full flex flex-col">
+                        {track.offerings?.map((offering, offeringIndex) => (
+                          <div 
+                            key={offeringIndex}
+                            className="minimal-card h-full flex flex-col min-h-[440px]"
+                          >
+                            <h4 className="text-lg font-bold text-foreground mb-2">
+                              {offering.name}
+                            </h4>
+                            <div className="text-xs text-muted-foreground mb-3">
+                              {offering.duration}
+                            </div>
+                            
+                            <p className="text-sm leading-relaxed mb-4 text-foreground">
+                              {offering.description}
+                            </p>
+                            
+                            {offering.image && (
+                              <div className="mb-4 flex-1 flex items-center justify-center overflow-visible relative group">
+                                <div className="w-full h-32 rounded-lg overflow-hidden border border-border/50 transition-all duration-300 bg-background">
+                                  <img 
+                                    src={offering.image} 
+                                    alt={offering.name}
+                                    className="w-full h-full object-contain"
+                                    loading="eager"
+                                  />
+                                </div>
+                              </div>
+                            )}
+                            
+                            <Button
+                              size="lg"
+                              variant="default"
+                              className="w-full touch-target mt-auto"
+                              onClick={() => handleBookClick(offering.program)}
+                            >
+                              {offering.cta}
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+          </div>
+        ) : (
+          // Desktop: Original Grid Layout
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 sm:px-0">
+            {tracks.map((track, trackIndex) => {
+              const IconComponent = track.icon;
+              return (
+                <div key={trackIndex} className="fade-in-up flex flex-col" style={{animationDelay: `${trackIndex * 0.1}s`}}>
+                  {/* Track Header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-ink text-white rounded-md flex items-center justify-center flex-shrink-0">
+                      <IconComponent className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-muted-foreground">
+                        {track.label}
+                      </div>
+                      <h3 className="text-xl font-bold text-foreground">
+                        {track.title}
+                      </h3>
+                    </div>
                   </div>
-                )}
-              </div>
-          );
-        })}
-      </div>
+
+                  {/* Track Content */}
+                  {track.useSlider ? (
+                    <JourneySlider onBookClick={handleBookClick} />
+                  ) : (
+                    <div className="h-full flex flex-col">
+                      {track.offerings?.map((offering, offeringIndex) => (
+                        <div 
+                          key={offeringIndex}
+                          className="minimal-card h-full flex flex-col min-h-[440px]"
+                        >
+                          <h4 className="text-lg font-bold text-foreground mb-2">
+                            {offering.name}
+                          </h4>
+                          <div className="text-xs text-muted-foreground mb-3">
+                            {offering.duration}
+                          </div>
+                          
+                          <p className="text-sm leading-relaxed mb-4 text-foreground">
+                            {offering.description}
+                          </p>
+                          
+                          {offering.image && (
+                            <div className="mb-4 flex-1 flex items-center justify-center overflow-visible relative group">
+                              <div className="w-full h-32 rounded-lg overflow-hidden border border-border/50 transition-all duration-300 md:group-hover:scale-[2] md:group-hover:z-50 md:group-hover:shadow-2xl md:cursor-zoom-in bg-background">
+                                <img 
+                                  src={offering.image} 
+                                  alt={offering.name}
+                                  className="w-full h-full object-contain"
+                                  loading="eager"
+                                />
+                              </div>
+                            </div>
+                          )}
+                          
+                          <Button
+                            size="lg"
+                            variant="default"
+                            className="w-full touch-target mt-auto"
+                            onClick={() => handleBookClick(offering.program)}
+                          >
+                            {offering.cta}
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+            );
+          })}
+        </div>
+        )}
 
       {/* Initial Consult Modal */}
       <InitialConsultModal 
