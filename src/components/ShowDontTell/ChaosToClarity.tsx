@@ -103,9 +103,6 @@ const ChaosToClarity = () => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const isComplete = animationProgress >= 1;
 
-  // Don't render until isMobile is determined (not undefined)
-  if (isMobile === undefined) return null;
-
   const handleProgress = useCallback((delta: number) => {
     setAnimationProgress(prev => 
       Math.max(0, Math.min(1, prev + delta / 800))
@@ -118,6 +115,9 @@ const ChaosToClarity = () => {
     isComplete,
     enabled: true,
   });
+
+  // Don't render until isMobile is determined (not undefined)
+  if (isMobile === undefined) return null;
 
   // Chaotic random positions
   const getRandomPosition = (id: number) => {
