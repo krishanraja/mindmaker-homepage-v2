@@ -65,7 +65,7 @@ const Navigation = () => {
             <img 
               src={theme === "dark" ? mindmakerLogoLight : mindmakerLogoDark} 
               alt="Mindmaker" 
-              className="h-8 sm:h-10 md:h-12 w-auto max-w-[200px] sm:max-w-[280px] object-contain"
+              className="h-6 sm:h-7 md:h-7 w-auto max-w-[140px] sm:max-w-[170px] object-contain"
             />
             </a>
           </div>
