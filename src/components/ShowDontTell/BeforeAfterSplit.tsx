@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 const transformations = [
   { 
@@ -29,60 +30,31 @@ const transformations = [
 ];
 
 const BeforeAfterSplit = () => {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [animationProgress, setAnimationProgress] = useState(0);
+  const isComplete = animationProgress >= 1;
 
-  // Map raw scroll progress to animation progress with three phases
-  const getAnimationProgress = (rawProgress: number): number => {
-    // Phase 1: 0% → 25% scroll = 0% animation (Section enters, user reads "Before")
-    if (rawProgress < 0.25) return 0;
-    
-    // Phase 2: 25% → 65% scroll = 0% → 100% animation (Wipe moves 1:1 with scroll)
-    if (rawProgress < 0.65) {
-      return (rawProgress - 0.25) / 0.40; // 40% of scroll for the wipe
-    }
-    
-    // Phase 3: 65% → 100% scroll = 100% animation (Dwell zone - "After" stays visible)
-    return 1;
+  const { sectionRef, isLocked } = useScrollLock({
+    lockThreshold: 0.2,
+    onProgress: (delta) => {
+      setAnimationProgress(prev => 
+        Math.max(0, Math.min(1, prev + delta / 3000))
+      );
+    },
+    isComplete,
+  });
+
+  // Calculate progress for each item with stagger
+  const getItemProgress = (index: number) => {
+    const itemStart = index * 0.15;
+    const itemDuration = 0.20;
+    return Math.max(0, Math.min(1, (animationProgress - itemStart) / itemDuration));
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!wrapperRef.current) return;
-      
-      const wrapperRect = wrapperRef.current.getBoundingClientRect();
-      const wrapperHeight = wrapperRef.current.offsetHeight;
-      const viewportHeight = window.innerHeight;
-      
-      // Calculate raw progress: how far through the wrapper has the user scrolled?
-      // 0 when wrapper top is at viewport bottom, 1 when wrapper bottom exits viewport top
-      const rawProgress = (viewportHeight - wrapperRect.top) / (wrapperHeight + viewportHeight);
-      
-      setScrollProgress(Math.max(0, Math.min(1, rawProgress)));
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const animationProgress = getAnimationProgress(scrollProgress);
-
   return (
-    <div 
-      ref={wrapperRef}
-      className="relative bg-muted/30"
-      style={{ height: '200vh' }}
+    <section 
+      ref={sectionRef}
+      className="min-h-screen flex items-center justify-center bg-muted/30 px-4 py-16 md:py-24"
     >
-      <section 
-        className="sticky px-4 py-16 md:py-24"
-        style={{ 
-          top: '10vh',
-          height: '80vh',
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
       <div className="container mx-auto max-w-2xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -94,8 +66,8 @@ const BeforeAfterSplit = () => {
           </p>
         </div>
 
-        {/* Scroll progress indicator */}
-        {scrollProgress > 0 && scrollProgress < 1 && (
+        {/* Progress indicator */}
+        {isLocked && animationProgress < 1 && (
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="h-1 w-20 bg-muted rounded-full overflow-hidden">
               <motion.div 
@@ -105,13 +77,13 @@ const BeforeAfterSplit = () => {
             </div>
             <span className="text-xs text-muted-foreground">
               {animationProgress === 0 ? '↓ Scroll to transform' : 
-               animationProgress < 1 ? 'Scroll to reveal...' : 
+               animationProgress < 1 ? 'Keep scrolling...' : 
                '✓ Complete'}
             </span>
           </div>
         )}
 
-        {/* Two-layer card with horizontal sweep */}
+        {/* Two-layer card with horizontal wipe */}
         <div className="relative editorial-card overflow-hidden">
           {/* AFTER layer (bottom) - always visible */}
           <div className="space-y-6">
@@ -128,7 +100,7 @@ const BeforeAfterSplit = () => {
             {/* Items */}
             <div className="space-y-4">
               {transformations.map((item, index) => {
-                const itemProgress = getItemProgress(index, animationProgress);
+                const itemProgress = getItemProgress(index);
                 return (
                   <motion.div 
                     key={`after-${index}`}
@@ -207,7 +179,7 @@ const BeforeAfterSplit = () => {
             </div>
           </motion.div>
 
-          {/* Mint glow line at sweep edge */}
+          {/* Mint glow line at wipe edge */}
           {animationProgress > 0.05 && animationProgress < 0.95 && (
             <motion.div
               className="absolute top-0 bottom-0 w-1 pointer-events-none"
@@ -234,17 +206,24 @@ const BeforeAfterSplit = () => {
             </p>
           </motion.div>
         )}
+
+        {/* Scroll Lock Indicator */}
+        {isLocked && animationProgress < 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50"
+          >
+            <div className="bg-background/90 px-4 py-2 rounded-full border shadow-lg backdrop-blur-sm">
+              <span className="text-xs text-muted-foreground">
+                ↓ Keep scrolling ({Math.round(animationProgress * 100)}%)
+              </span>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
-    </div>
   );
-};
-
-// Calculate progress for each item with stagger
-const getItemProgress = (index: number, animationProgress: number) => {
-  const itemStart = index * 0.15;
-  const itemDuration = 0.20;
-  return Math.max(0, Math.min(1, (animationProgress - itemStart) / itemDuration));
 };
 
 export default BeforeAfterSplit;
