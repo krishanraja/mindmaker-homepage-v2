@@ -46,7 +46,7 @@ const JourneySlider = ({ onBookClick, navigate }: { onBookClick: (program: strin
   const currentOffering = offerings[currentIndex];
 
   return (
-    <div className="premium-card h-full flex flex-col min-h-[440px]">
+    <div className="premium-card h-full flex flex-col min-h-[440px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <div className="inline-block bg-mint text-ink text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-lg w-fit">
         ⭐ RECOMMENDED
       </div>
@@ -234,7 +234,7 @@ const ProductLadder = () => {
                         {track.offerings?.map((offering, offeringIndex) => (
                           <div 
                             key={offeringIndex}
-                            className="minimal-card h-full flex flex-col min-h-[440px]"
+                            className="minimal-card h-full flex flex-col min-h-[440px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                           >
                             <h4 className="text-lg font-bold text-foreground mb-2">
                               {offering.name}
@@ -313,7 +313,7 @@ const ProductLadder = () => {
                       {track.offerings?.map((offering, offeringIndex) => (
                         <div 
                           key={offeringIndex}
-                          className="minimal-card h-full flex flex-col min-h-[440px]"
+                          className="minimal-card h-full flex flex-col min-h-[440px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                         >
                           <h4 className="text-lg font-bold text-foreground mb-2">
                             {offering.name}
