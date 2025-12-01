@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.create-consultation-hold]
 verify_jwt = false
+
+[functions.send-lead-email]
+verify_jwt = false
