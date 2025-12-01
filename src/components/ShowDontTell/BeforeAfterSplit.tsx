@@ -38,22 +38,22 @@ const BeforeAfterSplit = () => {
       
       const rect = sectionRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
+      const sectionHeight = rect.height;
       
-      // Start when section enters viewport, complete when it reaches center
-      const triggerStart = viewportHeight * 0.8; // Start at 80% down viewport
-      const triggerEnd = viewportHeight * 0.3;   // Complete at 30% down viewport
+      // Animation spans from when section enters viewport until it's scrolled 40% through
+      // This gives the user much more time to watch the transformation
+      const enterPoint = viewportHeight; // Section top enters at bottom of viewport
+      const exitPoint = -sectionHeight * 0.4; // Complete when 40% of section has scrolled past top
       
       let progress = 0;
       
-      if (rect.top < triggerStart && rect.top > triggerEnd) {
-        // Active transformation zone
-        progress = 1 - ((rect.top - triggerEnd) / (triggerStart - triggerEnd));
-      } else if (rect.top <= triggerEnd) {
-        // Fully transformed
+      if (rect.top < enterPoint && rect.top > exitPoint) {
+        progress = (enterPoint - rect.top) / (enterPoint - exitPoint);
+      } else if (rect.top <= exitPoint) {
         progress = 1;
       }
       
-      setScrollProgress(progress);
+      setScrollProgress(Math.max(0, Math.min(1, progress)));
     };
 
     handleScroll();
@@ -76,6 +76,21 @@ const BeforeAfterSplit = () => {
             Watch chaos become clarity
           </p>
         </div>
+
+        {/* Scroll progress indicator */}
+        {scrollProgress > 0 && scrollProgress < 1 && (
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-20 bg-muted rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-mint rounded-full"
+                style={{ width: `${scrollProgress * 100}%` }}
+              />
+            </div>
+            <span className="text-xs text-muted-foreground">
+              {scrollProgress < 0.5 ? '↓ Keep scrolling' : 'Almost there...'}
+            </span>
+          </div>
+        )}
 
         {/* Two-layer card with horizontal sweep */}
         <div className="relative editorial-card overflow-hidden">
@@ -133,6 +148,7 @@ const BeforeAfterSplit = () => {
             style={{
               clipPath: `inset(0 0 0 ${scrollProgress * 100}%)`,
             }}
+            transition={{ type: "tween", ease: "easeOut", duration: 0.1 }}
           >
             <div className="space-y-6 p-6">
               {/* Header */}

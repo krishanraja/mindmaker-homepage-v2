@@ -92,7 +92,7 @@ const WhitepaperPopup = () => {
         <Button
           variant="outline"
           size={isMobile ? "default" : "lg"}
-          className="w-full"
+          className="w-full dark:border-foreground/50 dark:text-foreground dark:hover:bg-foreground/10"
           onClick={handleClose}
         >
           Maybe Later

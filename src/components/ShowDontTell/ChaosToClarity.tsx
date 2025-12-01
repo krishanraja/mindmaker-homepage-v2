@@ -67,8 +67,8 @@ const ChaosToClarity = () => {
         // This prevents rapid switching that causes flashing
         const organizationLevel = 
           progress < 0.15 ? 0 : 
-          progress > 0.5 ? 1 : 
-          (progress - 0.15) / 0.35;
+          progress > 0.45 ? 1 : 
+          (progress - 0.15) / 0.30;
         
         if (organizationLevel < 0.25 && headlinePhase !== 'chaos') {
           setHeadlinePhase('chaos');
@@ -91,11 +91,11 @@ const ChaosToClarity = () => {
     };
   }, [headlinePhase]);
 
-  // Faster animation: 0.15-0.5 instead of 0.2-0.8
+  // Faster animation: 0.15-0.45 instead of 0.2-0.8 (completes 5% earlier)
   const organizationLevel = 
     scrollProgress < 0.15 ? 0 : 
-    scrollProgress > 0.5 ? 1 : 
-    (scrollProgress - 0.15) / 0.35;
+    scrollProgress > 0.45 ? 1 : 
+    (scrollProgress - 0.15) / 0.30;
 
   // Chaotic random positions
   const getRandomPosition = (id: number) => {
@@ -237,7 +237,9 @@ const ChaosToClarity = () => {
               <div key={category}>
                 {/* Category Label */}
                 <motion.div
-                  className={`absolute text-xs md:text-sm font-bold uppercase tracking-wider whitespace-nowrap ${getCategoryColor(cat, true)}`}
+                  className={`absolute text-xs md:text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${
+                    organizationLevel > 0.7 ? 'scale-105' : ''
+                  } ${getCategoryColor(cat, true)}`}
                   animate={{
                     left: `${labelPos.x}%`,
                     top: `${labelPos.y}%`,
