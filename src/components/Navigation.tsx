@@ -10,15 +10,16 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [lessonsExpanded, setLessonsExpanded] = useState(false);
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const navItems = [
     { 
       label: "Individuals", 
       dropdown: [
-        { label: "Builder Session", href: "/builder-session" },
-        { label: "Weekly Updates", href: "/builder-session" },
-        { label: "90-Day Program", href: "/builder-sprint" },
+        { label: "One-Off", href: "/builder-session" },
+        { label: "Weekly", href: "/builder-session" },
+        { label: "90-Day Sprint", href: "/builder-sprint" },
       ]
     },
     { label: "Teams", href: "/leadership-lab" },
@@ -227,7 +228,7 @@ const Navigation = () => {
                                 : 'text-ink dark:text-white hover:bg-mint/10'
                             }`}
                             onClick={(e) => {
-                              if (subItem.comingSoon) e.preventDefault();
+                              if (subItem.comingSoon && !subItem.allowClick) e.preventDefault();
                               else setIsOpen(false);
                             }}
                           >
@@ -268,10 +269,58 @@ const Navigation = () => {
                 Builder Economy
               </a>
               
-              {/* Lightning Lessons in Mobile */}
+              {/* Free Lightning Lessons - Expandable in Mobile */}
               <div className="h-px bg-border my-2" />
-              <div className="px-4 py-2">
-                <LightningLessons />
+              <div className="py-2">
+                <button 
+                  onClick={() => setLessonsExpanded(!lessonsExpanded)}
+                  className="w-full text-xs font-bold uppercase tracking-wider 
+                    text-muted-foreground mb-3 px-4 flex items-center justify-between"
+                >
+                  Free Lightning Lessons
+                  <ChevronDown className={`h-4 w-4 transition-transform ${lessonsExpanded ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {lessonsExpanded && (
+                  <div className="flex flex-col space-y-1">
+                    <a 
+                      href="https://maven.com/p/1eb66a" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="min-h-[44px] flex items-center justify-between px-4 py-3 
+                        text-base font-medium text-ink dark:text-white 
+                        hover:bg-mint/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span>Learn How To Program Your AI Tools</span>
+                      <ExternalLink className="h-3 w-3 flex-shrink-0 ml-2" />
+                    </a>
+                    <a 
+                      href="https://maven.com/p/1054a6" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="min-h-[44px] flex items-center justify-between px-4 py-3 
+                        text-base font-medium text-ink dark:text-white 
+                        hover:bg-mint/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span>Build In Public with Gen AI</span>
+                      <ExternalLink className="h-3 w-3 flex-shrink-0 ml-2" />
+                    </a>
+                    <a 
+                      href="https://maven.com/p/b95f6c" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="min-h-[44px] flex items-center justify-between px-4 py-3 
+                        text-base font-medium text-ink dark:text-white 
+                        hover:bg-mint/10 rounded-md transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span>Vibe Code Your Way To Income</span>
+                      <ExternalLink className="h-3 w-3 flex-shrink-0 ml-2" />
+                    </a>
+                  </div>
+                )}
               </div>
               
               <Button 
