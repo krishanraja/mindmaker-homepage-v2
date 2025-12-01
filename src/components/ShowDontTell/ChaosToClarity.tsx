@@ -116,8 +116,18 @@ const ChaosToClarity = () => {
     enabled: true,
   });
 
-  // Don't render until isMobile is determined (not undefined)
-  if (isMobile === undefined) return null;
+  // Show loading skeleton until isMobile is determined
+  if (isMobile === undefined) {
+    return (
+      <section className="section-padding bg-background py-32 relative overflow-hidden min-h-screen flex flex-col justify-center">
+        <div className="container-width">
+          <div className="text-center mb-16">
+            <div className="h-12 bg-muted/20 rounded-lg w-3/4 mx-auto animate-pulse" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   // Chaotic random positions
   const getRandomPosition = (id: number) => {
@@ -136,10 +146,10 @@ const ChaosToClarity = () => {
   // Organized 2x2 grid positions
   const getOrganizedPosition = (concept: Concept, index: number) => {
     const categoryPositions = isMobile ? {
-      Technical: { baseX: 10, baseY: 18, translateX: '0%' },
-      Commercial: { baseX: 90, baseY: 18, translateX: '-100%' },
-      Organizational: { baseX: 10, baseY: 55, translateX: '0%' },
-      Competitive: { baseX: 90, baseY: 55, translateX: '-100%' },
+      Technical: { baseX: 15, baseY: 18, translateX: '0%' },
+      Commercial: { baseX: 85, baseY: 18, translateX: '-100%' },
+      Organizational: { baseX: 15, baseY: 55, translateX: '0%' },
+      Competitive: { baseX: 85, baseY: 55, translateX: '-100%' },
     } : {
       Technical: { baseX: 30, baseY: 22, translateX: '-50%' },
       Commercial: { baseX: 70, baseY: 22, translateX: '-50%' },
@@ -250,7 +260,7 @@ const ChaosToClarity = () => {
         </motion.div>
 
         {/* Concepts Visualization */}
-        <div className="relative h-[500px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden">
+        <div className="relative h-[500px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden px-2 md:px-0">
           {Object.entries(groupedConcepts).map(([category, categoryPieces]) => {
             const cat = category as Category;
             const categoryPos = getOrganizedPosition(categoryPieces[0], 0);
