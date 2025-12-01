@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useSessionData } from "@/contexts/SessionDataContext";
 
 interface InitialConsultModalProps {
   open: boolean;
@@ -19,36 +20,32 @@ interface InitialConsultModalProps {
 export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: InitialConsultModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [selectedProgram, setSelectedProgram] = useState(preselectedProgram || "");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const { sessionData } = useSessionData();
 
   const programs = [
     { 
-      value: "builder-session", 
-      label: "Builder Session", 
-      subtitle: "60 min one-off",
+      value: "for-you", 
+      label: "For You", 
+      subtitle: "Individual leadership development",
       originalPrice: "$250",
       currentPrice: "$150",
       priceNote: "Holiday rate until Jan 1"
     },
     { 
-      value: "builder-sprint", 
-      label: "AI Literacy-to-Influence", 
-      subtitle: "90 days",
+      value: "for-team", 
+      label: "For Your Leadership Team", 
+      subtitle: "Executive team transformation",
       currentPrice: "Scope call"
     },
     { 
-      value: "leadership-lab", 
-      label: "AI Leadership Lab", 
-      subtitle: "Team workshop",
-      currentPrice: "Scope call"
-    },
-    { 
-      value: "partner-program", 
-      label: "Portfolio Partner Program", 
-      subtitle: "6-12 months"
+      value: "for-portfolio", 
+      label: "For Your Business Portfolio", 
+      subtitle: "Multi-company enablement"
     },
     { 
       value: "not-sure", 
@@ -60,7 +57,7 @@ export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !email || !selectedProgram) {
+    if (!name || !email || !jobTitle || !selectedProgram) {
       toast({
         title: "Missing information",
         description: "Please fill in all fields",
@@ -74,14 +71,30 @@ export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: 
     try {
       const selectedProgramData = programs.find(p => p.value === selectedProgram);
       
+      // Send enriched lead email
+      const { error: emailError } = await supabase.functions.invoke('send-lead-email', {
+        body: {
+          name,
+          email,
+          jobTitle,
+          selectedProgram,
+          sessionData
+        }
+      });
+
+      if (emailError) {
+        console.error('Email error:', emailError);
+        // Don't block the booking flow if email fails
+      }
+      
       // For partner program, go directly to Calendly
-      if (selectedProgram === 'partner-program') {
+      if (selectedProgram === 'for-portfolio') {
         const calendlyUrl = `https://calendly.com/krish-raja/mindmaker-meeting?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&prefill_email=${encodeURIComponent(email)}&prefill_name=${encodeURIComponent(name)}&a1=${encodeURIComponent(selectedProgram)}`;
         window.open(calendlyUrl, '_blank');
         onOpenChange(false);
         toast({
           title: "Opening Calendly",
-          description: "Booking your partner consultation...",
+          description: "Booking your consultation...",
         });
         return;
       }
@@ -168,8 +181,8 @@ export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: 
         </RadioGroup>
       </div>
 
-      {/* Name & Email */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Name, Job Title & Email */}
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input
@@ -177,6 +190,16 @@ export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: 
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your name"
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="jobTitle">Job Title</Label>
+          <Input
+            id="jobTitle"
+            value={jobTitle}
+            onChange={(e) => setJobTitle(e.target.value)}
+            placeholder="e.g. CEO, VP of Operations"
             required
           />
         </div>
@@ -195,15 +218,15 @@ export const InitialConsultModal = ({ open, onOpenChange, preselectedProgram }: 
 
       {/* Value Props */}
       <div className="bg-muted/50 rounded-lg p-4 space-y-2 border border-border/50">
-        {selectedProgram === 'partner-program' ? (
+        {selectedProgram === 'for-portfolio' ? (
           <div className="flex items-start gap-2 text-sm">
             <span className="text-lg">🎯</span>
             <div>
-              <span className="font-semibold">Partner Program</span>
-              <span className="text-muted-foreground"> • Free consultation for portfolio partners • Direct booking</span>
+              <span className="font-semibold">Portfolio Program</span>
+              <span className="text-muted-foreground"> • Free consultation • Direct booking</span>
             </div>
           </div>
-        ) : selectedProgram === 'builder-sprint' || selectedProgram === 'leadership-lab' ? (
+        ) : selectedProgram === 'for-team' || selectedProgram === 'not-sure' ? (
           <div className="flex items-start gap-2 text-sm">
             <span className="text-lg">📞</span>
             <div>

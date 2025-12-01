@@ -6,11 +6,13 @@ import { Loader2, Sparkles } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { MarkdownResponse } from '@/components/ui/markdown-response';
+import { useSessionData } from '@/contexts/SessionDataContext';
 
 const TryItWidget = () => {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { addTryItChallenge } = useSessionData();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +36,9 @@ const TryItWidget = () => {
 
       if (error) throw error;
 
-      setResponse(data?.message || 'Unable to generate response. Please try again.');
+      const aiResponse = data?.message || 'Unable to generate response. Please try again.';
+      setResponse(aiResponse);
+      addTryItChallenge(input, aiResponse);
     } catch (error: any) {
       console.error('Error:', error);
       if (error.message?.includes('429')) {

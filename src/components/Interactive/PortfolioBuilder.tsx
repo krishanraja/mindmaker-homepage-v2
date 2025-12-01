@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { usePortfolio } from '@/hooks/usePortfolio';
 import { TrendingUp, Download, ArrowRight } from 'lucide-react';
+import { useSessionData } from '@/contexts/SessionDataContext';
 
 interface PortfolioBuilderProps {
   compact?: boolean;
@@ -14,6 +15,22 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
   const { tasks, toggleTask, updateTaskHours, getPortfolioData } = usePortfolio();
   const [showResults, setShowResults] = useState(false);
   const portfolioData = getPortfolioData();
+  const { setPortfolioBuilder } = useSessionData();
+
+  useEffect(() => {
+    if (showResults) {
+      const portfolio = getPortfolioData();
+      setPortfolioBuilder({
+        selectedTasks: portfolio.tasks.map(t => ({
+          name: t.name,
+          hours: t.hoursPerWeek,
+          savings: t.potentialSavings
+        })),
+        totalTimeSaved: portfolio.totalTimeSaved,
+        totalCostSavings: portfolio.totalCostSavings
+      });
+    }
+  }, [showResults, getPortfolioData, setPortfolioBuilder]);
 
   const handleGenerate = () => {
     if (portfolioData.tasks.length > 0) {

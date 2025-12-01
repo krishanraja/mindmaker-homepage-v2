@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { useFrictionMap } from '@/hooks/useFrictionMap';
 import { ArrowRight, Download, Sparkles, Clock, Zap } from 'lucide-react';
+import { useSessionData } from '@/contexts/SessionDataContext';
 
 interface FrictionMapBuilderProps {
   compact?: boolean;
@@ -12,6 +13,13 @@ interface FrictionMapBuilderProps {
 export const FrictionMapBuilder = ({ compact = false }: FrictionMapBuilderProps) => {
   const [problem, setProblem] = useState('');
   const { frictionMap, isGenerating, generateFrictionMap, clearFrictionMap } = useFrictionMap();
+  const { setFrictionMap } = useSessionData();
+
+  useEffect(() => {
+    if (frictionMap) {
+      setFrictionMap(frictionMap);
+    }
+  }, [frictionMap, setFrictionMap]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

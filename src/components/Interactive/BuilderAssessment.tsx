@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAssessment } from '@/hooks/useAssessment';
 import { ArrowRight, RotateCcw, Award, CheckCircle2 } from 'lucide-react';
+import { useSessionData } from '@/contexts/SessionDataContext';
+import { useEffect } from 'react';
 
 interface BuilderAssessmentProps {
   compact?: boolean;
@@ -9,6 +11,18 @@ interface BuilderAssessmentProps {
 
 export const BuilderAssessment = ({ compact = false }: BuilderAssessmentProps) => {
   const { currentStep, questions, answers, profile, answerQuestion, nextQuestion, reset } = useAssessment();
+  const { setAssessment } = useSessionData();
+
+  useEffect(() => {
+    if (profile) {
+      setAssessment({
+        answers,
+        profileType: profile.type,
+        profileDescription: profile.description,
+        recommendedProduct: profile.recommendedProduct
+      });
+    }
+  }, [profile, answers, setAssessment]);
 
   // Compact mode - Results view
   if (compact && profile) {
