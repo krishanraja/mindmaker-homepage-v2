@@ -60,16 +60,22 @@ const Navigation = () => {
       <div className="container-width px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center mr-12">
             <a href="/" className="transition-opacity hover:opacity-80">
               <img 
                 src={mindmakerLogoDark} 
-                alt="Mindmaker" 
+                alt="Mindmaker"
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
                 className="h-7 sm:h-8 md:h-[24px] w-auto max-w-[150px] sm:max-w-[180px] object-contain dark:hidden"
               />
               <img 
                 src={mindmakerLogoLight} 
-                alt="Mindmaker" 
+                alt="Mindmaker"
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
                 className="h-7 sm:h-8 md:h-[24px] w-auto max-w-[150px] sm:max-w-[180px] object-contain hidden dark:block"
               />
             </a>
