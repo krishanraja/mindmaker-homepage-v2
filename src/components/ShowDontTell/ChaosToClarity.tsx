@@ -135,21 +135,26 @@ const ChaosToClarity = () => {
     const randX = Math.abs((Math.sin(seed) * 10000) % 100) / 100;
     const randY = Math.abs((Math.cos(seed * 1.5) * 10000) % 100) / 100;
     
+    // On mobile, constrain X to center band (30-70%) to prevent clipping
+    const xMin = isMobile ? 30 : 10;
+    const xRange = isMobile ? 40 : 80;
+    
     return {
-      x: 10 + randX * 80,
+      x: xMin + randX * xRange,
       y: 10 + randY * 80,
       rotation: (randX - 0.5) * 30,
-      translateX: '0%',
+      translateX: isMobile ? '-50%' : '0%',
     };
   };
 
-  // Organized 2x2 grid positions
+  // Organized positions: vertical stack on mobile, 2x2 grid on desktop
   const getOrganizedPosition = (concept: Concept, index: number) => {
     const categoryPositions = isMobile ? {
-      Technical: { baseX: 15, baseY: 18, translateX: '0%' },
-      Commercial: { baseX: 85, baseY: 18, translateX: '-100%' },
-      Organizational: { baseX: 15, baseY: 55, translateX: '0%' },
-      Competitive: { baseX: 85, baseY: 55, translateX: '-100%' },
+      // VERTICAL STACK - all centered at 50% with -50% translate
+      Technical: { baseX: 50, baseY: 8, translateX: '-50%' },
+      Commercial: { baseX: 50, baseY: 30, translateX: '-50%' },
+      Organizational: { baseX: 50, baseY: 52, translateX: '-50%' },
+      Competitive: { baseX: 50, baseY: 74, translateX: '-50%' },
     } : {
       Technical: { baseX: 30, baseY: 22, translateX: '-50%' },
       Commercial: { baseX: 70, baseY: 22, translateX: '-50%' },
@@ -168,7 +173,7 @@ const ChaosToClarity = () => {
     }
 
     const base = categoryPositions[concept.category];
-    const offsetY = categoryIndex * (isMobile ? 6.5 : 7);
+    const offsetY = categoryIndex * (isMobile ? 4.5 : 7);
 
     return {
       x: base.baseX,
@@ -260,7 +265,7 @@ const ChaosToClarity = () => {
         </motion.div>
 
         {/* Concepts Visualization */}
-        <div className="relative h-[500px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden px-2 md:px-0">
+        <div className="relative h-[550px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden px-2 md:px-0">
           {Object.entries(groupedConcepts).map(([category, categoryPieces]) => {
             const cat = category as Category;
             const categoryPos = getOrganizedPosition(categoryPieces[0], 0);
