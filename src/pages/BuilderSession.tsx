@@ -30,9 +30,10 @@ const BuilderSession = () => {
       },
       "offers": {
         "@type": "Offer",
-        "price": "348",
+        "price": "150",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2025-01-01"
       }
     }
   };
@@ -118,7 +119,7 @@ const BuilderSession = () => {
               <li>• Are tired of AI decks that go nowhere</li>
               <li>• Want to see what building with AI actually looks like</li>
               <li>• Have one specific problem they want to solve</li>
-              <li>• Are considering the 30-Day Sprint or Leadership Lab</li>
+              <li>• Are considering the 90-Day Program or Leadership Lab</li>
             </ul>
           </div>
           

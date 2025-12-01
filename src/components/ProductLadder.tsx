@@ -16,6 +16,7 @@ const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void
       name: "Drop In Builder Session",
       duration: "60 minutes",
       description: "Live session with Krish. Bring one real leadership problem. Leave with an AI friction map, 1-2 draft systems, and written follow-up with prompts.",
+      pricing: "$250 → $150 until Jan 1",
       cta: "Book Session",
       program: "builder-session",
       intensity: "Light Touch",
@@ -29,9 +30,9 @@ const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void
       intensity: "Steady Build",
     },
     {
-      name: "30-Day Builder Sprint",
-      duration: "4 weeks intensive",
-      description: "For senior leaders. Build 3-5 working AI-enabled systems around your actual week. Leave with a Builder Dossier and 90-day plan.",
+      name: "AI Literacy-to-Influence",
+      duration: "90 days",
+      description: "For senior leaders. Build working AI-enabled systems around your actual week. Leave with a Builder Dossier and implementation plan.",
       cta: "Learn More",
       program: "builder-sprint",
       intensity: "Deep Dive",
@@ -59,7 +60,7 @@ const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void
         <div className="flex justify-between text-xs text-muted-foreground">
           <span className={journeyStage[0] <= 33 ? "text-foreground font-semibold" : ""}>1 hr</span>
           <span className={journeyStage[0] > 33 && journeyStage[0] <= 66 ? "text-foreground font-semibold" : ""}>4 weeks</span>
-          <span className={journeyStage[0] > 66 ? "text-foreground font-semibold" : ""}>30 days</span>
+          <span className={journeyStage[0] > 66 ? "text-foreground font-semibold" : ""}>90 days</span>
         </div>
       </div>
 
@@ -71,6 +72,12 @@ const JourneySlider = ({ onBookClick }: { onBookClick: (program: string) => void
         <div className="text-xs text-muted-foreground mb-3">
           {currentOffering.duration}
         </div>
+        
+        {currentOffering.pricing && (
+          <div className="text-sm font-bold text-mint mb-3">
+            {currentOffering.pricing}
+          </div>
+        )}
         
         <p className="text-sm leading-relaxed mb-4 text-foreground flex-1">
           {currentOffering.description}

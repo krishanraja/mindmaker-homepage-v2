@@ -7,15 +7,15 @@ import { ModuleExplorer } from "@/components/ModuleExplorer";
 
 const BuilderSprint = () => {
   const seoData = {
-    title: "30-Day Builder Sprint - Build 3-5 AI Systems",
-    description: "4-week intensive program for senior leaders. Build 3-5 working AI systems around your actual work. Leave with a Builder Dossier and 90-day implementation plan. No coding required.",
+    title: "AI Literacy-to-Influence - 90-Day Builder Program",
+    description: "90-day intensive program for senior leaders. Build working AI systems around your actual work. Leave with a Builder Dossier and implementation plan. No coding required.",
     canonical: "/builder-sprint",
-    keywords: "AI builder sprint, executive AI training, AI systems building, hands-on AI program, AI for leaders, 30-day AI program, AI implementation, practical AI training",
+    keywords: "AI literacy program, executive AI training, AI systems building, hands-on AI program, AI for leaders, 90-day AI program, AI implementation, practical AI training, AI influence",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "30-Day Builder Sprint",
-      "description": "4-week intensive program for senior leaders to build 3-5 working AI-enabled systems around their actual work",
+      "name": "AI Literacy-to-Influence",
+      "description": "90-day intensive program for senior leaders to build working AI-enabled systems around their actual work",
       "provider": {
         "@type": "Organization",
         "name": "The Mindmaker",
@@ -27,11 +27,11 @@ const BuilderSprint = () => {
         "@type": "EducationalAudience",
         "audienceType": "Senior Leaders, CEOs, GMs, Executives"
       },
-      "timeRequired": "P30D",
+      "timeRequired": "P90D",
       "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": "Online",
-        "duration": "P30D"
+        "duration": "P90D"
       },
       "offers": {
         "@type": "Offer",
@@ -88,14 +88,14 @@ const BuilderSprint = () => {
               FOR LEADERS
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              30-Day Builder Sprint
+              AI Literacy-to-Influence
             </h1>
             <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6">
               <Calendar className="h-5 w-5" />
-              <span className="text-lg">4 weeks</span>
+              <span className="text-lg">90 days</span>
             </div>
             <p className="text-xl text-foreground leading-relaxed max-w-3xl mx-auto">
-              In 30 days you go from talking about AI to running a small set of working systems 
+              In 90 days you go from talking about AI to running a small set of working systems 
               that support how you think, decide and lead.
             </p>
           </div>

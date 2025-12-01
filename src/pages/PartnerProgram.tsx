@@ -39,7 +39,7 @@ const PartnerProgram = () => {
     },
     {
       title: "First Wave",
-      description: "Choose 3 to 5 companies for initial work. Run a 30-day Builder Sprint for a key leader in each, or an AI Leadership Lab for their exec team.",
+      description: "Choose 3 to 5 companies for initial work. Run AI Literacy-to-Influence for a key leader in each, or an AI Leadership Lab for their exec team.",
     },
     {
       title: "Program",

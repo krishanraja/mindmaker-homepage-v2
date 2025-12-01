@@ -17,7 +17,7 @@ const Navigation = () => {
       dropdown: [
         { label: "Builder Session", href: "/builder-session" },
         { label: "Weekly Updates", href: "/builder-session" },
-        { label: "Builder Sprint", href: "/builder-sprint" },
+        { label: "90-Day Program", href: "/builder-sprint" },
       ]
     },
     { label: "For Teams", href: "/leadership-lab" },

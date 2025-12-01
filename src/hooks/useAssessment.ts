@@ -96,11 +96,11 @@ export const useAssessment = () => {
         description: "You're actively experimenting and ready to systematize your approach.",
         strengths: ['Hands-on experience', 'Understanding of possibilities', 'Ready for structure'],
         nextSteps: [
-          'Join a 30-Day Builder Sprint to build 3-5 systems',
+          'Join AI Literacy-to-Influence to build working systems',
           'Develop a personal AI operating system',
           'Create reusable frameworks for your work',
         ],
-        recommendedProduct: '30-Day Builder Sprint',
+        recommendedProduct: 'AI Literacy-to-Influence',
         productLink: '/builder-sprint',
       };
     } else {
