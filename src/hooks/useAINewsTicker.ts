@@ -9,6 +9,7 @@ interface NewsHeadline {
 interface AINewsResponse {
   headlines: NewsHeadline[];
   timestamp: string;
+  provider?: 'lovable' | 'openai' | 'fallback';
   fallback?: boolean;
 }
 
@@ -38,6 +39,36 @@ const FALLBACK_HEADLINES: NewsHeadline[] = [
   { title: "[WATCH] SEC scrutiny of AI-related earnings claims increasing", source: "Regulatory" }
 ];
 
+// Safe cache loading with validation
+const loadCache = (): AINewsResponse | null => {
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (!cached) return null;
+    
+    const parsed = JSON.parse(cached);
+    const { data, timestamp } = parsed;
+    
+    // Validate cache structure
+    if (!data?.headlines || !Array.isArray(data.headlines) || data.headlines.length === 0) {
+      console.warn('Invalid cache structure, clearing');
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    
+    // Check cache age
+    if (Date.now() - timestamp > CACHE_DURATION) {
+      console.log('Cache expired');
+      return null;
+    }
+    
+    return data;
+  } catch (err) {
+    console.error('Cache read error:', err);
+    localStorage.removeItem(CACHE_KEY); // Clear corrupted cache
+    return null;
+  }
+};
+
 export const useAINewsTicker = () => {
   const [headlines, setHeadlines] = useState<NewsHeadline[]>(FALLBACK_HEADLINES);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,20 +78,18 @@ export const useAINewsTicker = () => {
     const fetchNews = async () => {
       try {
         // Check cache first
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-          const { data, timestamp } = JSON.parse(cached);
-          const age = Date.now() - timestamp;
-          
-          if (age < CACHE_DURATION) {
-            console.log('Using cached AI news');
-            setHeadlines(data.headlines);
-            return;
+        const cachedData = loadCache();
+        if (cachedData) {
+          console.log('✅ Using cached AI news');
+          if (cachedData.provider) {
+            console.log(`Provider: ${cachedData.provider}`);
           }
+          setHeadlines(cachedData.headlines);
+          return;
         }
 
-        // Fetch fresh headlines in background
-        console.log('Fetching fresh AI news in background...');
+        // Fetch fresh headlines
+        console.log('🔄 Fetching fresh AI news...');
         const { data, error: fetchError } = await supabase.functions.invoke('get-ai-news');
 
         if (fetchError) {
@@ -70,7 +99,21 @@ export const useAINewsTicker = () => {
 
         const newsData = data as AINewsResponse;
         
-        // Seamlessly update headlines
+        // Log provider info
+        if (newsData.provider) {
+          console.log(`✅ AI News Provider: ${newsData.provider}`);
+        }
+        if (newsData.fallback) {
+          console.warn('⚠️ Using fallback headlines');
+        }
+        
+        // Validate response
+        if (!newsData.headlines || newsData.headlines.length === 0) {
+          console.warn('Empty headlines received, keeping fallback');
+          return;
+        }
+        
+        // Update headlines
         setHeadlines(newsData.headlines);
         
         // Cache the results

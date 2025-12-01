@@ -11,176 +11,220 @@ interface NewsHeadline {
   source: string;
 }
 
+interface Provider {
+  name: 'lovable' | 'openai' | 'fallback';
+  key?: string;
+  endpoint?: string;
+  model?: string;
+}
+
+// Provider cascade: Lovable AI → OpenAI → Fallback
+const getProvider = (): Provider => {
+  const LOVABLE_KEY = Deno.env.get('LOVABLE_API_KEY');
+  const OPENAI_KEY = Deno.env.get('OPENAI_API_KEY');
+  
+  if (LOVABLE_KEY) {
+    console.log('✅ Using LOVABLE AI (Plan A)');
+    return {
+      name: 'lovable',
+      key: LOVABLE_KEY,
+      endpoint: 'https://ai.gateway.lovable.dev/v1/chat/completions',
+      model: 'google/gemini-2.5-flash'
+    };
+  }
+  
+  if (OPENAI_KEY) {
+    console.log('⚠️ LOVABLE_API_KEY missing, using OPENAI (Plan B)');
+    return {
+      name: 'openai',
+      key: OPENAI_KEY,
+      endpoint: 'https://api.openai.com/v1/chat/completions',
+      model: 'gpt-4o-mini'
+    };
+  }
+  
+  console.error('❌ No API keys available, returning fallback (Plan C)');
+  return { name: 'fallback' };
+};
+
+const SYSTEM_PROMPT = `You are a senior business journalist writing the AI briefing for Forbes, Business Insider, and The Wall Street Journal. Your audience: Fortune 500 CEOs, board members, enterprise leaders.
+
+Write 20 headlines about AI in business that executives would actually read.
+
+Mix:
+- **Breaking**: Major deals, earnings impacts, regulatory moves
+- **Analysis**: What a trend means for enterprise strategy  
+- **Data**: Research findings, market shifts, adoption stats
+- **Risk**: Compliance issues, cautionary intelligence
+
+Tone: Authoritative, factual, business-focused. Like Financial Times.
+NO marketing speak. NO hype. NO "revolutionary" or "game-changing".
+NO brackets like [SIGNAL] or [HOT TAKE].
+
+Use real publication names: Forbes, WSJ, Bloomberg, Reuters, McKinsey, Gartner, FT.
+
+Format: JSON array [{"title": "headline 60-90 chars", "source": "Publication Name"}]`;
+
+// Safe content extraction
+const extractContent = (data: any): string | null => {
+  try {
+    return data?.choices?.[0]?.message?.content || null;
+  } catch {
+    return null;
+  }
+};
+
+// Safe JSON parsing with multiple strategies
+const parseHeadlines = (content: string): NewsHeadline[] => {
+  // Strategy 1: Direct parse
+  try {
+    const parsed = JSON.parse(content);
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed.headlines) return parsed.headlines;
+    if (parsed.news) return parsed.news;
+  } catch {}
+  
+  // Strategy 2: Extract JSON from markdown code blocks
+  const match = content.match(/\[[\s\S]*?\]/);
+  if (match) {
+    try { 
+      return JSON.parse(match[0]); 
+    } catch {}
+  }
+  
+  return [];
+};
+
+// Validate headlines
+const validateHeadlines = (headlines: any[]): NewsHeadline[] => {
+  return headlines
+    .filter(h => 
+      h && 
+      typeof h.title === 'string' && 
+      h.title.length > 15 &&
+      typeof h.source === 'string' && 
+      h.source.length > 0
+    )
+    .slice(0, 20);
+};
+
+const FALLBACK_HEADLINES: NewsHeadline[] = [
+  { title: "Microsoft AI revenue tops $13B quarterly as Copilot adoption accelerates", source: "Bloomberg" },
+  { title: "EU regulators fine Meta €1.2B over AI training data practices", source: "Financial Times" },
+  { title: "OpenAI enterprise contracts reach $2B ARR amid pricing pressure", source: "The Information" },
+  { title: "McKinsey: 70% of AI pilots fail to reach production deployment", source: "McKinsey" },
+  { title: "Google Cloud loses ground to AWS in enterprise AI infrastructure", source: "Reuters" },
+  { title: "Anthropic raises Series D at $18B valuation as AI race intensifies", source: "WSJ" },
+  { title: "CFOs report AI investments underperforming ROI expectations", source: "Gartner" },
+  { title: "Healthcare AI adoption slows amid regulatory uncertainty", source: "STAT News" },
+  { title: "Amazon quietly scales back Alexa AI features citing costs", source: "Bloomberg" },
+  { title: "Enterprise AI spending to reach $150B by 2027, IDC forecasts", source: "IDC" },
+  { title: "SEC increases scrutiny of AI-related claims in earnings calls", source: "WSJ" },
+  { title: "China tech giants pivot to open-source AI amid chip restrictions", source: "FT" },
+  { title: "AI talent market cooling as layoffs hit tech sector", source: "Fortune" },
+  { title: "Banks face $50B compliance burden from incoming AI regulations", source: "Reuters" },
+  { title: "Nvidia data center revenue surges 400% on AI chip demand", source: "Bloomberg" },
+  { title: "Insurance industry leads in AI claims automation at 80%", source: "McKinsey" },
+  { title: "Microsoft, Google in talks over AI patent cross-licensing", source: "The Information" },
+  { title: "AI-generated code now accounts for 25% of GitHub commits", source: "GitHub" },
+  { title: "Enterprise CIOs prioritize AI governance over new deployments", source: "Gartner" },
+  { title: "Salesforce cuts workforce as AI automates sales functions", source: "WSJ" }
+];
+
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      console.error('CRITICAL: LOVABLE_API_KEY not configured - AI news feed will show fallback headlines only');
-      console.error('To fix: This secret should be auto-provisioned with Lovable Cloud. Check Settings -> Cloud -> Status');
-      throw new Error('LOVABLE_API_KEY not configured - AI features unavailable');
+    const provider = getProvider();
+    
+    // Plan C: Return fallback immediately if no API keys
+    if (provider.name === 'fallback') {
+      console.log('📋 Returning fallback headlines (no API keys configured)');
+      return new Response(
+        JSON.stringify({
+          headlines: FALLBACK_HEADLINES,
+          timestamp: new Date().toISOString(),
+          provider: 'fallback',
+          fallback: true,
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     }
 
-    console.log('Fetching AI news from Lovable AI Gateway...');
+    console.log(`Generating AI news briefing via ${provider.name}...`);
 
-    // Get today's date for context
-    const today = new Date().toLocaleDateString('en-US', { 
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-    });
-
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch(provider.endpoint!, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Authorization': `Bearer ${provider.key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: provider.model,
         messages: [
-          {
-            role: 'system',
-            content: `You are Krish Raja's AI intelligence analyst - an operator with 20+ years building $100M+ businesses. You don't report news. You interpret signals.
-
-Your perspective:
-- Cut through vendor theatre - what actually matters vs marketing
-- Operator lens - what this means for P&L, not just tech
-- Contrarian when warranted - call out hype, flag real shifts
-- Action-oriented - what should leaders DO about this
-
-Tone: Direct, confident, slightly provocative. No corporate buzzwords. No "revolutionary" or "transformative". Speak like a trusted advisor who's seen it all.`
-          },
-          {
-            role: 'user',
-            content: `Generate 20 AI intelligence briefings as of ${today}. Mix these types:
-
-**SIGNAL** (What's actually changing)
-- Real shifts in enterprise adoption patterns
-- Regulatory moves that affect deployment
-- Infrastructure bottlenecks or breakthroughs
-
-**HOT TAKE** (Contrarian perspective)  
-- Why a hyped announcement doesn't matter
-- What everyone's missing about a trend
-- Vendor claims vs reality
-
-**OPERATOR INTEL** (Practical implications)
-- Cost structure changes affecting build-vs-buy
-- Skills/hiring market shifts
-- Implementation patterns that work
-
-**WATCH LIST** (Early signals)
-- Under-the-radar developments
-- Second-order effects of major news
-- Competitive dynamics playing out
-
-Format each as:
-- title: Sharp, opinionated, 60-80 chars. Start with signal type in brackets.
-- source: Attribution or "Operator Intel" for analysis
-
-Examples:
-{"title": "[HOT TAKE] GPT-5 benchmarks impressive, enterprise use cases still unclear", "source": "Operator Intel"}
-{"title": "[SIGNAL] Microsoft quietly deprecating Copilot features that don't drive engagement", "source": "The Information"}
-{"title": "[WATCH] Mid-tier companies outperforming on AI ROI vs Fortune 100", "source": "McKinsey Data"}
-{"title": "[OPERATOR] Fine-tuning costs dropped 80% - build beats buy for most workflows", "source": "Operator Intel"}
-
-Return ONLY a JSON array with this exact structure:
-[{"title": "headline text", "source": "source name"}]
-
-No additional text, explanations, or markdown. Just the JSON array.`
-          }
-        ]
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: 'Generate 20 AI business news headlines.' }
+        ],
+        temperature: 0.8,
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Lovable AI API error:', response.status, errorText);
-      throw new Error(`Lovable AI API error: ${response.status}`);
+      console.error(`${provider.name} API error:`, response.status, errorText);
+      throw new Error(`${provider.name} API error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('Lovable AI response received');
+    const content = extractContent(data);
     
-    const content = data.choices[0].message.content;
-    
-    // Parse the JSON - Gemini returns it directly as array
-    let headlines: NewsHeadline[] = [];
-    try {
-      // Try direct parse first
-      headlines = JSON.parse(content);
-    } catch {
-      // If that fails, try extracting from object
-      const parsedContent = JSON.parse(content);
-      if (parsedContent.headlines) {
-        headlines = parsedContent.headlines;
-      } else if (Array.isArray(parsedContent)) {
-        headlines = parsedContent;
-      } else if (parsedContent.news) {
-        headlines = parsedContent.news;
-      }
+    if (!content) {
+      throw new Error('No content in AI response');
     }
 
-    // Validate and ensure we have proper format
-    const validHeadlines = headlines
-      .filter(h => h.title && h.source)
-      .slice(0, 20);
+    console.log('AI response received, parsing headlines...');
+    
+    const headlines = parseHeadlines(content);
+    const validHeadlines = validateHeadlines(headlines);
 
     if (validHeadlines.length === 0) {
       throw new Error('No valid headlines generated');
     }
 
-    console.log(`Generated ${validHeadlines.length} headlines`);
+    console.log(`✅ Generated ${validHeadlines.length} headlines via ${provider.name}`);
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         headlines: validHeadlines,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        provider: provider.name,
+        fallback: false,
       }),
-      {
+      { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
       }
     );
 
   } catch (error) {
-    console.error('Error in get-ai-news function:', error);
+    console.error('Error generating AI news:', error);
     
-    // Return fallback headlines on error
-    const fallbackHeadlines: NewsHeadline[] = [
-      { title: "[HOT TAKE] Most AI pilots fail because they solve vendor problems, not yours", source: "Operator Intel" },
-      { title: "[SIGNAL] EU AI Act compliance deadlines forcing enterprise re-architecture", source: "Policy Watch" },
-      { title: "[OPERATOR] 3 AI workflows that paid back in 30 days - and 5 that never will", source: "Operator Intel" },
-      { title: "[WATCH] AI talent costs falling as supply catches up - hiring window opening", source: "Talent Market" },
-      { title: "[HOT TAKE] The 'AI strategy deck' industry is worth $0 to your P&L", source: "Operator Intel" },
-      { title: "[SIGNAL] OpenAI enterprise pricing signals end of cheap experimentation era", source: "Pricing Analysis" },
-      { title: "[OPERATOR] Why your AI vendor demo worked but production deployment failed", source: "Operator Intel" },
-      { title: "[WATCH] Healthcare AI approval bottleneck creating competitive moats", source: "FDA Watch" },
-      { title: "[HOT TAKE] 90% of 'AI-powered' enterprise software is wrapper marketing", source: "Operator Intel" },
-      { title: "[SIGNAL] Google Cloud AI credits expiring - expect enterprise churn wave", source: "Cloud Intel" },
-      { title: "[OPERATOR] The 4-hour AI build that replaced a $50K SaaS contract", source: "Operator Intel" },
-      { title: "[WATCH] China AI chip workarounds outpacing export controls", source: "Geopolitics" },
-      { title: "[HOT TAKE] AI literacy > AI tools. Most leaders have it backwards", source: "Operator Intel" },
-      { title: "[SIGNAL] Microsoft Copilot adoption stalling in enterprises without AI training", source: "Enterprise Data" },
-      { title: "[OPERATOR] Fine-tuned small models beating GPT-4 for specific business tasks", source: "Operator Intel" },
-      { title: "[WATCH] AI-native startups eating into consulting firm revenue", source: "Market Shift" },
-      { title: "[HOT TAKE] Your AI vendor's roadmap is their strategy, not yours", source: "Operator Intel" },
-      { title: "[SIGNAL] Insurance industry AI claims processing hitting 80%+ automation", source: "Industry Report" },
-      { title: "[OPERATOR] The real cost of 'free' AI tools - data lock-in and switching pain", source: "Operator Intel" },
-      { title: "[WATCH] SEC scrutiny of AI-related earnings claims increasing", source: "Regulatory" }
-    ];
-
     return new Response(
-      JSON.stringify({ 
-        headlines: fallbackHeadlines,
+      JSON.stringify({
+        headlines: FALLBACK_HEADLINES,
         timestamp: new Date().toISOString(),
-        fallback: true
+        provider: 'fallback',
+        fallback: true,
+        error: error instanceof Error ? error.message : 'Unknown error',
       }),
-      {
-        status: 200,
+      { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
       }
     );
   }
