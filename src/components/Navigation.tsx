@@ -12,13 +12,21 @@ const Navigation = () => {
   const { theme, setTheme } = useTheme();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [lessonsExpanded, setLessonsExpanded] = useState(false);
+  const [nestedExpanded, setNestedExpanded] = useState<{ [key: string]: boolean }>({});
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const navItems = [
     { 
       label: "Executive Advisory", 
       dropdown: [
-        { label: "Individual", href: "/builder-session" },
+        { 
+          label: "Individual",
+          nested: [
+            { label: "One-Off", href: "/builder-session" },
+            { label: "Weekly Sync", href: "/builder-session" },
+            { label: "90-Day Sprint", href: "/builder-sprint" },
+          ]
+        },
         { label: "Team", href: "/leadership-lab" },
         { label: "Portfolio", href: "/portfolio-program" },
       ]
@@ -137,6 +145,45 @@ const Navigation = () => {
                           </div>
                         );
                       }
+                      
+                      // Handle nested dropdowns
+                      if (subItem.nested) {
+                        return (
+                          <div key={subItem.label} className="relative group/nested">
+                            <button
+                              className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium rounded-md mx-2
+                                text-ink dark:text-white hover:bg-mint/10 hover:text-ink dark:hover:text-white
+                                transition-colors"
+                            >
+                              <span>{subItem.label}</span>
+                              <ChevronDown className="h-3 w-3 ml-2 -rotate-90" />
+                            </button>
+                            
+                            {/* Nested dropdown */}
+                            <div className="absolute left-full top-0 ml-1 
+                              bg-white dark:bg-[#0e1a2b] 
+                              border-2 border-border 
+                              rounded-lg shadow-xl 
+                              py-3 min-w-[200px]
+                              opacity-0 invisible group-hover/nested:opacity-100 group-hover/nested:visible
+                              transition-all duration-200">
+                              {subItem.nested.map((nestedItem) => (
+                                <a
+                                  key={nestedItem.label}
+                                  href={nestedItem.href}
+                                  role="menuitem"
+                                  className="flex items-center px-4 py-2.5 text-sm font-medium rounded-md mx-2
+                                    text-ink dark:text-white hover:bg-mint/10 hover:text-ink dark:hover:text-white
+                                    transition-colors"
+                                >
+                                  {nestedItem.label}
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      }
+                      
                       return (
                         <a
                           key={subItem.label}
@@ -261,6 +308,44 @@ const Navigation = () => {
                               </div>
                             );
                           }
+                          
+                          // Handle nested items in mobile
+                          if (subItem.nested) {
+                            return (
+                              <div key={subItem.label} className="py-1">
+                                <button 
+                                  onClick={() => setNestedExpanded(prev => ({ 
+                                    ...prev, 
+                                    [subItem.label]: !prev[subItem.label] 
+                                  }))}
+                                  className="w-full min-h-[44px] flex items-center justify-between px-4 py-3 
+                                    text-base font-medium text-ink dark:text-white 
+                                    hover:bg-mint/10 rounded-md transition-colors"
+                                >
+                                  {subItem.label}
+                                  <ChevronDown className={`h-4 w-4 transition-transform ${nestedExpanded[subItem.label] ? 'rotate-180' : ''}`} />
+                                </button>
+                                
+                                {nestedExpanded[subItem.label] && (
+                                  <div className="flex flex-col space-y-1 mt-1 ml-4">
+                                    {subItem.nested.map((nestedItem) => (
+                                      <a
+                                        key={nestedItem.label}
+                                        href={nestedItem.href}
+                                        className="min-h-[44px] flex items-center px-4 py-3 
+                                          text-sm font-medium text-ink dark:text-white 
+                                          hover:bg-mint/10 rounded-md transition-colors"
+                                        onClick={() => setIsOpen(false)}
+                                      >
+                                        {nestedItem.label}
+                                      </a>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }
+                          
                           return (
                             <a
                               key={subItem.label}
