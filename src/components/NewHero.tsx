@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import mindmakerIconDark from "@/assets/mindmaker-icon-dark.png";
 import { InitialConsultModal } from "@/components/InitialConsultModal";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -67,16 +66,7 @@ const NewHero = () => {
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-mint/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
       
       {/* Content */}
-      <div className="container-width relative z-10 pt-4 sm:pt-12 md:pt-16 pb-12 sm:pb-16 md:pb-20">
-        {/* Logo */}
-        <div className="hidden sm:flex justify-start mb-6 sm:mb-12 md:mb-20 fade-in-up">
-          <img 
-            src={mindmakerIconDark} 
-            alt="Mindmaker" 
-            className="h-16 sm:h-20 md:h-24 w-auto"
-          />
-        </div>
-        
+      <div className="container-width relative z-10 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20">
         {/* Hero Content */}
         <div className="max-w-5xl">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
@@ -161,7 +151,7 @@ const NewHero = () => {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="flex flex-col items-start gap-2 mt-16 sm:mt-24 md:mt-32 opacity-60 hover:opacity-100 transition-opacity cursor-pointer fade-in-up" style={{animationDelay: '0.6s'}}>
+        <div className="flex flex-col items-start gap-2 mt-12 sm:mt-16 md:mt-20 opacity-60 hover:opacity-100 transition-opacity cursor-pointer fade-in-up" style={{animationDelay: '0.6s'}}>
           <span className="text-white/70 text-xs uppercase tracking-wider font-medium">Scroll to explore</span>
           <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white/70 animate-bounce" style={{animationDuration: '1.5s'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
