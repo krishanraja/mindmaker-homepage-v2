@@ -123,9 +123,9 @@ const ChaosToClarity = () => {
     const randX = Math.abs((Math.sin(seed) * 10000) % 100) / 100;
     const randY = Math.abs((Math.cos(seed * 1.5) * 10000) % 100) / 100;
     
-    // On mobile, constrain X to center band (30-70%) to prevent clipping
-    const xMin = isMobile ? 30 : 10;
-    const xRange = isMobile ? 40 : 80;
+    // On mobile, constrain X to safe center band (35-65%) to prevent any clipping
+    const xMin = isMobile ? 35 : 10;
+    const xRange = isMobile ? 30 : 80;
     
     return {
       x: xMin + randX * xRange,
@@ -138,11 +138,11 @@ const ChaosToClarity = () => {
   // Organized positions: vertical stack on mobile, 2x2 grid on desktop
   const getOrganizedPosition = (concept: Concept, index: number) => {
     const categoryPositions = isMobile ? {
-      // VERTICAL STACK - all centered at 50% with -50% translate, tighter spacing
-      Technical: { baseX: 50, baseY: 10, translateX: '-50%' },
-      Commercial: { baseX: 50, baseY: 32, translateX: '-50%' },
-      Organizational: { baseX: 50, baseY: 54, translateX: '-50%' },
-      Competitive: { baseX: 50, baseY: 76, translateX: '-50%' },
+      // VERTICAL STACK - all centered at 50%, better spacing for mobile
+      Technical: { baseX: 50, baseY: 12, translateX: '-50%' },
+      Commercial: { baseX: 50, baseY: 35, translateX: '-50%' },
+      Organizational: { baseX: 50, baseY: 58, translateX: '-50%' },
+      Competitive: { baseX: 50, baseY: 81, translateX: '-50%' },
     } : {
       Technical: { baseX: 30, baseY: 22, translateX: '-50%' },
       Commercial: { baseX: 70, baseY: 22, translateX: '-50%' },
@@ -161,7 +161,7 @@ const ChaosToClarity = () => {
     }
 
     const base = categoryPositions[concept.category];
-    const offsetY = categoryIndex * (isMobile ? 4 : 7);
+    const offsetY = categoryIndex * (isMobile ? 5 : 7);
 
     return {
       x: base.baseX,
@@ -249,9 +249,9 @@ const ChaosToClarity = () => {
   return (
     <section
       ref={sectionRef} 
-      className="section-padding bg-background py-16 md:py-32 relative overflow-hidden min-h-[600px] md:min-h-screen flex flex-col justify-center"
+      className="w-full bg-background py-16 md:py-32 relative overflow-hidden min-h-[600px] md:min-h-screen flex flex-col justify-center"
     >
-      <div className="container-width">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
         {/* Dynamic Headline */}
         <motion.div 
           className="text-center mb-16"
@@ -275,7 +275,7 @@ const ChaosToClarity = () => {
         </motion.div>
 
         {/* Concepts Visualization */}
-        <div className="relative h-[420px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden px-2 md:px-0">
+        <div className="relative h-[500px] md:h-[600px] w-full max-w-[min(calc(100vw-2rem),56rem)] mx-auto overflow-hidden">
           {Object.entries(groupedConcepts).map(([category, categoryPieces]) => {
             const cat = category as Category;
             const categoryPos = getOrganizedPosition(categoryPieces[0], 0);
@@ -343,7 +343,7 @@ const ChaosToClarity = () => {
                   return (
                     <motion.div
                       key={concept.id}
-                      className={`absolute px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border whitespace-nowrap max-w-[40vw] md:max-w-none overflow-hidden text-ellipsis
+                      className={`absolute px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border whitespace-nowrap max-w-[35vw] md:max-w-none overflow-hidden text-ellipsis
                         ${smoothStep(0.6, 0.8, animationProgress) > 0.5
                           ? 'bg-muted/30 border-border text-foreground' 
                           : 'bg-muted/50 border-border text-muted-foreground'}
