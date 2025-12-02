@@ -92,6 +92,7 @@ const JourneySlider = ({ onBookClick, navigate }: { onBookClick: (program: strin
           className="w-full touch-target font-semibold shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
           onClick={() => {
             if ('link' in currentOffering && currentOffering.link) {
+              window.scrollTo(0, 0);
               navigate(currentOffering.link);
             } else {
               onBookClick(currentOffering.program);
@@ -266,6 +267,7 @@ const ProductLadder = () => {
                               className="w-full touch-target mt-auto"
                               onClick={() => {
                                 if ('link' in offering && offering.link) {
+                                  window.scrollTo(0, 0);
                                   navigate(offering.link);
                                 } else {
                                   handleBookClick(offering.program);
@@ -345,6 +347,7 @@ const ProductLadder = () => {
                             className="w-full touch-target mt-auto"
                             onClick={() => {
                               if ('link' in offering && offering.link) {
+                                window.scrollTo(0, 0);
                                 navigate(offering.link);
                               } else {
                                 handleBookClick(offering.program);
