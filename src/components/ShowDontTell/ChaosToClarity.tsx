@@ -111,26 +111,31 @@ const ChaosToClarity = () => {
   }, []);
 
   const { sectionRef, isLocked } = useScrollLock({
-    lockThreshold: 0,
+    lockThreshold: isMobile ? -50 : 0,  // Trigger 50px earlier on mobile
     onProgress: handleProgress,
     isComplete,
     enabled: true,
   });
 
-  // Chaotic random positions
+  // Chaotic random positions - MORE CONGESTION
   const getRandomPosition = (id: number) => {
     const seed = id * 123.456;
     const randX = Math.abs((Math.sin(seed) * 10000) % 100) / 100;
     const randY = Math.abs((Math.cos(seed * 1.5) * 10000) % 100) / 100;
     
-    // On mobile, constrain X to safe center band (35-65%) to prevent any clipping
-    const xMin = isMobile ? 35 : 10;
-    const xRange = isMobile ? 30 : 80;
+    // Create visible congestion by clustering items more in center
+    // But keep safe from clipping with wider X range on mobile
+    const xMin = isMobile ? 20 : 5;
+    const xRange = isMobile ? 60 : 90;
+    
+    // Cluster vertically in center third for initial pile-up effect
+    const yMin = 30;
+    const yRange = 40;
     
     return {
       x: xMin + randX * xRange,
-      y: 10 + randY * 80,
-      rotation: (randX - 0.5) * 30,
+      y: yMin + randY * yRange,
+      rotation: (randX - 0.5) * 50,  // More rotation for chaos
       translateX: isMobile ? '-50%' : '0%',
     };
   };
