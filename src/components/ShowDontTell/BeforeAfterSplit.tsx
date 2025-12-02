@@ -6,11 +6,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const transformations = [
   { 
     before: "47 browser tabs about 'AI strategy'", 
-    after: "Clear decision framework that makes sense" 
+    after: "Clear decision framework" 
   },
   { 
     before: "Conflicting vendor promises everywhere", 
-    after: "Vendor evaluation criteria with BS detector" 
+    after: "Vendor evaluation with BS detector" 
   },
   { 
     before: "Scattered notes across 5 apps", 
@@ -18,7 +18,7 @@ const transformations = [
   },
   { 
     before: "Endless AI meetings going nowhere", 
-    after: "Confident narrative and boardroom prep" 
+    after: "Confident boardroom narrative" 
   },
   { 
     before: "Team asking about AI news daily", 
@@ -26,7 +26,7 @@ const transformations = [
   },
   { 
     before: "Zero prototypes. Zero conviction.", 
-    after: "Confidence to say 'no' to shiny objects" 
+    after: "Confidence to say 'no'" 
   },
 ];
 
@@ -66,7 +66,7 @@ const BeforeAfterSplit = () => {
     >
       <div className="container mx-auto max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-4 md:mb-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
             The Transformation
           </h2>
@@ -95,7 +95,7 @@ const BeforeAfterSplit = () => {
         {/* Two-layer card with horizontal wipe */}
         <div className="relative editorial-card overflow-hidden">
           {/* AFTER layer (bottom) - always visible */}
-          <div className="space-y-6 p-6">
+          <div className="space-y-4 md:space-y-6 p-4 md:p-6">
             {/* Header */}
             <div className="border-l-4 pl-4" style={{ borderColor: 'hsl(var(--mint))' }}>
               <h3 className="text-xl font-bold text-foreground mb-2">
@@ -107,7 +107,7 @@ const BeforeAfterSplit = () => {
             </div>
             
             {/* Items */}
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {transformations.map((item, index) => {
                 const itemProgress = getItemProgress(index);
                 return (
@@ -136,7 +136,7 @@ const BeforeAfterSplit = () => {
               <p className="text-xs font-semibold text-green-700 dark:text-green-600">
                 "I know exactly what we're building, why it matters, and how to get there."
               </p>
-              <p className="text-xs font-bold text-foreground">
+              <p className="text-xs font-bold text-foreground hidden md:block">
                 Guarantee or your money back
               </p>
             </div>
@@ -150,7 +150,7 @@ const BeforeAfterSplit = () => {
             }}
             transition={{ type: "tween", ease: "easeOut", duration: 0.1 }}
           >
-            <div className="space-y-6 p-6">
+            <div className="space-y-4 md:space-y-6 p-4 md:p-6">
               {/* Header */}
               <div className="border-l-4 pl-4" style={{ borderColor: 'hsl(var(--destructive))' }}>
                 <h3 className="text-xl font-bold text-foreground mb-2">
@@ -162,7 +162,7 @@ const BeforeAfterSplit = () => {
               </div>
               
               {/* Items */}
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {transformations.map((item, index) => (
                   <div 
                     key={`before-${index}`}
