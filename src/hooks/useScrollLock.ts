@@ -26,6 +26,7 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
   const isCompleteRef = useRef(options.isComplete);
   const canReverseExitRef = useRef(options.canReverseExit ?? false);
   const lastScrollCheckRef = useRef(0);
+  const lastWheelTimeRef = useRef(0);
   
   // Keep refs updated (these don't cause re-renders)
   useEffect(() => {
@@ -47,10 +48,17 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
     // Throttled wheel handler - batches via onProgress which already uses RAF
     const handleWheel = (e: WheelEvent) => {
       if (!isLocked) return;
+      
       e.preventDefault();
       e.stopPropagation();
+      
       const direction = e.deltaY > 0 ? 'down' : 'up';
+      
+      // FIX (a): Pass delta with correct sign for bidirectional support
+      // Negative delta for scroll up, positive for scroll down
       onProgressRef.current(e.deltaY, direction);
+      
+      lastWheelTimeRef.current = performance.now();
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -61,10 +69,14 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
       if (!isLocked) return;
       e.preventDefault();
       e.stopPropagation();
+      
       const currentY = e.touches[0].clientY;
       const delta = touchStartYRef.current - currentY;
       touchStartYRef.current = currentY;
+      
       const direction = delta > 0 ? 'down' : 'up';
+      
+      // FIX (a): Pass delta directly for bidirectional support
       onProgressRef.current(delta, direction);
     };
 
@@ -83,9 +95,10 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
       const rect = section.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const headerOffset = options.headerOffset ?? 60;
+      const lockThreshold = options.lockThreshold ?? 0;
       
-      // Lock when section is approaching viewport top with headerOffset breathing room
-      const shouldLock = rect.top <= headerOffset && 
+      // Lock when section reaches lockThreshold distance from top with headerOffset breathing room
+      const shouldLock = rect.top <= (headerOffset + lockThreshold) && 
                          rect.bottom > viewportHeight * 0.3 && 
                          !isCompleteRef.current;
 
@@ -117,7 +130,7 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
   // Separate effect for release logic
   useEffect(() => {
     if (options.isComplete && isLocked) {
-      // Release lock
+      // Release lock only when scrolling forward completes
       setIsLocked(false);
       
       // Set cooldown to prevent immediate re-lock
@@ -126,9 +139,12 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
       // Remove scroll lock class
       document.documentElement.classList.remove('scroll-locked');
       
+      // FIX (d): Ensure no scroll position jump by maintaining current position
+      const currentScrollY = window.scrollY;
+      
       // Restore scroll position after a frame
       requestAnimationFrame(() => {
-        window.scrollTo(0, scrollPositionRef.current);
+        window.scrollTo(0, currentScrollY);
         
         // Clear cooldown after scroll restoration settles
         setTimeout(() => {
