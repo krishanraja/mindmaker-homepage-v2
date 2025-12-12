@@ -8,42 +8,23 @@ export interface Message {
   timestamp: Date;
 }
 
+const WELCOME_MESSAGE: Message = {
+  id: 'welcome',
+  role: 'assistant',
+  content: "Hi! We're the MindMaker team. We help leaders build the cognitive infrastructure to think clearly about AI—so you can stay sharp, sceptical, and in control. How can we help you today?",
+  timestamp: new Date(),
+};
+
 export const useChatBot = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load messages from localStorage on mount
+  // Clear chat history on mount (fresh start every reload)
   useEffect(() => {
-    const savedMessages = localStorage.getItem('krish-chat-history');
-    if (savedMessages) {
-      try {
-        const parsed = JSON.parse(savedMessages);
-        setMessages(parsed.map((m: any) => ({
-          ...m,
-          timestamp: new Date(m.timestamp)
-        })));
-      } catch (e) {
-        console.error('Failed to load chat history:', e);
-      }
-    } else {
-      // Add welcome message if no history
-      const welcomeMessage: Message = {
-        id: 'welcome',
-        role: 'assistant',
-        content: "Hi! We're the MindMaker team. We help leaders build the cognitive infrastructure to think clearly about AI—so you can stay sharp, sceptical, and in control. How can we help you today?",
-        timestamp: new Date(),
-      };
-      setMessages([welcomeMessage]);
-    }
+    localStorage.removeItem('krish-chat-history');
+    setMessages([{ ...WELCOME_MESSAGE, timestamp: new Date() }]);
   }, []);
-
-  // Save messages to localStorage whenever they change
-  useEffect(() => {
-    if (messages.length > 0) {
-      localStorage.setItem('krish-chat-history', JSON.stringify(messages));
-    }
-  }, [messages]);
 
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim()) return;
@@ -92,13 +73,7 @@ export const useChatBot = () => {
 
   const clearHistory = useCallback(() => {
     localStorage.removeItem('krish-chat-history');
-    const welcomeMessage: Message = {
-      id: 'welcome',
-      role: 'assistant',
-      content: "Hi! We're the MindMaker team. We help leaders build the cognitive infrastructure to think clearly about AI. How can we help you today?",
-      timestamp: new Date(),
-    };
-    setMessages([welcomeMessage]);
+    setMessages([{ ...WELCOME_MESSAGE, timestamp: new Date() }]);
   }, []);
 
   return {
