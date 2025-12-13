@@ -1,12 +1,20 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 
 const Terms = () => {
   const navigate = useNavigate();
 
+  const seoData = {
+    title: "Terms & Conditions - Mindmaker",
+    description: "Terms and conditions for using Mindmaker LLC services. Read our service agreement and policies.",
+    canonical: "/terms",
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...seoData} />
       <div className="container-width py-8">
         <Button 
           variant="ghost" 

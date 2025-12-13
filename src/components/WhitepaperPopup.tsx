@@ -3,9 +3,9 @@ import { ExternalLink } from "lucide-react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -123,6 +123,9 @@ const WhitepaperPopup = () => {
           <DialogTitle className="text-2xl font-bold text-center mb-4">
             Before you go...
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Download our free whitepaper on resolving the AI literacy crisis
+          </DialogDescription>
         </DialogHeader>
         {popupContent}
       </DialogContent>

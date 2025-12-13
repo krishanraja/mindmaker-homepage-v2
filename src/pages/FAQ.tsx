@@ -1,28 +1,70 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SEO } from "@/components/SEO";
+
+// FAQ items defined outside component for better performance and to avoid hoisting issues
+const faqItems = [
+  {
+    question: "What is Mindmaker?",
+    answer: "Mindmaker turns non-technical leaders into no-code AI builders. We help CEOs, GMs, and executives build working AI systems around their real work—without writing code or waiting for IT."
+  },
+  {
+    question: "Who is this for?",
+    answer: "CEO, GM, CCO, CPO, CMO, CRO, COO—leaders with P&L responsibility who need to design the future, not delegate it. If you're tired of vendor theatre and want to build real systems, this is for you."
+  },
+  {
+    question: "What's a Drop In Builder Session?",
+    answer: "A 60-minute live session with Krish where you bring one real leadership problem. You leave with an AI friction map, 1-2 draft systems, and a written follow-up with prompts you can use immediately."
+  },
+  {
+    question: "What are Curated Weekly Updates?",
+    answer: "A 4-week async program with weekly recommendations and access to Krish. Stay current on what matters for your context. Build at your own pace without the intensity of a full sprint."
+  },
+  {
+    question: "What's the 30-Day Builder Sprint?",
+    answer: "A 4-week intensive program for senior leaders where you build 3-5 working AI-enabled systems around your actual week. You leave with a Builder Dossier and 90-day implementation plan."
+  },
+  {
+    question: "How is the AI Leadership Lab different?",
+    answer: "The Lab is for executive teams of 6-12 people. It's a 2-8 hour intensive where you run 2 real decisions through a new AI-enabled way of working. You leave with a 90-day pilot charter to implement across your team."
+  },
+  {
+    question: "What's the Portfolio Program?",
+    answer: "For VCs, advisors, and consultancies who want to help the business leaders they serve become AI literate. We give you a repeatable method to assess readiness, then co-create sprints and labs you can deliver across your portfolio or client base. 6-12 month engagement."
+  },
+  {
+    question: "What's The Builder Economy?",
+    answer: "The Builder Economy is our upcoming community platform featuring podcast episodes, live sessions, and insights on what's working in real portfolios—not vendor hype. Coming soon at thebuilderseconomy.com."
+  },
+  {
+    question: "How is this different from AI training?",
+    answer: "Training fades. Consulting tells you what to do. Tools do it for you. We build the system with you so you can think for yourself—design systems, run decisions, and stop wasting money on vendor theatre."
+  },
+  {
+    question: "What do I actually get?",
+    answer: "Working systems you can use tomorrow. Not slides, not theory—prompts, workflows, and frameworks built around your real work. Each engagement includes concrete deliverables you can implement immediately."
+  },
+  {
+    question: "How do I start?",
+    answer: "Book a Drop In Builder Session. Bring one real problem, leave with systems. From there, you can choose Weekly Updates for steady progress or dive into the 30-Day Sprint. No pressure, just clarity."
+  }
+];
 
 const FAQ = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "FAQ - Mindmaker";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Frequently asked questions about Mindmaker—turn non-technical leaders into no-code AI builders.");
-    }
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({
+  const seoData = {
+    title: "FAQ - Mindmaker",
+    description: "Frequently asked questions about Mindmaker—turn non-technical leaders into no-code AI builders.",
+    canonical: "/faq",
+    jsonLd: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": faqItems.map(item => ({
@@ -33,66 +75,12 @@ const FAQ = () => {
           "text": item.answer
         }
       }))
-    });
-    document.head.appendChild(script);
-
-    return () => {
-      document.title = "Mindmaker";
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
-
-  const faqItems = [
-    {
-      question: "What is Mindmaker?",
-      answer: "Mindmaker turns non-technical leaders into no-code AI builders. We help CEOs, GMs, and executives build working AI systems around their real work—without writing code or waiting for IT."
-    },
-    {
-      question: "Who is this for?",
-      answer: "CEO, GM, CCO, CPO, CMO, CRO, COO—leaders with P&L responsibility who need to design the future, not delegate it. If you're tired of vendor theatre and want to build real systems, this is for you."
-    },
-    {
-      question: "What's a Drop In Builder Session?",
-      answer: "A 60-minute live session with Krish where you bring one real leadership problem. You leave with an AI friction map, 1-2 draft systems, and a written follow-up with prompts you can use immediately."
-    },
-    {
-      question: "What are Curated Weekly Updates?",
-      answer: "A 4-week async program with weekly recommendations and access to Krish. Stay current on what matters for your context. Build at your own pace without the intensity of a full sprint."
-    },
-    {
-      question: "What's the 30-Day Builder Sprint?",
-      answer: "A 4-week intensive program for senior leaders where you build 3-5 working AI-enabled systems around your actual week. You leave with a Builder Dossier and 90-day implementation plan."
-    },
-    {
-      question: "How is the AI Leadership Lab different?",
-      answer: "The Lab is for executive teams of 6-12 people. It's a 2-8 hour intensive where you run 2 real decisions through a new AI-enabled way of working. You leave with a 90-day pilot charter to implement across your team."
-    },
-    {
-      question: "What's the Portfolio Program?",
-      answer: "For VCs, advisors, and consultancies who want to help the business leaders they serve become AI literate. We give you a repeatable method to assess readiness, then co-create sprints and labs you can deliver across your portfolio or client base. 6-12 month engagement."
-    },
-    {
-      question: "What's The Builder Economy?",
-      answer: "The Builder Economy is our upcoming community platform featuring podcast episodes, live sessions, and insights on what's working in real portfolios—not vendor hype. Coming soon at thebuilderseconomy.com."
-    },
-    {
-      question: "How is this different from AI training?",
-      answer: "Training fades. Consulting tells you what to do. Tools do it for you. We build the system with you so you can think for yourself—design systems, run decisions, and stop wasting money on vendor theatre."
-    },
-    {
-      question: "What do I actually get?",
-      answer: "Working systems you can use tomorrow. Not slides, not theory—prompts, workflows, and frameworks built around your real work. Each engagement includes concrete deliverables you can implement immediately."
-    },
-    {
-      question: "How do I start?",
-      answer: "Book a Drop In Builder Session. Bring one real problem, leave with systems. From there, you can choose Weekly Updates for steady progress or dive into the 30-Day Sprint. No pressure, just clarity."
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...seoData} />
       <div className="container-width py-8">
         <Button 
           variant="ghost" 
@@ -151,9 +139,11 @@ const FAQ = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                onClick={() => window.location.href = 'mailto:krish@themindmaker.ai?subject=FAQ Inquiry'}
+                asChild
               >
-                Email Us
+                <a href="mailto:krish@themindmaker.ai?subject=FAQ Inquiry">
+                  Email Us
+                </a>
               </Button>
             </div>
           </div>

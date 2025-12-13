@@ -7,7 +7,6 @@ import TrustSection from "@/components/TrustSection";
 import BeforeAfterSplit from "@/components/ShowDontTell/BeforeAfterSplit";
 import SimpleCTA from "@/components/SimpleCTA";
 import Footer from "@/components/Footer";
-import { ChatBot } from "@/components/ChatBot";
 import { ParticleBackground } from "@/components/Animations/ParticleBackground";
 import WhitepaperPromo from "@/components/WhitepaperPromo";
 import WhitepaperPopup from "@/components/WhitepaperPopup";
@@ -51,9 +50,6 @@ const Index = () => {
       
       {/* Footer */}
       <Footer />
-      
-      {/* ChatBot */}
-      <ChatBot />
       
       {/* Whitepaper Popup */}
       <WhitepaperPopup />

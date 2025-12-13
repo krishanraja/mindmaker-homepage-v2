@@ -1,12 +1,20 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 
 const Privacy = () => {
   const navigate = useNavigate();
 
+  const seoData = {
+    title: "Privacy Policy - Mindmaker",
+    description: "Privacy policy for Mindmaker LLC. Learn how we collect, use, and protect your personal information.",
+    canonical: "/privacy",
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...seoData} />
       <div className="container-width py-8">
         <Button 
           variant="ghost" 
