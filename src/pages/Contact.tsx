@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import krishHeadshot from "@/assets/krish-headshot.png";
+import { SEO } from "@/components/SEO";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -16,6 +17,12 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  const seoData = {
+    title: "Contact Us - Mindmaker",
+    description: "Get in touch with Mindmaker. Have questions about our AI literacy programs? We'd love to hear from you.",
+    canonical: "/contact",
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +47,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...seoData} />
       <div className="container mx-auto px-4 py-8">
         <Button
           variant="ghost"

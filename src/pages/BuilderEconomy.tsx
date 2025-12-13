@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Radio, Video, FileText, ArrowRight } from "lucide-react";
+import { SEO } from "@/components/SEO";
 
 const BuilderEconomy = () => {
   const formats = [
@@ -28,8 +29,16 @@ const BuilderEconomy = () => {
     },
   ];
 
+  const seoData = {
+    title: "The Builder Economy - AI Insights & Community",
+    description: "Podcasts, live builder rooms, and written briefings on how leaders are building with AI. Real stories from practitioners, not hype.",
+    canonical: "/builder-economy",
+    keywords: "AI podcast, AI community, AI builders, AI insights, AI for leaders",
+  };
+
   return (
     <main className="min-h-screen bg-background">
+      <SEO {...seoData} />
       <Navigation />
       
       <section className="section-padding">
@@ -86,9 +95,9 @@ const BuilderEconomy = () => {
                     <Button 
                       variant="outline"
                       className="w-full border-ink text-ink hover:bg-ink/5"
-                      onClick={() => window.location.href = format.link}
+                      asChild
                     >
-                      {format.cta}
+                      <a href={format.link}>{format.cta}</a>
                     </Button>
                   </div>
                 );

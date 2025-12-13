@@ -33,7 +33,7 @@ const BuilderSession = () => {
         "price": "150",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2025-01-01"
+        "priceValidUntil": "2026-12-31"
       }
     }
   };

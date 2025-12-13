@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Lock, DollarSign } from "lucide-react";
+import { ArrowRight, DollarSign } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 interface ConsultationBookingProps {
   variant?: 'default' | 'compact';
@@ -48,11 +47,11 @@ export const ConsultationBooking = ({ variant = 'default', preselectedProgram }:
       // if (error) throw error;
       // if (data?.url) window.location.href = data.url;
       
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error:', error);
       toast({
         title: "Booking Error",
-        description: error.message || "Failed to create booking. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to create booking. Please try again.",
         variant: "destructive",
       });
     } finally {

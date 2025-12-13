@@ -1,6 +1,6 @@
 # Common Issues
 
-**Last Updated:** 2025-12-01
+**Last Updated:** 2025-12-13
 
 ---
 
@@ -342,6 +342,44 @@ When investigating issues:
 8. ✅ Verify edge functions deployed (check timestamp)
 9. ✅ Test with different browsers
 10. ✅ Check for TypeScript errors in build
+
+---
+
+## Production Audit Issues (Fixed 2025-12-13)
+
+### Issue: Duplicate ChatBot Component
+**Symptom:** Two chat buttons appearing, inconsistent state  
+**Cause:** ChatBot rendered both in App.tsx and Index.tsx  
+**Solution:** Remove duplicate from Index.tsx - App.tsx renders it globally
+
+**Prevention:** Only render global components in App.tsx
+
+---
+
+### Issue: FAQ Items Hoisting
+**Symptom:** FAQ schema not loading, possible runtime errors  
+**Cause:** `faqItems` used in useEffect before being defined in component  
+**Solution:** Move `faqItems` constant outside component
+
+**Prevention:** Define data constants outside components when used in effects
+
+---
+
+### Issue: Outdated SEO Dates
+**Symptom:** Schema.org pricing shows as expired  
+**Cause:** `priceValidUntil` dates set in the past  
+**Solution:** Update dates to future (e.g., 2026-12-31)
+
+**Prevention:** Use dynamic dates or set reminders to update annually
+
+---
+
+### Issue: Missing SEO on Pages
+**Symptom:** Pages don't have proper meta tags in search results  
+**Cause:** SEO component not added to all pages  
+**Solution:** Add SEO component with title, description, canonical URL
+
+**Prevention:** Include SEO component in all page templates
 
 ---
 
