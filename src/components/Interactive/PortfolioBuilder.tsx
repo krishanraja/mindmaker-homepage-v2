@@ -124,7 +124,12 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
             </Button>
             <Button 
               className="flex-1 bg-mint text-ink hover:bg-mint/90"
-              onClick={() => window.location.href = '/builder-sprint'}
+              onClick={() => {
+                // #region agent log
+                fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PortfolioBuilder.tsx:BuildPortfolio:click',message:'Build Portfolio button clicked, navigating to /builder-sprint',data:{targetUrl:'/builder-sprint'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H4'})}).catch(()=>{});
+                // #endregion
+                window.location.href = '/builder-sprint';
+              }}
             >
               Build This Portfolio →
             </Button>
@@ -198,7 +203,7 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
   );
 };
 
-// Generate master prompts based on selected tasks
+// Generate master prompts based on selected tasks - using Mindmaker methodology
 function generateMasterPrompts(tasks: Array<{ name: string; aiTools: string[] }>) {
   const prompts: Array<{ title: string; prompt: string }> = [];
   
@@ -207,78 +212,91 @@ function generateMasterPrompts(tasks: Array<{ name: string; aiTools: string[] }>
     
     if (taskLower.includes('email') || taskLower.includes('communication')) {
       prompts.push({
-        title: `${task.name} Accelerator`,
-        prompt: `You are my [YOUR_ROLE] communication assistant. I need to [SPECIFIC_TASK] for [RECIPIENT/AUDIENCE]. 
+        title: `Executive Communication Drafter`,
+        prompt: `I need to draft a professional communication to my team about an important update. The key message is our strategic priority shift for this quarter. Write a clear, confident message that:
+1. Opens with the key decision/update (don't bury the lead)
+2. Explains the reasoning in 2-3 sentences
+3. Addresses how this affects the team
+4. Ends with clear next steps
 
-Context: [RELEVANT_BACKGROUND]
-Tone: [professional/casual/urgent]
-Key points to include: [POINT_1], [POINT_2]
-
-Draft a response that is clear, actionable, and under [WORD_COUNT] words.`
+Keep it under 200 words, professional but warm tone. Make it something I can send with minimal editing.`
       });
     } else if (taskLower.includes('report') || taskLower.includes('data')) {
       prompts.push({
-        title: `${task.name} Generator`,
-        prompt: `Analyze the following [DATA_TYPE] and create a [REPORT_TYPE] report:
+        title: `Weekly Performance Analysis`,
+        prompt: `I'm sharing our key metrics for this week. Analyze this data and give me:
+1. The 3 most important trends I should know about
+2. Any anomalies or red flags that need immediate attention
+3. One specific, actionable recommendation for next week
+4. A one-paragraph executive summary I can share with leadership
 
-Data: [PASTE_DATA_OR_DESCRIBE]
-
-Include:
-1. Executive summary (3 sentences max)
-2. Key metrics and trends
-3. Anomalies or concerns
-4. Recommended actions
-
-Format for [AUDIENCE] with [FORMAL/CASUAL] tone.`
+Format this for a busy executive who has 2 minutes to review. Use bullet points, be direct, highlight what matters.`
       });
     } else if (taskLower.includes('meeting') || taskLower.includes('notes')) {
       prompts.push({
-        title: `${task.name} Optimizer`,
-        prompt: `Process these meeting notes from a [MEETING_TYPE] meeting:
+        title: `Meeting Summary Generator`,
+        prompt: `Here are my raw notes from today's leadership meeting. Transform these into a shareable summary with:
+1. Executive summary (3 sentences max - what does the reader NEED to know?)
+2. Decisions made (what was decided and by whom)
+3. Action items with owners and deadlines (table format)
+4. Open questions for next meeting
+5. Key quotes worth remembering
 
-"[PASTE_NOTES]"
+Format this so I can paste it directly into Slack or email to the team.`
+      });
+    } else if (taskLower.includes('strategic') || taskLower.includes('planning') || taskLower.includes('analysis')) {
+      prompts.push({
+        title: `Strategic Analysis Framework`,
+        prompt: `I'm working through a strategic decision and want to apply structured thinking. Help me analyze this using the dialectical method:
 
-Create:
-1. Executive summary (bullet points)
-2. Decisions made
-3. Action items (with owners and deadlines)
-4. Open questions for follow-up
-5. Key quotes worth remembering`
+1. THESIS: What's the strongest case FOR this direction?
+2. ANTITHESIS: What's the strongest case AGAINST?
+3. SYNTHESIS: What path captures the benefits while mitigating the risks?
+4. FIRST-PRINCIPLES CHECK: What are we assuming that might not be true?
+5. RECOMMENDATION: Given all this, what should we actually do?
+
+Be direct, challenge my thinking, and give me a clear recommendation with reasoning.`
+      });
+    } else if (taskLower.includes('research') || taskLower.includes('market') || taskLower.includes('competitive')) {
+      prompts.push({
+        title: `Competitive Intelligence Brief`,
+        prompt: `I need a quick competitive intelligence brief on our market. Research and provide:
+1. Key moves by our top 3 competitors in the last 90 days
+2. Emerging trends that could affect our positioning
+3. Gaps in the market we could potentially exploit
+4. Questions we should be asking internally based on this analysis
+
+Keep it to one page, cite sources where possible, and end with 2-3 specific recommendations for our team.`
       });
     } else {
       prompts.push({
-        title: `${task.name} Assistant`,
-        prompt: `I am a [YOUR_ROLE] working on [SPECIFIC_TASK]. 
+        title: `${task.name} Accelerator`,
+        prompt: `I'm a senior leader working on ${task.name.toLowerCase()}. I need to move faster on this without sacrificing quality.
 
-Context: [RELEVANT_BACKGROUND]
-Constraints: [TIME/BUDGET/SCOPE_LIMITS]
-Desired outcome: [WHAT_SUCCESS_LOOKS_LIKE]
+Help me by:
+1. Identifying the 20% of this work that drives 80% of the value
+2. Suggesting how AI tools (specifically ${task.aiTools.slice(0, 2).join(' or ')}) could accelerate each step
+3. Creating a draft framework or template I can use immediately
+4. Flagging potential pitfalls so I avoid common mistakes
 
-Help me by providing:
-1. A structured approach
-2. Potential pitfalls to avoid
-3. A draft output I can refine
-
-Format for [INTENDED_USE].`
+Be direct and practical—I want to implement this today, not someday.`
       });
     }
   });
 
-  // Add a universal prompt if we have less than 2
+  // Add strategic decision prompt if we have less than 2
   if (prompts.length < 2) {
     prompts.push({
-      title: 'Strategic Decision Helper',
-      prompt: `I need to make a decision about [DESCRIBE_DECISION].
+      title: 'First-Principles Decision Framework',
+      prompt: `I'm facing a strategic decision and want to think through it rigorously. Apply first-principles thinking:
 
-Key factors: [FACTOR_1], [FACTOR_2], [FACTOR_3]
-Constraints: [CONSTRAINTS]
-Stakeholders: [WHO_IS_AFFECTED]
+1. What's the fundamental problem I'm actually trying to solve? (Strip away the symptoms)
+2. What are we assuming that might not be true?
+3. If we started from scratch with no constraints, what would we do?
+4. What's the minimum viable test to validate our hypothesis?
+5. What would change our mind about this direction?
 
-Provide:
-1. Pros and cons analysis
-2. Risk assessment
-3. Your recommended path forward with reasoning
-4. How to communicate this decision to stakeholders`
+Then give me a clear recommendation with your reasoning. Be willing to tell me if I'm thinking about this wrong.`
     });
   }
 

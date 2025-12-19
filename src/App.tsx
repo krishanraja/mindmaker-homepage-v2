@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { ChatBot } from "@/components/ChatBot";
 import { SessionDataProvider } from "@/contexts/SessionDataContext";
@@ -37,6 +37,9 @@ const App = () => (
             {/* Leadership Insights Diagnostic - accessible at /leaders */}
             <Route path="/leaders" element={<LeadershipInsights />} />
             <Route path="/leadership-insights" element={<LeadershipInsights />} />
+            {/* Redirects for common URL variations */}
+            <Route path="/builder" element={<Navigate to="/builder-session" replace />} />
+            <Route path="/partner-program" element={<Navigate to="/portfolio-program" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
