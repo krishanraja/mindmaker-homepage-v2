@@ -120,23 +120,30 @@ const TryItWidget = () => {
                   transition={{ duration: 0.4 }}
                   className="mt-6 pt-6 border-t border-mint/20"
                 >
+                  <div className="flex items-center gap-2 text-xs text-mint-dark mb-3">
+                    <Sparkles className="h-3 w-3" />
+                    <span>Mindmaker Framework Applied</span>
+                  </div>
                   <MarkdownResponse 
                     content={response} 
                     className="text-sm text-muted-foreground leading-relaxed"
                   />
                   
-                  <div className="mt-6 pt-6 border-t border-border">
+                  {/* CTA - Sticky on mobile */}
+                  <div className="mt-6 pt-6 border-t border-border sm:relative fixed bottom-0 left-0 right-0 bg-background p-4 sm:p-0 z-10 sm:z-auto">
                     <p className="text-xs text-muted-foreground text-center mb-4">
                       Want deeper analysis for your specific situation?
                     </p>
                     <Button
-                      size="sm"
+                      size="lg"
                       className="w-full bg-ink text-white hover:bg-ink/90"
                       onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
                     >
                       Book a Builder Session
                     </Button>
                   </div>
+                  {/* Spacer for fixed CTA on mobile */}
+                  <div className="h-28 sm:hidden" />
                 </motion.div>
               )}
             </AnimatePresence>

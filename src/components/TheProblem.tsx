@@ -105,10 +105,16 @@ const TheProblem = () => {
 
   const renderDialogContent = () => {
     const aiDisclaimer = (
-      <div className="mb-4 p-3 bg-muted border border-border rounded-lg">
-        <p className="text-xs text-muted-foreground">
-          <strong className="text-foreground">AI-Powered Sample:</strong> This tool uses AI trained on proprietary data and frameworks. Results are for exploration—book a session with Krish for personalized guidance.
-        </p>
+      <div className="mb-4 p-3 bg-gradient-to-r from-mint/10 to-ink/5 border border-mint/20 rounded-lg">
+        <div className="flex items-start gap-2">
+          <Sparkles className="w-4 h-4 text-mint shrink-0 mt-0.5" />
+          <div>
+            <p className="text-xs text-foreground font-medium">Powered by Mindmaker Methodology</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Using the Five Cognitive Frameworks: A/B Framing, Dialectical Reasoning, Mental Contrasting, Reflective Equilibrium, and First-Principles Thinking.
+            </p>
+          </div>
+        </div>
       </div>
     );
 
@@ -260,7 +266,7 @@ const TheProblem = () => {
 
       {/* Dialog for Interactive Components */}
       <Dialog open={dialogType !== null} onOpenChange={() => setDialogType(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl">
           {renderDialogContent()}
         </DialogContent>
       </Dialog>

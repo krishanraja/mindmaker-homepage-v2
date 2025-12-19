@@ -107,7 +107,7 @@ export const FrictionMapBuilder = ({ compact = false }: FrictionMapBuilderProps)
   if (frictionMap) {
     return (
       <Card className="p-6 sm:p-8 -mt-4 bg-white dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 shadow-lg animate-in fade-in duration-500">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
             <Sparkles className="h-5 w-5 text-mint dark:text-mint" />
             Your AI Friction Map
@@ -115,6 +115,12 @@ export const FrictionMapBuilder = ({ compact = false }: FrictionMapBuilderProps)
           <Button variant="ghost" size="sm" onClick={clearFrictionMap} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             Build Another
           </Button>
+        </div>
+        
+        {/* Mindmaker Methodology Badge */}
+        <div className="mb-6 flex items-center gap-2 text-xs text-mint-dark">
+          <Sparkles className="h-3 w-3" />
+          <span>Analyzed using Mindmaker's First-Principles Framework</span>
         </div>
 
         <div className="space-y-6">
@@ -183,8 +189,8 @@ export const FrictionMapBuilder = ({ compact = false }: FrictionMapBuilderProps)
             </div>
           )}
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+          {/* Actions - Sticky on mobile */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t sm:relative fixed bottom-0 left-0 right-0 bg-background p-4 sm:p-0 sm:bg-transparent z-10 sm:z-auto">
             <Button onClick={handleDownload} variant="outline" className="flex-1">
               <Download className="h-4 w-4 mr-2" />
               Download PDF
@@ -196,6 +202,8 @@ export const FrictionMapBuilder = ({ compact = false }: FrictionMapBuilderProps)
               Build 4 More Like This →
             </Button>
           </div>
+          {/* Spacer for fixed CTA on mobile */}
+          <div className="h-24 sm:hidden" />
         </div>
       </Card>
     );

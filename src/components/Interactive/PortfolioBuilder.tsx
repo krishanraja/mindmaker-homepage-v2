@@ -4,17 +4,28 @@ import { Card } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { usePortfolio } from '@/hooks/usePortfolio';
-import { TrendingUp, Download, ArrowRight } from 'lucide-react';
+import { TrendingUp, Download, ArrowRight, Loader2, Sparkles, Copy, Check } from 'lucide-react';
 import { useSessionData } from '@/contexts/SessionDataContext';
 import { generatePortfolioPDF } from '@/utils/pdfGenerator';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface PortfolioBuilderProps {
   compact?: boolean;
 }
 
+interface MasterPrompt {
+  title: string;
+  prompt: string;
+  framework?: string;
+}
+
 export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => {
   const { tasks, toggleTask, updateTaskHours, getPortfolioData } = usePortfolio();
   const [showResults, setShowResults] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [masterPrompts, setMasterPrompts] = useState<MasterPrompt[]>([]);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const portfolioData = getPortfolioData();
   const { setPortfolioBuilder } = useSessionData();
 
@@ -33,17 +44,78 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
     }
   }, [showResults, getPortfolioData, setPortfolioBuilder]);
 
-  const handleGenerate = () => {
-    if (portfolioData.tasks.length > 0) {
-      setShowResults(true);
+  const handleGenerate = async () => {
+    if (portfolioData.tasks.length === 0) return;
+    
+    setIsGenerating(true);
+    setShowResults(true);
+    
+    // Build context for AI
+    const tasksSummary = portfolioData.tasks.map(t => 
+      `- ${t.name}: ${t.hoursPerWeek}h/week currently, could save ${t.potentialSavings}h/week. Suggested tools: ${t.aiTools.join(', ')}`
+    ).join('\n');
+
+    try {
+      const { data, error } = await supabase.functions.invoke('chat-with-krish', {
+        body: {
+          messages: [
+            {
+              role: 'user',
+              content: `Generate 3 personalized, ready-to-use AI master prompts for a leader based on their selected tasks:
+
+${tasksSummary}
+
+Total time savings potential: ${portfolioData.totalTimeSaved}h/week
+Total value: $${portfolioData.totalCostSavings.toLocaleString()}/month
+
+Return a JSON array with exactly 3 prompts:
+[
+  {
+    "title": "A specific, action-oriented title (e.g., 'Weekly Report Synthesizer')",
+    "framework": "The Mindmaker framework applied (e.g., 'First-Principles Thinking')",
+    "prompt": "A complete, ready-to-use prompt (200-300 words) that the leader can paste directly into ChatGPT or Claude. Include specific context, clear instructions, and expected output format. Reference their actual tasks. No placeholders."
+  }
+]
+
+Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their workflow, not generic templates. These should be prompts they can use TODAY.`
+            }
+          ],
+          widgetMode: 'tryit'
+        }
+      });
+
+      if (error) throw error;
+
+      const responseText = data?.message || '';
+      const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+      
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        setMasterPrompts(parsed);
+      } else {
+        // Fallback to static prompts
+        setMasterPrompts(generateFallbackPrompts(portfolioData.tasks));
+      }
+    } catch (err) {
+      console.error('AI prompt generation failed:', err);
+      setMasterPrompts(generateFallbackPrompts(portfolioData.tasks));
+    } finally {
+      setIsGenerating(false);
     }
   };
 
+  const handleCopyPrompt = async (prompt: string, index: number) => {
+    await navigator.clipboard.writeText(prompt);
+    setCopiedIndex(index);
+    toast.success('Prompt copied to clipboard!');
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
   const handleDownload = () => {
-    const masterPrompts = generateMasterPrompts(portfolioData.tasks);
+    const promptsForPDF = masterPrompts.length > 0 ? masterPrompts : generateFallbackPrompts(portfolioData.tasks);
     generatePortfolioPDF({
       ...portfolioData,
-      masterPrompts,
+      masterPrompts: promptsForPDF,
     });
   };
 
@@ -55,42 +127,14 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
             <TrendingUp className="h-5 w-5 text-mint" />
             Your AI Portfolio
           </h3>
-          <Button variant="ghost" size="sm" onClick={() => setShowResults(false)}>
+          <Button variant="ghost" size="sm" onClick={() => { setShowResults(false); setMasterPrompts([]); }}>
             Edit
           </Button>
         </div>
 
         <div className="space-y-6">
-          {/* Tasks */}
-          <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3">YOUR AI SYSTEMS</div>
-            <div className="space-y-3">
-              {portfolioData.tasks.map(task => (
-                <div key={task.id} className="p-4 rounded-lg bg-background border">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="font-semibold text-sm">{task.name}</div>
-                      <div className="text-right">
-                        <div className="text-xs text-muted-foreground">Saves</div>
-                        <div className="text-lg font-bold text-mint-dark">{task.potentialSavings}h/wk</div>
-                    </div>
-                  </div>
-                    <div className="text-xs text-muted-foreground space-y-1">
-                      <div>Current: {task.hoursPerWeek}h/week</div>
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {task.aiTools.map((tool, i) => (
-                          <span key={i} className="px-2 py-0.5 bg-mint/10 text-mint-dark rounded-full text-xs">
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Total Impact */}
-          <div className="grid sm:grid-cols-2 gap-4 p-4 rounded-lg bg-background">
+          {/* Total Impact - Moved to top for visibility */}
+          <div className="grid grid-cols-2 gap-4 p-4 rounded-lg bg-background">
             <div className="text-center">
               <div className="text-3xl font-bold text-mint-dark">{portfolioData.totalTimeSaved}h</div>
               <div className="text-xs text-muted-foreground">Saved per week</div>
@@ -101,23 +145,89 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
             </div>
           </div>
 
-          {/* Roadmap */}
+          {/* AI-Generated Master Prompts */}
           <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3">IMPLEMENTATION ROADMAP</div>
-            <div className="space-y-2">
-              {portfolioData.implementationRoadmap.map((step, i) => (
-                <div key={i} className="flex items-start gap-3 text-sm">
-                  <div className="w-6 h-6 rounded-full bg-mint/20 text-mint-dark flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    {i + 1}
+            <div className="text-xs font-bold text-muted-foreground mb-3 flex items-center gap-2">
+              <Sparkles className="h-3 w-3 text-mint" />
+              YOUR PERSONALIZED PROMPTS
+            </div>
+            {isGenerating ? (
+              <div className="p-6 rounded-lg bg-background border flex flex-col items-center justify-center">
+                <Loader2 className="h-8 w-8 text-mint animate-spin mb-3" />
+                <p className="text-sm text-muted-foreground text-center">
+                  Generating personalized prompts using Mindmaker methodology...
+                </p>
+              </div>
+            ) : masterPrompts.length > 0 ? (
+              <div className="space-y-4">
+                {masterPrompts.map((prompt, i) => (
+                  <div key={i} className="p-4 rounded-lg bg-background border">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <div className="font-semibold text-sm">{prompt.title}</div>
+                        {prompt.framework && (
+                          <div className="text-xs text-mint-dark flex items-center gap-1 mt-1">
+                            <Sparkles className="h-3 w-3" />
+                            {prompt.framework}
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleCopyPrompt(prompt.prompt, i)}
+                        className="shrink-0"
+                      >
+                        {copiedIndex === i ? (
+                          <Check className="h-4 w-4 text-success" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground whitespace-pre-wrap bg-muted/50 p-3 rounded mt-2 max-h-32 overflow-y-auto">
+                      {prompt.prompt}
+                    </p>
                   </div>
-                  <div className="pt-0.5">{step}</div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          {/* Tasks - Collapsible on mobile */}
+          <details className="group">
+            <summary className="text-xs font-bold text-muted-foreground mb-3 cursor-pointer list-none flex items-center gap-2">
+              YOUR AI SYSTEMS
+              <span className="text-mint text-[10px]">({portfolioData.tasks.length} selected)</span>
+              <ArrowRight className="h-3 w-3 transition-transform group-open:rotate-90" />
+            </summary>
+            <div className="space-y-3 mt-3">
+              {portfolioData.tasks.map(task => (
+                <div key={task.id} className="p-4 rounded-lg bg-background border">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="font-semibold text-sm">{task.name}</div>
+                    <div className="text-right">
+                      <div className="text-xs text-muted-foreground">Saves</div>
+                      <div className="text-lg font-bold text-mint-dark">{task.potentialSavings}h/wk</div>
+                    </div>
+                  </div>
+                  <div className="text-xs text-muted-foreground space-y-1">
+                    <div>Current: {task.hoursPerWeek}h/week</div>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {task.aiTools.map((tool, i) => (
+                        <span key={i} className="px-2 py-0.5 bg-mint/10 text-mint-dark rounded-full text-xs">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
+          </details>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+          {/* Actions - Sticky on mobile */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t sm:relative fixed bottom-0 left-0 right-0 bg-background p-4 sm:p-0 sm:bg-transparent z-10 sm:z-auto">
             <Button onClick={handleDownload} variant="outline" className="flex-1">
               <Download className="h-4 w-4 mr-2" />
               Download PDF
@@ -129,6 +239,8 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
               Build This Portfolio →
             </Button>
           </div>
+          {/* Spacer for fixed CTA on mobile */}
+          <div className="h-24 sm:hidden" />
         </div>
       </Card>
     );
@@ -198,9 +310,9 @@ export const PortfolioBuilder = ({ compact = false }: PortfolioBuilderProps) => 
   );
 };
 
-// Generate master prompts based on selected tasks - using Mindmaker methodology
-function generateMasterPrompts(tasks: Array<{ name: string; aiTools: string[] }>) {
-  const prompts: Array<{ title: string; prompt: string }> = [];
+// Fallback prompts when AI generation fails
+function generateFallbackPrompts(tasks: Array<{ name: string; aiTools: string[] }>): MasterPrompt[] {
+  const prompts: MasterPrompt[] = [];
   
   tasks.forEach(task => {
     const taskLower = task.name.toLowerCase();

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAssessment } from '@/hooks/useAssessment';
-import { ArrowRight, RotateCcw, Award, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, RotateCcw, Award, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
 import { useSessionData } from '@/contexts/SessionDataContext';
 import { useEffect } from 'react';
 
@@ -10,7 +10,7 @@ interface BuilderAssessmentProps {
 }
 
 export const BuilderAssessment = ({ compact = false }: BuilderAssessmentProps) => {
-  const { currentStep, questions, answers, profile, answerQuestion, nextQuestion, reset } = useAssessment();
+  const { currentStep, questions, answers, profile, isGenerating, answerQuestion, nextQuestion, reset } = useAssessment();
   const { setAssessment } = useSessionData();
 
   useEffect(() => {
@@ -114,6 +114,24 @@ export const BuilderAssessment = ({ compact = false }: BuilderAssessmentProps) =
     );
   }
 
+  // Loading state while generating AI profile
+  if (isGenerating) {
+    return (
+      <Card className="p-6 sm:p-8 bg-gradient-to-br from-mint/10 to-ink/10 border-2 border-mint/50">
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="relative mb-6">
+            <Loader2 className="h-12 w-12 text-mint animate-spin" />
+            <Sparkles className="h-5 w-5 text-mint absolute -top-1 -right-1 animate-pulse" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Analyzing Your Responses</h3>
+          <p className="text-muted-foreground text-sm max-w-sm">
+            Applying Mindmaker's Five Cognitive Frameworks to create your personalized AI Builder Profile...
+          </p>
+        </div>
+      </Card>
+    );
+  }
+
   // Full mode - Results view
   if (profile) {
     return (
@@ -135,6 +153,12 @@ export const BuilderAssessment = ({ compact = false }: BuilderAssessmentProps) =
               {profile.type}
             </div>
             <p className="text-lg text-muted-foreground">{profile.description}</p>
+            {profile.frameworkUsed && (
+              <p className="text-xs text-mint-dark mt-3 flex items-center justify-center gap-1">
+                <Sparkles className="h-3 w-3" />
+                Analyzed using {profile.frameworkUsed}
+              </p>
+            )}
           </div>
 
           {/* Strengths */}
@@ -165,19 +189,21 @@ export const BuilderAssessment = ({ compact = false }: BuilderAssessmentProps) =
             </div>
           </div>
 
-          {/* Recommended Product */}
-          <div className="p-6 rounded-lg bg-ink text-white text-center">
+          {/* Recommended Product with sticky CTA on mobile */}
+          <div className="p-6 rounded-lg bg-ink text-white text-center sm:relative fixed bottom-0 left-0 right-0 sm:rounded-lg rounded-none z-10 sm:z-auto">
             <div className="text-xs font-bold text-mint mb-2">RECOMMENDED FOR YOU</div>
             <div className="text-xl font-bold mb-4">{profile.recommendedProduct}</div>
             <Button
               size="lg"
-              className="bg-mint text-ink hover:bg-mint/90 font-bold"
+              className="bg-mint text-ink hover:bg-mint/90 font-bold w-full sm:w-auto"
               onClick={() => window.location.href = profile.productLink}
             >
               Learn More
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>
+          {/* Spacer for fixed CTA on mobile */}
+          <div className="h-32 sm:hidden" />
         </div>
       </Card>
     );
