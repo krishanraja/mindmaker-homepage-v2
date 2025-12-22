@@ -96,52 +96,74 @@ export const useAssessment = () => {
 ASSESSMENT RESPONSES:
 ${answerSummary}
 
-ANALYSIS REQUIREMENTS:
-1. **Deep Pattern Recognition**: Look beyond surface answers. What do their choices reveal about their leadership style, risk tolerance, and organizational context? Are they a hands-on builder or strategic delegator? Do they prefer quick wins or transformational change?
+## DEEP ANALYSIS PROCESS (Follow this systematically):
 
-2. **Mindmaker Framework Application**: Apply ONE of the Five Cognitive Frameworks that best fits their situation:
-   - **First-Principles Thinking**: If they're questioning fundamentals or need to strip away assumptions
-   - **Mental Contrasting (WOOP)**: If they have clear goals but need obstacle planning
-   - **Dialectical Reasoning**: If they're weighing competing options or need synthesis
-   - **A/B Framing**: If they're stuck in binary thinking or need perspective shift
-   - **Reflective Equilibrium**: If alignment with values/org culture is the key issue
+### Step 1: Extract Specific Language
+- Pull out exact phrases, words, or patterns from their answers (not just the option they selected)
+- Note their tone: Are they cautious? Enthusiastic? Overwhelmed? Confident but stuck?
+- Identify contradictions: Do they say one thing but their choices suggest another?
 
-3. **Specificity Over Generics**: 
-   - Reference their EXACT words/phrases from answers
-   - Identify what they're NOT saying (gaps, hesitations, blind spots)
-   - Connect their answers to real leadership scenarios (e.g., "Your focus on implementation suggests you've hit the 'knowing vs doing' gap that many COOs face")
+### Step 2: Pattern Recognition Across Answers
+- What story do their answers tell together? (e.g., "You selected 'experimenting' but also 'need structure' - this suggests you've tried tools but hit the 'now what?' wall")
+- What are they NOT saying? (e.g., No mention of team? They might be thinking solo. No mention of ROI? They might be in exploration mode)
+- What's their journey stage? (Curious → Experimenting → Building → Scaling → Transforming)
 
-4. **Actionable Insights**: Each strength and next step must be:
-   - Tied directly to their assessment responses
-   - Specific enough they think "this person really gets my situation"
-   - Actionable within 30 days
-   - Include WHY it matters for their specific journey stage
+### Step 3: Identify Unique Combinations
+- Their specific answer combination creates a unique profile (e.g., "Experimentation + Implementation challenge + Team of 10-50" = "You're a scaling leader who's past the demo phase but needs systems")
+- What makes THIS person different from others with similar answers? Find the nuance.
 
-5. **Product Recommendation Logic**: 
-   - Builder Session: If they need proof-of-concept, have 1 specific problem, or are early-stage
-   - AI Literacy-to-Influence (Builder Sprint): If they're experimenting, need systems, or want to systematize
-   - AI Leadership Lab: If they're thinking at scale, need team transformation, or have executive mandate
+### Step 4: Apply Mindmaker Framework (Choose ONE that best fits)
+- **First-Principles Thinking**: If they're questioning fundamentals, stuck on assumptions, or need to rebuild from basics
+- **Mental Contrasting (WOOP)**: If they have clear goals but obstacles are blocking them
+- **Dialectical Reasoning**: If they're torn between options (build vs buy, speed vs quality, etc.)
+- **A/B Framing**: If they're stuck in binary thinking or need perspective shift
+- **Reflective Equilibrium**: If values/org culture alignment is the core challenge
 
-Return ONLY a valid JSON object (no markdown, no explanation) with this exact structure:
+### Step 5: Create Specific Strengths (NOT Generic)
+BAD: "Open mindset" (anyone could have this)
+GOOD: "Your recognition of overwhelm suggests you've moved past the 'AI is magic' phase—you're seeing the complexity, which is actually a strength because it means you're thinking critically, not just following hype."
+
+Each strength must:
+- Reference their specific answer combination
+- Explain WHY it's a strength (not just what it is)
+- Show you understand their unique position
+
+### Step 6: Craft Actionable Next Steps
+Each step must:
+- Reference their specific answers (e.g., "You mentioned weekly reports take 5 hours - let's start there")
+- Include timeline (e.g., "Within 2 weeks")
+- Explain expected outcome
+- Build on previous steps logically
+
+## OUTPUT FORMAT (Return ONLY valid JSON, no markdown):
+
 {
-  "type": "A creative, memorable 2-3 word profile title that captures their unique position (e.g., 'Experimentation Catalyst', 'Systematization Builder', 'Transformation Architect') - make it specific to their answers, not generic",
-  "description": "A personalized 2-3 sentence description that: (1) acknowledges their specific journey stage based on answers, (2) identifies the key insight/pattern you noticed, (3) frames their potential in concrete terms. Reference their actual responses.",
-  "frameworkUsed": "The specific Mindmaker framework you applied and WHY it fits their situation",
+  "type": "A creative 2-3 word title that captures their UNIQUE position based on their answer combination. Must be specific, not generic. Examples: 'Experimentation Catalyst' (if experimenting + need structure), 'Systematization Builder' (if building + need systems), 'Transformation Architect' (if scaling + need strategy)",
+  "description": "2-3 sentences that: (1) Acknowledge their EXACT journey stage from answers, (2) Identify the KEY insight/pattern you noticed (reference specific answers), (3) Frame their potential in concrete terms. MUST reference their actual responses, not generic statements.",
+  "frameworkUsed": "The specific framework name AND a 1-sentence explanation of why it fits their situation",
   "strengths": [
-    "Strength 1: Specific to their answers, with brief context (e.g., 'Your hands-on experimentation shows you've moved past the 'AI is magic' phase - you're testing real workflows, not just demos')",
-    "Strength 2: Another specific insight tied to their responses",
-    "Strength 3: A third insight that shows deep understanding"
+    "Strength 1: Specific to their answer combination, with context explaining WHY it's a strength. Reference their actual words/choices. Example: 'Your selection of 'experimenting' combined with 'implementation challenge' shows you've moved past the 'AI is magic' phase—you're testing real workflows, which is a strength because it means you're thinking critically about fit, not just following hype.'",
+    "Strength 2: Another specific insight that shows deep understanding of their unique position",
+    "Strength 3: A third insight that demonstrates you've analyzed their full answer set, not just surface level"
   ],
   "nextSteps": [
-    "Step 1: Highly specific, actionable next step with timeline and expected outcome. Reference their answers. (e.g., 'Within 2 weeks, map your weekly reporting workflow using our Friction Map tool - you mentioned this takes 5 hours, and it's a perfect quick win to build confidence')",
-    "Step 2: Another specific step tied to their situation",
-    "Step 3: A third step that builds on the previous ones"
+    "Step 1: Highly specific, actionable step with timeline. Reference their answers directly. Example: 'Within 2 weeks, use our Friction Map Builder to map your weekly reporting workflow—you mentioned this takes 5 hours, and it's a perfect quick win to build confidence before tackling bigger systems.'",
+    "Step 2: Another specific step that builds on step 1, tied to their situation",
+    "Step 3: A third step that shows progression and addresses their specific journey stage"
   ],
   "recommendedProduct": "Builder Session OR AI Literacy-to-Influence OR AI Leadership Lab",
   "productLink": "/builder-session OR /builder-sprint OR /leadership-lab"
 }
 
-CRITICAL: This profile should feel like it was written by someone who spent 30 minutes understanding their specific situation, not a generic template. A CEO reading this should think "This is exactly where I am."`
+## QUALITY CHECKLIST:
+Before finalizing, ask:
+- [ ] Does the description reference their specific answers, not generic statements?
+- [ ] Are strengths specific enough that only THIS person (with their answer combination) would get them?
+- [ ] Do next steps reference their actual words/choices?
+- [ ] Would a CEO read this and think "This person really understands my situation"?
+- [ ] Is it clear this was written for THEM, not a template?
+
+CRITICAL: This profile should feel like it was written by someone who spent 30 minutes understanding their specific situation. A CEO reading this should think "This is exactly where I am and exactly what I need."`
             }
           ],
           widgetMode: 'tryit'

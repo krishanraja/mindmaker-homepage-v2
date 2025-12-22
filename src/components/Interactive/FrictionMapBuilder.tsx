@@ -321,8 +321,9 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
   // Desktop layout
   if (frictionMap) {
     return (
-      <Card className="p-6 sm:p-8 bg-white dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 shadow-lg animate-in fade-in duration-500">
-        <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col h-full max-h-[70vh] min-h-0 bg-white dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg animate-in fade-in duration-500">
+        {/* Header - Fixed */}
+        <div className="shrink-0 flex items-center justify-between p-6 pb-4 border-b">
           <h3 className="text-xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
             <MindmakerIcon size={20} />
             Your AI Friction Map
@@ -332,83 +333,87 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
           </Button>
         </div>
         
-        <MindmakerBadge text="Analyzed using Mindmaker's First-Principles Framework" className="mb-6" />
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto min-h-0 p-6 pr-4">
+          <div className="space-y-6">
+            <MindmakerBadge text="Analyzed using Mindmaker's First-Principles Framework" />
 
-        <div className="space-y-6">
-          <div>
-            <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">YOUR CHALLENGE</div>
-            <div className="text-lg font-semibold text-gray-900 dark:text-white">{frictionMap.problem}</div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
-              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">CURRENT STATE</div>
-              <p className="text-sm text-gray-700 dark:text-gray-300">{frictionMap.currentState}</p>
-            </div>
-            <div className="p-4 rounded-lg bg-mint/10 dark:bg-mint/20 border border-mint/30 dark:border-mint/40">
-              <div className="text-xs font-bold text-mint dark:text-mint mb-2">AI-ENABLED STATE</div>
-              <p className="text-sm text-gray-900 dark:text-white">{frictionMap.aiEnabledState}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-8 py-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg">
-            <div className="text-center">
-              <Clock className="h-6 w-6 text-mint mx-auto mb-2" />
-              <div className="text-xl font-bold text-gray-900 dark:text-white">{frictionMap.timeSaved}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Estimated savings</div>
-            </div>
-          </div>
-
-          <div>
-            <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-3">RECOMMENDED TOOLS</div>
-            <div className="space-y-3">
-              {frictionMap.toolRecommendations.map((tool, i) => (
-                <div key={i} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-mint/20 dark:bg-mint/30 text-mint-dark flex items-center justify-center text-xs font-bold flex-shrink-0">
-                      {i + 1}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm text-gray-900 dark:text-white">{tool.name}</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">{tool.description}</div>
-                      <div className="text-xs text-mint-dark mt-1 italic">→ {tool.useCase}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {frictionMap.masterPrompts && frictionMap.masterPrompts.length > 0 && (
             <div>
-              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-3">MASTER PROMPTS</div>
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">YOUR CHALLENGE</div>
+              <div className="text-lg font-semibold text-gray-900 dark:text-white">{frictionMap.problem}</div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">CURRENT STATE</div>
+                <p className="text-sm text-gray-700 dark:text-gray-300">{frictionMap.currentState}</p>
+              </div>
+              <div className="p-4 rounded-lg bg-mint/10 dark:bg-mint/20 border border-mint/30 dark:border-mint/40">
+                <div className="text-xs font-bold text-mint dark:text-mint mb-2">AI-ENABLED STATE</div>
+                <p className="text-sm text-gray-900 dark:text-white">{frictionMap.aiEnabledState}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-8 py-4 bg-gray-50 dark:bg-gray-800/30 rounded-lg">
+              <div className="text-center">
+                <Clock className="h-6 w-6 text-mint mx-auto mb-2" />
+                <div className="text-xl font-bold text-gray-900 dark:text-white">{frictionMap.timeSaved}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Estimated savings</div>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-3">RECOMMENDED TOOLS</div>
               <div className="space-y-3">
-                {frictionMap.masterPrompts.map((prompt, i) => (
-                  <div key={i} className="p-4 rounded-lg bg-ink/5 dark:bg-ink/20 border border-ink/10 dark:border-ink/30">
-                    <div className="font-semibold text-sm mb-2 text-gray-900 dark:text-white">{prompt.title}</div>
-                    <div className="text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap bg-white dark:bg-gray-900 p-3 rounded border">
-                      {prompt.prompt}
+                {frictionMap.toolRecommendations.map((tool, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-mint/20 dark:bg-mint/30 text-mint-dark flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        {i + 1}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm text-gray-900 dark:text-white">{tool.name}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{tool.description}</div>
+                        <div className="text-xs text-mint-dark mt-1 italic">→ {tool.useCase}</div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          )}
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-            <Button onClick={handleDownload} variant="outline" className="flex-1">
-              <Download className="h-4 w-4 mr-2" />
-              Download PDF
-            </Button>
-            <Button 
-              className="flex-1 bg-mint text-ink hover:bg-mint/90"
-              onClick={() => window.location.href = '/builder-session'}
-            >
-              Build 4 More Like This →
-            </Button>
+            {frictionMap.masterPrompts && frictionMap.masterPrompts.length > 0 && (
+              <div>
+                <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-3">MASTER PROMPTS</div>
+                <div className="space-y-3">
+                  {frictionMap.masterPrompts.map((prompt, i) => (
+                    <div key={i} className="p-4 rounded-lg bg-ink/5 dark:bg-ink/20 border border-ink/10 dark:border-ink/30">
+                      <div className="font-semibold text-sm mb-2 text-gray-900 dark:text-white">{prompt.title}</div>
+                      <div className="text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap bg-white dark:bg-gray-900 p-3 rounded border max-h-40 overflow-y-auto">
+                        {prompt.prompt}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </Card>
+
+        {/* Fixed Buttons at Bottom */}
+        <div className="shrink-0 flex flex-col sm:flex-row gap-3 p-6 pt-4 border-t bg-white dark:bg-gray-900/90">
+          <Button onClick={handleDownload} variant="outline" className="flex-1">
+            <Download className="h-4 w-4 mr-2" />
+            Download PDF
+          </Button>
+          <Button 
+            className="flex-1 bg-mint text-ink hover:bg-mint/90"
+            onClick={() => window.location.href = '/builder-session'}
+          >
+            Build 4 More Like This →
+          </Button>
+        </div>
+      </div>
     );
   }
 

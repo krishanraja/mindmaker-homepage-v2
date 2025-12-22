@@ -533,8 +533,9 @@ Return ONLY valid JSON array, no markdown or explanation.`;
   // Desktop layout
   if (showResults) {
     return (
-      <Card className="p-6 sm:p-8 bg-gradient-to-br from-mint/5 to-ink/5 border-2 border-mint">
-        <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col h-full max-h-[70vh] min-h-0">
+        {/* Header - Fixed */}
+        <div className="shrink-0 flex items-center justify-between mb-4 pb-4 border-b">
           <h3 className="text-xl font-bold flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-mint" />
             Your AI Portfolio
@@ -544,175 +545,187 @@ Return ONLY valid JSON array, no markdown or explanation.`;
           </Button>
         </div>
 
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4 p-4 rounded-lg bg-background">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-mint-dark">{portfolioData.totalTimeSaved}h</div>
-              <div className="text-xs text-muted-foreground">Saved per week</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gold">${(portfolioData.totalCostSavings / 1000).toFixed(0)}K</div>
-              <div className="text-xs text-muted-foreground">Value per month</div>
-            </div>
-          </div>
-
-          <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3 flex items-center gap-2">
-              <MindmakerIcon size={12} />
-              YOUR PERSONALIZED PROMPTS
-            </div>
-            {isGenerating ? (
-              <div className="p-6 rounded-lg bg-background border flex flex-col items-center justify-center">
-                <MindmakerIcon size={32} animated />
-                <p className="text-sm text-muted-foreground text-center mt-3">
-                  Generating personalized prompts using Mindmaker methodology...
-                </p>
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto min-h-0 pr-2 -mr-2">
+          <div className="space-y-6 pr-2">
+            <div className="grid grid-cols-2 gap-4 p-4 rounded-lg bg-background">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-mint-dark">{portfolioData.totalTimeSaved}h</div>
+                <div className="text-xs text-muted-foreground">Saved per week</div>
               </div>
-            ) : masterPrompts.length > 0 ? (
-              <div className="space-y-4">
-                {masterPrompts.map((prompt, i) => (
-                  <div key={i} className="p-4 rounded-lg bg-background border">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <div className="font-semibold text-sm">{prompt.title}</div>
-                        {prompt.framework && (
-                          <div className="text-xs text-mint-dark flex items-center gap-1 mt-1">
-                            <MindmakerIcon size={12} />
-                            {prompt.framework}
-                          </div>
-                        )}
+              <div className="text-center">
+                <div className="text-3xl font-bold text-gold">${(portfolioData.totalCostSavings / 1000).toFixed(0)}K</div>
+                <div className="text-xs text-muted-foreground">Value per month</div>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-bold text-muted-foreground mb-3 flex items-center gap-2">
+                <MindmakerIcon size={12} />
+                YOUR PERSONALIZED PROMPTS
+              </div>
+              {isGenerating ? (
+                <div className="p-6 rounded-lg bg-background border flex flex-col items-center justify-center">
+                  <MindmakerIcon size={32} animated />
+                  <p className="text-sm text-muted-foreground text-center mt-3">
+                    Generating personalized prompts using Mindmaker methodology...
+                  </p>
+                </div>
+              ) : masterPrompts.length > 0 ? (
+                <div className="space-y-4">
+                  {masterPrompts.map((prompt, i) => (
+                    <div key={i} className="p-4 rounded-lg bg-background border">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <div className="font-semibold text-sm">{prompt.title}</div>
+                          {prompt.framework && (
+                            <div className="text-xs text-mint-dark flex items-center gap-1 mt-1">
+                              <MindmakerIcon size={12} />
+                              {prompt.framework}
+                            </div>
+                          )}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleCopyPrompt(prompt.prompt, i)}
+                          className="shrink-0"
+                        >
+                          {copiedIndex === i ? (
+                            <Check className="h-4 w-4 text-success" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleCopyPrompt(prompt.prompt, i)}
-                        className="shrink-0"
-                      >
-                        {copiedIndex === i ? (
-                          <Check className="h-4 w-4 text-success" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
-                      </Button>
+                      <p className="text-xs text-muted-foreground whitespace-pre-wrap bg-muted/50 p-3 rounded mt-2 max-h-32 overflow-y-auto">
+                        {prompt.prompt}
+                      </p>
                     </div>
-                    <p className="text-xs text-muted-foreground whitespace-pre-wrap bg-muted/50 p-3 rounded mt-2 max-h-32 overflow-y-auto">
-                      {prompt.prompt}
-                    </p>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+
+            <details className="group">
+              <summary className="text-xs font-bold text-muted-foreground mb-3 cursor-pointer list-none flex items-center gap-2">
+                YOUR AI SYSTEMS
+                <span className="text-mint text-[10px]">({portfolioData.tasks.length} selected)</span>
+                <ArrowRight className="h-3 w-3 transition-transform group-open:rotate-90" />
+              </summary>
+              <div className="space-y-3 mt-3">
+                {portfolioData.tasks.map(task => (
+                  <div key={task.id} className="p-4 rounded-lg bg-background border">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="font-semibold text-sm">{task.name}</div>
+                      <div className="text-right">
+                        <div className="text-xs text-muted-foreground">Saves</div>
+                        <div className="text-lg font-bold text-mint-dark">{task.potentialSavings}h/wk</div>
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-1">
+                      <div>Current: {task.hoursPerWeek}h/week</div>
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {task.aiTools.map((tool, i) => (
+                          <span key={i} className="px-2 py-0.5 bg-mint/10 text-mint-dark rounded-full text-xs">
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
-            ) : null}
-          </div>
-
-          <details className="group">
-            <summary className="text-xs font-bold text-muted-foreground mb-3 cursor-pointer list-none flex items-center gap-2">
-              YOUR AI SYSTEMS
-              <span className="text-mint text-[10px]">({portfolioData.tasks.length} selected)</span>
-              <ArrowRight className="h-3 w-3 transition-transform group-open:rotate-90" />
-            </summary>
-            <div className="space-y-3 mt-3">
-              {portfolioData.tasks.map(task => (
-                <div key={task.id} className="p-4 rounded-lg bg-background border">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="font-semibold text-sm">{task.name}</div>
-                    <div className="text-right">
-                      <div className="text-xs text-muted-foreground">Saves</div>
-                      <div className="text-lg font-bold text-mint-dark">{task.potentialSavings}h/wk</div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground space-y-1">
-                    <div>Current: {task.hoursPerWeek}h/week</div>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {task.aiTools.map((tool, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-mint/10 text-mint-dark rounded-full text-xs">
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </details>
-
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-            <Button onClick={handleDownload} variant="outline" className="flex-1">
-              <Download className="h-4 w-4 mr-2" />
-              Download PDF
-            </Button>
-            <Button 
-              className="flex-1 bg-mint text-ink hover:bg-mint/90"
-              onClick={() => window.location.href = '/builder-sprint'}
-            >
-              Build This Portfolio →
-            </Button>
+            </details>
           </div>
         </div>
-      </Card>
+
+        {/* Fixed Buttons at Bottom */}
+        <div className="shrink-0 flex flex-col sm:flex-row gap-3 pt-4 mt-4 border-t bg-background">
+          <Button onClick={handleDownload} variant="outline" className="flex-1">
+            <Download className="h-4 w-4 mr-2" />
+            Download PDF
+          </Button>
+          <Button 
+            className="flex-1 bg-mint text-ink hover:bg-mint/90"
+            onClick={() => window.location.href = '/builder-sprint'}
+          >
+            Build This Portfolio →
+          </Button>
+        </div>
+      </div>
     );
   }
 
+  // Desktop input form - fixed height with scrollable content
   return (
-    <Card className="p-6 sm:p-8 bg-background/50 backdrop-blur-sm border-2 border-mint/30 hover:border-mint transition-colors">
-      <div className="mb-6">
+    <div className="flex flex-col h-full max-h-[70vh] min-h-0">
+      {/* Header - Fixed */}
+      <div className="shrink-0 mb-4 pb-4 border-b">
         <h3 className="text-xl font-bold mb-2">Model out your starting points</h3>
         <p className="text-sm text-muted-foreground">
           Select your weekly tasks and see your personalized transformation roadmap
         </p>
       </div>
 
-      <div className="space-y-6">
-        {tasks.map(task => (
-          <div key={task.id} className="space-y-3 pb-6 border-b last:border-0">
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id={task.id}
-                checked={task.selected}
-                onCheckedChange={() => toggleTask(task.id)}
-                className="mt-1"
-              />
-              <label htmlFor={task.id} className="flex-1 cursor-pointer">
-                <div className="font-semibold text-sm">{task.name}</div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  Tools: {task.aiTools.slice(0, 2).join(', ')}
-                </div>
-              </label>
-            </div>
-
-            {task.selected && (
-              <div className="ml-7 space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                <label className="text-xs text-muted-foreground">
-                  Hours per week: <span className="font-bold text-foreground">{task.hoursPerWeek}h</span>
-                </label>
-                <Slider
-                  value={[task.hoursPerWeek]}
-                  onValueChange={([value]) => updateTaskHours(task.id, value)}
-                  min={1}
-                  max={20}
-                  step={1}
-                  className="w-full"
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto min-h-0 pr-2 -mr-2">
+        <div className="space-y-6 pr-2">
+          {tasks.map(task => (
+            <div key={task.id} className="space-y-3 pb-6 border-b last:border-0">
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id={task.id}
+                  checked={task.selected}
+                  onCheckedChange={() => toggleTask(task.id)}
+                  className="mt-1"
                 />
-                {task.hoursPerWeek > 0 && (
-                  <div className="text-xs text-mint-dark font-semibold">
-                    → Could save {task.potentialSavings}h per week
+                <label htmlFor={task.id} className="flex-1 cursor-pointer">
+                  <div className="font-semibold text-sm">{task.name}</div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Tools: {task.aiTools.slice(0, 2).join(', ')}
                   </div>
-                )}
+                </label>
               </div>
-            )}
-          </div>
-        ))}
+
+              {task.selected && (
+                <div className="ml-7 space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <label className="text-xs text-muted-foreground">
+                    Hours per week: <span className="font-bold text-foreground">{task.hoursPerWeek}h</span>
+                  </label>
+                  <Slider
+                    value={[task.hoursPerWeek]}
+                    onValueChange={([value]) => updateTaskHours(task.id, value)}
+                    min={1}
+                    max={20}
+                    step={1}
+                    className="w-full"
+                  />
+                  {task.hoursPerWeek > 0 && (
+                    <div className="text-xs text-mint-dark font-semibold">
+                      → Could save {task.potentialSavings}h per week
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <Button
-        onClick={handleGenerate}
-        size="lg"
-        className="w-full mt-6 bg-mint text-ink hover:bg-mint/90 font-bold"
-        disabled={portfolioData.tasks.length === 0}
-      >
-        Generate Portfolio
-        <ArrowRight className="h-4 w-4 ml-2" />
-      </Button>
-    </Card>
+      {/* Fixed Button at Bottom */}
+      <div className="shrink-0 pt-4 mt-4 border-t bg-background">
+        <Button
+          onClick={handleGenerate}
+          size="lg"
+          className="w-full bg-mint text-ink hover:bg-mint/90 font-bold"
+          disabled={portfolioData.tasks.length === 0}
+        >
+          Generate Portfolio
+          <ArrowRight className="h-4 w-4 ml-2" />
+        </Button>
+      </div>
+    </div>
   );
 };
 

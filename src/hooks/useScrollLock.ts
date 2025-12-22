@@ -105,18 +105,27 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
                          rect.bottom > viewportHeight * 0.3 && 
                          !isCompleteRef.current;
       
-      // After lock, snap so section top is just barely above viewport (minimal overshoot)
-      const snapOffset = -10; // Section top will be 10px above viewport (slightly past)
+      // After lock, snap so section top is flush with viewport top
+      const snapOffset = 0; // Section top will be flush with viewport top
 
       if (shouldLock && !isLocked) {
-        // Snap to position where section top is at snapOffset (slightly above viewport)
+        // Snap to position where section top is flush with viewport top
         const idealScrollY = window.scrollY + rect.top - snapOffset;
         
         setIsLocked(true);
         scrollPositionRef.current = idealScrollY;
-        // Snap so section top is just past viewport top
+        // Snap so section top is flush with viewport top
         window.scrollTo(0, idealScrollY);
         document.documentElement.classList.add('scroll-locked');
+      }
+      
+      // Maintain scroll position during lock to prevent drift
+      if (isLocked && !releaseCooldownRef.current) {
+        const currentScrollY = window.scrollY;
+        if (Math.abs(currentScrollY - scrollPositionRef.current) > 1) {
+          // If scroll position has drifted, restore it
+          window.scrollTo(0, scrollPositionRef.current);
+        }
       }
     };
     

@@ -19,6 +19,32 @@ export const MindmakerIcon = ({
   // #region agent log
   fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MindmakerIcon.tsx:19',message:'MindmakerIcon rendered',data:{size,animated,iconSrc:mindmakerIcon?.toString().substring(0,50) || 'MISSING',hasIcon:!!mindmakerIcon},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
   // #endregion
+  
+  if (animated) {
+    return (
+      <div className={cn("relative inline-flex items-center justify-center", className)} style={{ width: size, height: size }}>
+        <img
+          src={mindmakerIcon}
+          alt="Mindmaker"
+          width={size}
+          height={size}
+          className="shrink-0 object-contain animate-pulse"
+          style={{ aspectRatio: 'auto' }}
+        />
+        {/* Circular loading ring */}
+        <div
+          className="absolute inset-0 rounded-full border-2 border-mint border-t-transparent animate-spin"
+          style={{
+            width: size + 8,
+            height: size + 8,
+            top: -4,
+            left: -4,
+          }}
+        />
+      </div>
+    );
+  }
+  
   return (
     <img
       src={mindmakerIcon}
@@ -27,7 +53,6 @@ export const MindmakerIcon = ({
       height={size}
       className={cn(
         "shrink-0 object-contain",
-        animated && "animate-pulse",
         className
       )}
       style={{ aspectRatio: 'auto' }}

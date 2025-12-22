@@ -31,6 +31,14 @@ export const useScrollDirection = (options: UseScrollDirectionOptions = {}) => {
   const ticking = useRef(false);
 
   const updateScrollDirection = useCallback(() => {
+    // Check if scroll is locked - if so, keep nav bar hidden
+    const isScrollLocked = document.documentElement.classList.contains('scroll-locked');
+    if (isScrollLocked) {
+      setIsHidden(true);
+      ticking.current = false;
+      return;
+    }
+    
     const scrollY = window.scrollY;
     const diff = scrollY - lastScrollY.current;
     

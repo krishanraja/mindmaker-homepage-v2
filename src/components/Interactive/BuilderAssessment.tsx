@@ -335,8 +335,9 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
 
   if (profile) {
     return (
-      <Card className="p-6 sm:p-8 bg-gradient-to-br from-mint/10 to-ink/10 border-2 border-mint animate-in fade-in duration-500">
-        <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col h-full max-h-[70vh] min-h-0 bg-gradient-to-br from-mint/10 to-ink/10 border-2 border-mint rounded-lg animate-in fade-in duration-500">
+        {/* Header - Fixed */}
+        <div className="shrink-0 flex items-center justify-between p-6 pb-4 border-b">
           <h3 className="text-2xl font-bold flex items-center gap-2">
             <Award className="h-6 w-6 text-mint" />
             Your Builder Profile
@@ -346,60 +347,64 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
           </Button>
         </div>
 
-        <div className="space-y-6">
-          <div className="text-center py-6">
-            <div className="inline-block px-6 py-3 bg-mint text-ink rounded-full font-bold text-xl mb-4">
-              {profile.type}
+        {/* Scrollable Content Area */}
+        <div className="flex-1 overflow-y-auto min-h-0 p-6 pr-4">
+          <div className="space-y-6">
+            <div className="text-center py-6">
+              <div className="inline-block px-6 py-3 bg-mint text-ink rounded-full font-bold text-xl mb-4">
+                {profile.type}
+              </div>
+              <p className="text-lg text-muted-foreground">{profile.description}</p>
+              {profile.frameworkUsed && (
+                <p className="text-xs text-mint-dark mt-3 flex items-center justify-center gap-1">
+                  <MindmakerIcon size={12} />
+                  Analyzed using {profile.frameworkUsed}
+                </p>
+              )}
             </div>
-            <p className="text-lg text-muted-foreground">{profile.description}</p>
-            {profile.frameworkUsed && (
-              <p className="text-xs text-mint-dark mt-3 flex items-center justify-center gap-1">
-                <MindmakerIcon size={12} />
-                Analyzed using {profile.frameworkUsed}
-              </p>
-            )}
-          </div>
 
-          <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3">YOUR STRENGTHS</div>
-            <div className="grid sm:grid-cols-3 gap-3">
-              {profile.strengths.map((strength, i) => (
-                <div key={i} className="p-3 rounded-lg bg-success/10 border border-success/20 text-center">
-                  <CheckCircle2 className="h-4 w-4 text-success mx-auto mb-1" />
-                  <div className="text-sm font-medium">{strength}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="text-xs font-bold text-muted-foreground mb-3">YOUR NEXT STEPS</div>
-            <div className="space-y-3">
-              {profile.nextSteps.map((step, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-background">
-                  <div className="w-6 h-6 rounded-full bg-mint/20 text-mint-dark flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    {i + 1}
+            <div>
+              <div className="text-xs font-bold text-muted-foreground mb-3">YOUR STRENGTHS</div>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {profile.strengths.map((strength, i) => (
+                  <div key={i} className="p-3 rounded-lg bg-success/10 border border-success/20 text-center">
+                    <CheckCircle2 className="h-4 w-4 text-success mx-auto mb-1" />
+                    <div className="text-sm font-medium">{strength}</div>
                   </div>
-                  <div className="text-sm pt-0.5">{step}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="p-6 rounded-lg bg-ink text-white text-center">
-            <div className="text-xs font-bold text-mint mb-2">RECOMMENDED FOR YOU</div>
-            <div className="text-xl font-bold mb-4">{profile.recommendedProduct}</div>
-            <Button
-              size="lg"
-              className="bg-mint text-ink hover:bg-mint/90 font-bold"
-              onClick={() => window.location.href = profile.productLink}
-            >
-              Learn More
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+            <div>
+              <div className="text-xs font-bold text-muted-foreground mb-3">YOUR NEXT STEPS</div>
+              <div className="space-y-3">
+                {profile.nextSteps.map((step, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-background">
+                    <div className="w-6 h-6 rounded-full bg-mint/20 text-mint-dark flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      {i + 1}
+                    </div>
+                    <div className="text-sm pt-0.5">{step}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </Card>
+
+        {/* Fixed CTA at Bottom */}
+        <div className="shrink-0 p-6 pt-4 border-t bg-ink text-white">
+          <div className="text-xs font-bold text-mint mb-2 text-center">RECOMMENDED FOR YOU</div>
+          <div className="text-xl font-bold mb-4 text-center">{profile.recommendedProduct}</div>
+          <Button
+            size="lg"
+            className="w-full bg-mint text-ink hover:bg-mint/90 font-bold"
+            onClick={() => window.location.href = profile.productLink}
+          >
+            Learn More
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Button>
+        </div>
+      </div>
     );
   }
 

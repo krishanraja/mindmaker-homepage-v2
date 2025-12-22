@@ -224,17 +224,17 @@ const TheProblem = () => {
 
       {/* Dialog for Interactive Components */}
       <Dialog open={dialogType !== null} onOpenChange={() => setDialogType(null)}>
-        <DialogWizardContent className="sm:max-w-2xl" hideCloseButton={isMobile}>
+        <DialogWizardContent className="sm:max-w-2xl sm:max-h-[85vh]" hideCloseButton={isMobile}>
           {/* Mobile: Header with close button integrated into tool */}
           {!isMobile && (
-            <div className="p-6 pb-0">
+            <div className="shrink-0 p-6 pb-4 border-b">
               <h2 className="text-xl font-bold">{getDialogTitle()}</h2>
               <p className="text-xs text-muted-foreground mt-1">
                 Powered by Mindmaker Methodology
               </p>
             </div>
           )}
-          <div className="flex-1 overflow-hidden sm:p-6 sm:pt-4">
+          <div className="flex-1 flex flex-col overflow-hidden min-h-0 sm:p-6 sm:pt-4">
             {renderDialogContent()}
           </div>
         </DialogWizardContent>

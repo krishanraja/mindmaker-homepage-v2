@@ -241,70 +241,95 @@ export const TryItWidget = ({ compact = false, onClose }: TryItWidgetProps) => {
 
   // Desktop layout
   return (
-    <div className="space-y-6">
-      <div className="text-center">
+    <div className="flex flex-col h-full max-h-[70vh] min-h-0">
+      {/* Header - Fixed */}
+      <div className="shrink-0 text-center mb-4 pb-4 border-b">
         <h3 className="text-2xl font-bold mb-2">Stuck on an AI Decision?</h3>
         <p className="text-muted-foreground">
           Describe your challenge. Get instant clarity.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Example: Should we build or buy our AI chatbot? We have limited engineering resources but need something in production within 3 months..."
-          className="min-h-[120px] resize-none text-base"
-          disabled={isLoading}
-        />
-        
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full bg-mint text-ink hover:bg-mint/90 font-bold"
-          disabled={isLoading || !input.trim()}
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Organizing your thinking...
-            </>
-          ) : (
-            'Get Instant Clarity'
-          )}
-        </Button>
-      </form>
-
-      <AnimatePresence>
-        {response && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4 }}
-            className="pt-6 border-t border-mint/20"
-          >
-            <MindmakerBadge text="Mindmaker Framework Applied" className="mb-3" />
-            <MarkdownResponse 
-              content={response} 
-              className="text-sm text-muted-foreground leading-relaxed"
-            />
-            
-            <div className="mt-6 pt-6 border-t border-border">
-              <p className="text-xs text-muted-foreground text-center mb-4">
-                Want deeper analysis for your specific situation?
-              </p>
-              <Button
-                size="lg"
-                className="w-full bg-ink text-white hover:bg-ink/90"
-                onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
-              >
-                Book a Builder Session
-              </Button>
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto min-h-0 pr-2 -mr-2">
+        <div className="pr-2">
+          {!response ? (
+            <div className="space-y-4">
+              <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Example: Should we build or buy our AI chatbot? We have limited engineering resources but need something in production within 3 months..."
+                className="min-h-[120px] resize-none text-base"
+                disabled={isLoading}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                    e.preventDefault();
+                    handleSubmit(e as any);
+                  }
+                }}
+              />
             </div>
-          </motion.div>
+          ) : (
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-4"
+              >
+                <MindmakerBadge text="Mindmaker Framework Applied" />
+                <MarkdownResponse 
+                  content={response} 
+                  className="text-sm text-muted-foreground leading-relaxed"
+                />
+              </motion.div>
+            </AnimatePresence>
+          )}
+        </div>
+      </div>
+
+      {/* Fixed Buttons at Bottom */}
+      <div className="shrink-0 pt-4 mt-4 border-t bg-background">
+        {!response ? (
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full bg-mint text-ink hover:bg-mint/90 font-bold"
+            disabled={isLoading || !input.trim()}
+            onClick={handleSubmit}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Organizing your thinking...
+              </>
+            ) : (
+              'Get Instant Clarity'
+            )}
+          </Button>
+        ) : (
+          <div className="space-y-3">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setResponse('');
+                setInput('');
+              }}
+            >
+              Ask Another Question
+            </Button>
+            <Button
+              size="lg"
+              className="w-full bg-ink text-white hover:bg-ink/90"
+              onClick={() => window.open('https://calendly.com/krish-raja/mindmaker-meeting', '_blank')}
+            >
+              Book a Builder Session
+            </Button>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 };
