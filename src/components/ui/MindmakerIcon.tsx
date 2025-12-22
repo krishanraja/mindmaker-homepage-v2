@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import mindmakerIcon from "@/assets/Mindmaker-icon.png";
+import mindmakerIcon from "@/assets/mindmaker-icon.png";
 
 interface MindmakerIconProps {
   size?: number;
