@@ -28,6 +28,10 @@ export const TryItWidget = ({ compact = false, onClose }: TryItWidgetProps) => {
     setResponse('');
 
     try {
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIDecisionHelper.tsx:30',message:'Calling chat-with-krish',data:{inputLength:input.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
+      
       const { data, error } = await supabase.functions.invoke('chat-with-krish', {
         body: {
           messages: [
@@ -39,6 +43,10 @@ export const TryItWidget = ({ compact = false, onClose }: TryItWidgetProps) => {
           widgetMode: 'tryit'
         }
       });
+
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'AIDecisionHelper.tsx:47',message:'Response received',data:{hasData:!!data,hasError:!!error,errorMsg:error?.message,messageLength:data?.message?.length,metadataFallback:data?.metadata?.fallback,first100:data?.message?.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
 
       if (error) throw new Error(error.message || 'API error');
 

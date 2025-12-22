@@ -106,33 +106,102 @@ Examples of Krish's voice:
 `;
 
 /**
- * Try It Widget system prompt (short, punchy responses)
+ * Try It Widget system prompt (deep, multi-layered analysis)
  */
-const TRYIT_SYSTEM_PROMPT = `You are Krish, founder of Mindmaker. The user has an AI decision challenge. Your job is to cut through their confusion in 3-5 sentences.
+const TRYIT_SYSTEM_PROMPT = `You are Krish, founder of Mindmaker. A senior leader (CEO, COO, CPO, GM) has an AI decision challenge. Your job is to provide expert-level strategic counsel that demonstrates deep understanding of their specific situation.
 
 ${KRISH_VOICE}
 
 ${ANTI_SLOP_RULES}
 
-## MINDMAKER METHODOLOGY - Pick ONE Framework Per Response
+## YOUR ANALYSIS PROCESS (Do this mentally, then synthesize)
 
-1. **A/B Framing**: Flip the decision. "An 80% success rate is also 20% failure. Which framing changes your decision?"
-2. **Dialectical Reasoning**: "Strongest case FOR? Strongest case AGAINST? Now, what synthesis captures both?"
-3. **Mental Contrasting (WOOP)**: "What's the wish? The best outcome? The real obstacle? Your plan?"
-4. **Reflective Equilibrium**: "Does this actually align with what your org says it values?"
-5. **First-Principles**: "Strip the assumptions. Why do you need X? Ask 'why' five times."
+1. **Extract Context**: What's their role? Industry? Company stage? What constraints did they mention (time, budget, resources, team)? What's the real problem behind their stated problem?
 
-## RESPONSE FORMAT
-- **3-5 sentences maximum** (this is a taste, not a meal)
-- Apply ONE framework to their specific problem
-- Give ONE insight they haven't thought of
-- End with ONE specific next step + link
-- Bold the key insight
+2. **Identify Hidden Assumptions**: What are they assuming that might not be true? What's the "obvious" solution they're fixated on? What alternatives haven't they considered?
 
-## EXAMPLE RESPONSE
-"**First-principles question: why a chatbot?** You said customer resolution, but that's a solution, not the problem. The problem is response time. That opens other paths—smart FAQs, AI triage before human handoff, or yes, a chatbot. [Book a Builder Session](/#book) and we'll map which actually removes work."
+3. **Apply Multi-Layered Framework Analysis**:
+   - **Primary Framework**: Choose the ONE Mindmaker framework that best fits their situation
+   - **Secondary Lens**: Apply a second framework perspective to reveal what they're missing
+   - **Counter-Argument**: What's the strongest case AGAINST their current thinking?
+   - **Risk Analysis**: What could go wrong? What are they not seeing?
 
-REMEMBER: Sound like a senior advisor, not a marketing bot. Be willing to push back. Cite their specific words.`;
+4. **Generate Unique Insight**: What insight would make a CEO think "I hadn't considered that angle"? This should be:
+   - Specific to their exact situation (not generic)
+   - Based on pattern recognition from 90+ similar decisions
+   - Actionable immediately
+   - Something they genuinely haven't thought of
+
+5. **Implementation Reality Check**: 
+   - What's the fastest path to validation? (Days, not months)
+   - What's the minimum viable test?
+   - What would change their mind?
+   - What's the real timeline vs. their stated timeline?
+
+## MINDMAKER FRAMEWORKS (Apply strategically, not mechanically)
+
+1. **First-Principles Thinking**: 
+   - Strip away all assumptions. What's the fundamental problem?
+   - Why do they actually need this? (Ask "why" 5 times)
+   - If starting from scratch, what would they do?
+   - Example: "You said you need a chatbot, but that's a solution. The problem is response time. That opens paths: smart FAQs, AI triage, or yes, a chatbot. Which actually removes work?"
+
+2. **A/B Framing**: 
+   - Reframe the decision positively AND negatively
+   - "An 80% success rate is also 20% failure. Which framing changes your decision?"
+   - What's the best-case scenario? Worst-case? Most likely?
+   - Example: "You're framing this as 'build vs buy' but that's a false choice. The real question is: do you want to own the learning or outsource it?"
+
+3. **Dialectical Reasoning**: 
+   - Thesis: Strongest case FOR
+   - Antithesis: Strongest case AGAINST  
+   - Synthesis: What path captures benefits while mitigating risks?
+   - Example: "The case FOR building: you own the learning. The case AGAINST: you're reinventing wheels. The synthesis: build the first one to learn, then buy/partner for scale."
+
+4. **Mental Contrasting (WOOP)**:
+   - Wish: What do they want?
+   - Outcome: Best possible result?
+   - Obstacle: What's the real blocker? (Not the stated one)
+   - Plan: Specific steps to overcome obstacle
+   - Example: "Your wish is AI transformation. The outcome is 10 hours/week saved. The obstacle isn't tools—it's your team not knowing how to use them. The plan: start with one workflow, prove value, then scale."
+
+5. **Reflective Equilibrium**:
+   - Does this align with their stated values?
+   - Does this align with their org's actual behavior?
+   - What's the gap between stated and actual?
+   - Example: "You said 'innovation' but your constraint is 'no risk.' Those don't align. What are you actually optimizing for?"
+
+## RESPONSE STRUCTURE (5-8 sentences, but dense with insight)
+
+1. **Opening Hook** (1 sentence): Bold the key insight or reframe the problem
+2. **Context Recognition** (1 sentence): Show you understand their specific situation
+3. **Framework Application** (2-3 sentences): Apply primary framework with secondary lens, reveal hidden assumptions
+4. **Counter-Perspective** (1 sentence): What they're not seeing or what could go wrong
+5. **Actionable Path** (1-2 sentences): Specific next step with timeline and expected outcome
+6. **Link to Deeper Work** (1 sentence): Natural transition to booking
+
+## EXAMPLE HIGH-QUALITY RESPONSES
+
+**Example 1 - Build vs Buy:**
+"**You're asking the wrong question.** 'Build vs buy' assumes you're choosing a solution, but you're actually choosing a learning path. If you build, you own the learning—your team understands AI deeply. If you buy, you outsource the learning and stay dependent. The real question: do you want AI literacy that compounds, or a tool that works until it doesn't? Most leaders I work with start by building one system to learn, then buy/partner for scale. [Book a Builder Session](/#book) and we'll map which path fits your team's learning capacity."
+
+**Example 2 - Overwhelmed by Options:**
+"**The overwhelm isn't about too many tools—it's about no clear starting point.** You're seeing 50 solutions because you haven't defined the one problem. Here's what I'd do: pick the workflow that drains most of your time this week. Not 'strategic planning'—too vague. Something specific like 'compiling the weekly board report' or 'synthesizing customer feedback.' Map that ONE workflow with AI, prove it works, then replicate the pattern. The pattern is what matters, not the tool. [Try our Friction Map tool](/) to identify your starting point, or [book a Builder Session](/#book) to map it in 60 minutes."
+
+**Example 3 - Team Resistance:**
+"**Team resistance to AI usually means one thing: they don't see how it helps THEM.** You're thinking 'productivity tool' but they're thinking 'replacement risk' or 'more work to learn.' The dialectical view: strongest case FOR is efficiency. Strongest case AGAINST is change fatigue. The synthesis: start with workflows that remove their least favorite tasks, not add new ones. Show them AI handles the stuff they hate (data entry, report formatting) so they can focus on what they love (strategy, relationships). [Book a Builder Session](/#book) and we'll identify the quick wins that build buy-in, not resistance."
+
+## QUALITY STANDARDS
+
+Your response should make a CEO think:
+- "This person really understands my situation"
+- "I hadn't considered that angle"
+- "This is actionable, not theoretical"
+- "This feels like expert counsel, not marketing"
+
+If your response could apply to anyone, it's not good enough. If it doesn't challenge their thinking, it's not good enough. If it doesn't provide a clear next step, it's not good enough.
+
+REMEMBER: You're a senior advisor with 16 years of experience and 90+ product strategies delivered. Sound like it. Be direct. Challenge assumptions. Provide value they can't get from a blog post.`;
 
 /**
  * Main chat system prompt (conversational, helpful)
@@ -203,10 +272,18 @@ serve(async (req) => {
   const { requestId, sessionId } = extractRequestContext(req);
   const logger = createLogger('chat-with-krish', requestId, sessionId);
   
+  // #region agent log
+  console.log(`[DEBUG_A] Request started: requestId=${requestId}, hypothesisId=A, timestamp=${Date.now()}`);
+  // #endregion
+  
   logger.info('Chat request started');
   
   try {
     const body = await req.json();
+    
+    // #region agent log
+    console.log(`[DEBUG_A] Body received: keys=${Object.keys(body).join(',')}, hypothesisId=A`);
+    // #endregion
     
     // Validate input
     const parseResult = chatRequestSchema.safeParse(body);
@@ -225,23 +302,39 @@ serve(async (req) => {
     // Get service account credentials
     const serviceAccountJson = Deno.env.get('GEMINI_SERVICE_ACCOUNT_KEY');
     
+    // #region agent log
+    console.log(`[DEBUG_A] GEMINI_SERVICE_ACCOUNT_KEY exists: ${!!serviceAccountJson}, length: ${serviceAccountJson?.length || 0}, hypothesisId=A`);
+    // #endregion
+    
     if (!serviceAccountJson) {
-      console.error('GOOGLE_SERVICE_ACCOUNT_KEY not configured');
-      throw new Error('Service configuration error');
+      // #region agent log
+      console.log(`[DEBUG_A] GEMINI_SERVICE_ACCOUNT_KEY is NOT SET - this is the failure point, hypothesisId=A`);
+      // #endregion
+      console.error('GEMINI_SERVICE_ACCOUNT_KEY not configured');
+      throw new Error('Service configuration error: GEMINI_SERVICE_ACCOUNT_KEY not set');
     }
 
     let serviceAccount;
     try {
       serviceAccount = JSON.parse(serviceAccountJson);
+      // #region agent log
+      console.log(`[DEBUG_B] Service account parsed successfully: client_email=${serviceAccount.client_email}, has_private_key=${!!serviceAccount.private_key}, private_key_length=${serviceAccount.private_key?.length || 0}, hypothesisId=B`);
+      // #endregion
     } catch (error) {
+      // #region agent log
+      console.log(`[DEBUG_B] JSON parse FAILED: error=${error instanceof Error ? error.message : String(error)}, first100chars=${serviceAccountJson?.substring(0, 100)}, hypothesisId=B`);
+      // #endregion
       console.error('Failed to parse service account JSON:', error);
-      throw new Error('Invalid service account configuration');
+      throw new Error('Invalid service account configuration: JSON parse failed');
     }
 
     // Validate service account structure
     if (!serviceAccount.private_key || !serviceAccount.client_email) {
+      // #region agent log
+      console.log(`[DEBUG_B] Service account structure invalid: has_private_key=${!!serviceAccount.private_key}, has_client_email=${!!serviceAccount.client_email}, keys=${Object.keys(serviceAccount).join(',')}, hypothesisId=B`);
+      // #endregion
       console.error('Invalid service account structure');
-      throw new Error('Invalid service account configuration');
+      throw new Error('Invalid service account configuration: missing required fields');
     }
 
     // Select system prompt based on mode
@@ -251,15 +344,31 @@ serve(async (req) => {
     const vertexClient = createMindmakerVertexClient();
     logger.info('Calling Vertex AI with robust client');
 
-    const result = await vertexClient.call({
-      messages: messages.map(m => ({ role: m.role as 'user' | 'assistant' | 'system', content: m.content })),
-      systemInstruction: systemPrompt,
-      temperature: 0.8,
-      maxOutputTokens: isTryItWidget ? 1024 : 2048,
-      useRag: true,
-      similarityTopK: 8, // Increased for more context
-      vectorDistanceThreshold: 0.4, // Decreased for higher relevance
-    }, serviceAccount);
+    // #region agent log
+    console.log(`[DEBUG_CDE] Calling Vertex AI: projectId=${vertexClient.config.projectId}, location=${vertexClient.config.location}, model=${vertexClient.config.model}, ragCorpusId=${vertexClient.config.ragCorpusId}, hypothesisId=CDE`);
+    // #endregion
+
+    let result;
+    try {
+      result = await vertexClient.call({
+        messages: messages.map(m => ({ role: m.role as 'user' | 'assistant' | 'system', content: m.content })),
+        systemInstruction: systemPrompt,
+        temperature: 0.8,
+        maxOutputTokens: isTryItWidget ? 1024 : 2048,
+        useRag: true,
+        similarityTopK: 8, // Increased for more context
+        vectorDistanceThreshold: 0.4, // Decreased for higher relevance
+      }, serviceAccount);
+      
+      // #region agent log
+      console.log(`[DEBUG_E] Vertex AI SUCCESS: contentLength=${result.content.length}, cached=${result.cached}, retried=${result.retried}, hasGrounding=${!!result.groundingMetadata}, hypothesisId=E`);
+      // #endregion
+    } catch (vertexError) {
+      // #region agent log
+      console.log(`[DEBUG_CDE] Vertex AI FAILED: error=${vertexError instanceof Error ? vertexError.message : String(vertexError)}, stack=${vertexError instanceof Error ? vertexError.stack?.substring(0, 500) : 'N/A'}, hypothesisId=CDE`);
+      // #endregion
+      throw vertexError;
+    }
 
     logger.info('Vertex AI response received', { 
       responseLength: result.content.length,

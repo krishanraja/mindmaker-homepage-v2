@@ -1,7 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import mindmakerIconLight from "@/assets/mindmaker-icon-light.png";
-import mindmakerIconDark from "@/assets/mindmaker-icon-dark.png";
+import mindmakerIcon from "@/assets/Mindmaker-icon.png";
 
 interface MindmakerIconProps {
   size?: number;
@@ -10,22 +8,17 @@ interface MindmakerIconProps {
 }
 
 /**
- * Mindmaker brand icon - uses the real PNG assets
- * Automatically switches between light/dark variants based on theme
+ * Mindmaker brand icon - uses the exact Mindmaker-icon.png asset
+ * Preserves aspect ratio with object-contain
  */
 export const MindmakerIcon = ({
   size = 24,
   className,
   animated = false,
 }: MindmakerIconProps) => {
-  const { resolvedTheme } = useTheme();
-  
-  // Use light icon on dark backgrounds, dark icon on light backgrounds
-  const iconSrc = resolvedTheme === "dark" ? mindmakerIconLight : mindmakerIconDark;
-
   return (
     <img
-      src={iconSrc}
+      src={mindmakerIcon}
       alt="Mindmaker"
       width={size}
       height={size}
@@ -34,6 +27,7 @@ export const MindmakerIcon = ({
         animated && "animate-pulse",
         className
       )}
+      style={{ aspectRatio: 'auto' }}
     />
   );
 };

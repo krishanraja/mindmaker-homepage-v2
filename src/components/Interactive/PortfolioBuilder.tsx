@@ -66,23 +66,84 @@ export const PortfolioBuilder = ({ compact = false, onClose }: PortfolioBuilderP
           messages: [
             {
               role: 'user',
-              content: `Generate 3 personalized, ready-to-use AI master prompts for a leader based on their selected tasks:
+              content: `You are creating a personalized AI portfolio for a senior leader. Analyze their selected tasks and generate 3 interconnected, expert-level master prompts that work together as a system.
 
+LEADER'S TASK PORTFOLIO:
 ${tasksSummary}
 
-Total time savings potential: ${portfolioData.totalTimeSaved}h/week
-Total value: $${portfolioData.totalCostSavings.toLocaleString()}/month
+PORTFOLIO METRICS:
+- Total time savings potential: ${portfolioData.totalTimeSaved}h/week
+- Total value: $${portfolioData.totalCostSavings.toLocaleString()}/month
+- Number of tasks: ${portfolioData.tasks.length}
+
+YOUR ANALYSIS PROCESS:
+
+1. **Pattern Recognition**:
+   - What role does this portfolio suggest? (CEO strategic focus? COO operational? CPO product?)
+   - What are the connections between tasks? (e.g., reporting feeds into planning)
+   - What's the workflow sequence? (What happens first, then next?)
+   - What's the biggest leverage point? (Which task, if solved, unlocks others?)
+
+2. **Task Synergy Analysis**:
+   - How do these tasks interconnect? (Data flows, dependencies, sequences)
+   - What's the compound effect? (Solving task A makes task B 2x faster)
+   - What's the implementation sequence? (Which to build first for maximum impact?)
+
+3. **Role-Specific Context**:
+   - CEO: Strategic thinking, decision-making, board communication
+   - COO: Operational efficiency, team coordination, execution
+   - CPO: Product strategy, user research, roadmap planning
+   - GM: P&L management, cross-functional coordination
+   - Tailor prompts to their likely role based on task patterns
+
+4. **Prompt Design Principles**:
+   - Each prompt should be copy-paste ready (NO placeholders)
+   - Reference their specific tasks and time allocations
+   - Include expected output format and quality criteria
+   - Make prompts interconnected (output from prompt 1 feeds into prompt 2)
+   - Include business impact reasoning ("This saves X hours because...")
+
+5. **Framework Application**:
+   - Apply different Mindmaker frameworks to different prompts
+   - First-Principles: For strategic/planning tasks
+   - Mental Contrasting: For goal-oriented tasks
+   - Dialectical Reasoning: For decision-making tasks
+   - A/B Framing: For evaluation/analysis tasks
+   - Reflective Equilibrium: For alignment/values tasks
+
+OUTPUT REQUIREMENTS:
 
 Return ONLY a valid JSON array (no markdown, no explanation) with exactly 3 prompts:
+
 [
   {
-    "title": "A specific, action-oriented title (e.g., 'Weekly Report Synthesizer')",
-    "framework": "The Mindmaker framework applied (e.g., 'First-Principles Thinking')",
-    "prompt": "A complete, ready-to-use prompt (200-300 words) that the leader can paste directly into ChatGPT or Claude. Include specific context, clear instructions, and expected output format. Reference their actual tasks. No placeholders."
+    "title": "A specific, memorable title that references their task combination (e.g., 'Strategic Planning Synthesis Engine' not 'Planning Prompt')",
+    "framework": "The specific Mindmaker framework applied and WHY it fits this task",
+    "prompt": "A complete, ready-to-use prompt (250-400 words) that: (1) Includes specific context from their task portfolio (reference task names, hours, tools), (2) Specifies input format (what they provide), (3) Defines output format (structure, length, style), (4) Includes quality criteria, (5) Explains business impact ('This saves X hours by...'), (6) Has NO placeholders - write it for their actual situation. Make it copy-paste ready for ChatGPT or Claude TODAY."
+  },
+  {
+    "title": "Second prompt title (should connect to first prompt - show the system)",
+    "framework": "...",
+    "prompt": "Second prompt that either: (a) Uses output from first prompt as input, OR (b) Complements first prompt for a different task, OR (c) Builds on first prompt for deeper analysis. Show how these prompts work together."
+  },
+  {
+    "title": "Third prompt title (completes the system)",
+    "framework": "...",
+    "prompt": "Third prompt that completes the interconnected system. Reference how all three prompts work together."
   }
 ]
 
-Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their workflow, not generic templates. These should be prompts they can use TODAY.`
+QUALITY STANDARDS:
+
+Your prompts should make the leader think:
+- "These prompts are designed specifically for MY tasks"
+- "I can see how these work together as a system"
+- "This person understands my role and workflow"
+- "I can use these TODAY and get immediate value"
+
+If your prompts are generic templates, they're not good enough. If they don't reference their specific tasks, rewrite them. If they don't show interconnection, redesign them.
+
+Return ONLY valid JSON array, no markdown or explanation.`
             }
           ],
           widgetMode: 'tryit'
@@ -205,9 +266,9 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
   // Mobile full-screen wizard layout
   if (isMobile) {
     return (
-      <div className="flex flex-col h-full min-h-0 overflow-hidden">
+      <div className="flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b shrink-0">
           <div className="flex items-center gap-3">
             <MindmakerIcon size={24} />
             <div>
@@ -245,10 +306,10 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col"
+                className="flex-1 flex flex-col min-h-0 overflow-hidden"
               >
                 {/* Tab Navigation */}
-                <div className="flex border-b">
+                <div className="flex border-b shrink-0">
                   {(['overview', 'prompts', 'systems'] as const).map((tab) => (
                     <button
                       key={tab}
@@ -265,7 +326,7 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
                 </div>
 
                 {/* Tab Content */}
-                <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex-1 overflow-y-auto p-4 min-h-0">
                   <AnimatePresence mode="wait">
                     {resultTab === 'overview' && (
                       <motion.div
@@ -368,8 +429,8 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
                   </AnimatePresence>
                 </div>
 
-                {/* Actions */}
-                <div className="p-4 border-t space-y-2">
+                {/* Actions - Fixed at bottom */}
+                <div className="p-4 border-t space-y-2 shrink-0 bg-background pb-safe-bottom">
                   <Button onClick={handleDownload} variant="outline" className="w-full">
                     <Download className="h-4 w-4 mr-2" />
                     Download PDF
@@ -388,16 +449,16 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col"
+                className="flex-1 flex flex-col min-h-0 overflow-hidden"
               >
-                <div className="text-center p-4">
+                <div className="text-center p-4 shrink-0">
                   <h3 className="text-xl font-bold mb-2">Select Your Tasks</h3>
                   <p className="text-muted-foreground text-sm">
                     Choose tasks and adjust hours to see your AI transformation potential
                   </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 pb-4">
                   {tasks.map(task => (
                     <div key={task.id} className="p-4 rounded-xl border bg-muted/30">
                       <div className="flex items-start gap-3">
@@ -436,7 +497,8 @@ Apply the Mindmaker Five Cognitive Frameworks. Make prompts specific to their wo
                   ))}
                 </div>
 
-                <div className="p-4 border-t">
+                {/* Button - Fixed at bottom */}
+                <div className="p-4 border-t shrink-0 bg-background pb-safe-bottom">
                   <Button
                     onClick={handleGenerate}
                     size="lg"

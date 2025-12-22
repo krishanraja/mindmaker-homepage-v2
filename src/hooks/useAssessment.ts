@@ -82,37 +82,84 @@ export const useAssessment = () => {
     }).join('\n');
 
     try {
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:84',message:'Calling chat-with-krish',data:{answerSummary,totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
+      
       const { data, error: apiError } = await supabase.functions.invoke('chat-with-krish', {
         body: {
           messages: [
             {
               role: 'user',
-              content: `Generate a personalized AI Builder Profile for this leader based on their assessment answers:
+              content: `You are analyzing a senior leader's AI readiness assessment. Your job is to create a deeply personalized, insightful profile that demonstrates expert-level understanding of their specific situation.
 
+ASSESSMENT RESPONSES:
 ${answerSummary}
+
+ANALYSIS REQUIREMENTS:
+1. **Deep Pattern Recognition**: Look beyond surface answers. What do their choices reveal about their leadership style, risk tolerance, and organizational context? Are they a hands-on builder or strategic delegator? Do they prefer quick wins or transformational change?
+
+2. **Mindmaker Framework Application**: Apply ONE of the Five Cognitive Frameworks that best fits their situation:
+   - **First-Principles Thinking**: If they're questioning fundamentals or need to strip away assumptions
+   - **Mental Contrasting (WOOP)**: If they have clear goals but need obstacle planning
+   - **Dialectical Reasoning**: If they're weighing competing options or need synthesis
+   - **A/B Framing**: If they're stuck in binary thinking or need perspective shift
+   - **Reflective Equilibrium**: If alignment with values/org culture is the key issue
+
+3. **Specificity Over Generics**: 
+   - Reference their EXACT words/phrases from answers
+   - Identify what they're NOT saying (gaps, hesitations, blind spots)
+   - Connect their answers to real leadership scenarios (e.g., "Your focus on implementation suggests you've hit the 'knowing vs doing' gap that many COOs face")
+
+4. **Actionable Insights**: Each strength and next step must be:
+   - Tied directly to their assessment responses
+   - Specific enough they think "this person really gets my situation"
+   - Actionable within 30 days
+   - Include WHY it matters for their specific journey stage
+
+5. **Product Recommendation Logic**: 
+   - Builder Session: If they need proof-of-concept, have 1 specific problem, or are early-stage
+   - AI Literacy-to-Influence (Builder Sprint): If they're experimenting, need systems, or want to systematize
+   - AI Leadership Lab: If they're thinking at scale, need team transformation, or have executive mandate
 
 Return ONLY a valid JSON object (no markdown, no explanation) with this exact structure:
 {
-  "type": "A creative 2-3 word profile title (e.g., 'Strategic Visionary', 'Pragmatic Builder', 'Innovation Catalyst')",
-  "description": "A personalized 2-sentence description of their AI journey stage and potential",
-  "frameworkUsed": "Name of the Mindmaker framework you applied (e.g., 'First-Principles Thinking')",
-  "strengths": ["3 specific strengths based on their answers"],
-  "nextSteps": ["3 personalized, actionable next steps mentioning specific Mindmaker programs"],
+  "type": "A creative, memorable 2-3 word profile title that captures their unique position (e.g., 'Experimentation Catalyst', 'Systematization Builder', 'Transformation Architect') - make it specific to their answers, not generic",
+  "description": "A personalized 2-3 sentence description that: (1) acknowledges their specific journey stage based on answers, (2) identifies the key insight/pattern you noticed, (3) frames their potential in concrete terms. Reference their actual responses.",
+  "frameworkUsed": "The specific Mindmaker framework you applied and WHY it fits their situation",
+  "strengths": [
+    "Strength 1: Specific to their answers, with brief context (e.g., 'Your hands-on experimentation shows you've moved past the 'AI is magic' phase - you're testing real workflows, not just demos')",
+    "Strength 2: Another specific insight tied to their responses",
+    "Strength 3: A third insight that shows deep understanding"
+  ],
+  "nextSteps": [
+    "Step 1: Highly specific, actionable next step with timeline and expected outcome. Reference their answers. (e.g., 'Within 2 weeks, map your weekly reporting workflow using our Friction Map tool - you mentioned this takes 5 hours, and it's a perfect quick win to build confidence')",
+    "Step 2: Another specific step tied to their situation",
+    "Step 3: A third step that builds on the previous ones"
+  ],
   "recommendedProduct": "Builder Session OR AI Literacy-to-Influence OR AI Leadership Lab",
   "productLink": "/builder-session OR /builder-sprint OR /leadership-lab"
 }
 
-Apply the Mindmaker Five Cognitive Frameworks to analyze their responses. Be specific and avoid generic advice. Reference their actual answers in the profile.`
+CRITICAL: This profile should feel like it was written by someone who spent 30 minutes understanding their specific situation, not a generic template. A CEO reading this should think "This is exactly where I am."`
             }
           ],
           widgetMode: 'tryit'
         }
       });
 
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:115',message:'Response received',data:{hasData:!!data,hasError:!!apiError,errorMsg:apiError?.message,messageLength:data?.message?.length,metadataFallback:data?.metadata?.fallback},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
+
       if (apiError) throw new Error(apiError.message || 'API error');
 
       // Parse the AI response with robust extraction
       const responseText = data?.message || '';
+      
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:125',message:'Parsing response',data:{responseTextLength:responseText.length,first200:responseText.substring(0,200),isFallbackMessage:responseText.includes("I'm having trouble connecting")},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
       
       // Try multiple JSON extraction strategies
       let parsed: any = null;
@@ -141,8 +188,15 @@ Apply the Mindmaker Five Cognitive Frameworks to analyze their responses. Be spe
         }
       }
       
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:155',message:'Parse result',data:{parsedSuccess:!!parsed,hasType:!!parsed?.type,hasStrengths:!!parsed?.strengths,hasNextSteps:!!parsed?.nextSteps},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
+      
       // Validate the parsed object has required fields
       if (parsed && parsed.type && (parsed.strengths || parsed.nextSteps)) {
+        // #region agent log
+        fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:162',message:'AI profile SUCCESS',data:{type:parsed.type,strengthsCount:parsed.strengths?.length,nextStepsCount:parsed.nextSteps?.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+        // #endregion
         setProfile({
           type: parsed.type || 'AI Builder',
           description: parsed.description || "You're on a unique AI journey with significant potential.",
@@ -157,6 +211,9 @@ Apply the Mindmaker Five Cognitive Frameworks to analyze their responses. Be spe
       
       throw new Error('Invalid AI response structure');
     } catch (err) {
+      // #region agent log
+      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:180',message:'FALLBACK triggered',data:{errorMessage:err instanceof Error ? err.message : String(err),totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
+      // #endregion
       console.error('AI profile generation failed:', err);
       // Fallback to score-based profile
       let fallbackProfile: BuilderProfile;
