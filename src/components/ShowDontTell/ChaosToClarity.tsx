@@ -195,6 +195,7 @@ const ChaosToClarity = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafIdRef = useRef<number | null>(null);
   const accumulatedDeltaRef = useRef(0);
+  const titleRef = useRef<HTMLDivElement>(null); // Ref for title element to trigger scroll hijack
   
   // State only for discrete UI changes (visibility thresholds)
   const [uiState, setUiState] = useState({
@@ -377,6 +378,8 @@ const ChaosToClarity = () => {
     isComplete: uiState.isComplete,
     canReverseExit: true,
     enabled: true,
+    titleRef: titleRef, // Use title position to trigger scroll hijack
+    titleOffset: 30, // Trigger when title is 30px from top
   });
 
   // Initialize CSS variables
@@ -407,7 +410,7 @@ const ChaosToClarity = () => {
         {/* FIX (d): Changed to opaque background to prevent nav bleedthrough */}
         {/* FIX (c): Fixed height container prevents layout shift */}
         <div className="sticky top-0 z-20 bg-background border-b border-border/40 pt-4 pb-6 md:pt-6 md:pb-8">
-          <div className="text-center">
+          <div className="text-center" ref={titleRef}>
             {/* FIX (c): Increased fixed height to accommodate longest headline without wrapping */}
             <div className="relative h-[4rem] md:h-[5.5rem] lg:h-[6.5rem]">
               {/* Chaos headline */}

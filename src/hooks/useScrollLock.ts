@@ -7,6 +7,8 @@ interface UseScrollLockOptions {
   isComplete: boolean;
   canReverseExit?: boolean;
   enabled?: boolean;
+  titleRef?: RefObject<HTMLElement>; // Reference to title element for title-based triggering
+  titleOffset?: number; // Offset from top when title should trigger (default: 30px)
 }
 
 interface UseScrollLockReturn {
@@ -96,14 +98,27 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
       const viewportHeight = window.innerHeight;
       const lockThreshold = options.lockThreshold ?? 0;
       
-      // Use section's rect.top directly - trigger after section has scrolled PAST the viewport top
-      // lockThreshold controls how far past (negative = section top above viewport)
-      // Default: -30 means section top must be 30px above viewport before locking
-      const triggerPoint = -(30 + lockThreshold);
+      // Title-based triggering: if titleRef is provided, use title position
+      // Otherwise fall back to section-based triggering
+      let shouldLock = false;
       
-      const shouldLock = rect.top <= triggerPoint && 
-                         rect.bottom > viewportHeight * 0.3 && 
-                         !isCompleteRef.current;
+      if (options.titleRef?.current) {
+        const titleRect = options.titleRef.current.getBoundingClientRect();
+        const titleOffset = options.titleOffset ?? 30; // Default: trigger when title is 30px from top
+        
+        // Trigger when title is near (but not at) the top of viewport
+        // Title should be between 0 and titleOffset pixels from top
+        shouldLock = titleRect.top <= titleOffset && 
+                     titleRect.top >= 0 && // Not past top
+                     rect.bottom > viewportHeight * 0.3 && 
+                     !isCompleteRef.current;
+      } else {
+        // Fallback to section-based triggering
+        const triggerPoint = -(30 + lockThreshold);
+        shouldLock = rect.top <= triggerPoint && 
+                     rect.bottom > viewportHeight * 0.3 && 
+                     !isCompleteRef.current;
+      }
       
       // After lock, snap so section top is flush with viewport top
       const snapOffset = 0; // Section top will be flush with viewport top
@@ -141,7 +156,7 @@ export const useScrollLock = (options: UseScrollLockOptions): UseScrollLockRetur
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isLocked, options.lockThreshold, options.enabled, options.headerOffset]);
+  }, [isLocked, options.lockThreshold, options.enabled, options.headerOffset, options.titleRef, options.titleOffset]);
 
   // Separate effect for release logic
   useEffect(() => {

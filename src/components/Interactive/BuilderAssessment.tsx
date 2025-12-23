@@ -134,11 +134,15 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
               <p className="text-xs text-muted-foreground">Powered by Mindmaker</p>
             </div>
           </div>
-          {onClose && (
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-5 w-5" />
-            </Button>
-          )}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={onClose || (() => {})}
+            className="min-w-[44px] min-h-[44px] touch-target"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5" />
+          </Button>
         </div>
 
         {/* Progress */}

@@ -37,6 +37,7 @@ const BeforeAfterSplit = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafIdRef = useRef<number | null>(null);
   const accumulatedDeltaRef = useRef(0);
+  const titleRef = useRef<HTMLDivElement>(null); // Ref for title element to trigger scroll hijack
   
   // State only for discrete UI updates (progress indicator text, completion)
   const [displayProgress, setDisplayProgress] = useState(0);
@@ -89,6 +90,8 @@ const BeforeAfterSplit = () => {
     isComplete: isComplete,
     canReverseExit: true,
     enabled: true,
+    titleRef: titleRef, // Use title position to trigger scroll hijack
+    titleOffset: 30, // Trigger when title is 30px from top
   });
   
   // Cleanup RAF on unmount
@@ -114,7 +117,7 @@ const BeforeAfterSplit = () => {
     >
       <div className="container mx-auto max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-4 md:mb-8">
+        <div className="text-center mb-4 md:mb-8" ref={titleRef}>
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
             The Transformation
           </h2>
