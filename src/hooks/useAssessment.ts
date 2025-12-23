@@ -200,8 +200,9 @@ Before finalizing, ask:
 
 CRITICAL: This profile should feel like it was written by a professional consultant who spent 30 minutes understanding their specific situation at a strategic level. A CEO reading this should think "This person gets it. This is exactly where I am and exactly what I need. I want to work with them."`
             }
-          ],
-          widgetMode: 'tryit'
+          ]
+          // Removed widgetMode: 'tryit' - Builder Profile should not use Try It Widget system prompt
+          // Edge function will detect Builder Profile from message content
         }
       });
 
@@ -272,44 +273,130 @@ CRITICAL: This profile should feel like it was written by a professional consult
       fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:180',message:'FALLBACK triggered',data:{errorMessage:err instanceof Error ? err.message : String(err),totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
       // #endregion
       console.error('AI profile generation failed:', err);
-      // Fallback to score-based profile
+      
+      // Try LLM-generated fallback with simplified prompt (maintains CEO-grade standards)
+      try {
+        const fallbackPrompt = `You are Krish, founder of Mindmaker. Generate a CEO-grade Builder Profile based on these assessment answers:
+
+${answerSummary}
+
+Total Score: ${totalScore}/9
+
+Create a specific, actionable profile that:
+1. References their exact answers (not generic)
+2. Shows strategic insight (not "Open mindset")
+3. Provides CEO-grade next steps with timelines
+4. Uses one of Mindmaker's cognitive frameworks
+
+Return ONLY valid JSON:
+{
+  "type": "Specific 2-3 word title",
+  "description": "2-3 sentences referencing their answers",
+  "frameworkUsed": "Framework name with brief explanation",
+  "strengths": ["Specific strength 1", "Specific strength 2", "Specific strength 3"],
+  "nextSteps": ["Actionable step 1", "Actionable step 2", "Actionable step 3"],
+  "recommendedProduct": "Builder Session OR AI Literacy-to-Influence OR AI Leadership Lab",
+  "productLink": "/builder-session OR /builder-sprint OR /leadership-lab"
+}`;
+
+        const { data: fallbackData, error: fallbackError } = await supabase.functions.invoke('chat-with-krish', {
+          body: {
+            messages: [{ role: 'user', content: fallbackPrompt }],
+            mode: 'builder-profile'
+          }
+        });
+
+        if (!fallbackError && fallbackData?.message) {
+          const fallbackText = fallbackData.message;
+          let fallbackParsed: any = null;
+          
+          // Try to parse fallback response
+          try {
+            fallbackParsed = JSON.parse(fallbackText.trim());
+          } catch {
+            const jsonMatch = fallbackText.match(/\{[\s\S]*?\}(?=[^}]*$)/);
+            if (jsonMatch) {
+              try {
+                fallbackParsed = JSON.parse(jsonMatch[0]);
+              } catch {
+                const start = fallbackText.indexOf('{');
+                const end = fallbackText.lastIndexOf('}');
+                if (start !== -1 && end > start) {
+                  try {
+                    fallbackParsed = JSON.parse(fallbackText.slice(start, end + 1));
+                  } catch {}
+                }
+              }
+            }
+          }
+
+          if (fallbackParsed && fallbackParsed.type && (fallbackParsed.strengths || fallbackParsed.nextSteps)) {
+            setProfile({
+              type: fallbackParsed.type || 'AI Builder',
+              description: fallbackParsed.description || "You're on a unique AI journey with significant potential.",
+              strengths: Array.isArray(fallbackParsed.strengths) ? fallbackParsed.strengths : ['Strategic thinking', 'Leadership drive', 'Growth mindset'],
+              nextSteps: Array.isArray(fallbackParsed.nextSteps) ? fallbackParsed.nextSteps : ['Book a Builder Session to map your first AI system'],
+              recommendedProduct: fallbackParsed.recommendedProduct || 'Builder Session',
+              productLink: fallbackParsed.productLink || '/builder-session',
+              frameworkUsed: fallbackParsed.frameworkUsed,
+            });
+            return;
+          }
+        }
+      } catch (fallbackErr) {
+        console.error('Fallback LLM call also failed:', fallbackErr);
+      }
+
+      // Ultimate fallback: Score-based but with better messaging
       let fallbackProfile: BuilderProfile;
       
       if (totalScore <= 4) {
         fallbackProfile = {
-          type: 'Curious Explorer',
-          description: "You're at the beginning of your AI journey. You see the potential but need a structured entry point.",
-          strengths: ['Open mindset', 'Willingness to learn', 'Recognition of AI importance'],
+          type: 'Experimentation Catalyst',
+          description: `Based on your answers, you're exploring AI's potential but need a structured entry point. Your score of ${totalScore}/9 suggests you're at the beginning of your AI journey.`,
+          strengths: [
+            `Your approach (${answers.approach?.label || 'exploring'}) shows you're thinking critically about AI adoption`,
+            `Your recognition of challenges (${answers.frustration?.label || 'implementation'}) indicates you're past the hype phase`,
+            'You understand AI's importance for leadership effectiveness'
+          ],
           nextSteps: [
-            'Start with a 1:1 Builder Session to build your first system',
-            'Focus on one high-impact use case',
-            'Build confidence through hands-on practice',
+            'Within 2 weeks: Book a Builder Session to map your first AI system around a real workflow',
+            'Within 30 days: Build one working system to prove value and build confidence',
+            'Within 90 days: Scale to 3-5 systems using the pattern from your first success'
           ],
           recommendedProduct: 'Builder Session',
           productLink: '/builder-session',
         };
       } else if (totalScore <= 7) {
         fallbackProfile = {
-          type: 'Strategic Builder',
-          description: "You're actively experimenting and ready to systematize your approach.",
-          strengths: ['Hands-on experience', 'Understanding of possibilities', 'Ready for structure'],
+          type: 'Systematization Builder',
+          description: `Your score of ${totalScore}/9 indicates you're actively experimenting and ready to systematize. Your answers show you've moved past basics and need structure.`,
+          strengths: [
+            `Your approach (${answers.approach?.label || 'experimenting'}) demonstrates hands-on experience`,
+            `Your goal (${answers.goal?.label || 'scaling'}) shows strategic thinking`,
+            'You understand the gap between pilots and production systems'
+          ],
           nextSteps: [
-            'Join AI Literacy-to-Influence to build working systems',
-            'Develop a personal AI operating system',
-            'Create reusable frameworks for your work',
+            'Within 30 days: Join AI Literacy-to-Influence to build 3-5 working systems',
+            'Within 60 days: Develop a personal AI operating system with reusable frameworks',
+            'Within 90 days: Create a team-wide AI enablement strategy'
           ],
           recommendedProduct: 'AI Literacy-to-Influence',
           productLink: '/builder-sprint',
         };
       } else {
         fallbackProfile = {
-          type: 'Transformation Leader',
-          description: "You're thinking at scale and ready to transform how your team works.",
-          strengths: ['Strategic vision', 'Implementation experience', 'Leadership mandate'],
+          type: 'Transformation Architect',
+          description: `Your score of ${totalScore}/9 shows you're thinking at scale. Your answers indicate you're ready to transform how your organization works with AI.`,
+          strengths: [
+            `Your goal (${answers.goal?.label || 'transformation'}) demonstrates strategic vision`,
+            `Your approach (${answers.approach?.label || 'building'}) shows implementation experience`,
+            'You have the leadership mandate to drive organization-wide change'
+          ],
           nextSteps: [
-            'Run an AI Leadership Lab for your executive team',
-            'Build organization-wide AI capabilities',
-            'Create a 90-day transformation roadmap',
+            'Within 30 days: Run an AI Leadership Lab for your executive team',
+            'Within 60 days: Build organization-wide AI capabilities with clear metrics',
+            'Within 90 days: Create a 90-day transformation roadmap with pilot programs'
           ],
           recommendedProduct: 'AI Leadership Lab',
           productLink: '/leadership-lab',

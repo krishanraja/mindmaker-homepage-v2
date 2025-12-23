@@ -37,6 +37,7 @@ const messageSchema = z.object({
 const chatRequestSchema = z.object({
   messages: z.array(messageSchema).min(1).max(50),
   widgetMode: z.enum(['tryit']).optional(),
+  mode: z.enum(['builder-profile', 'tryit', 'chat']).optional(), // Explicit mode parameter
 });
 
 // Predictable response shape
@@ -296,9 +297,22 @@ serve(async (req) => {
       );
     }
     
-    const { messages, widgetMode } = parseResult.data;
+    const { messages, widgetMode, mode } = parseResult.data;
     const isTryItWidget = widgetMode === 'tryit';
-    logger.info('Request validated', { widgetMode, messageCount: messages.length, isTryItWidget });
+    
+    // Detect Builder Profile mode: explicit mode param OR message content detection
+    const isBuilderProfile = mode === 'builder-profile' || 
+      (messages[0]?.content?.includes('AI readiness assessment') || 
+       messages[0]?.content?.includes('Builder Profile') ||
+       messages[0]?.content?.includes('CEO/COO/CPO\'s AI readiness'));
+    
+    logger.info('Request validated', { 
+      widgetMode, 
+      mode, 
+      messageCount: messages.length, 
+      isTryItWidget,
+      isBuilderProfile 
+    });
 
     // Get service account credentials
     const serviceAccountJson = Deno.env.get('GEMINI_SERVICE_ACCOUNT_KEY');
@@ -339,9 +353,18 @@ serve(async (req) => {
     }
 
     // Select system prompt based on mode
-    const systemPrompt = isTryItWidget ? TRYIT_SYSTEM_PROMPT : CHAT_SYSTEM_PROMPT;
+    // Builder Profile gets minimal prompt that defers to user's detailed instructions
+    let systemPrompt: string;
+    if (isBuilderProfile) {
+      systemPrompt = `You are Krish, founder of Mindmaker. Follow the instructions in the user message exactly. The user message contains complete, detailed instructions for generating a CEO-grade Builder Profile. Use those instructions as your primary guide.`;
+    } else if (isTryItWidget) {
+      systemPrompt = TRYIT_SYSTEM_PROMPT;
+    } else {
+      systemPrompt = CHAT_SYSTEM_PROMPT;
+    }
+    
     // #region agent log
-    console.log(`[DEBUG_B] System prompt selected: isTryItWidget=${isTryItWidget}, promptLength=${systemPrompt.length}, hasEnhancedContent=${systemPrompt.includes('Multi-Layered') || systemPrompt.includes('multi-layered')}, hasAnalysisProcess=${systemPrompt.includes('ANALYSIS PROCESS')}, hypothesisId=B`);
+    console.log(`[DEBUG_B] System prompt selected: isBuilderProfile=${isBuilderProfile}, isTryItWidget=${isTryItWidget}, promptLength=${systemPrompt.length}, promptType=${isBuilderProfile ? 'BUILDER_PROFILE' : isTryItWidget ? 'TRYIT' : 'CHAT'}, hypothesisId=B`);
     // #endregion
 
     // Create robust Vertex client and call
@@ -358,7 +381,8 @@ serve(async (req) => {
         messages: messages.map(m => ({ role: m.role as 'user' | 'assistant' | 'system', content: m.content })),
         systemInstruction: systemPrompt,
         temperature: 0.8,
-        maxOutputTokens: isTryItWidget ? 1024 : 2048,
+        // Builder Profile needs more tokens for CEO-grade detailed responses
+        maxOutputTokens: isBuilderProfile ? 4096 : (isTryItWidget ? 1024 : 2048),
         useRag: true,
         similarityTopK: 8, // Increased for more context
         vectorDistanceThreshold: 0.4, // Decreased for higher relevance
