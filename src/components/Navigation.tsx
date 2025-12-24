@@ -39,7 +39,7 @@ const Navigation = () => {
       label: "Learning & Content", 
       dropdown: [
         { label: "Lightning Lessons", type: "lessons" },
-        { label: "Podcast", href: "https://content.themindmaker.ai/podcast", external: true },
+        { label: "Podcast", href: "https://www.thebuildereconomy.com", external: true },
         { label: "Blog", href: "https://content.themindmaker.ai", external: true },
       ]
     },
