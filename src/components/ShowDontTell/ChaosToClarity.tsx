@@ -379,7 +379,7 @@ const ChaosToClarity = () => {
     canReverseExit: true,
     enabled: true,
     titleRef: titleRef, // Use title position to trigger scroll hijack
-    titleOffset: 30, // Trigger when title is 30px from top
+    titleOffset: 100, // Trigger when title is 100px from top (less whitespace above)
   });
 
   // Initialize CSS variables
@@ -405,11 +405,11 @@ const ChaosToClarity = () => {
     >
       <div 
         ref={containerRef}
-        className="w-full max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-32 chaos-clarity-container"
+        className="w-full max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 chaos-clarity-container"
       >
         {/* FIX (d): Changed to opaque background to prevent nav bleedthrough */}
         {/* FIX (c): Fixed height container prevents layout shift */}
-        <div className="sticky top-0 z-20 bg-background border-b border-border/40 pt-4 pb-6 md:pt-6 md:pb-8">
+        <div className="sticky top-0 z-20 bg-background border-b border-border/40 pt-2 pb-4 md:pt-4 md:pb-6">
           <div className="text-center" ref={titleRef}>
             {/* FIX (c): Increased fixed height to accommodate longest headline without wrapping */}
             <div className="relative h-[4rem] md:h-[5.5rem] lg:h-[6.5rem]">
@@ -458,7 +458,7 @@ const ChaosToClarity = () => {
         </div>
 
         {/* Main animation canvas */}
-        <div className="relative h-[500px] md:h-[600px] w-full max-w-[min(calc(100vw-2rem),56rem)] mx-auto mt-10 md:mt-16 overflow-hidden">
+        <div className="relative h-[500px] md:h-[600px] w-full max-w-[min(calc(100vw-2rem),56rem)] mx-auto mt-6 md:mt-10 overflow-hidden">
           {Object.entries(groupedConcepts).map(([category, categoryPieces]) => {
             const cat = category as Category;
             const colorProgress = clamp01(mapRange(progressRef.current, 0.6, 0.8));
