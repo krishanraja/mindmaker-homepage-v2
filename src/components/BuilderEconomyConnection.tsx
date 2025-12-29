@@ -27,9 +27,11 @@ const BuilderEconomyConnection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             The Builder Economy
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
-            The media and community layer that feeds Mindmaker. 
-            A long-running conversation about how people build with AI in their own careers and companies.
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-4">
+            For hands-on operators who want to become builders alongside AI. The path to creating weapons-grade AI-enabled GTM engines, content engines, and end-to-end apps—following what Krish is doing to build a complete AI-enabled business.
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            The media and community layer that feeds Mindmaker. A long-running conversation about how commercial leaders build with AI in their own careers and companies.
           </p>
         </div>
         
@@ -94,9 +96,12 @@ const BuilderEconomyConnection = () => {
         
         <div className="max-w-3xl mx-auto mt-12">
           <div className="minimal-card bg-muted/50 p-6 text-center">
-            <p className="text-sm text-muted-foreground italic">
+            <p className="text-sm text-muted-foreground italic mb-2">
               Listen → Join a live session → Book a Builder Session. 
               A simple path from curiosity to capability.
+            </p>
+            <p className="text-sm font-semibold text-foreground">
+              This is the hands-on builder path: become the commercial leader who builds alongside AI, not just delegates to it.
             </p>
           </div>
         </div>

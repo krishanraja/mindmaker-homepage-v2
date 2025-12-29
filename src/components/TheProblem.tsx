@@ -281,12 +281,27 @@ const TheProblem = () => {
             </motion.div>
             
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Lead from the front.
+              Become the leader who bosses the boardroom confidently.
             </h2>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto">
-              AI Agents will be working inside most businesses within six months. Are you ready to lead a new species of worker?
+            <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">
+              Three paths for commercial leaders who accept what's coming: build systems with AI, don't delegate to others. Whether you need AI systems and authority, want to build alongside AI, or need to sharpen your team's transformation readiness—all lead to one outcome: confident boardroom leadership.
             </p>
+            
+            <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto mt-8 text-left">
+              <div className="minimal-card p-4">
+                <h3 className="font-bold text-sm text-mint-dark mb-2">HANDS-OFF LEADERS</h3>
+                <p className="text-sm text-muted-foreground">Become the leader with AI systems, authority, and ideas. Deploy working systems that give you command without hands-on building.</p>
+              </div>
+              <div className="minimal-card p-4">
+                <h3 className="font-bold text-sm text-mint-dark mb-2">HANDS-ON BUILDERS</h3>
+                <p className="text-sm text-muted-foreground">Become a builder alongside AI. Create weapons-grade GTM engines, content engines, and end-to-end apps. (The Builder Economy path)</p>
+              </div>
+              <div className="minimal-card p-4">
+                <h3 className="font-bold text-sm text-mint-dark mb-2">TEAMS NEEDING TRANSFORMATION</h3>
+                <p className="text-sm text-muted-foreground">Sharpen communal AI literacy before committing to transformation. Stop wasting your one bullet on vendors who can't deliver.</p>
+              </div>
+            </div>
           </motion.div>
 
           {/* Desktop: 2x2 Grid */}

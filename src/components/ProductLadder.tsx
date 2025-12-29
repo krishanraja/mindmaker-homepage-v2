@@ -34,7 +34,7 @@ const JourneySlider = ({ onBookClick, navigate }: { onBookClick: (program: strin
     {
       name: "AI Literacy-to-Influence",
       duration: "90 days",
-      description: "For senior leaders. Build working AI-enabled systems around your actual week. Leave with a Builder Dossier and implementation plan.",
+      description: "For senior commercial leaders. Build working AI-enabled systems around your actual week. Become the leader with systems and authority (hands-off path) or build alongside AI to create weapons-grade engines (hands-on path). Leave with a Builder Dossier and implementation plan.",
       cta: "Learn More",
       link: "/builder-sprint",
       program: "builder-sprint",
@@ -141,17 +141,19 @@ const ProductLadder = () => {
       icon: User,
       label: "1-1 LEADERS",
       title: "Individual Builder Journey",
+      subtitle: "For hands-off leaders who need systems and authority, or hands-on builders who want to create alongside AI",
       useSlider: true,
     },
     {
       icon: Users,
       label: "EXEC TEAMS",
       title: "Team Transformation",
+      subtitle: "For teams needing transformation: sharpen communal AI literacy before committing to vendors or consultants",
       offerings: [
         {
           name: "AI Leadership Lab",
           duration: "2-8 hours",
-          description: "For 6-12 executives. Run two real decisions through a new AI-enabled way of working. Leave with a 90-day pilot charter.",
+          description: "For 6-12 executives. Sharpen your team's communal AI literacy. Run two real decisions through a new AI-enabled way of working. Leave with a 90-day pilot charter and the confidence to evaluate vendors without wasting your one transformation bullet.",
           cta: "Learn More",
           link: "/leadership-lab",
           program: "leadership-lab",
@@ -163,11 +165,12 @@ const ProductLadder = () => {
       icon: TrendingUp,
       label: "PORTFOLIOS",
       title: "Portfolio-Wide Programs",
+      subtitle: "For VCs, advisors, consultancies helping leaders become transformation-ready",
       offerings: [
         {
           name: "Portfolio Program",
           duration: "6-12 months",
-          description: "For VCs, advisors, consultancies. Help the business leaders you serve become AI literate with a repeatable method and co-branded delivery.",
+          description: "For VCs, advisors, consultancies. Help the commercial leaders you serve become AI literate and transformation-ready with a repeatable method and co-branded delivery. They'll confidently evaluate vendors and lead boardroom discussions.",
           cta: "Learn More",
           link: "/portfolio-program",
           program: "portfolio-program",
@@ -184,8 +187,8 @@ const ProductLadder = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
             Choose Your Builder Journey
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            From 60-minute sessions to portfolio-wide transformation
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-4">
+            Three paths to confidently boss the boardroom: hands-off leaders get systems and authority, hands-on builders create alongside AI, teams sharpen transformation readiness.
           </p>
         </div>
         
@@ -217,6 +220,11 @@ const ProductLadder = () => {
                           <h3 className="text-lg font-bold text-foreground">
                             {track.title}
                           </h3>
+                          {track.subtitle && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {track.subtitle}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <ChevronDown 
@@ -304,6 +312,11 @@ const ProductLadder = () => {
                       <h3 className="text-xl font-bold text-foreground">
                         {track.title}
                       </h3>
+                      {track.subtitle && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {track.subtitle}
+                        </p>
+                      )}
                     </div>
                   </div>
 

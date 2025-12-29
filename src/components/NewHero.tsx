@@ -7,17 +7,17 @@ const NewHero = () => {
   const [consultModalOpen, setConsultModalOpen] = useState(false);
 
   const heroVariants = [
-    "Become the next version of yourself with",
-    "Lead the next chapter of your business with",
-    "Build the skills your future demands today with",
-    "Strengthen your judgment for what comes next with",
-    "Step into the role your company will need with",
-    "Shape a sharper path for your team's future with",
-    "Prepare yourself for every decisive moment with",
-    "Guide your organisation with clearer thinking through",
-    "Stay ahead of every shift in your industry with",
-    "Upgrade the decisions that define your success with",
-    "Lead with confidence in a changing world through",
+    "Become the commercial leader who commands the boardroom with",
+    "Transform into the leader your board needs with",
+    "Step into confident boardroom leadership through",
+    "Become the leader who leads from the front with",
+    "Transform into an AI-enabled commercial leader with",
+    "Become the leader who confidently bosses the boardroom with",
+    "Step into the future-ready leader your company needs with",
+    "Become the commercial leader who builds systems, not delegates with",
+    "Transform into the leader who accepts what's coming with",
+    "Become the leader who confidently navigates AI transformation with",
+    "Step into boardroom-ready leadership through",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -74,7 +74,7 @@ const NewHero = () => {
             <div className="relative">
               {/* Invisible spacer using longest variant to reserve height */}
               <h1 className="invisible text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight max-w-4xl" aria-hidden="true">
-                Upgrade the decisions that define your success with{" "}
+                Become the commercial leader who confidently bosses the boardroom with{" "}
                 <span>AI literacy for leaders</span>
               </h1>
               
@@ -101,7 +101,7 @@ const NewHero = () => {
             </div>
       
             <p className="text-base sm:text-lg md:text-xl lg:text-xl text-white/90 max-w-3xl font-light leading-relaxed">
-              Most leaders feel behind on AI, but don't know what to actually do about it. Level up with a tailored, outcomes-focused accelerator - so you can outlive the unpredictable changes that lie ahead.
+              For commercial leaders who accept what's coming: we won't delegate the future to others, but to systems. Become the leader who confidently bosses the boardroom—whether you need AI systems and authority, want to build alongside AI, or need to sharpen your team's transformation readiness.
             </p>
               
             {/* Trust Bar */}

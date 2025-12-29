@@ -6,7 +6,9 @@
 
 ## Core Value Proposition
 
-**"Become AI-literate by building working AI systems around your real work - with an experienced operator, not a consultant."**
+**"Become the commercial leader who confidently bosses the boardroom with AI—whether you need systems and authority, want to build alongside AI, or need to sharpen your team's transformation readiness."**
+
+**Target Audience:** Commercial leaders (not technical ones) who accept what's coming: we won't delegate the future to others, but to systems. Leaders who want to lead from the front.
 
 ---
 
@@ -39,7 +41,33 @@
 
 ---
 
-## Positioning by Segment
+## Positioning by ICP (Ideal Customer Profile)
+
+### ICP 1: Hands-Off Leaders
+**Who:** Commercial leaders who need AI systems, authority, and ideas from their new AI capabilities  
+**Problem:** Can't confidently boss the boardroom on AI. Need working systems without hands-on building.  
+**What You Become:** The leader with AI systems, authority, and ideas. Deploy working systems that give you command without hands-on building.  
+**Value:** Deploy 3-5 working AI systems in 30-90 days. Gain boardroom confidence through systems that work.  
+**Proof:** 10-20x ROI, 8-15 hrs saved/week, confident boardroom presence
+
+### ICP 2: Hands-On Builders
+**Who:** Commercial leaders who want to become builders alongside AI  
+**Problem:** Want to create weapons-grade AI-enabled GTM engines, content engines, and end-to-end apps—following what Krish is doing.  
+**What You Become:** A builder alongside AI. Create weapons-grade systems: GTM engines, content engines, end-to-end apps. (The Builder Economy path)  
+**Value:** Build alongside AI, not just delegate to it. Create production-grade systems that transform your business.  
+**Proof:** Working GTM/content engines, end-to-end apps, transformation-ready business
+
+### ICP 3: Teams Needing Transformation
+**Who:** Teams that aren't aligned or confident enough to undergo transformation  
+**Problem:** Being pitched by OpenAI or countless consultants but need to sharpen communal AI literacy first—before wasting your one bullet for future-proofing.  
+**What You Become:** A transformation-ready team with sharpened communal AI literacy. Confident to evaluate vendors and lead boardroom discussions.  
+**Value:** Sharpen communal AI literacy before committing to transformation. Stop wasting your one bullet on vendors who can't deliver.  
+**Proof:** 90-day pilot charter, measurable ROI, team alignment, confident vendor evaluation
+
+### Common Outcome Across All ICPs
+**All paths lead to:** Confidently "boss the boardroom"—something you cannot do right now. Whether you need systems and authority, want to build alongside AI, or need to sharpen transformation readiness, the outcome is the same: confident boardroom leadership.
+
+## Positioning by Segment (Legacy Structure)
 
 ### Individual Leaders
 **Problem:** Pressure to "do AI", drowning in pitches  
@@ -60,9 +88,9 @@
 
 ## Positioning Statements
 
-**One-Liner:** "AI literacy for leaders - through building, not training."
+**One-Liner:** "Become the commercial leader who confidently bosses the boardroom with AI—through building, not training."
 
-**Elevator Pitch (30s):** "Most leaders feel behind on AI but don't know what to actually do. We help you become AI-literate by building working systems around your real work - not through vendor theatre or generic training. Start with a 60-minute session, walk away with deployed solutions."
+**Elevator Pitch (30s):** "For commercial leaders who accept what's coming: we won't delegate the future to others, but to systems. Whether you need AI systems and authority (hands-off), want to build alongside AI (hands-on), or need to sharpen your team's transformation readiness—all paths lead to confidently bossing the boardroom. Start with a 60-minute session, walk away with deployed solutions."
 
 ---
 
@@ -72,7 +100,7 @@
 → "60 min session saves 2-5 hrs/week. 100+ hrs/year. Pays for itself month one."
 
 **"My team should handle this"**  
-→ "Your team builds tactically. You need strategic AI literacy to guide them."
+→ "Your team builds tactically. You need strategic AI literacy to guide them. As a commercial leader, you need to confidently boss the boardroom—you can't do that by delegating AI to others."
 
 **"We need strategy first"**  
 → "Strategy without proof doesn't work. Build 1-2 systems, then strategize."
@@ -121,6 +149,9 @@
 - "I finally understand what's possible"
 - "Paid for itself first month"
 - "Team has shared language now"
+- "I can confidently boss the boardroom on AI now"
+- "We stopped wasting our transformation bullet on vendors"
+- "Building alongside AI transformed how we operate"
 
 ---
 
