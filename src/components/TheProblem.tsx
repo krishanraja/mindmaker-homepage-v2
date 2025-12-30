@@ -464,16 +464,6 @@ const TheProblem = () => {
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isVisible ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mint/10 border border-mint/20 mb-6"
-            >
-              <Mic className="w-4 h-4 text-mint" />
-              <span className="text-sm font-medium text-mint-dark">Voice-enabled tools</span>
-            </motion.div>
-            
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground dark:text-foreground">
               Boss the boardroom confidently.
             </h2>
@@ -484,16 +474,16 @@ const TheProblem = () => {
           </motion.div>
 
           {/* ICP Heading */}
-          <h3 className="text-sm font-bold text-mint-dark dark:text-mint text-center tracking-widest mb-10">
-            Who does Mindmaker help?
+          <h3 className="text-sm font-bold italic text-mint-dark dark:text-mint text-center tracking-widest mb-10">
+            WHO DOES MINDMAKER HELP?
           </h3>
 
           {/* ICP Slider */}
           <ICPSlider />
 
           {/* Interactive Tools Heading */}
-          <h3 className="text-sm font-bold text-mint-dark dark:text-mint text-center tracking-widest mb-8 mt-12">
-            Ideate with Mindmaker AI
+          <h3 className="text-sm font-bold italic text-mint-dark dark:text-mint text-center tracking-widest mb-8 mt-12">
+            IDEATE WITH MINDMAKER AI
           </h3>
 
           {/* Desktop: 2x2 Grid */}
