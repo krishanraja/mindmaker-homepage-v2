@@ -51,32 +51,52 @@ async function generateFavicons() {
   for (const { size, name } of sizes) {
     const outputPath = path.join(publicDir, name);
     
-    // Create a dark background and composite the icon on top
-    const background = await sharp({
-      create: {
-        width: size,
-        height: size,
-        channels: 4,
-        background: { r: 10, g: 10, b: 11, alpha: 255 } // #0A0A0B background
-      }
-    }).png().toBuffer();
+    // Determine if this icon needs an opaque background
+    // iOS apple-touch-icon requires opaque background
+    // Windows tiles work better with backgrounds
+    const needsBackground = name === 'apple-touch-icon.png' || 
+                           name.includes('favicon-70x70') ||
+                           name.includes('favicon-144x144') ||
+                           name.includes('favicon-150x150') ||
+                           name.includes('favicon-310x310');
     
-    // Resize the icon
-    const resizedIcon = await sharp(sourceBuffer)
-      .resize(size, size, {
-        fit: 'contain',
-        background: { r: 0, g: 0, b: 0, alpha: 0 } // transparent for resize
-      })
-      .png()
-      .toBuffer();
+    if (needsBackground) {
+      // Create a dark background and composite the icon on top
+      const background = await sharp({
+        create: {
+          width: size,
+          height: size,
+          channels: 4,
+          background: { r: 10, g: 10, b: 11, alpha: 255 } // #0A0A0B background
+        }
+      }).png().toBuffer();
+      
+      // Resize the icon
+      const resizedIcon = await sharp(sourceBuffer)
+        .resize(size, size, {
+          fit: 'contain',
+          background: { r: 0, g: 0, b: 0, alpha: 0 } // transparent for resize
+        })
+        .png()
+        .toBuffer();
+      
+      // Composite icon onto dark background
+      await sharp(background)
+        .composite([{ input: resizedIcon, blend: 'over' }])
+        .png()
+        .toFile(outputPath);
+    } else {
+      // Generate with transparent background
+      await sharp(sourceBuffer)
+        .resize(size, size, {
+          fit: 'contain',
+          background: { r: 0, g: 0, b: 0, alpha: 0 } // transparent background
+        })
+        .png()
+        .toFile(outputPath);
+    }
     
-    // Composite icon onto dark background
-    await sharp(background)
-      .composite([{ input: resizedIcon, blend: 'over' }])
-      .png()
-      .toFile(outputPath);
-    
-    console.log(`✅ Generated: ${name} (${size}x${size})`);
+    console.log(`✅ Generated: ${name} (${size}x${size})${needsBackground ? ' [with background]' : ' [transparent]'}`);
   }
 
   // Generate ICO file (contains 16x16, 32x32, 48x48)
@@ -91,27 +111,16 @@ async function generateFavicons() {
   await fs.writeFile(path.join(publicDir, 'favicon.ico'), icoBuffer);
   console.log('✅ Generated: favicon.ico (16x16, 32x32, 48x48)');
   
-  // Copy the 32x32 as a fallback favicon.png
-  const bg32 = await sharp({
-    create: {
-      width: 32,
-      height: 32,
-      channels: 4,
-      background: { r: 10, g: 10, b: 11, alpha: 255 }
-    }
-  }).png().toBuffer();
-  
-  const icon32 = await sharp(sourceBuffer)
-    .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png()
-    .toBuffer();
-  
-  await sharp(bg32)
-    .composite([{ input: icon32, blend: 'over' }])
+  // Generate transparent 32x32 as a fallback favicon.png
+  await sharp(sourceBuffer)
+    .resize(32, 32, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 } // transparent background
+    })
     .png()
     .toFile(path.join(publicDir, 'favicon.png'));
-  
-  console.log('✅ Generated: favicon.png (32x32 fallback)');
+
+  console.log('✅ Generated: favicon.png (32x32 fallback, transparent)');
   console.log('\n🎉 Favicon generation complete!');
   console.log('\n📝 Test your favicons at: https://realfavicongenerator.net/favicon_checker');
 }

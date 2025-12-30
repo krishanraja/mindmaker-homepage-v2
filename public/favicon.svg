@@ -5,8 +5,6 @@
       <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <!-- Background for better visibility -->
-  <rect width="512" height="512" fill="#0A0A0B"/>
   <!-- Mindmaker M icon - matching the actual logo proportions -->
   <g transform="translate(48, 64)">
     <!-- Left small trapezoid (peak) -->
