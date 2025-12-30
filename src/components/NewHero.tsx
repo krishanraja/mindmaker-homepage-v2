@@ -68,12 +68,12 @@ const NewHero = () => {
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-mint/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
       
       {/* Content */}
-      <div className="container-width relative z-10 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20">
+      <div className="container-width relative z-10 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 overflow-x-hidden">
         {/* Hero Content */}
-        <div className="max-w-5xl">
+        <div className="max-w-5xl overflow-x-hidden">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
             {/* Two-line hero layout: rotating text on line 1, static text on line 2 */}
-            <div className="relative" style={{ minHeight: 'calc(1.2em + 1.2 * min(4.5rem, max(2rem, 6vw)))' }}>
+            <div className="relative w-full max-w-5xl" style={{ minHeight: 'calc((1.2em + 20px) + 1.2 * min(4.5rem, max(2rem, 6vw)))' }}>
               {/* Invisible spacer to reserve exact height for both lines - uses longest variant */}
               <h1 
                 className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none" 
@@ -83,25 +83,29 @@ const NewHero = () => {
                 }}
                 aria-hidden="true"
               >
-                <div style={{ height: '1.2em', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
-                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: '1.2' }}>AI literacy for commercial leaders</div>
+                <div style={{ height: 'calc(1.2em + 20px)', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
+                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)', lineHeight: '1.2' }}>AI literacy for commercial leaders</div>
               </h1>
               
               {/* Visible headline - two-line layout with fixed structure */}
               <h1 
-                className="absolute top-0 left-0 right-0 font-bold leading-tight tracking-tight text-white max-w-4xl flex flex-col"
+                className="absolute top-0 left-0 font-bold leading-tight tracking-tight text-white max-w-4xl flex flex-col"
                 style={{
                   fontSize: 'clamp(1.875rem, 5vw, 3.75rem)',
                   lineHeight: '1.2',
+                  width: '100%',
+                  overflowX: 'hidden',
                 }}
               >
-                {/* Line 1: Rotating text - fixed height, overflow hidden */}
+                {/* Line 1: Rotating text - fixed height with animation buffer */}
                 <div 
-                  className="overflow-hidden relative"
+                  className="relative"
                   style={{ 
-                    height: '1.2em',
-                    minHeight: '1.2em',
-                    maxHeight: '1.2em',
+                    height: 'calc(1.2em + 20px)',
+                    minHeight: 'calc(1.2em + 20px)',
+                    maxHeight: 'calc(1.2em + 20px)',
+                    overflowX: 'hidden',
+                    overflowY: 'visible',
                   }}
                 >
                   <AnimatePresence mode="wait">
@@ -135,7 +139,7 @@ const NewHero = () => {
                       whiteSpace: 'nowrap',
                       position: 'relative',
                       display: 'inline-block',
-                      fontSize: 'clamp(2rem, 6vw, 4.5rem)',
+                      fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
@@ -143,7 +147,7 @@ const NewHero = () => {
                     <span 
                       className="relative z-10 inline-block text-mint font-bold tracking-tight"
                       style={{
-                        fontSize: 'clamp(2rem, 6vw, 4.5rem)',
+                        fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
                         maxWidth: '100%',
                         textShadow: '0 0 40px hsl(var(--mint) / 0.6), 0 0 80px hsl(var(--mint) / 0.4), 0 0 120px hsl(var(--mint) / 0.2)',
                         filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
