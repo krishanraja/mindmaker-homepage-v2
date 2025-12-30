@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -102,6 +102,15 @@ const LeadershipInsights = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach(timeoutId => clearTimeout(timeoutId));
+      timeoutRefs.current = [];
+    };
+  }, []);
 
   const handleFormSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,7 +254,8 @@ const LeadershipInsights = () => {
                     onClick={() => {
                       answerQuestion(currentQuestion.id, option.value);
                       // Auto-advance after short delay
-                      setTimeout(() => nextQuestion(), 200);
+                      const timeoutId = setTimeout(() => nextQuestion(), 200);
+                      timeoutRefs.current.push(timeoutId);
                     }}
                     className={`w-full p-4 rounded-lg border-2 text-left transition-all flex items-center gap-3 touch-target ${
                       answers[currentQuestion.id] === option.value
@@ -336,7 +346,8 @@ const LeadershipInsights = () => {
                     key={option}
                     onClick={() => {
                       answerPersonalization(currentPersonalizationQuestion.id, option);
-                      setTimeout(() => nextPersonalizationQuestion(), 200);
+                      const timeoutId = setTimeout(() => nextPersonalizationQuestion(), 200);
+                      timeoutRefs.current.push(timeoutId);
                     }}
                     className="w-full p-4 rounded-lg border-2 text-left transition-all flex items-center gap-3 touch-target border-border hover:border-mint/50 hover:bg-mint/5"
                   >

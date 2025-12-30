@@ -72,33 +72,75 @@ const NewHero = () => {
         {/* Hero Content */}
         <div className="max-w-5xl">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
-            {/* Fixed-height container with invisible spacer */}
-            <div className="relative">
-              {/* Invisible spacer using longest variant to reserve height */}
-              <h1 className="invisible text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight max-w-4xl" aria-hidden="true">
-                Build your knowledge instead of relying on IT with{" "}
-                <span>AI literacy for leaders</span>
+            {/* Two-line hero layout: rotating text on line 1, static text on line 2 */}
+            <div className="relative" style={{ minHeight: 'calc(2 * 1.2em)' }}>
+              {/* Invisible spacer to reserve exact height for both lines - uses longest variant */}
+              <h1 
+                className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none" 
+                style={{
+                  fontSize: 'clamp(1.875rem, 5vw, 3.75rem)',
+                  lineHeight: '1.2',
+                }}
+                aria-hidden="true"
+              >
+                <div style={{ height: '1.2em', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
+                <div style={{ height: '1.2em', whiteSpace: 'nowrap' }}>AI literacy for commercial leaders</div>
               </h1>
               
-              {/* Visible headline - absolutely positioned */}
-              <h1 className="absolute top-0 left-0 right-0 text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white max-w-4xl">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.5 }}
-                    className="inline"
+              {/* Visible headline - two-line layout with fixed structure */}
+              <h1 
+                className="absolute top-0 left-0 right-0 font-bold leading-tight tracking-tight text-white max-w-4xl flex flex-col"
+                style={{
+                  fontSize: 'clamp(1.875rem, 5vw, 3.75rem)',
+                  lineHeight: '1.2',
+                }}
+              >
+                {/* Line 1: Rotating text - fixed height, overflow hidden */}
+                <div 
+                  className="overflow-hidden relative"
+                  style={{ 
+                    height: '1.2em',
+                    minHeight: '1.2em',
+                    maxHeight: '1.2em',
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0 flex items-center"
+                      style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+                    >
+                      {heroVariants[currentIndex]}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                
+                {/* Line 2: Static text - absolutely fixed, never moves */}
+                <div 
+                  className="relative flex items-center"
+                  style={{ 
+                    height: '1.2em',
+                    minHeight: '1.2em',
+                    maxHeight: '1.2em',
+                    marginTop: 0,
+                  }}
+                >
+                  <span 
+                    className="relative inline-block"
+                    style={{ 
+                      whiteSpace: 'nowrap',
+                      position: 'relative',
+                      display: 'inline-block',
+                    }}
                   >
-                    {heroVariants[currentIndex]}
-                  </motion.span>
-                </AnimatePresence>
-                {" "}
-                <span className="relative inline">
-                  <span className="relative z-10 text-mint animate-pulse" style={{animationDuration: '2s'}}>AI literacy for leaders</span>
-                  <span className="absolute bottom-0 left-0 w-full h-3 sm:h-4 bg-mint/30 -z-10 animate-expandWidth blur-sm"></span>
-                </span>
+                    <span className="relative z-10 text-mint animate-pulse" style={{animationDuration: '2s'}}>AI literacy for commercial leaders</span>
+                    <span className="absolute bottom-0 left-0 w-full h-3 sm:h-4 bg-mint/30 -z-10 animate-expandWidth blur-sm"></span>
+                  </span>
+                </div>
               </h1>
             </div>
       

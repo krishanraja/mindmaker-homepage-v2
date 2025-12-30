@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface MarketSentiment {
@@ -29,6 +29,17 @@ export const useOpenAIContext = (): UseOpenAIContextReturn => {
   const [marketSentiment, setMarketSentiment] = useState<MarketSentiment>(defaultSentiment);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
+  const cancelRef = useRef(false);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    cancelRef.current = false;
+    return () => {
+      isMountedRef.current = false;
+      cancelRef.current = true;
+    };
+  }, []);
 
   // Load cached sentiment from localStorage
   const loadCachedSentiment = useCallback((): MarketSentiment | null => {
@@ -82,32 +93,40 @@ export const useOpenAIContext = (): UseOpenAIContextReturn => {
 
   // Main function to get sentiment (cached or fresh)
   const refreshSentiment = useCallback(async () => {
+    if (!isMountedRef.current) return; // Component unmounted, don't start
+    
+    // Reset cancellation flag for new request
+    cancelRef.current = false;
     setIsLoading(true);
     setError(null);
 
     try {
       // Try to get fresh sentiment
       const sentiment = await fetchMarketSentiment();
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
       setMarketSentiment(sentiment);
       cacheSentiment(sentiment);
     } catch (err) {
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       console.error('Error fetching market sentiment:', errorMessage);
       setError(errorMessage);
       
       // On error, try to use cached data even if expired
       const cached = loadCachedSentiment();
-      if (cached) {
+      if (cached && !cancelRef.current && isMountedRef.current) {
         console.log('Using expired cache due to fetch error');
         setMarketSentiment(cached);
       }
       // Otherwise keep default sentiment
     } finally {
-      setIsLoading(false);
+      if (!cancelRef.current && isMountedRef.current) {
+        setIsLoading(false);
+      }
     }
   }, [fetchMarketSentiment, cacheSentiment, loadCachedSentiment]);
 
-  // Initialize on mount
+  // Initialize on mount - only run once
   useEffect(() => {
     const cached = loadCachedSentiment();
     if (cached) {
@@ -116,7 +135,8 @@ export const useOpenAIContext = (): UseOpenAIContextReturn => {
       // No cache or expired, fetch fresh data
       refreshSentiment();
     }
-  }, [loadCachedSentiment, refreshSentiment]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount - loadCachedSentiment and refreshSentiment are stable
 
   return {
     marketSentiment,

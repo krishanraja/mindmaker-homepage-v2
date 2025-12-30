@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface ToolRecommendation {
@@ -126,6 +126,17 @@ export const useFrictionMap = () => {
   const [frictionMap, setFrictionMap] = useState<FrictionMapData | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
+  const cancelRef = useRef(false);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    cancelRef.current = false;
+    return () => {
+      isMountedRef.current = false;
+      cancelRef.current = true;
+    };
+  }, []);
 
   const generateFrictionMap = useCallback(async (problem: string) => {
     if (!problem.trim() || problem.length < 10) {
@@ -133,6 +144,10 @@ export const useFrictionMap = () => {
       return;
     }
 
+    if (!isMountedRef.current) return; // Component unmounted, don't start
+    
+    // Reset cancellation flag for new request
+    cancelRef.current = false;
     setIsGenerating(true);
     setError(null);
 
@@ -187,6 +202,8 @@ export const useFrictionMap = () => {
         parsedResponse = generateFallbackResponse(problem);
       }
 
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
+
       const newFrictionMap: FrictionMapData = {
         problem,
         currentState: parsedResponse.currentState || 'Manual processes consuming significant time and mental energy.',
@@ -197,20 +214,27 @@ export const useFrictionMap = () => {
         generatedAt: new Date(),
       };
 
-      setFrictionMap(newFrictionMap);
-      localStorage.setItem('mindmaker-friction-map', JSON.stringify(newFrictionMap));
+      if (!cancelRef.current && isMountedRef.current) {
+        setFrictionMap(newFrictionMap);
+        localStorage.setItem('mindmaker-friction-map', JSON.stringify(newFrictionMap));
+      }
     } catch (err) {
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
       console.error('Error generating friction map:', err);
       setError('Failed to generate analysis. Please try again.');
       
       const fallback = generateFallbackResponse(problem);
-      setFrictionMap({
-        problem,
-        ...fallback,
-        generatedAt: new Date(),
-      });
+      if (!cancelRef.current && isMountedRef.current) {
+        setFrictionMap({
+          problem,
+          ...fallback,
+          generatedAt: new Date(),
+        });
+      }
     } finally {
-      setIsGenerating(false);
+      if (!cancelRef.current && isMountedRef.current) {
+        setIsGenerating(false);
+      }
     }
   }, []);
 

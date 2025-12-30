@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -37,6 +37,15 @@ export const PortfolioBuilder = ({ compact = false, onClose }: PortfolioBuilderP
   const portfolioData = getPortfolioData();
   const { setPortfolioBuilder } = useSessionData();
   const isMobile = useIsMobile();
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach(timeoutId => clearTimeout(timeoutId));
+      timeoutRefs.current = [];
+    };
+  }, []);
 
   const handleVoiceCommand = useCallback((transcript: string, isFinal: boolean) => {
     if (!isFinal || showResults || isGenerating) return;
@@ -91,7 +100,8 @@ export const PortfolioBuilder = ({ compact = false, onClose }: PortfolioBuilderP
           toast.success(`${shouldSelect ? 'Selected' : 'Deselected'}: ${matchedTask.name}`);
           
           // Clear the action message after a delay
-          setTimeout(() => setLastVoiceAction(null), 2000);
+          const timeoutId = setTimeout(() => setLastVoiceAction(null), 2000);
+          timeoutRefs.current.push(timeoutId);
         }
       }
     }

@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { useAssessment } from '@/hooks/useAssessment';
 import { ArrowRight, RotateCcw, Award, CheckCircle2, X } from 'lucide-react';
 import { useSessionData } from '@/contexts/SessionDataContext';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MindmakerIcon } from '@/components/ui/MindmakerIcon';
@@ -33,6 +33,7 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
   const [resultTab, setResultTab] = useState<'profile' | 'strengths' | 'next'>('profile');
   const [highlightedOption, setHighlightedOption] = useState<string | null>(null);
   const [voiceMode, setVoiceMode] = useState(false);
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
   const currentQuestion = questions[currentStep];
 
@@ -50,11 +51,13 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
           setHighlightedOption(option.value);
           
           if (isFinal) {
-            setTimeout(() => {
+            const timeoutId1 = setTimeout(() => {
               answerQuestion(currentQuestion.id, option.value);
               setHighlightedOption(null);
-              setTimeout(() => nextQuestion(), 300);
+              const timeoutId2 = setTimeout(() => nextQuestion(), 300);
+              timeoutRefs.current.push(timeoutId2);
             }, 500);
+            timeoutRefs.current.push(timeoutId1);
           }
           return;
         }
@@ -72,11 +75,13 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
         setHighlightedOption(option.value);
         
         if (isFinal) {
-          setTimeout(() => {
+          const timeoutId1 = setTimeout(() => {
             answerQuestion(currentQuestion.id, option.value);
             setHighlightedOption(null);
-            setTimeout(() => nextQuestion(), 300);
+            const timeoutId2 = setTimeout(() => nextQuestion(), 300);
+            timeoutRefs.current.push(timeoutId2);
           }, 500);
+          timeoutRefs.current.push(timeoutId1);
         }
         return;
       }
@@ -117,6 +122,14 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
     setHighlightedOption(null);
     resetTranscript();
   }, [currentStep, resetTranscript]);
+
+  // Cleanup all timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach(timeoutId => clearTimeout(timeoutId));
+      timeoutRefs.current = [];
+    };
+  }, []);
 
   const handleVoiceStart = () => {
     resetTranscript();
@@ -198,7 +211,8 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
                 key={option.value}
                 onClick={() => {
                   answerQuestion(currentQuestion.id, option.value);
-                  setTimeout(() => nextQuestion(), 300);
+                  const timeoutId = setTimeout(() => nextQuestion(), 300);
+                  timeoutRefs.current.push(timeoutId);
                 }}
                 className={`w-full p-2 rounded text-xs text-left transition-all border ${
                   answers[currentQuestion.id] === option.value
@@ -413,7 +427,8 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
                       key={option.value}
                       onClick={() => {
                         answerQuestion(currentQuestion.id, option.value);
-                        setTimeout(() => nextQuestion(), 300);
+                        const timeoutId = setTimeout(() => nextQuestion(), 300);
+                        timeoutRefs.current.push(timeoutId);
                       }}
                       className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
                         highlightedOption === option.value

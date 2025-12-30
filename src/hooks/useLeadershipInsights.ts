@@ -153,6 +153,8 @@ export const useLeadershipInsights = () => {
   // Ref for smooth progress animation that never regresses
   const progressRef = useRef(0);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const progressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const phaseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentQuestion = LEADERSHIP_QUESTIONS[currentQuestionIndex];
   const currentPersonalizationQuestion = PERSONALIZATION_QUESTIONS[personalizationIndex];
@@ -248,7 +250,7 @@ export const useLeadershipInsights = () => {
     }, 50);
     
     // Simulate AI generation and calculate results
-    setTimeout(() => {
+    progressTimeoutRef.current = setTimeout(() => {
       // Calculate results based on answers
       const calculatedResults = calculateResults();
       setResults(calculatedResults);
@@ -256,6 +258,7 @@ export const useLeadershipInsights = () => {
       // Complete progress animation
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
       }
       
       // Animate to 100%
@@ -266,12 +269,12 @@ export const useLeadershipInsights = () => {
           requestAnimationFrame(completeProgress);
         } else {
           setGenerationProgress(100);
-          setTimeout(() => setPhase('results'), 300);
+          phaseTimeoutRef.current = setTimeout(() => setPhase('results'), 300);
         }
       };
       completeProgress();
     }, 5000);
-  }, [answers, personalizationAnswers]);
+  }, [answers, personalizationAnswers, calculateResults]);
 
   const calculateResults = useCallback((): LeadershipResults => {
     // Calculate raw score (sum of all answers)
@@ -353,6 +356,15 @@ export const useLeadershipInsights = () => {
   const reset = useCallback(() => {
     if (progressIntervalRef.current) {
       clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
+    }
+    if (progressTimeoutRef.current) {
+      clearTimeout(progressTimeoutRef.current);
+      progressTimeoutRef.current = null;
+    }
+    if (phaseTimeoutRef.current) {
+      clearTimeout(phaseTimeoutRef.current);
+      phaseTimeoutRef.current = null;
     }
     setPhase('intro');
     setCurrentQuestionIndex(0);
@@ -363,6 +375,21 @@ export const useLeadershipInsights = () => {
     setGenerationProgress(0);
     setIsPersonalized(false);
     progressRef.current = 0;
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+      if (progressTimeoutRef.current) {
+        clearTimeout(progressTimeoutRef.current);
+      }
+      if (phaseTimeoutRef.current) {
+        clearTimeout(phaseTimeoutRef.current);
+      }
+    };
   }, []);
 
   return {

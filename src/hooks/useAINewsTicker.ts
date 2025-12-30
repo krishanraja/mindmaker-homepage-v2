@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface NewsHeadline {
@@ -73,8 +73,18 @@ export const useAINewsTicker = () => {
   const [headlines, setHeadlines] = useState<NewsHeadline[]>(FALLBACK_HEADLINES);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    
     const fetchNews = async () => {
       try {
         // Check cache first
@@ -84,7 +94,9 @@ export const useAINewsTicker = () => {
           if (cachedData.provider) {
             console.log(`Provider: ${cachedData.provider}`);
           }
-          setHeadlines(cachedData.headlines);
+          if (!cancelled && isMountedRef.current) {
+            setHeadlines(cachedData.headlines);
+          }
           return;
         }
 
@@ -96,6 +108,8 @@ export const useAINewsTicker = () => {
           console.error('Error fetching AI news:', fetchError);
           throw fetchError;
         }
+
+        if (cancelled || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
 
         const newsData = data as AINewsResponse;
         
@@ -113,16 +127,19 @@ export const useAINewsTicker = () => {
           return;
         }
         
-        // Update headlines
-        setHeadlines(newsData.headlines);
-        
-        // Cache the results
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          data: newsData,
-          timestamp: Date.now()
-        }));
+        // Update headlines only if still mounted and not cancelled
+        if (!cancelled && isMountedRef.current) {
+          setHeadlines(newsData.headlines);
+          
+          // Cache the results
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            data: newsData,
+            timestamp: Date.now()
+          }));
+        }
 
       } catch (err) {
+        if (cancelled || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
         console.error('Error in useAINewsTicker:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch news');
         // Keep showing fallback headlines on error
@@ -130,6 +147,10 @@ export const useAINewsTicker = () => {
     };
 
     fetchNews();
+    
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return { headlines, isLoading, error };

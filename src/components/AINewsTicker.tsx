@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useAINewsTicker } from '@/hooks/useAINewsTicker';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MindmakerIcon } from '@/components/ui/MindmakerIcon';
 
 const AINewsTicker = () => {
@@ -71,6 +71,15 @@ const AINewsTicker = () => {
       setScrollOffset(0);
     }, 2000);
   };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative w-full py-6 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 overflow-hidden">

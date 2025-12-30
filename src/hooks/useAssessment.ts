@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface AssessmentQuestion {
@@ -57,12 +57,27 @@ export const useAssessment = () => {
   const [profile, setProfile] = useState<BuilderProfile | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
+  const cancelRef = useRef(false);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    cancelRef.current = false;
+    return () => {
+      isMountedRef.current = false;
+      cancelRef.current = true;
+    };
+  }, []);
 
   const answerQuestion = useCallback((questionId: string, value: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }));
   }, []);
 
   const generateProfile = useCallback(async () => {
+    if (!isMountedRef.current) return; // Component unmounted, don't start
+    
+    // Reset cancellation flag for new request
+    cancelRef.current = false;
     setIsGenerating(true);
     setError(null);
 
@@ -250,25 +265,30 @@ CRITICAL: This profile should feel like it was written by a professional consult
       fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:155',message:'Parse result',data:{parsedSuccess:!!parsed,hasType:!!parsed?.type,hasStrengths:!!parsed?.strengths,hasNextSteps:!!parsed?.nextSteps},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
       // #endregion
       
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
+
       // Validate the parsed object has required fields
       if (parsed && parsed.type && (parsed.strengths || parsed.nextSteps)) {
         // #region agent log
         fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:162',message:'AI profile SUCCESS',data:{type:parsed.type,strengthsCount:parsed.strengths?.length,nextStepsCount:parsed.nextSteps?.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
         // #endregion
-        setProfile({
-          type: parsed.type || 'AI Builder',
-          description: parsed.description || "You're on a unique AI journey with significant potential.",
-          strengths: Array.isArray(parsed.strengths) ? parsed.strengths : ['Strategic thinking', 'Leadership drive', 'Growth mindset'],
-          nextSteps: Array.isArray(parsed.nextSteps) ? parsed.nextSteps : ['Book a Builder Session to map your first AI system'],
-          recommendedProduct: parsed.recommendedProduct || 'Builder Session',
-          productLink: parsed.productLink || '/builder-session',
-          frameworkUsed: parsed.frameworkUsed,
-        });
+        if (!cancelRef.current && isMountedRef.current) {
+          setProfile({
+            type: parsed.type || 'AI Builder',
+            description: parsed.description || "You're on a unique AI journey with significant potential.",
+            strengths: Array.isArray(parsed.strengths) ? parsed.strengths : ['Strategic thinking', 'Leadership drive', 'Growth mindset'],
+            nextSteps: Array.isArray(parsed.nextSteps) ? parsed.nextSteps : ['Book a Builder Session to map your first AI system'],
+            recommendedProduct: parsed.recommendedProduct || 'Builder Session',
+            productLink: parsed.productLink || '/builder-session',
+            frameworkUsed: parsed.frameworkUsed,
+          });
+        }
         return;
       }
       
       throw new Error('Invalid AI response structure');
     } catch (err) {
+      if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
       // #region agent log
       fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:180',message:'FALLBACK triggered',data:{errorMessage:err instanceof Error ? err.message : String(err),totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
       // #endregion
@@ -331,15 +351,17 @@ Return ONLY valid JSON:
           }
 
           if (fallbackParsed && fallbackParsed.type && (fallbackParsed.strengths || fallbackParsed.nextSteps)) {
-            setProfile({
-              type: fallbackParsed.type || 'AI Builder',
-              description: fallbackParsed.description || "You're on a unique AI journey with significant potential.",
-              strengths: Array.isArray(fallbackParsed.strengths) ? fallbackParsed.strengths : ['Strategic thinking', 'Leadership drive', 'Growth mindset'],
-              nextSteps: Array.isArray(fallbackParsed.nextSteps) ? fallbackParsed.nextSteps : ['Book a Builder Session to map your first AI system'],
-              recommendedProduct: fallbackParsed.recommendedProduct || 'Builder Session',
-              productLink: fallbackParsed.productLink || '/builder-session',
-              frameworkUsed: fallbackParsed.frameworkUsed,
-            });
+            if (!cancelRef.current && isMountedRef.current) {
+              setProfile({
+                type: fallbackParsed.type || 'AI Builder',
+                description: fallbackParsed.description || "You're on a unique AI journey with significant potential.",
+                strengths: Array.isArray(fallbackParsed.strengths) ? fallbackParsed.strengths : ['Strategic thinking', 'Leadership drive', 'Growth mindset'],
+                nextSteps: Array.isArray(fallbackParsed.nextSteps) ? fallbackParsed.nextSteps : ['Book a Builder Session to map your first AI system'],
+                recommendedProduct: fallbackParsed.recommendedProduct || 'Builder Session',
+                productLink: fallbackParsed.productLink || '/builder-session',
+                frameworkUsed: fallbackParsed.frameworkUsed,
+              });
+            }
             return;
           }
         }
@@ -411,9 +433,13 @@ Return ONLY valid JSON:
           productLink: '/leadership-lab',
         };
       }
-      setProfile(fallbackProfile);
+      if (!cancelRef.current && isMountedRef.current) {
+        setProfile(fallbackProfile);
+      }
     } finally {
-      setIsGenerating(false);
+      if (!cancelRef.current && isMountedRef.current) {
+        setIsGenerating(false);
+      }
     }
   }, [answers]);
 
