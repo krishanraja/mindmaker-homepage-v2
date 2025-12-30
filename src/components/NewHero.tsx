@@ -84,7 +84,7 @@ const NewHero = () => {
                 aria-hidden="true"
               >
                 <div style={{ height: '1.2em', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
-                <div style={{ height: '1.2em', whiteSpace: 'nowrap' }}>AI literacy for commercial leaders</div>
+                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)' }}>AI literacy for commercial leaders</div>
               </h1>
               
               {/* Visible headline - two-line layout with fixed structure */}
@@ -130,14 +130,26 @@ const NewHero = () => {
                   }}
                 >
                   <span 
-                    className="relative inline-block"
+                    className="relative inline-block w-full"
                     style={{ 
                       whiteSpace: 'nowrap',
                       position: 'relative',
                       display: 'inline-block',
+                      fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                   >
-                    <span className="relative z-10 text-mint animate-pulse" style={{animationDuration: '2s'}}>AI literacy for commercial leaders</span>
+                    <span 
+                      className="relative z-10 text-mint animate-pulse inline-block" 
+                      style={{
+                        animationDuration: '2s',
+                        fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
+                        maxWidth: '100%',
+                      }}
+                    >
+                      AI literacy for commercial leaders
+                    </span>
                     <span className="absolute bottom-0 left-0 w-full h-3 sm:h-4 bg-mint/30 -z-10 animate-expandWidth blur-sm"></span>
                   </span>
                 </div>

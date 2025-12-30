@@ -221,70 +221,27 @@ const ICPSlider = () => {
                   }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  <div className="relative p-6 rounded-2xl bg-card border-2 overflow-hidden group">
-                    {/* Shimmering border effect */}
-                    <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <motion.div
-                        className="absolute inset-0"
-                        style={{
-                          background: isSelected
-                            ? 'linear-gradient(135deg, hsl(var(--mint) / 0.4) 0%, transparent 50%, hsl(var(--mint) / 0.3) 100%)'
-                            : 'linear-gradient(135deg, hsl(var(--mint) / 0.1) 0%, transparent 50%, hsl(var(--mint) / 0.05) 100%)',
-                        }}
-                        animate={
-                          isSelected
-                            ? {
-                                backgroundPosition: ['0% 0%', '100% 100%'],
-                              }
-                            : {}
-                        }
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                          ease: 'linear',
-                        }}
-                      />
-                      {/* Animated shimmer line */}
-                      {isSelected && (
-                        <motion.div
-                          className="absolute inset-0"
-                          style={{
-                            background: 'linear-gradient(90deg, transparent 0%, hsl(var(--mint) / 0.6) 50%, transparent 100%)',
-                            backgroundSize: '200% 100%',
-                          }}
-                          animate={{
-                            backgroundPosition: ['-200% 0', '200% 0'],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: 'linear',
-                          }}
-                        />
-                      )}
-                    </div>
-
-                    {/* Border */}
+                  <div className="relative p-6 rounded-2xl bg-card border-2 overflow-hidden group" style={{ minHeight: '200px' }}>
+                    {/* Subtle shimmer border effect */}
                     <motion.div
                       className="absolute inset-0 rounded-2xl pointer-events-none"
                       style={{
-                        border: isSelected ? '2px solid hsl(var(--mint) / 0.6)' : '2px solid hsl(var(--border))',
+                        border: isSelected ? '2px solid hsl(var(--mint) / 0.4)' : '2px solid hsl(var(--border))',
                         boxShadow: isSelected
-                          ? '0 0 20px hsl(var(--mint) / 0.3), inset 0 0 20px hsl(var(--mint) / 0.1)'
+                          ? '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)'
                           : 'none',
                       }}
                       animate={{
                         boxShadow: isSelected
                           ? [
-                              '0 0 20px hsl(var(--mint) / 0.3), inset 0 0 20px hsl(var(--mint) / 0.1)',
-                              '0 0 30px hsl(var(--mint) / 0.4), inset 0 0 25px hsl(var(--mint) / 0.15)',
-                              '0 0 20px hsl(var(--mint) / 0.3), inset 0 0 20px hsl(var(--mint) / 0.1)',
+                              '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)',
+                              '0 0 20px hsl(var(--mint) / 0.2), inset 0 0 18px hsl(var(--mint) / 0.1)',
+                              '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)',
                             ]
                           : 'none',
                       }}
                       transition={{
-                        duration: 2,
+                        duration: 5,
                         repeat: Infinity,
                         ease: 'easeInOut',
                       }}
@@ -301,10 +258,10 @@ const ICPSlider = () => {
                           <IconComponent className="w-8 h-8 text-mint" />
                         </motion.div>
                         <div className="flex-1">
-                          <h3 className="font-bold text-sm text-mint-dark mb-1">{icp.title}</h3>
+                          <h3 className="font-bold text-sm text-mint-dark dark:text-mint mb-1">{icp.title}</h3>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{icp.description}</p>
+                      <p className="text-sm text-muted-foreground dark:text-foreground/80 leading-relaxed">{icp.description}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -349,47 +306,25 @@ const ICPSlider = () => {
               const IconComponent = icp.icon;
               return (
                 <CarouselItem key={icp.id} className="basis-full">
-                  <div className="relative p-6 rounded-2xl bg-card border-2 overflow-hidden mx-2">
-                    {/* Shimmering border effect */}
-                    <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <motion.div
-                        className="absolute inset-0"
-                        style={{
-                          background: 'linear-gradient(135deg, hsl(var(--mint) / 0.3) 0%, transparent 50%, hsl(var(--mint) / 0.2) 100%)',
-                        }}
-                        animate={{
-                          backgroundPosition: ['0% 0%', '100% 100%'],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                          ease: 'linear',
-                        }}
-                      />
-                      <motion.div
-                        className="absolute inset-0"
-                        style={{
-                          background: 'linear-gradient(90deg, transparent 0%, hsl(var(--mint) / 0.5) 50%, transparent 100%)',
-                          backgroundSize: '200% 100%',
-                        }}
-                        animate={{
-                          backgroundPosition: ['-200% 0', '200% 0'],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        }}
-                      />
-                    </div>
-
-                    {/* Border */}
-                    <div
+                  <div className="relative p-6 rounded-2xl bg-card border-2 overflow-hidden mx-2" style={{ minHeight: '200px' }}>
+                    {/* Subtle shimmer border effect */}
+                    <motion.div
                       className="absolute inset-0 rounded-2xl pointer-events-none"
                       style={{
-                        border: '2px solid hsl(var(--mint) / 0.5)',
-                        boxShadow: '0 0 20px hsl(var(--mint) / 0.3), inset 0 0 20px hsl(var(--mint) / 0.1)',
+                        border: '2px solid hsl(var(--mint) / 0.4)',
+                        boxShadow: '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)',
+                      }}
+                      animate={{
+                        boxShadow: [
+                          '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)',
+                          '0 0 20px hsl(var(--mint) / 0.2), inset 0 0 18px hsl(var(--mint) / 0.1)',
+                          '0 0 15px hsl(var(--mint) / 0.15), inset 0 0 15px hsl(var(--mint) / 0.08)',
+                        ],
+                      }}
+                      transition={{
+                        duration: 5,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
                       }}
                     />
 
@@ -400,10 +335,10 @@ const ICPSlider = () => {
                           <IconComponent className="w-8 h-8 text-mint" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-bold text-sm text-mint-dark mb-1">{icp.title}</h3>
+                          <h3 className="font-bold text-sm text-mint-dark dark:text-mint mb-1">{icp.title}</h3>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{icp.description}</p>
+                      <p className="text-sm text-muted-foreground dark:text-foreground/80 leading-relaxed">{icp.description}</p>
                     </div>
                   </div>
                 </CarouselItem>
@@ -539,14 +474,19 @@ const TheProblem = () => {
               <span className="text-sm font-medium text-mint-dark">Voice-enabled tools</span>
             </motion.div>
             
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground dark:text-foreground">
               Boss the boardroom confidently.
             </h2>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-muted-foreground dark:text-foreground/90 max-w-3xl mx-auto mb-8">
               Three paths. One outcome: confident boardroom leadership.
             </p>
           </motion.div>
+
+          {/* ICP Heading */}
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground dark:text-foreground">
+            Who does Mindmaker help?
+          </h3>
 
           {/* ICP Slider */}
           <ICPSlider />
