@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { InitialConsultModal } from "@/components/InitialConsultModal";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NewHero = () => {
   const [consultModalOpen, setConsultModalOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
 
   const heroVariants = [
     "Boss the boardroom with",
@@ -23,6 +25,57 @@ const NewHero = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Validate headlines to ensure they don't exceed 2 lines
+  useEffect(() => {
+    const validateHeadlines = () => {
+      if (!containerRef.current || !measureRef.current) return;
+
+      // Wait a tick to ensure layout is complete
+      setTimeout(() => {
+        const container = containerRef.current;
+        const measureEl = measureRef.current;
+        if (!container || !measureEl) return;
+
+        // Get the h1 element to match its computed styles
+        const h1Element = container.querySelector('h1:not([aria-hidden])');
+        if (!h1Element) return;
+
+        const containerWidth = container.offsetWidth;
+        const computedStyle = getComputedStyle(h1Element);
+        const fontSize = parseFloat(computedStyle.fontSize);
+        const fontWeight = computedStyle.fontWeight;
+        const fontFamily = computedStyle.fontFamily;
+        const letterSpacing = computedStyle.letterSpacing;
+        const lineHeight = 1.2;
+        const maxWidthForTwoLines = containerWidth * 2;
+
+        // Set up measurement element with exact same styles
+        measureEl.style.fontSize = `${fontSize}px`;
+        measureEl.style.fontWeight = fontWeight;
+        measureEl.style.fontFamily = fontFamily;
+        measureEl.style.letterSpacing = letterSpacing;
+
+        heroVariants.forEach((headline, index) => {
+          measureEl.textContent = headline;
+          const textWidth = measureEl.offsetWidth;
+
+          if (textWidth > maxWidthForTwoLines) {
+            console.warn(
+              `⚠️ Hero headline #${index + 1} may exceed 2 lines: "${headline}"\n` +
+              `   Text width: ${Math.round(textWidth)}px, Max for 2 lines: ${Math.round(maxWidthForTwoLines)}px\n` +
+              `   Consider shortening this headline.`
+            );
+          }
+        });
+      }, 100);
+    };
+
+    // Validate on mount and window resize
+    validateHeadlines();
+    window.addEventListener('resize', validateHeadlines);
+    return () => window.removeEventListener('resize', validateHeadlines);
+  }, [heroVariants]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,7 +126,25 @@ const NewHero = () => {
         <div className="max-w-5xl overflow-x-hidden">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
             {/* Two-line hero layout: rotating text on line 1, static text on line 2 */}
-            <div className="relative w-full max-w-5xl" style={{ minHeight: 'calc((1.2em + 20px) + 1.2 * min(4.5rem, max(2rem, 6vw)))' }}>
+            <div 
+              ref={containerRef}
+              className="relative w-full max-w-5xl" 
+              style={{ 
+                minHeight: 'calc(2.4em + 1.2em)', // 2 lines of rotating text + 1 line of static text
+              }}
+            >
+              {/* Hidden measurement element for headline validation */}
+              <div
+                ref={measureRef}
+                className="absolute invisible pointer-events-none"
+                style={{
+                  fontSize: 'clamp(1.875rem, 5vw, 3.75rem)',
+                  fontWeight: 'bold',
+                  whiteSpace: 'nowrap',
+                }}
+                aria-hidden="true"
+              />
+              
               {/* Invisible spacer to reserve exact height for both lines - uses longest variant */}
               <h1 
                 className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none" 
@@ -83,8 +154,24 @@ const NewHero = () => {
                 }}
                 aria-hidden="true"
               >
-                <div style={{ height: 'calc(1.2em + 20px)', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
-                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)', lineHeight: '1.2' }}>AI literacy for commercial leaders</div>
+                <div style={{ 
+                  height: '2.4em', // 2 lines at 1.2em line-height
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                }}>
+                  Build your knowledge instead of relying on IT with
+                </div>
+                <div style={{ 
+                  height: '1.2em', 
+                  whiteSpace: 'nowrap',
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}>
+                  AI literacy for commercial leaders
+                </div>
               </h1>
               
               {/* Visible headline - two-line layout with fixed structure */}
@@ -97,15 +184,16 @@ const NewHero = () => {
                   overflowX: 'hidden',
                 }}
               >
-                {/* Line 1: Rotating text - fixed height with animation buffer */}
+                {/* Line 1: Rotating text - exactly 2 lines, bottom-aligned */}
                 <div 
                   className="relative"
                   style={{ 
-                    height: 'calc(1.2em + 20px)',
-                    minHeight: 'calc(1.2em + 20px)',
-                    maxHeight: 'calc(1.2em + 20px)',
-                    overflowX: 'hidden',
-                    overflowY: 'visible',
+                    minHeight: '2.4em', // 2 lines at 1.2em line-height
+                    maxHeight: '2.4em',
+                    height: '2.4em',
+                    display: 'flex',
+                    alignItems: 'flex-end', // Bottom-align the text
+                    overflow: 'hidden',
                   }}
                 >
                   <AnimatePresence mode="wait">
@@ -115,46 +203,46 @@ const NewHero = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.5 }}
-                      className="absolute inset-0 flex items-center"
-                      style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+                      className="w-full"
+                      style={{ 
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        wordBreak: 'break-word',
+                        lineHeight: '1.2',
+                        maxHeight: '2.4em',
+                      }}
                     >
                       {heroVariants[currentIndex]}
                     </motion.div>
                   </AnimatePresence>
                 </div>
                 
-                {/* Line 2: Epic site title - absolutely fixed, never moves */}
+                {/* Line 2: Static text - exactly 1 line, never moves */}
                 <div 
                   className="relative flex items-center"
                   style={{ 
-                    height: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
-                    minHeight: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
-                    maxHeight: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
+                    height: '1.2em',
+                    minHeight: '1.2em',
+                    maxHeight: '1.2em',
                     marginTop: 0,
                   }}
                 >
                   <span 
-                    className="relative inline-block w-full"
+                    className="relative inline-block w-full text-mint font-bold tracking-tight"
                     style={{ 
                       whiteSpace: 'nowrap',
-                      position: 'relative',
-                      display: 'inline-block',
-                      fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
+                      fontSize: 'clamp(1.875rem, 5vw, 3.75rem)',
+                      lineHeight: '1.2',
+                      textShadow: '0 0 40px hsl(var(--mint) / 0.6), 0 0 80px hsl(var(--mint) / 0.4), 0 0 120px hsl(var(--mint) / 0.2)',
+                      filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
                     }}
                   >
-                    <span 
-                      className="relative z-10 inline-block text-mint font-bold tracking-tight"
-                      style={{
-                        fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
-                        maxWidth: '100%',
-                        textShadow: '0 0 40px hsl(var(--mint) / 0.6), 0 0 80px hsl(var(--mint) / 0.4), 0 0 120px hsl(var(--mint) / 0.2)',
-                        filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
-                      }}
-                    >
-                      AI literacy for commercial leaders
-                    </span>
+                    AI literacy for commercial leaders
                     <span className="absolute bottom-0 left-0 w-full h-4 sm:h-6 bg-mint/40 -z-10 animate-expandWidth blur-md"></span>
                   </span>
                 </div>
