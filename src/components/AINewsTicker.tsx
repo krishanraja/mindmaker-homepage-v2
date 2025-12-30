@@ -11,6 +11,15 @@ const AINewsTicker = () => {
   const [isPaused, setIsPaused] = useState(false);
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Cleanup timeout on unmount - must be before any early returns
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // Don't render if no headlines
   if (!headlines || headlines.length === 0) {
     return null;
@@ -71,15 +80,6 @@ const AINewsTicker = () => {
       setScrollOffset(0);
     }, 2000);
   };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (resumeTimeoutRef.current) {
-        clearTimeout(resumeTimeoutRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div className="relative w-full py-6 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 overflow-hidden">
