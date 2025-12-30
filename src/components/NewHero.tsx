@@ -73,7 +73,7 @@ const NewHero = () => {
         <div className="max-w-5xl">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
             {/* Two-line hero layout: rotating text on line 1, static text on line 2 */}
-            <div className="relative" style={{ minHeight: 'calc(2 * 1.2em)' }}>
+            <div className="relative" style={{ minHeight: 'calc(1.2em + 1.2 * min(4.5rem, max(2rem, 6vw)))' }}>
               {/* Invisible spacer to reserve exact height for both lines - uses longest variant */}
               <h1 
                 className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none" 
@@ -84,7 +84,7 @@ const NewHero = () => {
                 aria-hidden="true"
               >
                 <div style={{ height: '1.2em', overflow: 'hidden' }}>Build your knowledge instead of relying on IT with</div>
-                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)' }}>AI literacy for commercial leaders</div>
+                <div style={{ height: '1.2em', whiteSpace: 'nowrap', fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: '1.2' }}>AI literacy for commercial leaders</div>
               </h1>
               
               {/* Visible headline - two-line layout with fixed structure */}
@@ -119,13 +119,13 @@ const NewHero = () => {
                   </AnimatePresence>
                 </div>
                 
-                {/* Line 2: Static text - absolutely fixed, never moves */}
+                {/* Line 2: Epic site title - absolutely fixed, never moves */}
                 <div 
                   className="relative flex items-center"
                   style={{ 
-                    height: '1.2em',
-                    minHeight: '1.2em',
-                    maxHeight: '1.2em',
+                    height: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
+                    minHeight: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
+                    maxHeight: 'calc(1.2 * min(4.5rem, max(2rem, 6vw)))',
                     marginTop: 0,
                   }}
                 >
@@ -135,22 +135,23 @@ const NewHero = () => {
                       whiteSpace: 'nowrap',
                       position: 'relative',
                       display: 'inline-block',
-                      fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
+                      fontSize: 'clamp(2rem, 6vw, 4.5rem)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
                   >
                     <span 
-                      className="relative z-10 text-mint animate-pulse inline-block" 
+                      className="relative z-10 inline-block text-mint font-bold tracking-tight"
                       style={{
-                        animationDuration: '2s',
-                        fontSize: 'clamp(0.875rem, 3.2vw, 1.5rem)',
+                        fontSize: 'clamp(2rem, 6vw, 4.5rem)',
                         maxWidth: '100%',
+                        textShadow: '0 0 40px hsl(var(--mint) / 0.6), 0 0 80px hsl(var(--mint) / 0.4), 0 0 120px hsl(var(--mint) / 0.2)',
+                        filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
                       }}
                     >
                       AI literacy for commercial leaders
                     </span>
-                    <span className="absolute bottom-0 left-0 w-full h-3 sm:h-4 bg-mint/30 -z-10 animate-expandWidth blur-sm"></span>
+                    <span className="absolute bottom-0 left-0 w-full h-4 sm:h-6 bg-mint/40 -z-10 animate-expandWidth blur-md"></span>
                   </span>
                 </div>
               </h1>

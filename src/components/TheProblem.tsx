@@ -484,12 +484,17 @@ const TheProblem = () => {
           </motion.div>
 
           {/* ICP Heading */}
-          <h3 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground dark:text-foreground">
+          <h3 className="text-sm font-bold text-mint-dark dark:text-mint text-center tracking-widest mb-10">
             Who does Mindmaker help?
           </h3>
 
           {/* ICP Slider */}
           <ICPSlider />
+
+          {/* Interactive Tools Heading */}
+          <h3 className="text-sm font-bold text-mint-dark dark:text-mint text-center tracking-widest mb-8 mt-12">
+            Ideate with Mindmaker AI
+          </h3>
 
           {/* Desktop: 2x2 Grid */}
           <div className="hidden md:grid md:grid-cols-2 gap-6 lg:gap-8">
