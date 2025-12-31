@@ -15,11 +15,13 @@ export const ToolsDrawerButton = ({ onToolClick }: ToolsDrawerButtonProps) => {
 
   return (
     <>
-      {/* Tab Button - Extends from right edge, positioned above chatbot */}
+      {/* Tab Button - Extends from right edge, positioned higher up */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "fixed right-0 bottom-28 z-30",
+          "fixed right-0 z-30",
+          "top-1/3 -translate-y-1/2 md:top-1/4",
+          "mb-6 md:mb-0",
           "w-12 h-24 rounded-l-2xl",
           "bg-gradient-to-br from-mint to-mint-dark",
           "shadow-lg hover:shadow-xl",
