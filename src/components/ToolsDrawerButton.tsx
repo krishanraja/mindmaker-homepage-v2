@@ -20,8 +20,7 @@ export const ToolsDrawerButton = ({ onToolClick }: ToolsDrawerButtonProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "fixed right-0 z-30",
-          "top-1/3 -translate-y-1/2 md:top-1/4",
-          "mb-6 md:mb-0",
+          "top-[30%] -translate-y-1/2 md:top-1/4 md:-translate-y-1/2",
           "w-12 h-24 rounded-l-2xl",
           "bg-gradient-to-br from-mint to-mint-dark",
           "shadow-lg hover:shadow-xl",
@@ -30,6 +29,9 @@ export const ToolsDrawerButton = ({ onToolClick }: ToolsDrawerButtonProps) => {
           "group",
           isOpen && "bg-gradient-to-br from-mint-dark to-mint"
         )}
+        style={{
+          marginBottom: '1.5rem' // 24px padding from bottom on mobile
+        }}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.5 }}
