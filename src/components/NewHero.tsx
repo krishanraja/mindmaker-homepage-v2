@@ -122,7 +122,19 @@ const NewHero = () => {
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-mint/10 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s', animationDelay: '1s'}}></div>
       
       {/* Content */}
-      <div className="container-width relative z-10 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 overflow-x-hidden">
+      <div className="container-width relative z-10 pb-12 sm:pb-16 md:pb-20 overflow-x-hidden hero-content-wrapper" style={{ paddingTop: 'calc(5rem * 0.8)' }}>
+        <style>{`
+          @media (min-width: 640px) {
+            .hero-content-wrapper {
+              padding-top: calc(7rem * 0.8) !important;
+            }
+          }
+          @media (min-width: 768px) {
+            .hero-content-wrapper {
+              padding-top: calc(8rem * 0.8) !important;
+            }
+          }
+        `}</style>
         {/* Hero Content */}
         <div className="max-w-5xl overflow-x-hidden">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
@@ -137,9 +149,8 @@ const NewHero = () => {
               {/* Hidden measurement element for headline validation */}
               <div
                 ref={measureRef}
-                className="absolute invisible pointer-events-none"
+                className="absolute invisible pointer-events-none hero-text-size"
                 style={{
-                  fontSize: 'clamp(1rem, 4vw, 3rem)',
                   fontWeight: 'bold',
                   whiteSpace: 'nowrap',
                 }}
@@ -148,9 +159,8 @@ const NewHero = () => {
               
               {/* Invisible spacer to reserve exact height for both lines - uses longest variant */}
               <h1 
-                className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none" 
+                className="invisible font-bold leading-tight tracking-tight max-w-4xl pointer-events-none hero-text-size" 
                 style={{
-                  fontSize: 'clamp(1rem, 4vw, 3rem)',
                   lineHeight: '1.2',
                 }}
                 aria-hidden="true"
@@ -177,9 +187,8 @@ const NewHero = () => {
               
               {/* Visible headline - two-line layout with fixed structure */}
               <h1 
-                className="absolute top-0 left-0 font-bold leading-tight tracking-tight text-white max-w-4xl flex flex-col"
+                className="absolute top-0 left-0 font-bold leading-tight tracking-tight text-white max-w-4xl flex flex-col hero-text-size"
                 style={{
-                  fontSize: 'clamp(1rem, 4vw, 3rem)',
                   lineHeight: '1.2',
                   width: '100%',
                   overflowX: 'hidden',
@@ -232,19 +241,17 @@ const NewHero = () => {
                   }}
                 >
                   <span 
-                    className="relative inline-block w-full text-mint font-bold tracking-tight"
+                    className="relative inline-block w-full text-mint font-bold tracking-tight hero-text-size"
                     style={{ 
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      fontSize: 'clamp(1rem, 4vw, 3rem)',
                       lineHeight: '1.2',
                       textShadow: '0 0 40px hsl(var(--mint) / 0.6), 0 0 80px hsl(var(--mint) / 0.4), 0 0 120px hsl(var(--mint) / 0.2)',
                       filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
                     }}
                   >
                     AI literacy for commercial leaders
-                    <span className="absolute bottom-0 left-0 w-full h-4 sm:h-6 bg-mint/40 -z-10 animate-expandWidth blur-md"></span>
                   </span>
                 </div>
               </h1>
@@ -318,6 +325,24 @@ const NewHero = () => {
           100% {
             transform: scaleX(1);
             opacity: 1;
+          }
+        }
+        
+        /* Hero text responsive sizing: 2.5x on mobile, 25% smaller on desktop */
+        .hero-text-size {
+          font-size: 2.5rem; /* 40px - 2.5x mobile size (was 16px) */
+        }
+        
+        @media (min-width: 640px) {
+          .hero-text-size {
+            /* Smoothly transition from 2.5rem (640px) to 2.25rem (1024px) */
+            font-size: clamp(2.25rem, calc(2.5rem - (100vw - 640px) * 0.000651rem), 2.5rem);
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .hero-text-size {
+            font-size: 2.25rem; /* 36px - 25% smaller than original 48px desktop size */
           }
         }
       `}</style>
