@@ -251,7 +251,8 @@ const NewHero = () => {
                       filter: 'drop-shadow(0 0 20px hsl(var(--mint) / 0.5))',
                     }}
                   >
-                    AI literacy for commercial leaders
+                    <span className="md:hidden">AI literacy for leaders</span>
+                    <span className="hidden md:inline">AI literacy for commercial leaders</span>
                   </span>
                 </div>
               </h1>

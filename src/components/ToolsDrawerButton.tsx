@@ -20,10 +20,11 @@ export const ToolsDrawerButton = ({ onToolClick }: ToolsDrawerButtonProps) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <motion.div
-              className="fixed right-6 bottom-6 z-50"
+              className="fixed right-6 bottom-6 z-[100]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.5 }}
+              style={{ position: 'fixed' }}
             >
               <Button
                 onClick={() => setIsOpen(true)}
