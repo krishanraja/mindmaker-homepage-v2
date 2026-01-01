@@ -86,7 +86,7 @@ const NewHero = () => {
   }, [heroVariants.length]);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-ink text-white relative overflow-hidden pt-safe-area-top" style={{ overflow: 'hidden' }}>
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-ink text-white relative overflow-hidden pt-safe-area-top">
       {/* Dynamic Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-ink-900 via-ink to-ink-700/50"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-transparent to-mint/5"></div>
@@ -327,21 +327,6 @@ const NewHero = () => {
             transform: scaleX(1);
             opacity: 1;
           }
-        }
-        
-        /* Prevent any scrollbars on hero section */
-        #hero {
-          overflow: hidden !important;
-          overflow-x: hidden !important;
-          overflow-y: hidden !important;
-        }
-        
-        #hero *,
-        #hero .hero-content-wrapper,
-        #hero .max-w-5xl,
-        #hero h1 {
-          overflow-x: hidden !important;
-          overflow-y: visible;
         }
         
         /* Hero text responsive sizing: reduced mobile size by 40%, 25% smaller on desktop */
