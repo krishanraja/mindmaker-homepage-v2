@@ -38,7 +38,7 @@ const panels: PanelData[] = [
     },
     opportunity: {
       video: '/solution 2.mp4',
-      headline: 'Leaders who build their own systems can\'t be fooled.',
+      headline: 'Leaders who understand how to orchestrate AI can\'t be blinded by AI theatre.',
       objectPosition: 'center center',
     },
   },

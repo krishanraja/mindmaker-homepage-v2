@@ -11,8 +11,7 @@ import Footer from "@/components/Footer";
 import { ParticleBackground } from "@/components/Animations/ParticleBackground";
 import WhitepaperPromo from "@/components/WhitepaperPromo";
 import WhitepaperPopup from "@/components/WhitepaperPopup";
-import { ToolsDrawerButton } from "@/components/ToolsDrawerButton";
-import { FloatingCTA } from "@/components/FloatingCTA";
+import { ActionsHub } from "@/components/ActionsHub";
 import { Dialog, DialogWizardContent } from "@/components/ui/dialog";
 import { BuilderAssessment } from "@/components/Interactive/BuilderAssessment";
 import { FrictionMapBuilder } from "@/components/Interactive/FrictionMapBuilder";
@@ -94,11 +93,8 @@ const Index = () => {
       {/* Whitepaper Popup */}
       <WhitepaperPopup />
       
-      {/* Tools Drawer Button - Fixed at page level */}
-      <ToolsDrawerButton onToolClick={setDialogType} />
-      
-      {/* Floating CTA - Persistent Book Session button */}
-      <FloatingCTA />
+      {/* Unified Actions Hub - Single access point for all actions */}
+      <ActionsHub onToolClick={setDialogType} />
 
       {/* Dialog for Interactive Tools */}
       <Dialog open={dialogType !== null} onOpenChange={() => setDialogType(null)}>
