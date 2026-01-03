@@ -237,30 +237,31 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
   // Mobile full-screen wizard layout
   if (isMobile && !compact) {
     return (
-      <div className="flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden">
+      <div className="flex flex-col flex-1 min-h-0 h-full overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b shrink-0">
           <div className="flex items-center gap-3">
             <MindmakerIcon size={24} />
             <div>
-              <h2 className="font-semibold">Builder Profile Quiz</h2>
+              <h2 className="font-semibold text-base">Builder Profile Quiz</h2>
               <p className="text-xs text-muted-foreground">Powered by Mindmaker</p>
             </div>
           </div>
           <Button 
-            variant="ghost" 
-            size="icon" 
+            variant="outline" 
+            size="sm" 
             onClick={onClose || (() => {})}
-            className="min-w-[44px] min-h-[44px] touch-target"
-            aria-label="Close"
+            className="min-w-[44px] min-h-[44px] touch-target gap-1.5 px-3"
+            aria-label="Close quiz"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
+            <span className="text-xs font-medium">Close</span>
           </Button>
         </div>
 
         {/* Progress */}
         {!profile && !isGenerating && (
-          <div className="px-4 py-3 border-b bg-muted/30 pt-safe-top">
+          <div className="px-4 py-3 border-b bg-muted/30 shrink-0">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>Question {currentStep + 1} of {questions.length}</span>
               <span>{Math.round(progress)}%</span>
@@ -321,7 +322,7 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
                 </div>
 
                 {/* Tab Content */}
-                <div className="flex-1 overflow-y-auto p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}>
+                <div className="flex-1 overflow-y-auto p-4 min-h-0">
                   <AnimatePresence mode="wait">
                     {resultTab === 'profile' && (
                       <motion.div
@@ -384,7 +385,7 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
                 </div>
 
                 {/* Fixed CTA */}
-                <div className="p-4 border-t bg-ink text-white pb-safe-bottom">
+                <div className="p-4 border-t bg-ink text-white shrink-0">
                   <div className="text-xs font-bold text-mint text-center mb-2">RECOMMENDED FOR YOU</div>
                   <div className="text-lg font-bold text-center mb-3">{profile.recommendedProduct}</div>
                   <Button
@@ -404,8 +405,7 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
-                className="flex-1 flex flex-col p-4"
-                style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}
+                className="flex-1 flex flex-col p-4 min-h-0 overflow-y-auto"
               >
                 {/* Voice Mode Toggle */}
                 {voiceSupported && (

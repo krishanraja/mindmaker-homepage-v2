@@ -19,7 +19,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-[110] bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className,
     )}
     {...props}
@@ -37,7 +37,7 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         // Mobile: full screen with dynamic viewport height
-        "fixed inset-x-0 top-0 z-50 flex flex-col bg-background p-4 pt-12 duration-200",
+        "fixed inset-x-0 top-0 z-[110] flex flex-col bg-background p-4 pt-12 duration-200",
         "h-[100dvh] max-h-[100dvh]", // Dynamic viewport height
         "pb-[env(safe-area-inset-bottom,0px)]", // Safe area for notched phones
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -111,16 +111,17 @@ const DialogWizardContent = React.forwardRef<
       ref={ref}
       className={cn(
         // Mobile: full screen with dynamic viewport height (100dvh accounts for browser chrome)
-        "fixed inset-x-0 top-0 z-50 flex flex-col bg-background duration-200",
+        "fixed inset-x-0 top-0 z-[110] flex flex-col bg-background duration-200",
         "h-[100dvh] max-h-[100dvh]", // Dynamic viewport height for mobile
-        "pb-[env(safe-area-inset-bottom,0px)]", // Safe area for notched phones
+        "pt-[env(safe-area-inset-top,0px)]", // Safe area for notched phones (top)
+        "pb-[env(safe-area-inset-bottom,0px)]", // Safe area for notched phones (bottom)
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
         // Desktop: centered modal with max-width
         "sm:inset-auto sm:left-[50%] sm:top-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]",
         "sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-2xl sm:rounded-lg sm:border sm:shadow-lg",
-        "sm:pb-0", // Reset safe area on desktop
+        "sm:pt-0 sm:pb-0", // Reset safe area on desktop
         "sm:data-[state=closed]:zoom-out-95 sm:data-[state=open]:zoom-in-95",
         "sm:data-[state=closed]:slide-out-to-left-1/2 sm:data-[state=closed]:slide-out-to-top-[48%]",
         "sm:data-[state=open]:slide-in-from-left-1/2 sm:data-[state=open]:slide-in-from-top-[48%]",
@@ -128,7 +129,10 @@ const DialogWizardContent = React.forwardRef<
       )}
       {...props}
     >
-      {children}
+      {/* Flex container to properly propagate height to children */}
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        {children}
+      </div>
       {!hideCloseButton && (
         <DialogPrimitive.Close className="absolute right-4 top-4 z-10 rounded-full bg-background/80 p-2 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none sm:bg-transparent sm:p-0">
           <X className="h-5 w-5 sm:h-4 sm:w-4" />

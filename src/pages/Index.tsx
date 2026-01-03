@@ -116,7 +116,8 @@ const Index = () => {
               </div>
             </div>
           )}
-          <div className="flex-1 flex flex-col overflow-hidden min-h-0 sm:p-6 sm:pt-4">
+          {/* Content wrapper - flex-1 to fill available space */}
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden sm:p-6 sm:pt-4">
             {renderDialogContent()}
           </div>
         </DialogWizardContent>

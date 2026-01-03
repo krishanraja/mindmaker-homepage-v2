@@ -160,24 +160,25 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
   // Mobile full-screen wizard layout
   if (isMobile) {
     return (
-      <div className="flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden">
+      <div className="flex flex-col flex-1 min-h-0 h-full overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b shrink-0">
           <div className="flex items-center gap-3">
             <MindmakerIcon size={24} />
             <div>
-              <h2 className="font-semibold">Friction Map Builder</h2>
+              <h2 className="font-semibold text-base">Friction Map Builder</h2>
               <p className="text-xs text-muted-foreground">Powered by Mindmaker</p>
             </div>
           </div>
           <Button 
-            variant="ghost" 
-            size="icon" 
+            variant="outline" 
+            size="sm" 
             onClick={onClose || (() => {})}
-            className="min-w-[44px] min-h-[44px] touch-target"
-            aria-label="Close"
+            className="min-w-[44px] min-h-[44px] touch-target gap-1.5 px-3"
+            aria-label="Close friction map builder"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
+            <span className="text-xs font-medium">Close</span>
           </Button>
         </div>
 
@@ -224,7 +225,7 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
                 </div>
 
                 {/* Tab Content */}
-                <div className="flex-1 overflow-y-auto p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}>
+                <div className="flex-1 overflow-y-auto p-4 min-h-0">
                   <AnimatePresence mode="wait">
                     {resultTab === 'overview' && (
                       <motion.div
@@ -306,7 +307,7 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
                 </div>
 
                 {/* Actions */}
-                <div className="p-4 border-t space-y-2 pb-safe-bottom">
+                <div className="p-4 border-t space-y-2 shrink-0">
                   <Button onClick={handleDownload} variant="outline" className="w-full">
                     <Download className="h-4 w-4 mr-2" />
                     Download PDF
@@ -327,7 +328,7 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col"
               >
-                <div className="text-center p-4 pt-6 pt-safe-top">
+                <div className="text-center p-4 pt-6 shrink-0">
                   <h3 className="text-xl sm:text-2xl font-bold mb-2 overflow-hidden">Build Your AI Friction Map</h3>
                   <p className="text-muted-foreground text-sm overflow-hidden">
                     Speak your biggest time drain
@@ -396,7 +397,7 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col p-4"
               >
-                <div className="text-center mb-6 pt-safe-top">
+                <div className="text-center mb-6 shrink-0">
                   <h3 className="text-xl sm:text-2xl font-bold mb-2 overflow-hidden">Build Your AI Friction Map</h3>
                   <p className="text-muted-foreground text-sm overflow-hidden">
                     Describe a workflow challenge and get AI-powered recommendations.
@@ -440,7 +441,6 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
                     size="lg"
                     className="w-full mt-4 bg-mint text-ink hover:bg-mint/90 font-bold"
                     disabled={isGenerating || problem.trim().length < 10}
-                    style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
                   >
                     Generate Friction Map
                     <ArrowRight className="h-4 w-4 ml-2" />
