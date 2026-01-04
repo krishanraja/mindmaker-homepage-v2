@@ -219,7 +219,7 @@ ${formData.message}
               </div>
 
               {/* Direct Contact */}
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
                   Direct Contact
                 </h3>
@@ -229,9 +229,35 @@ ${formData.message}
                     krish@themindmaker.ai
                   </a>
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Sydney, Australia (Global clients)</span>
+                
+                {/* Global Offices */}
+                <div className="pt-2">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                    Global Offices
+                  </h4>
+                  <div className="grid gap-3">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border border-border/50">
+                      <MapPin className="h-4 w-4 text-mint-dark dark:text-mint mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Brooklyn, New York</p>
+                        <p className="text-xs text-muted-foreground">United States</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border border-border/50">
+                      <MapPin className="h-4 w-4 text-mint-dark dark:text-mint mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">London</p>
+                        <p className="text-xs text-muted-foreground">England</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border border-border/50">
+                      <MapPin className="h-4 w-4 text-mint-dark dark:text-mint mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Sydney</p>
+                        <p className="text-xs text-muted-foreground">Australia</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
