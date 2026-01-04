@@ -276,7 +276,7 @@ const Navigation = () => {
                                 {lessonsExpanded && (
                                   <div className="flex flex-col space-y-1 mt-2 ml-4">
                                     <a 
-                                      href="https://maven.com/p/1eb66a" 
+                                      href="https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools?utm_medium=ll_share_link&utm_source=instructor" 
                                       target="_blank" 
                                       rel="noopener noreferrer"
                                       className="min-h-[44px] flex items-center justify-between px-4 py-3 
@@ -288,7 +288,7 @@ const Navigation = () => {
                                       <ExternalLink className="h-3 w-3 flex-shrink-0 ml-2" />
                                     </a>
                                     <a 
-                                      href="https://maven.com/p/1054a6" 
+                                      href="https://maven.com/p/1054a6/build-in-public-with-gen-ai-as-your-co-founder?utm_medium=ll_share_link&utm_source=instructor" 
                                       target="_blank" 
                                       rel="noopener noreferrer"
                                       className="min-h-[44px] flex items-center justify-between px-4 py-3 
@@ -300,7 +300,7 @@ const Navigation = () => {
                                       <ExternalLink className="h-3 w-3 flex-shrink-0 ml-2" />
                                     </a>
                                     <a 
-                                      href="https://maven.com/p/b95f6c" 
+                                      href="https://maven.com/p/b95f6c/vibe-code-your-way-to-a-new-income-stream?utm_medium=ll_share_link&utm_source=instructor" 
                                       target="_blank" 
                                       rel="noopener noreferrer"
                                       className="min-h-[44px] flex items-center justify-between px-4 py-3 

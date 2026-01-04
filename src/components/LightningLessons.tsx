@@ -10,7 +10,7 @@ export const LightningLessons = () => {
   const lessons = [
     {
       title: "Learn How To Program Your AI Tools",
-      url: "https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools",
+      url: "https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools?utm_medium=ll_share_link&utm_source=instructor",
       image: "/lesson-program-ai-tools.jpg",
       duration: "45 min",
       cta: "Sign Up",
@@ -22,7 +22,7 @@ export const LightningLessons = () => {
     },
     {
       title: "Build In Public with Gen AI",
-      url: "https://maven.com/p/1054a6/build-in-public-with-gen-ai-as-your-co-founder",
+      url: "https://maven.com/p/1054a6/build-in-public-with-gen-ai-as-your-co-founder?utm_medium=ll_share_link&utm_source=instructor",
       image: "/lesson-build-in-public.jpg",
       duration: "45 min",
       cta: "Sign Up",
@@ -34,7 +34,7 @@ export const LightningLessons = () => {
     },
     {
       title: "Vibe Code Your Way To Income",
-      url: "https://maven.com/p/b95f6c/vibe-code-your-way-to-a-new-income-stream",
+      url: "https://maven.com/p/b95f6c/vibe-code-your-way-to-a-new-income-stream?utm_medium=ll_share_link&utm_source=instructor",
       image: "/lesson-vibe-code.jpg",
       duration: "45 min",
       cta: "Sign Up",
