@@ -13,7 +13,7 @@ export const LightningLessons = () => {
       url: "https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools",
       image: "/lesson-program-ai-tools.jpg",
       duration: "45 min",
-      cta: "Learn to Program AI",
+      cta: "Sign Up",
       bullets: [
         "Master prompt engineering basics",
         "Build custom AI workflows",
@@ -25,7 +25,7 @@ export const LightningLessons = () => {
       url: "https://maven.com/p/1054a6/build-in-public-with-gen-ai-as-your-co-founder",
       image: "/lesson-build-in-public.jpg",
       duration: "45 min",
-      cta: "Start Building in Public",
+      cta: "Sign Up",
       bullets: [
         "Use AI as your thinking partner",
         "Share progress authentically",
@@ -37,7 +37,7 @@ export const LightningLessons = () => {
       url: "https://maven.com/p/b95f6c/vibe-code-your-way-to-a-new-income-stream",
       image: "/lesson-vibe-code.jpg",
       duration: "45 min",
-      cta: "Learn to Vibe Code",
+      cta: "Sign Up",
       bullets: [
         "No-code to low-code transition",
         "Monetize your AI skills",
@@ -104,11 +104,11 @@ export const LightningLessons = () => {
                   <Button 
                     asChild 
                     size="sm"
-                    className="w-full bg-mint text-ink hover:bg-mint/90 font-semibold mt-auto text-xs px-2"
+                    className="w-full bg-mint text-ink hover:bg-mint/90 font-semibold mt-auto"
                   >
                     <a href={lesson.url} target="_blank" rel="noopener noreferrer">
-                      <span className="truncate">{lesson.cta}</span>
-                      <ExternalLink className="ml-1.5 h-3 w-3 shrink-0" />
+                      {lesson.cta}
+                      <ExternalLink className="ml-2 h-3.5 w-3.5" />
                     </a>
                   </Button>
                 </div>
