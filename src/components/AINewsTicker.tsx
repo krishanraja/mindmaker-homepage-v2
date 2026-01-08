@@ -1,7 +1,17 @@
 import { motion } from 'framer-motion';
 import { useAINewsTicker } from '@/hooks/useAINewsTicker';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { MindmakerIcon } from '@/components/ui/MindmakerIcon';
+
+/**
+ * AINewsTicker v2
+ * 
+ * Fixed issues:
+ * - v1 used fixed 100px per headline assumption, causing overlaps
+ * - v2 measures actual content width for accurate animation
+ * - Reduced duplication from 3x to 2x for better performance
+ * - Uses CSS animation with measured width for seamless loop
+ */
 
 const AINewsTicker = () => {
   const { headlines } = useAINewsTicker();
@@ -10,6 +20,41 @@ const AINewsTicker = () => {
   const [scrollOffset, setScrollOffset] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // v2: Measure actual content width for accurate animation
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentWidth, setContentWidth] = useState(0);
+  
+  // v2: Measure content width on mount and when headlines change
+  const measureWidth = useCallback(() => {
+    if (contentRef.current && headlines.length > 0) {
+      // Get the width of one set of headlines (not duplicated)
+      const children = contentRef.current.children;
+      let singleSetWidth = 0;
+      
+      // Measure first half of children (one complete set)
+      const singleSetCount = headlines.length;
+      for (let i = 0; i < singleSetCount && i < children.length; i++) {
+        const child = children[i] as HTMLElement;
+        singleSetWidth += child.offsetWidth + 48; // 48px = gap-12 (3rem)
+      }
+      
+      setContentWidth(singleSetWidth);
+    }
+  }, [headlines.length]);
+  
+  useEffect(() => {
+    // Measure after render
+    const timer = setTimeout(measureWidth, 100);
+    
+    // Re-measure on resize
+    window.addEventListener('resize', measureWidth);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', measureWidth);
+    };
+  }, [measureWidth, headlines]);
 
   // Cleanup timeout on unmount - must be before any early returns
   useEffect(() => {
@@ -25,8 +70,8 @@ const AINewsTicker = () => {
     return null;
   }
 
-  // Duplicate headlines for seamless loop
-  const duplicatedHeadlines = [...headlines, ...headlines, ...headlines];
+  // v2: Only duplicate once (2x total) instead of 3x - reduces DOM size
+  const duplicatedHeadlines = [...headlines, ...headlines];
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true);
@@ -95,16 +140,20 @@ const AINewsTicker = () => {
       {/* Ticker content */}
       <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
         <motion.div
+          ref={contentRef}
           className="flex gap-12 items-center whitespace-nowrap"
           style={isPaused ? { x: scrollOffset } : undefined}
-          animate={isPaused ? {} : {
-            x: [0, -100 * headlines.length],
+          animate={isPaused || contentWidth === 0 ? {} : {
+            // v2: Use measured content width instead of fixed assumption
+            x: [0, -contentWidth],
           }}
-          transition={isPaused ? {} : {
+          transition={isPaused || contentWidth === 0 ? {} : {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: headlines.length * 2.67,
+              // v2: Duration based on actual width for consistent speed
+              // ~50px per second for readable scrolling
+              duration: contentWidth / 50,
               ease: "linear",
             },
           }}
@@ -119,16 +168,16 @@ const AINewsTicker = () => {
           {duplicatedHeadlines.map((headline, index) => (
             <div
               key={`${headline.title}-${index}`}
-              className="flex items-center gap-4 text-sm md:text-base group select-none"
+              className="flex items-center gap-4 text-sm md:text-base group select-none flex-shrink-0"
             >
               <MindmakerIcon size={16} className="text-primary flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
               <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
                 {headline.title}
               </span>
-              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 flex-shrink-0">
                 {headline.source}
               </span>
-              <span className="text-muted-foreground mx-4">•</span>
+              <span className="text-muted-foreground mx-4 flex-shrink-0">•</span>
             </div>
           ))}
         </motion.div>

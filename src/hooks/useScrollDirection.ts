@@ -1,5 +1,5 @@
 /**
- * @file useScrollDirection Hook
+ * @file useScrollDirection Hook v2
  * @description Tracks scroll direction using requestAnimationFrame for performance.
  *              Returns isHidden boolean for header hide/reveal behavior.
  * @dependencies None (standalone hook)
@@ -12,6 +12,10 @@
  * Options:
  *   - threshold: Minimum scroll distance to trigger direction change (default: 10px)
  *   - disabled: Disable scroll tracking (e.g., when mobile menu is open)
+ * 
+ * v2 Changes:
+ *   - Added debounce after scroll-hijack release to prevent navbar flicker
+ *   - Navbar stays hidden for 150ms after scroll-hijack class is removed
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -23,19 +27,43 @@ interface UseScrollDirectionOptions {
   disabled?: boolean;
 }
 
+// Debounce time after scroll-hijack release before allowing navbar to show
+const SCROLL_HIJACK_RELEASE_DEBOUNCE = 150;
+
 export const useScrollDirection = (options: UseScrollDirectionOptions = {}) => {
   const { threshold = 10, disabled = false } = options;
   
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  
+  // v2: Track when scroll-hijack was last active for debounce
+  const wasScrollLockedRef = useRef(false);
+  const releaseTimestampRef = useRef(0);
 
   const updateScrollDirection = useCallback(() => {
     // Check if scroll is locked - if so, keep nav bar hidden
     // Check BOTH legacy class and new scroll-hijack class
     const isScrollLocked = document.documentElement.classList.contains('scroll-locked') ||
                            document.documentElement.classList.contains('scroll-hijack-locked');
+    
     if (isScrollLocked) {
+      wasScrollLockedRef.current = true;
+      setIsHidden(true);
+      ticking.current = false;
+      return;
+    }
+    
+    // v2: If scroll was just released, debounce before allowing navbar to show
+    // This prevents the "flash" during scroll-hijack exit transition
+    if (wasScrollLockedRef.current) {
+      wasScrollLockedRef.current = false;
+      releaseTimestampRef.current = performance.now();
+    }
+    
+    const timeSinceRelease = performance.now() - releaseTimestampRef.current;
+    if (timeSinceRelease < SCROLL_HIJACK_RELEASE_DEBOUNCE) {
+      // Still in debounce period - keep navbar hidden
       setIsHidden(true);
       ticking.current = false;
       return;

@@ -371,10 +371,11 @@ const ChaosToClarity = () => {
     });
   }, [updateAnimationState]);
 
-  // Use bulletproof scroll hijack hook v4
+  // Use bulletproof scroll hijack hook v5
   // targetOffset: 0 = section top flush with viewport top (matches screenshot)
   // triggerBuffer: 80 = lock engages when section is within 80px of target position
-  // v4: overflowThreshold = 150px extra scroll at boundary triggers seamless release
+  // v5: overflowThreshold = 80px (lowered from 150) for smoother boundary exit
+  // v5: Once complete, section behaves as normal page element (no re-engagement)
   const { isLocked, skipToEnd } = useScrollHijack({
     sectionRef,
     onProgress: handleProgress,
@@ -382,11 +383,11 @@ const ChaosToClarity = () => {
     progressDivisor: PROGRESS_DIVISOR,
     enabled: true,
     maxDeltaPerFrame: 0.08, // Max 8% progress per frame (prevents skipping)
-    escapeVelocityThreshold: 8, // v4: Lowered from 12 to 8 - more forgiving
+    escapeVelocityThreshold: 8, // More forgiving escape velocity
     onEscapeVelocity: handleEscapeVelocity,
     targetOffset: 0, // Section top should be at viewport top
     triggerBuffer: 80, // Lock within 80px of target
-    overflowThreshold: 150, // v4: 150px extra scroll at boundary triggers release
+    overflowThreshold: 80, // v5: Lowered from 150 for smoother exit
   });
 
   // Initialize CSS variables

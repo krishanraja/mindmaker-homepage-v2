@@ -1,20 +1,21 @@
 /**
- * @file useScrollHijack Hook v4
- * @description BULLETPROOF scroll hijacking with seamless boundary exit
+ * @file useScrollHijack Hook v5
+ * @description BULLETPROOF scroll hijacking with permanent completion + smooth exit
  * 
  * Key architectural changes:
  * - v2: Body fixed positioning (caused blank screen bug)
  * - v3: Overflow-based lock with RAF position maintenance (fixed blank screen)
  * - v4: Boundary-based auto-release (fixes "stuck" UX issue)
+ * - v5: Permanent completion - once done, NEVER re-engage (fixes re-engagement UX)
  * 
- * The v3 bug: Users got "stuck" at boundaries because:
- * - Exit only happened at 100% progress
- * - No exit at 0% when scrolling up
- * - Escape velocity threshold was too high (12px/ms)
- * - Extra scroll delta at boundaries was lost
+ * The v4 bug: Users completing the animation could get trapped again when
+ * scrolling back up because hasExitedViewportRef allowed re-engagement.
  * 
- * v4 fix: Accumulate "overflow" scroll delta at boundaries.
- * Once overflow exceeds threshold, release lock and let user continue.
+ * v5 fix:
+ * - Add `completedRef` for permanent completion state
+ * - Remove `hasExitedViewportRef` re-engagement logic entirely
+ * - Lower `overflowThreshold` default to 80px for smoother exit
+ * - Once complete, section behaves as normal page element forever
  * 
  * @dependencies None (standalone hook)
  */
@@ -46,9 +47,9 @@ interface UseScrollHijackOptions {
   targetOffset?: number;
   /** Buffer zone for triggering (how close to targetOffset before lock) */
   triggerBuffer?: number;
-  /** v4: Overflow threshold - how much extra scroll at boundary triggers release (default: 150px) */
+  /** v5: Overflow threshold - how much extra scroll at boundary triggers release (default: 80px) */
   overflowThreshold?: number;
-  /** v4: Callback when released at boundary (top or bottom) */
+  /** v5: Callback when released at boundary (top or bottom) */
   onBoundaryRelease?: (boundary: 'top' | 'bottom') => void;
 }
 
@@ -102,8 +103,8 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     onEscapeVelocity,
     targetOffset = 0,
     triggerBuffer = 100,
-    // v4: New boundary release options
-    overflowThreshold = 150,
+    // v5: Lowered from 150 to 80 - smoother boundary exit
+    overflowThreshold = 80,
     onBoundaryRelease,
   } = options;
 
@@ -138,9 +139,11 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   // State management
   const releaseCooldownRef = useRef(false);
   const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hasExitedViewportRef = useRef(false);
   
-  // v4: Boundary overflow tracking
+  // v5: Permanent completion tracking - once true, NEVER re-engage
+  const completedRef = useRef(false);
+  
+  // v5: Boundary overflow tracking (lowered threshold for smoother exit)
   const overflowDeltaRef = useRef(0);
   const boundaryHitRef = useRef<'top' | 'bottom' | null>(null);
   
@@ -499,9 +502,11 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
       return;
     }
     
-    // Skip if in cooldown or already complete
+    // Skip if in cooldown
     if (releaseCooldownRef.current) return;
-    if (isCompleteRef.current && !hasExitedViewportRef.current) return;
+    
+    // v5: Once completed, NEVER re-engage - treat as normal page element
+    if (completedRef.current) return;
     
     // Calculate the ideal scroll position for locking
     // This is where the section top = targetOffset
@@ -537,15 +542,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
       }
     }
     
-    // Track if section has exited viewport (scrolled past)
-    // This allows re-engagement when scrolling back up
-    if (rect.bottom < 0) {
-      hasExitedViewportRef.current = true;
-    } else if (rect.top > window.innerHeight) {
-      hasExitedViewportRef.current = true;
-      // Reset isComplete when section is fully out of view (above viewport)
-      // This allows re-engagement when user scrolls back down
-    }
+    // v5: Removed hasExitedViewportRef logic - no re-engagement after completion
   }, [enabled, sectionRef, targetOffset, triggerBuffer, lockBody]);
 
   // ============================================================
@@ -589,12 +586,17 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   }, [enabled, handleScroll, handleWheel, handleTouchStart, handleTouchMove, handleKeyDown, handlePopState]);
 
   // ============================================================
-  // EFFECT: RELEASE ON COMPLETION
+  // EFFECT: RELEASE ON COMPLETION (v5: permanent completion)
   // ============================================================
   
   useEffect(() => {
-    if (isComplete && isLockedRef.current) {
-      unlockBody();
+    if (isComplete) {
+      // v5: Mark as permanently completed - will NEVER re-engage
+      completedRef.current = true;
+      
+      if (isLockedRef.current) {
+        unlockBody();
+      }
     }
   }, [isComplete, unlockBody]);
 
@@ -633,7 +635,8 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     setProgress(0);
     velocityHistoryRef.current = [];
     accumulatedDeltaRef.current = 0;
-    hasExitedViewportRef.current = false;
+    // v5: Reset completion state (allows re-engagement if explicitly reset)
+    completedRef.current = false;
     onProgressRef.current(0, 0, 'up');
   }, []);
 
