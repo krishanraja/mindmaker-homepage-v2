@@ -414,7 +414,7 @@ const ChaosToClarity = () => {
         {/* FIX (d): Changed to opaque background to prevent nav bleedthrough */}
         {/* FIX (c): Fixed height container prevents layout shift */}
         <div className="sticky top-0 z-20 bg-background border-b border-border/40 pt-1 pb-2 md:pt-2 md:pb-3">
-          <div className="text-center" ref={titleRef}>
+          <div className="text-center">
             {/* FIX (c): Increased fixed height to accommodate longest headline without wrapping */}
             <div className="relative h-[4rem] md:h-[5.5rem] lg:h-[6.5rem]">
               {/* Chaos headline */}

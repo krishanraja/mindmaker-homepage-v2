@@ -4,7 +4,6 @@ import { User, Users, Compass, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitialConsultModal } from "@/components/InitialConsultModal";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 type PathType = "build" | "orchestrate";
 
@@ -224,7 +223,6 @@ const TeamCard = ({ navigate }: { navigate: (path: string) => void }) => {
 };
 
 const ProductLadder = () => {
-  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const [consultModalOpen, setConsultModalOpen] = useState(false);
   const [preselectedProgram, setPreselectedProgram] = useState<string | undefined>();
