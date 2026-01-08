@@ -1,12 +1,15 @@
 /**
- * @file useScrollHijack Hook v2
- * @description BULLETPROOF scroll hijacking with continuous monitoring
+ * @file useScrollHijack Hook v3
+ * @description BULLETPROOF scroll hijacking with overflow-based locking
  * 
- * Key architectural changes from v1:
- * - CONTINUOUS scroll monitoring (not just IntersectionObserver)
- * - SNAP-TO-POSITION before lock engages
- * - Configurable targetOffset for precise positioning
- * - Proper reset logic for re-engagement
+ * Key architectural changes from v2:
+ * - NO body fixed positioning (was causing blank screen bug)
+ * - Uses overflow:hidden + scroll event prevention
+ * - RAF-based position maintenance loop
+ * - Content stays visible during lock
+ * 
+ * The v2 bug: body.style.top = "-scrollY" pushed the ENTIRE body up,
+ * including the section we wanted to show, resulting in blank screen.
  * 
  * @dependencies None (standalone hook)
  */
@@ -103,10 +106,10 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   // REFS
   // ============================================================
   
-  // Position lock
+  // Position lock - v3: NO body.style.top manipulation
   const savedScrollYRef = useRef(0);
   const isLockedRef = useRef(false);
-  const targetScrollYRef = useRef(0);
+  const positionMaintenanceRafRef = useRef<number | null>(null);
   
   // Velocity tracking
   const lastWheelTimeRef = useRef(0);
@@ -146,7 +149,34 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   }, [isComplete]);
 
   // ============================================================
-  // LOCK/UNLOCK FUNCTIONS
+  // POSITION MAINTENANCE LOOP (v3 - replaces body fixed positioning)
+  // ============================================================
+  
+  const startPositionMaintenance = useCallback(() => {
+    const maintainPosition = () => {
+      if (!isLockedRef.current) return;
+      
+      // Force scroll position back to saved position
+      // This runs every frame to prevent ANY drift
+      if (Math.abs(window.scrollY - savedScrollYRef.current) > 0) {
+        window.scrollTo(0, savedScrollYRef.current);
+      }
+      
+      positionMaintenanceRafRef.current = requestAnimationFrame(maintainPosition);
+    };
+    
+    positionMaintenanceRafRef.current = requestAnimationFrame(maintainPosition);
+  }, []);
+  
+  const stopPositionMaintenance = useCallback(() => {
+    if (positionMaintenanceRafRef.current !== null) {
+      cancelAnimationFrame(positionMaintenanceRafRef.current);
+      positionMaintenanceRafRef.current = null;
+    }
+  }, []);
+
+  // ============================================================
+  // LOCK/UNLOCK FUNCTIONS (v3 - overflow-based, no body repositioning)
   // ============================================================
   
   const lockBody = useCallback((scrollY: number) => {
@@ -155,33 +185,35 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     // Save the EXACT scroll position we want to maintain
     savedScrollYRef.current = scrollY;
     
-    // Apply CSS classes
+    // Apply CSS classes (these now only set overflow:hidden, NOT position:fixed)
     document.documentElement.classList.add(CSS_CLASS_LOCKED);
     document.documentElement.classList.add(CSS_CLASS_LEGACY);
     
-    // Set body top to maintain visual position
-    document.body.style.top = `-${scrollY}px`;
+    // v3: NO body.style.top manipulation - this was causing the blank screen!
+    // Instead, we use RAF to maintain scroll position
     
     isLockedRef.current = true;
     setIsLocked(true);
     
+    // Start the position maintenance loop
+    startPositionMaintenance();
+    
     // Reset progress tracking for fresh start
     velocityHistoryRef.current = [];
     accumulatedDeltaRef.current = 0;
-  }, []);
+  }, [startPositionMaintenance]);
   
   const unlockBody = useCallback(() => {
     if (!isLockedRef.current) return;
+    
+    // Stop position maintenance first
+    stopPositionMaintenance();
     
     // Remove CSS classes
     document.documentElement.classList.remove(CSS_CLASS_LOCKED);
     document.documentElement.classList.remove(CSS_CLASS_LEGACY);
     
-    // Clear body top
-    document.body.style.top = '';
-    
-    // Restore scroll position
-    window.scrollTo(0, savedScrollYRef.current);
+    // v3: No body.style.top to clear
     
     isLockedRef.current = false;
     setIsLocked(false);
@@ -194,7 +226,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     cooldownTimerRef.current = setTimeout(() => {
       releaseCooldownRef.current = false;
     }, 300);
-  }, []);
+  }, [stopPositionMaintenance]);
 
   // ============================================================
   // PROGRESS UPDATE WITH SMOOTHING
@@ -474,10 +506,16 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   
   useEffect(() => {
     return () => {
+      // Stop position maintenance RAF
+      if (positionMaintenanceRafRef.current !== null) {
+        cancelAnimationFrame(positionMaintenanceRafRef.current);
+        positionMaintenanceRafRef.current = null;
+      }
+      
       if (isLockedRef.current) {
         document.documentElement.classList.remove(CSS_CLASS_LOCKED);
         document.documentElement.classList.remove(CSS_CLASS_LEGACY);
-        document.body.style.top = '';
+        // v3: No body.style.top to clear
       }
     };
   }, []);

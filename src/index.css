@@ -8,6 +8,10 @@
 /* =============================================================
    SCROLL HIJACK LAYER - Loads BEFORE ALL other layers
    Defense-in-depth for bulletproof scroll hijacking
+   
+   v3 FIX: Removed position:fixed from body - it was causing blank screen!
+   The body.style.top = "-scrollY" pattern pushed content OUT of viewport.
+   Now using overflow:hidden + RAF position maintenance instead.
    ============================================================= */
 @layer scroll-hijack {
   /* Root scroll state - MOST AGGRESSIVE containment */
@@ -19,12 +23,13 @@
     scroll-behavior: auto !important; /* Disable smooth scrolling during lock */
   }
   
-  /* Body lock - Fixed positioning to prevent ALL scrolling */
+  /* Body lock - v3: NO position:fixed (was causing blank screen bug) */
+  /* Instead, we use overflow:hidden + RAF to maintain scroll position */
   html.scroll-hijack-locked body {
     overflow: hidden !important;
-    position: fixed !important;
-    width: 100% !important;
-    height: 100% !important;
+    /* REMOVED: position: fixed !important; - THIS CAUSED BLANK SCREEN */
+    /* REMOVED: width: 100% !important; */
+    /* REMOVED: height: 100% !important; */
     overscroll-behavior: none !important;
     touch-action: none !important;
   }
@@ -372,6 +377,7 @@ html {
 /* Scroll lock utility for smooth animation hijacking */
 /* LEGACY: scroll-locked class for backward compatibility */
 /* NEW: scroll-hijack-locked class with defense-in-depth (see @layer scroll-hijack) */
+/* v3 FIX: NO position:fixed on body - it caused blank screen bug */
 html.scroll-locked {
   overflow: hidden !important;
   overscroll-behavior: none !important;
@@ -382,6 +388,7 @@ html.scroll-locked {
 
 html.scroll-locked body {
   overflow: hidden !important;
+  /* REMOVED: position:fixed - THIS CAUSED BLANK SCREEN */
   overscroll-behavior: none !important;
   touch-action: none !important;
 }

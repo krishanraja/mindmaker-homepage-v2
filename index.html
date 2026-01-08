@@ -14,7 +14,8 @@
       #hero * { max-width: 100%; }
       
       /* SCROLL HIJACK LAYER 1: Critical containment before React loads */
-      /* Scroll-locked state - prevents ALL native scrolling */
+      /* v3 FIX: NO position:fixed on body - it caused blank screen bug */
+      /* Scroll-locked state - prevents native scrolling via overflow:hidden */
       html.scroll-hijack-locked {
         overflow: hidden !important;
         overscroll-behavior: none !important;
@@ -23,8 +24,7 @@
       }
       html.scroll-hijack-locked body {
         overflow: hidden !important;
-        position: fixed !important;
-        width: 100% !important;
+        /* REMOVED: position: fixed - THIS CAUSED BLANK SCREEN */
         overscroll-behavior: none !important;
         touch-action: none !important;
       }
