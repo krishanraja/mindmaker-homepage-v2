@@ -22,10 +22,27 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { createLogger, extractRequestContext } from '../_shared/logger.ts';
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const googleAIApiKey = Deno.env.get("GOOGLE_AI_API_KEY");
+
+// Initialize Supabase client for database operations
+// In Supabase Edge Functions, these are available via environment variables
+// SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY should be set in Supabase dashboard
+const getSupabaseClient = () => {
+  const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
+  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  
+  if (!supabaseUrl || !supabaseServiceKey) {
+    console.warn("Supabase credentials not available - database insert will be skipped");
+    console.warn("Required env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY");
+    return null;
+  }
+  
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -114,6 +131,17 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Extract domain from email
     const domain = email.split("@")[1];
+    
+    // Calculate engagement score early (needed for database insert)
+    const engagementFactors = [
+      sessionData.frictionMap ? 25 : 0,
+      sessionData.portfolioBuilder && sessionData.portfolioBuilder.selectedTasks.length > 0 ? 25 : 0,
+      sessionData.assessment ? 20 : 0,
+      sessionData.tryItWidget && sessionData.tryItWidget.challenges.length > 0 ? 15 : 0,
+      Math.min(sessionData.timeOnSite / 180 * 10, 10), // Max 10 points for 3+ min
+      Math.min(sessionData.scrollDepth / 100 * 5, 5), // Max 5 points for 100% scroll
+    ];
+    const engagementScore = Math.round(engagementFactors.reduce((a, b) => a + b, 0));
     
     // Research company using Gemini with Google Search grounding
     let companyResearch = {
@@ -280,6 +308,45 @@ Format your response as a JSON object with these exact keys:
 
     const timeMinutes = Math.floor(sessionData.timeOnSite / 60);
     const timeSeconds = sessionData.timeOnSite % 60;
+
+    // Insert lead to database FIRST (before email send)
+    // This ensures we capture the lead even if email fails
+    let leadId: string | null = null;
+    const supabaseClient = getSupabaseClient();
+    
+    if (supabaseClient) {
+      try {
+        const { data: leadData, error: dbError } = await supabaseClient
+          .from('leads')
+          .insert({
+            name,
+            email,
+            job_title: jobTitle,
+            selected_program: selectedProgram,
+            commitment_level: commitmentLevel,
+            audience_type: audienceType,
+            path_type: pathType,
+            session_data: sessionData,
+            company_research: companyResearch,
+            engagement_score: engagementScore,
+          })
+          .select()
+          .single();
+
+        if (dbError) {
+          console.error('Database insert error:', dbError);
+          // Continue with email send even if DB fails - don't block the flow
+        } else {
+          leadId = leadData?.id || null;
+          console.log('Lead saved to database:', leadId);
+        }
+      } catch (dbErr) {
+        console.error('Database insert exception:', dbErr);
+        // Continue with email send even if DB fails
+      }
+    } else {
+      console.warn('Supabase client not available - skipping database insert');
+    }
 
     // Build email HTML with improved structure and brand colors
     // AI-AGENT READABLE: Structured data markers for easy parsing
@@ -510,6 +577,24 @@ Format your response as a JSON object with these exact keys:
         const emailData = await emailResponse.json();
         console.log("Email sent successfully:", emailData);
         emailSent = true;
+        
+        // Update lead record with email status
+        if (leadId && supabaseClient) {
+          try {
+            await supabaseClient
+              .from('leads')
+              .update({ 
+                email_sent: true,
+                email_sent_at: new Date().toISOString()
+              })
+              .eq('id', leadId);
+            console.log('Lead email status updated:', leadId);
+          } catch (updateErr) {
+            console.error('Failed to update lead email status:', updateErr);
+            // Don't fail the whole request if update fails
+          }
+        }
+        
         break;
         
       } catch (error) {
@@ -529,7 +614,10 @@ Format your response as a JSON object with these exact keys:
       throw new Error(`Email delivery failed after ${maxRetries} attempts: ${lastError?.message || 'Unknown error'}`);
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ 
+      success: true, 
+      leadId: leadId 
+    }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

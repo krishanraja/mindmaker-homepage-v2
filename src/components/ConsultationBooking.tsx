@@ -34,8 +34,8 @@ export const ConsultationBooking = ({ variant = 'default', preselectedProgram }:
     setIsLoading(true);
 
     try {
-      // Send email notification (don't block if it fails)
-      await sendLeadEmail({
+      // Send email notification
+      const emailResult = await sendLeadEmail({
         name,
         email,
         source: 'consultation-booking',
@@ -44,18 +44,35 @@ export const ConsultationBooking = ({ variant = 'default', preselectedProgram }:
         },
       });
 
-      // Open Calendly popup
-      openCalendlyPopup({
-        name,
-        email,
-        source: 'consultation-booking',
-        preselectedProgram: preselectedProgram || 'not-specified',
-      });
+      if (!emailResult.success) {
+        toast({
+          title: "Email notification failed",
+          description: "Your booking will proceed, but we couldn't send a confirmation email.",
+          variant: "destructive",
+        });
+      }
 
-      toast({
-        title: "Opening Calendly",
-        description: "Booking your consultation...",
-      });
+      // Open Calendly popup
+      try {
+        await openCalendlyPopup({
+          name,
+          email,
+          source: 'consultation-booking',
+          preselectedProgram: preselectedProgram || 'not-specified',
+        });
+
+        toast({
+          title: "Opening Calendly",
+          description: "Booking your consultation...",
+        });
+      } catch (calendlyError) {
+        console.error('Calendly error:', calendlyError);
+        toast({
+          title: "Booking Error",
+          description: "Could not open booking page. Please try again.",
+          variant: "destructive",
+        });
+      }
       
       // Keep Stripe integration code for future use
       // const { data, error } = await supabase.functions.invoke('create-consultation-hold', {

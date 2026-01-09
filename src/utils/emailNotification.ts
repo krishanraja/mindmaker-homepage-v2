@@ -18,13 +18,19 @@ export interface LeadEmailParams {
   };
 }
 
+export interface LeadEmailResult {
+  success: boolean;
+  error?: string;
+  leadId?: string;
+}
+
 /**
  * Sends a lead email notification to krish@themindmaker.ai
- * Handles errors gracefully - does not block user flow
+ * Returns result status so caller can make informed decisions
  */
-export const sendLeadEmail = async (params: LeadEmailParams): Promise<void> => {
+export const sendLeadEmail = async (params: LeadEmailParams): Promise<LeadEmailResult> => {
   try {
-    const { error } = await supabase.functions.invoke('send-lead-email', {
+    const { data, error } = await supabase.functions.invoke('send-lead-email', {
       body: {
         name: params.name,
         email: params.email,
@@ -39,11 +45,24 @@ export const sendLeadEmail = async (params: LeadEmailParams): Promise<void> => {
 
     if (error) {
       console.error('Email notification error:', error);
-      // Don't throw - we don't want to block the user flow
+      return { success: false, error: error.message };
     }
+
+    if (data && data.error) {
+      console.error('Email function returned error:', data.error);
+      return { success: false, error: data.error };
+    }
+
+    return { 
+      success: true, 
+      leadId: data?.leadId 
+    };
   } catch (err) {
     console.error('Failed to send lead email:', err);
-    // Don't throw - we don't want to block the user flow
+    return { 
+      success: false, 
+      error: err instanceof Error ? err.message : 'Unknown error' 
+    };
   }
 };
 

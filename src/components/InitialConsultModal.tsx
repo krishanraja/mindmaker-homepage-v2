@@ -100,23 +100,42 @@ export const InitialConsultModal = ({
         }
       });
 
-      if (emailError) {
-        console.error('Email error:', emailError);
-        // Don't block the booking flow if email fails
+      // Check for errors in multiple places
+      const emailFailed = emailError || (emailData && emailData.error);
+      
+      if (emailFailed) {
+        console.error('Email error:', emailError || emailData?.error);
+        toast({
+          title: "Email notification failed",
+          description: "Your booking will proceed, but we couldn't send a confirmation email. Please contact us if needed.",
+          variant: "destructive",
+        });
+        // Still proceed to Calendly, but user is informed
       }
       
-      // Open Calendly popup
-      openCalendlyPopup({
-        name,
-        email,
-        source: 'initial-consult',
-        preselectedProgram: programValue,
-      });
-      onOpenChange(false);
-      toast({
-        title: "Opening Calendly",
-        description: "Booking your consultation...",
-      });
+      // Open Calendly popup with commitmentLevel
+      try {
+        await openCalendlyPopup({
+          name,
+          email,
+          source: 'initial-consult',
+          preselectedProgram: programValue,
+          commitmentLevel: commitmentLevel,
+        });
+        
+        onOpenChange(false);
+        toast({
+          title: "Opening Calendly",
+          description: "Booking your consultation...",
+        });
+      } catch (calendlyError) {
+        console.error('Calendly error:', calendlyError);
+        toast({
+          title: "Booking Error",
+          description: "Could not open booking page. Please try again or contact support.",
+          variant: "destructive",
+        });
+      }
       
     } catch (error) {
       console.error('Error creating checkout:', error);

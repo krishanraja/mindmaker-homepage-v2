@@ -540,7 +540,13 @@ export const BuilderAssessment = ({ compact = false, onClose }: BuilderAssessmen
           <Button
             size="lg"
             className="w-full bg-mint text-ink hover:bg-mint/90 font-bold"
-            onClick={() => openCalendlyPopup({ source: 'builder-assessment', preselectedProgram: profile.recommendedProduct })}
+            onClick={async () => {
+              try {
+                await openCalendlyPopup({ source: 'builder-assessment', preselectedProgram: profile.recommendedProduct });
+              } catch (error) {
+                console.error('Error opening Calendly:', error);
+              }
+            }}
           >
             Learn More
             <ArrowRight className="h-4 w-4 ml-2" />

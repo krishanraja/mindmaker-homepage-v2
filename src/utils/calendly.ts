@@ -25,13 +25,39 @@ export interface CalendlyParams {
   email?: string;
   source: CalendlySource;
   preselectedProgram?: string;
+  commitmentLevel?: string;
+}
+
+/**
+ * Waits for Calendly script to load with timeout
+ * @param timeout Maximum time to wait in milliseconds (default: 5000ms)
+ * @returns Promise that resolves to true if script loaded, false if timeout
+ */
+async function waitForCalendlyScript(timeout = 5000): Promise<boolean> {
+  if (window.Calendly) {
+    return true;
+  }
+  
+  return new Promise((resolve) => {
+    const startTime = Date.now();
+    const checkInterval = setInterval(() => {
+      if (window.Calendly) {
+        clearInterval(checkInterval);
+        resolve(true);
+      } else if (Date.now() - startTime > timeout) {
+        clearInterval(checkInterval);
+        resolve(false);
+      }
+    }, 100);
+  });
 }
 
 /**
  * Opens Calendly popup widget with standardized parameters
- * Falls back to window.open if Calendly widget is not available
+ * Waits for Calendly script to load, falls back to direct navigation if needed
+ * @param params Calendly parameters including name, email, source, and commitmentLevel
  */
-export const openCalendlyPopup = (params: CalendlyParams): void => {
+export const openCalendlyPopup = async (params: CalendlyParams): Promise<void> => {
   // Map source to Calendly a1 parameter (used for interest field)
   const sourceMap: Record<CalendlySource, string> = {
     'builder-assessment': 'builder-profile-quiz',
@@ -44,14 +70,50 @@ export const openCalendlyPopup = (params: CalendlyParams): void => {
   };
 
   const a1Value = sourceMap[params.source];
-  const calendlyUrl = `https://calendly.com/krish-raja/mindmaker-meeting?name=${encodeURIComponent(params.name || '')}&email=${encodeURIComponent(params.email || '')}&prefill_email=${encodeURIComponent(params.email || '')}&prefill_name=${encodeURIComponent(params.name || '')}&a1=${encodeURIComponent(a1Value)}`;
+  
+  // Build Calendly URL with all parameters including commitmentLevel
+  const urlParams = new URLSearchParams({
+    name: params.name || '',
+    email: params.email || '',
+    prefill_email: params.email || '',
+    prefill_name: params.name || '',
+    a1: a1Value,
+  });
+  
+  // Add commitmentLevel as a2 parameter if provided
+  if (params.commitmentLevel) {
+    urlParams.set('a2', params.commitmentLevel);
+  }
+  
+  const calendlyUrl = `https://calendly.com/krish-raja/mindmaker-meeting?${urlParams.toString()}`;
 
-  // Use Calendly popup widget if available, fallback to window.open
-  if (window.Calendly) {
-    window.Calendly.initPopupWidget({ url: calendlyUrl });
-  } else {
-    // Fallback for when Calendly script hasn't loaded yet
-    window.open(calendlyUrl, '_blank');
+  try {
+    // Wait for Calendly script to load (max 5 seconds)
+    const scriptLoaded = await waitForCalendlyScript(5000);
+    
+    if (scriptLoaded && window.Calendly) {
+      // Use Calendly popup widget
+      try {
+        window.Calendly.initPopupWidget({ url: calendlyUrl });
+        return;
+      } catch (widgetError) {
+        console.error('Calendly widget error:', widgetError);
+        // Fall through to direct navigation
+      }
+    }
+    
+    // Fallback: Direct navigation (works even with popup blockers)
+    // This is better than window.open() because it maintains user gesture context
+    window.location.href = calendlyUrl;
+    
+  } catch (error) {
+    console.error('Error opening Calendly:', error);
+    // Last resort: try window.open (may be blocked by popup blocker)
+    const newWindow = window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
+    if (!newWindow) {
+      // Popup blocked, use direct navigation
+      window.location.href = calendlyUrl;
+    }
   }
 };
 

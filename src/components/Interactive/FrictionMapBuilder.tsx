@@ -529,7 +529,13 @@ export const FrictionMapBuilder = ({ compact = false, onClose }: FrictionMapBuil
           </Button>
           <Button 
             className="flex-1 bg-mint text-ink hover:bg-mint/90"
-            onClick={() => openCalendlyPopup({ source: 'friction-map' })}
+            onClick={async () => {
+              try {
+                await openCalendlyPopup({ source: 'friction-map' });
+              } catch (error) {
+                console.error('Error opening Calendly:', error);
+              }
+            }}
           >
             Build 4 More Like This →
           </Button>
