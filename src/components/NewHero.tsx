@@ -276,7 +276,7 @@ const NewHero = () => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 sm:gap-4 fade-in-up" style={{animationDelay: '0.3s'}}>
               <Button 
                 size="lg" 
-                className="bg-mint text-ink hover:bg-mint-500/95 font-bold px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg shadow-lg shadow-mint-lg hover:shadow-xl hover:shadow-mint-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-0.5 touch-target group"
+                className="bg-mint text-ink hover:bg-mint-500/95 font-bold px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg shadow-lg shadow-mint-lg hover:shadow-xl hover:shadow-mint-lg transition-all duration-300 ease-out hover:-translate-y-0.5 touch-target group"
                 onClick={() => setConsultModalOpen(true)}
               >
                 <span className="group-hover:opacity-90">Book Your Initial Consult</span>
@@ -284,7 +284,7 @@ const NewHero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-mint/50 text-mint hover:bg-mint/10 hover:border-mint/70 backdrop-blur-md font-bold px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg touch-target hover:scale-[1.02] transition-all duration-300 ease-out shadow-sm hover:shadow-md"
+                className="border-2 border-mint/50 text-mint hover:bg-mint/10 hover:border-mint/70 backdrop-blur-md font-bold px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg touch-target transition-all duration-300 ease-out shadow-sm hover:shadow-md"
                 onClick={() => {
                   // Dispatch event to skip scroll hijack animation
                   // ChaosToClarity component will listen and handle completion
