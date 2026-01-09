@@ -50,8 +50,9 @@ const corsHeaders = {
 };
 
 // HTML escape helper to prevent XSS in email content
-const escapeHtml = (str: string): string => {
-  return str
+const escapeHtml = (str: string | undefined | null): string => {
+  if (!str) return '';
+  return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -284,14 +285,23 @@ Format your response as a JSON object with these exact keys:
       "90d": "90 Day Program",
     };
 
-    // Build session type label
-    let sessionTypeLabel = programLabels[selectedProgram] || selectedProgram;
+    // Build session type label - ensure it's never undefined
+    let sessionTypeLabel = programLabels[selectedProgram] || selectedProgram || "Not specified";
     if (audienceType === "individual" && pathType) {
-      sessionTypeLabel = `${programLabels[pathType]} - ${commitmentLevel ? commitmentLabels[commitmentLevel] || commitmentLevel : "Not specified"}`;
+      const pathLabel = programLabels[pathType] || pathType || "Individual";
+      const commitmentLabel = commitmentLevel ? (commitmentLabels[commitmentLevel] || commitmentLevel) : "Not specified";
+      sessionTypeLabel = `${pathLabel} - ${commitmentLabel}`;
     } else if (audienceType === "team") {
-      sessionTypeLabel = `Team Alignment - ${commitmentLevel ? commitmentLabels[commitmentLevel] || commitmentLevel : "Not specified"}`;
+      const commitmentLabel = commitmentLevel ? (commitmentLabels[commitmentLevel] || commitmentLevel) : "Not specified";
+      sessionTypeLabel = `Team Alignment - ${commitmentLabel}`;
     } else if (commitmentLevel) {
-      sessionTypeLabel = `${sessionTypeLabel} - ${commitmentLabels[commitmentLevel] || commitmentLevel}`;
+      const commitmentLabel = commitmentLabels[commitmentLevel] || commitmentLevel;
+      sessionTypeLabel = `${sessionTypeLabel} - ${commitmentLabel}`;
+    }
+    
+    // Final safety check
+    if (!sessionTypeLabel || sessionTypeLabel === 'undefined') {
+      sessionTypeLabel = "Not specified";
     }
 
     // Calculate engagement score (0-100)
@@ -401,8 +411,8 @@ Format your response as a JSON object with these exact keys:
   <div style="background: #ffffff; padding: 32px 24px;">
     <!-- Quick Actions -->
     <div style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid #e5e5e3;">
-      <a href="mailto:${escapeHtml(email)}" style="display: inline-block; background: #0e1a2b; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin-right: 8px; transition: background 0.2s;">Email ${escapeHtml(name.split(' ')[0])}</a>
-      <a href="https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent(name + ' ' + companyResearch.companyName)}" style="display: inline-block; background: #0077b5; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s;">Find on LinkedIn</a>
+      <a href="mailto:${escapeHtml(email)}" style="display: inline-block; background: #0e1a2b; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin-right: 8px; transition: background 0.2s;">Email ${escapeHtml(name ? name.split(' ')[0] : 'Lead')}</a>
+      <a href="https://www.linkedin.com/search/results/all/?keywords=${encodeURIComponent((name || '') + ' ' + (companyResearch.companyName || ''))}" style="display: inline-block; background: #0077b5; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s;">Find on LinkedIn</a>
     </div>
 
     <!-- Commitment Level - Prominently Displayed -->
