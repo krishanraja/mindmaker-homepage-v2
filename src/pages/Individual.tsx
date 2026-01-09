@@ -269,6 +269,16 @@ const Individual = () => {
     }
   }, [searchParams]);
 
+  // Listen for openConsultModal event from Navigation component
+  useEffect(() => {
+    const handleOpenConsultModal = () => {
+      setConsultModalOpen(true);
+    };
+    
+    window.addEventListener('openConsultModal', handleOpenConsultModal);
+    return () => window.removeEventListener('openConsultModal', handleOpenConsultModal);
+  }, []);
+
   // Calculate current depth from slider
   const currentIndex = commitmentSlider[0] <= 33 ? 0 : commitmentSlider[0] <= 66 ? 1 : 2;
   const depthOptions: DepthType[] = ["1hr", "4wk", "90d"];

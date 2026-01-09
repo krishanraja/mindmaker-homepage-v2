@@ -397,6 +397,33 @@ const ChaosToClarity = () => {
     }
   }, [updateAnimationState]);
 
+  // Listen for skip event from external components (e.g., View Programs button)
+  useEffect(() => {
+    const handleSkip = () => {
+      // Complete the animation immediately
+      skipToEnd();
+      progressRef.current = 1;
+      updateAnimationState(1);
+      setUiState({
+        showClarity: true,
+        showTicker: true,
+        showScrollHint: false,
+        isComplete: true,
+      });
+      
+      // Small delay to ensure animation completes, then allow scroll
+      setTimeout(() => {
+        const productsSection = document.getElementById('products') || document.getElementById('book');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    };
+    
+    window.addEventListener('skipChaosToClarity', handleSkip);
+    return () => window.removeEventListener('skipChaosToClarity', handleSkip);
+  }, [skipToEnd, updateAnimationState]);
+
   // Note: RAF cleanup is now handled internally by useScrollHijack hook
 
   return (

@@ -286,30 +286,17 @@ const NewHero = () => {
                 variant="outline" 
                 className="border-2 border-mint/50 text-mint hover:bg-mint/10 hover:border-mint/70 backdrop-blur-md font-bold px-8 sm:px-10 py-6 sm:py-7 text-base sm:text-lg touch-target hover:scale-[1.02] transition-all duration-300 ease-out shadow-sm hover:shadow-md"
                 onClick={() => {
-                  // Force release scroll hijack if active
-                  const isScrollLocked = document.documentElement.classList.contains('scroll-hijack-locked') || 
-                                        document.documentElement.classList.contains('scroll-locked');
+                  // Dispatch event to skip scroll hijack animation
+                  // ChaosToClarity component will listen and handle completion
+                  window.dispatchEvent(new CustomEvent('skipChaosToClarity'));
                   
-                  if (isScrollLocked) {
-                    // Remove lock classes
-                    document.documentElement.classList.remove('scroll-hijack-locked');
-                    document.documentElement.classList.remove('scroll-locked');
-                    
-                    // Force scroll position to current position to unlock
-                    const currentScroll = window.scrollY;
-                    window.scrollTo(0, currentScroll);
-                    
-                    // Wait a frame for unlock to take effect
-                    requestAnimationFrame(() => {
-                      const productsSection = document.getElementById('products');
-                      if (productsSection) {
-                        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    });
-                  } else {
-                    const productsSection = document.getElementById('products');
-                    productsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
+                  // Small delay to ensure skip completes, then scroll to products section
+                  setTimeout(() => {
+                    const productsSection = document.getElementById('products') || document.getElementById('book');
+                    if (productsSection) {
+                      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }, 150);
                 }}
               >
                 View Programs
