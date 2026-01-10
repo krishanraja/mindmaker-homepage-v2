@@ -127,7 +127,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Validate RESEND_API_KEY early - fail fast if missing
+    // Validate and sanitize RESEND_API_KEY early - fail fast if missing
     if (!RESEND_API_KEY || RESEND_API_KEY.trim() === '') {
       console.error("CRITICAL: RESEND_API_KEY is not configured");
       return new Response(
@@ -135,6 +135,25 @@ const handler = async (req: Request): Promise<Response> => {
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
+
+    // Sanitize API key: trim whitespace and validate format
+    const sanitizedApiKey = RESEND_API_KEY.trim();
+    if (!sanitizedApiKey.startsWith('re_')) {
+      console.error("CRITICAL: RESEND_API_KEY format invalid (should start with 're_')");
+      console.error("API key first 10 chars:", sanitizedApiKey.substring(0, 10));
+      return new Response(
+        JSON.stringify({ error: "Email service configuration error. Please contact support." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Log API key info (for debugging, not full key)
+    console.log("API key configured:", {
+      present: true,
+      length: sanitizedApiKey.length,
+      startsWith: sanitizedApiKey.substring(0, 3),
+      format: "valid"
+    });
 
     const body = await req.json();
     
@@ -597,28 +616,58 @@ Format your response as a JSON object with these exact keys:
       try {
         console.log(`Email send attempt ${attempt}/${maxRetries}`);
         
-        // Use timeout wrapper for Resend API (10 second timeout)
-        const emailResponse = await fetchWithTimeout(
+        // Log request details for debugging
+        const requestBody = {
+          from: 'Mindmaker Leads <leads@themindmaker.ai>',
+          to: ['krish@themindmaker.ai'],
+          reply_to: email,
+          subject: `🎯 Lead: ${name} from ${companyResearch.companyName} - ${sessionTypeLabel}`,
+          html: emailHtml,
+        };
+        
+        console.log("Resend API request details:", {
+          url: 'https://api.resend.com/emails',
+          method: 'POST',
+          hasApiKey: !!sanitizedApiKey,
+          apiKeyLength: sanitizedApiKey.length,
+          apiKeyPrefix: sanitizedApiKey.substring(0, 5),
+          from: requestBody.from,
+          to: requestBody.to,
+          subjectLength: requestBody.subject.length,
+          htmlLength: requestBody.html.length
+        });
+        
+        // CRITICAL FIX: Use regular fetch instead of fetchWithTimeout
+        // Working functions (send-contact-email, send-leadership-insights-email) use regular fetch
+        // The AbortController signal in fetchWithTimeout may interfere with Resend API authentication
+        const emailResponse = await fetch(
           'https://api.resend.com/emails',
           {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${RESEND_API_KEY}`,
+              'Authorization': `Bearer ${sanitizedApiKey}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              from: 'Mindmaker Leads <leads@themindmaker.ai>',
-              to: ['krish@themindmaker.ai'],
-              reply_to: email, // Allow replying directly to the lead
-              subject: `🎯 Lead: ${name} from ${companyResearch.companyName} - ${sessionTypeLabel}`,
-              html: emailHtml,
-            }),
-          },
-          10000 // 10 second timeout
+            body: JSON.stringify(requestBody),
+          }
         );
 
         if (!emailResponse.ok) {
           const errorText = await emailResponse.text();
+          
+          // Enhanced error logging for debugging
+          console.error("Resend API error details:", {
+            status: emailResponse.status,
+            statusText: emailResponse.statusText,
+            errorBody: errorText,
+            attempt: attempt,
+            requestHeaders: {
+              'Authorization': `Bearer ${sanitizedApiKey.substring(0, 5)}...`,
+              'Content-Type': 'application/json'
+            },
+            responseHeaders: Object.fromEntries(emailResponse.headers.entries())
+          });
+          
           lastError = new Error(`Resend API error (${emailResponse.status}): ${errorText}`);
           console.error(`Email send attempt ${attempt} failed:`, lastError.message);
           
