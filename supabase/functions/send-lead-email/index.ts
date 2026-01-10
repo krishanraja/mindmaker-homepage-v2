@@ -420,8 +420,8 @@ Format your response as a JSON object with these exact keys:
       console.warn('Supabase client not available - skipping database insert');
     }
 
-    // Build email HTML with CEO-grade premium design and high contrast
-    // AI-AGENT READABLE: Structured data markers for easy parsing
+    // Build email HTML with professional CEO-grade design
+    // Clean, high-contrast, actionable lead capture email
     let emailHtml = `
 <!DOCTYPE html>
 <html>
@@ -429,100 +429,62 @@ Format your response as a JSON object with these exact keys:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.6; color: #0e1a2b; max-width: 700px; margin: 0 auto; padding: 0; background-color: #f7f7f5;">
-  <!-- AI-AGENT DATA START -->
-  <!-- LEAD_NAME: ${escapeHtml(name)} -->
-  <!-- LEAD_EMAIL: ${escapeHtml(email)} -->
-  <!-- LEAD_JOB_TITLE: ${escapeHtml(jobTitle || 'Not specified')} -->
-  <!-- COMMITMENT_LEVEL: ${commitmentLevel || 'Not specified'} -->
-  <!-- AUDIENCE_TYPE: ${audienceType || 'Not specified'} -->
-  <!-- PATH_TYPE: ${pathType || 'Not specified'} -->
-  <!-- SESSION_TYPE: ${escapeHtml(sessionTypeLabel)} -->
-  <!-- COMPANY_NAME: ${escapeHtml(companyResearch.companyName)} -->
-  <!-- COMPANY_INDUSTRY: ${escapeHtml(companyResearch.industry)} -->
-  <!-- COMPANY_SIZE: ${escapeHtml(companyResearch.companySize)} -->
-  <!-- COMPANY_NEWS: ${escapeHtml(companyResearch.latestNews)} -->
-  <!-- SUGGESTED_SCOPE: ${escapeHtml(companyResearch.suggestedScope)} -->
-  <!-- ENGAGEMENT_SCORE: ${engagementScore}/100 -->
-  <!-- ENGAGEMENT_LEVEL: ${engagementLevel} -->
-  <!-- AI-AGENT DATA END -->
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 680px; margin: 0 auto; padding: 0; background-color: #ffffff;">
   
-  <!-- Premium Dark Header with High Contrast -->
-  <div style="background: linear-gradient(135deg, #0e1a2b 0%, #1a2b3d 100%); padding: 40px 32px; border-radius: 0;">
-    <div style="text-align: center;">
-      <p style="color: #7ef4c2; margin: 0 0 12px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">NEW LEAD ALERT</p>
-      <h1 style="color: #ffffff; margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.5px;">${escapeHtml(name)}</h1>
-      <p style="color: #ffffff; margin: 12px 0 0 0; font-size: 18px; font-weight: 500; opacity: 1;">${escapeHtml(jobTitle || 'Role not specified')} at ${escapeHtml(companyResearch.companyName)}</p>
-    </div>
+  <!-- Header: Lead Contact Information - MOST PROMINENT -->
+  <div style="background: linear-gradient(135deg, #0e1a2b 0%, #1a2b3d 100%); padding: 48px 40px; text-align: center;">
+    <p style="color: #7ef4c2; margin: 0 0 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">NEW LEAD</p>
+    <h1 style="color: #ffffff; margin: 0 0 12px 0; font-size: 42px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;">${escapeHtml(name)}</h1>
+    <p style="color: #ffffff; margin: 0 0 24px 0; font-size: 20px; font-weight: 500;">${escapeHtml(jobTitle || 'Role not specified')}</p>
     
-    <!-- High Contrast Stats Cards -->
-    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 32px; flex-wrap: wrap;">
-      <div style="background: rgba(126, 244, 194, 0.15); border: 2px solid #7ef4c2; border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 120px;">
-        <p style="color: #7ef4c2; margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">ENGAGEMENT</p>
-        <p style="color: #ffffff; margin: 8px 0 0 0; font-size: 24px; font-weight: 800;">${engagementLevel}</p>
-      </div>
-      <div style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 120px;">
-        <p style="color: #ffffff; margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">SCORE</p>
-        <p style="color: #ffffff; margin: 8px 0 0 0; font-size: 24px; font-weight: 800;">${engagementScore}/100</p>
-      </div>
-      <div style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 140px;">
-        <p style="color: #ffffff; margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">INTEREST</p>
-        <p style="color: #ffffff; margin: 8px 0 0 0; font-size: 16px; font-weight: 700; line-height: 1.3;">${escapeHtml(sessionTypeLabel)}</p>
-      </div>
+    <!-- Lead Email - PROMINENTLY DISPLAYED -->
+    <div style="background: rgba(126, 244, 194, 0.2); border: 3px solid #7ef4c2; border-radius: 12px; padding: 20px; margin: 0 auto; max-width: 500px;">
+      <p style="color: #7ef4c2; margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">CONTACT EMAIL</p>
+      <a href="mailto:${escapeHtml(email)}" style="color: #ffffff; font-size: 22px; font-weight: 700; text-decoration: none; word-break: break-all; display: block;">${escapeHtml(email)}</a>
     </div>
   </div>
   
-  <!-- White Content Section -->
-  <div style="background: #ffffff; padding: 40px 32px;">
-    <!-- Commitment Level - Most Prominent (if available) -->
-    ${commitmentLevel ? `
-    <div style="background: linear-gradient(135deg, #7ef4c2 0%, #5dd4a8 100%); border-radius: 16px; padding: 32px; margin-bottom: 32px; border: 3px solid #0e1a2b; box-shadow: 0 4px 12px rgba(14, 26, 43, 0.15);">
-      <div style="display: flex; align-items: center; margin-bottom: 12px;">
-        <span style="font-size: 24px; margin-right: 12px;">⏱️</span>
-        <h2 style="color: #0e1a2b; margin: 0; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">COMMITMENT LEVEL</h2>
-      </div>
-      <p style="color: #0e1a2b; margin: 0; font-size: 32px; font-weight: 900; line-height: 1.2;">${escapeHtml(commitmentLabels[commitmentLevel] || commitmentLevel)}</p>
-      ${audienceType ? `<p style="color: #0e1a2b; margin: 12px 0 0 0; font-size: 16px; font-weight: 600; opacity: 1;">${audienceType === 'individual' ? (pathType ? `${programLabels[pathType] || pathType}` : 'Individual Program') : 'Team Alignment Program'}</p>` : ''}
-    </div>
-    ` : ''}
-
-    <!-- Company Intelligence - Primary Section with High Contrast -->
-    <div style="background: #f7f7f5; border-radius: 16px; padding: 32px; margin-bottom: 32px; border: 2px solid #0e1a2b; box-shadow: 0 2px 8px rgba(14, 26, 43, 0.08);">
-      <div style="display: flex; align-items: center; margin-bottom: 24px;">
-        <span style="font-size: 24px; margin-right: 12px;">🔍</span>
-        <h2 style="color: #0e1a2b; margin: 0; font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">COMPANY INTELLIGENCE</h2>
-      </div>
+  <!-- Main Content -->
+  <div style="background: #ffffff; padding: 40px;">
+    
+    <!-- Company Information -->
+    <div style="background: #f8f9fa; border-left: 4px solid #0e1a2b; border-radius: 8px; padding: 28px; margin-bottom: 32px;">
+      <h2 style="color: #0e1a2b; margin: 0 0 20px 0; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">COMPANY</h2>
       <table style="width: 100%; border-collapse: collapse;">
         <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; width: 140px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Company:</td>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 16px; font-weight: 700;">${escapeHtml(companyResearch.companyName)}</td>
+          <td style="padding: 10px 0; color: #666666; font-size: 14px; width: 120px; vertical-align: top; font-weight: 600;">Company:</td>
+          <td style="padding: 10px 0; color: #1a1a1a; font-size: 16px; font-weight: 700;">${escapeHtml(companyResearch.companyName)}</td>
         </tr>
         <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Industry:</td>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 15px; font-weight: 500;">${escapeHtml(companyResearch.industry)}</td>
+          <td style="padding: 10px 0; color: #666666; font-size: 14px; vertical-align: top; font-weight: 600;">Industry:</td>
+          <td style="padding: 10px 0; color: #1a1a1a; font-size: 15px; font-weight: 500;">${escapeHtml(companyResearch.industry)}</td>
         </tr>
         <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Size:</td>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 15px;">
-            <span style="background: #7ef4c2; color: #0e1a2b; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; text-transform: capitalize; border: 2px solid #0e1a2b;">${escapeHtml(companyResearch.companySize)}</span>
+          <td style="padding: 10px 0; color: #666666; font-size: 14px; vertical-align: top; font-weight: 600;">Size:</td>
+          <td style="padding: 10px 0; color: #1a1a1a; font-size: 15px;">
+            <span style="background: #e8f5f0; color: #0e1a2b; padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; text-transform: capitalize;">${escapeHtml(companyResearch.companySize)}</span>
           </td>
         </tr>
+        ${companyResearch.latestNews && companyResearch.latestNews !== 'Unable to verify company information' ? `
         <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Latest News:</td>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 15px; line-height: 1.6; font-weight: 400;">${escapeHtml(companyResearch.latestNews)}</td>
+          <td style="padding: 10px 0; color: #666666; font-size: 14px; vertical-align: top; font-weight: 600;">Recent News:</td>
+          <td style="padding: 10px 0; color: #1a1a1a; font-size: 15px; line-height: 1.5;">${escapeHtml(companyResearch.latestNews)}</td>
         </tr>
-        <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Suggested Scope:</td>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 15px; line-height: 1.6; font-weight: 500; font-style: italic;">"${escapeHtml(companyResearch.suggestedScope)}"</td>
-        </tr>
-        <tr>
-          <td style="padding: 16px 0; color: #0e1a2b; font-size: 13px; vertical-align: top; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Confidence:</td>
-          <td style="padding: 16px 0; font-size: 15px;">
-            <span style="background: ${companyResearch.confidence === 'high' ? '#22c55e' : companyResearch.confidence === 'medium' ? '#f59e0b' : '#ef4444'}; color: #ffffff; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; text-transform: uppercase; border: 2px solid ${companyResearch.confidence === 'high' ? '#16a34a' : companyResearch.confidence === 'medium' ? '#d97706' : '#dc2626'};">${escapeHtml(companyResearch.confidence)}</span>
-          </td>
-        </tr>
+        ` : ''}
       </table>
     </div>
+
+    <!-- Program Interest - Prominent if available -->
+    ${commitmentLevel || sessionTypeLabel !== 'Not specified' ? `
+    <div style="background: linear-gradient(135deg, #7ef4c2 0%, #5dd4a8 100%); border-radius: 12px; padding: 32px; margin-bottom: 32px; border: 2px solid #0e1a2b;">
+      <h2 style="color: #0e1a2b; margin: 0 0 16px 0; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">PROGRAM INTEREST</h2>
+      ${commitmentLevel ? `
+      <p style="color: #0e1a2b; margin: 0 0 8px 0; font-size: 28px; font-weight: 900; line-height: 1.2;">${escapeHtml(commitmentLabels[commitmentLevel] || commitmentLevel)}</p>
+      ` : ''}
+      <p style="color: #0e1a2b; margin: ${commitmentLevel ? '8px' : '0'} 0 0 0; font-size: 18px; font-weight: 700;">${escapeHtml(sessionTypeLabel)}</p>
+    </div>
+    ` : ''}
+    
     `;
 
     // Add session engagement data
@@ -573,35 +535,29 @@ Format your response as a JSON object with these exact keys:
       `;
     }
 
-    <!-- Session Analytics - Only if meaningful -->
-    ${sessionData.timeOnSite > 60 || sessionData.scrollDepth > 30 ? `
-    <div style="background: #f7f7f5; border-radius: 16px; padding: 28px; margin-bottom: 32px; border: 2px solid #e5e5e3;">
-      <h3 style="color: #0e1a2b; margin: 0 0 20px 0; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">📈 SESSION ANALYTICS</h3>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
+    <!-- Engagement Metrics - Compact -->
+    <div style="background: #f8f9fa; border-radius: 8px; padding: 24px; margin-bottom: 32px; border: 1px solid #e0e0e0;">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center;">
         <div>
-          <p style="color: #0e1a2b; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Time on Site</p>
-          <p style="color: #0e1a2b; margin: 8px 0 0 0; font-size: 24px; font-weight: 800;">${timeMinutes}:${timeSeconds.toString().padStart(2, '0')}</p>
+          <p style="color: #666666; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Engagement</p>
+          <p style="color: #1a1a1a; margin: 8px 0 0 0; font-size: 20px; font-weight: 800;">${engagementLevel}</p>
         </div>
         <div>
-          <p style="color: #0e1a2b; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Scroll Depth</p>
-          <p style="color: #0e1a2b; margin: 8px 0 0 0; font-size: 24px; font-weight: 800;">${sessionData.scrollDepth}%</p>
+          <p style="color: #666666; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Score</p>
+          <p style="color: #1a1a1a; margin: 8px 0 0 0; font-size: 20px; font-weight: 800;">${engagementScore}/100</p>
         </div>
         <div>
-          <p style="color: #0e1a2b; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Pages</p>
-          <p style="color: #0e1a2b; margin: 8px 0 0 0; font-size: 24px; font-weight: 800;">${sessionData.pagesVisited.length || 1}</p>
+          <p style="color: #666666; margin: 0; font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Time</p>
+          <p style="color: #1a1a1a; margin: 8px 0 0 0; font-size: 20px; font-weight: 800;">${timeMinutes}:${timeSeconds.toString().padStart(2, '0')}</p>
         </div>
       </div>
-      ${sessionData.pagesVisited.length > 0 ? `
-      <p style="color: #0e1a2b; margin: 20px 0 0 0; font-size: 13px; font-weight: 500;"><strong>Journey:</strong> ${sessionData.pagesVisited.join(" → ")}</p>
-      ` : ''}
     </div>
-    ` : ''}
   </div>
   
   <!-- Footer -->
-  <div style="text-align: center; padding: 32px; background: #0e1a2b; color: #ffffff;">
-    <p style="margin: 0; color: #7ef4c2; font-size: 12px; font-weight: 600;">Lead captured at <a href="https://www.themindmaker.ai" style="color: #7ef4c2; text-decoration: none;">themindmaker.ai</a></p>
-    <p style="margin: 12px 0 0 0; color: rgba(255,255,255,0.7); font-size: 11px;">© ${new Date().getFullYear()} Mindmaker LLC</p>
+  <div style="text-align: center; padding: 24px; background: #0e1a2b; color: #ffffff;">
+    <p style="margin: 0; color: #7ef4c2; font-size: 11px; font-weight: 600;">Lead captured at <a href="https://www.themindmaker.ai" style="color: #7ef4c2; text-decoration: none;">themindmaker.ai</a></p>
+    <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.6); font-size: 10px;">© ${new Date().getFullYear()} Mindmaker LLC</p>
   </div>
 </body>
 </html>

@@ -11,6 +11,7 @@ import { Loader2, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSessionData } from "@/contexts/SessionDataContext";
 import { openCalendlyPopup } from "@/utils/calendly";
+import { checkSupabaseHealth } from '@/utils/supabaseHealthCheck';
 
 interface InitialConsultModalProps {
   open: boolean;
@@ -45,6 +46,19 @@ export const InitialConsultModal = ({
       setSelectedPath(preselectedProgram);
     }
   }, [preselectedProgram, selectedPath]);
+
+  // Run health check on mount (only in dev)
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      checkSupabaseHealth().then(health => {
+        if (!health.isHealthy) {
+          console.error('⚠️ Supabase health check failed:', health);
+        } else {
+          console.log('✅ Supabase health check passed');
+        }
+      });
+    }
+  }, []);
 
   const pathOptions = [
     { 
@@ -88,6 +102,23 @@ export const InitialConsultModal = ({
       // Determine the program value to send
       const programValue = preselectedProgram || selectedPath || 'not-sure';
       
+      // Log request details for debugging
+      console.log('📧 Sending lead email request:', {
+        functionName: 'send-lead-email',
+        payload: {
+          name,
+          email,
+          jobTitle,
+          selectedProgram: programValue,
+          commitmentLevel,
+          audienceType,
+          pathType,
+          sessionDataKeys: Object.keys(sessionData || {})
+        },
+        supabaseUrl: (supabase as any).supabaseUrl?.substring(0, 30) + '...',
+        timestamp: new Date().toISOString()
+      });
+      
       // Send enriched lead email with all context
       // Add timeout: 30 seconds
       const timeoutPromise = new Promise((_, reject) => {
@@ -110,9 +141,26 @@ export const InitialConsultModal = ({
       let emailData, emailError;
       try {
         const result = await Promise.race([emailPromise, timeoutPromise]) as any;
-        emailData = result.data;
-        emailError = result.error;
+        
+        // Validate result structure
+        if (result && typeof result === 'object') {
+          emailData = result.data;
+          emailError = result.error;
+        } else {
+          // Result might be the direct response
+          emailData = result;
+          emailError = null;
+        }
+        
+        // Log result for debugging
+        console.log('📧 Email request result:', {
+          hasData: !!emailData,
+          hasError: !!emailError,
+          dataKeys: emailData ? Object.keys(emailData) : [],
+          errorMessage: emailError?.message || emailError
+        });
       } catch (timeoutError) {
+        console.error('📧 Email request timeout or error:', timeoutError);
         emailError = timeoutError instanceof Error ? timeoutError : new Error('Request timeout');
         emailData = null;
       }
@@ -122,12 +170,19 @@ export const InitialConsultModal = ({
       
       if (emailFailed) {
         const errorMessage = emailError?.message || emailData?.error || 'Unknown error';
-        console.error('Email error:', errorMessage);
+        const errorDetails = {
+          errorObject: emailError,
+          dataError: emailData?.error,
+          fullData: emailData,
+          timestamp: new Date().toISOString()
+        };
+        
+        console.error('📧 Email request failed:', errorMessage, errorDetails);
         setEmailError(errorMessage);
         
         toast({
           title: "Unable to process your request",
-          description: "We couldn't send your booking notification. Please try again or contact us directly at krish@themindmaker.ai",
+          description: `We couldn't send your booking notification: ${errorMessage}. Please try again or contact us directly at krish@themindmaker.ai`,
           variant: "destructive",
         });
         

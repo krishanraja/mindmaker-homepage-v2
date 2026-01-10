@@ -5,6 +5,25 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
+// Validate environment variables at initialization
+if (!SUPABASE_URL || SUPABASE_URL.trim() === '') {
+  console.error('CRITICAL: VITE_SUPABASE_URL is not set');
+  throw new Error('Supabase URL is not configured. Check environment variables.');
+}
+
+if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY.trim() === '') {
+  console.error('CRITICAL: VITE_SUPABASE_PUBLISHABLE_KEY is not set');
+  throw new Error('Supabase publishable key is not configured. Check environment variables.');
+}
+
+// Log configuration (first 10 chars for security)
+console.log('Supabase client initialized:', {
+  url: SUPABASE_URL.substring(0, 20) + '...',
+  keyPrefix: SUPABASE_PUBLISHABLE_KEY.substring(0, 10) + '...',
+  urlValid: SUPABASE_URL.startsWith('http'),
+  keyValid: SUPABASE_PUBLISHABLE_KEY.length > 20
+});
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 

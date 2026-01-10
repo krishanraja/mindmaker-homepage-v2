@@ -29,19 +29,32 @@ export interface LeadEmailResult {
  * Returns result status so caller can make informed decisions
  */
 export const sendLeadEmail = async (params: LeadEmailParams): Promise<LeadEmailResult> => {
+  console.log('📧 sendLeadEmail called:', {
+    name: params.name,
+    email: params.email,
+    source: params.source,
+    hasAdditionalData: !!params.additionalData
+  });
+
   try {
+    const requestPayload = {
+      name: params.name,
+      email: params.email,
+      jobTitle: params.additionalData?.jobTitle || 'Not specified',
+      selectedProgram: params.source,
+      commitmentLevel: params.additionalData?.commitmentLevel,
+      audienceType: params.additionalData?.audienceType,
+      pathType: params.additionalData?.pathType,
+      sessionData: params.additionalData?.sessionData || {},
+    };
+    
+    console.log('📧 Invoking send-lead-email with payload:', requestPayload);
+    
     const { data, error } = await supabase.functions.invoke('send-lead-email', {
-      body: {
-        name: params.name,
-        email: params.email,
-        jobTitle: params.additionalData?.jobTitle || 'Not specified',
-        selectedProgram: params.source,
-        commitmentLevel: params.additionalData?.commitmentLevel,
-        audienceType: params.additionalData?.audienceType,
-        pathType: params.additionalData?.pathType,
-        sessionData: params.additionalData?.sessionData || {},
-      },
+      body: requestPayload,
     });
+    
+    console.log('📧 send-lead-email response:', { data, error });
 
     if (error) {
       console.error('Email notification error:', error);
