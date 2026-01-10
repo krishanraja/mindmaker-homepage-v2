@@ -357,16 +357,7 @@ Format your response as a JSON object with these exact keys:
       sessionTypeLabel = "Not specified";
     }
 
-    // Calculate engagement score (0-100)
-    const engagementFactors = [
-      sessionData.frictionMap ? 25 : 0,
-      sessionData.portfolioBuilder && sessionData.portfolioBuilder.selectedTasks.length > 0 ? 25 : 0,
-      sessionData.assessment ? 20 : 0,
-      sessionData.tryItWidget && sessionData.tryItWidget.challenges.length > 0 ? 15 : 0,
-      Math.min(sessionData.timeOnSite / 180 * 10, 10), // Max 10 points for 3+ min
-      Math.min(sessionData.scrollDepth / 100 * 5, 5), // Max 5 points for 100% scroll
-    ];
-    const engagementScore = Math.round(engagementFactors.reduce((a, b) => a + b, 0));
+    // Calculate engagement level from already-computed engagementScore
     const engagementLevel = engagementScore >= 70 ? 'Hot 🔥' : engagementScore >= 40 ? 'Warm ☀️' : 'New 🌱';
 
     const timeMinutes = Math.floor(sessionData.timeOnSite / 60);
@@ -535,6 +526,8 @@ Format your response as a JSON object with these exact keys:
       `;
     }
 
+    // Add closing sections to email
+    emailHtml += `
     <!-- Engagement Metrics - Compact -->
     <div style="background: #f8f9fa; border-radius: 8px; padding: 24px; margin-bottom: 32px; border: 1px solid #e0e0e0;">
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center;">
