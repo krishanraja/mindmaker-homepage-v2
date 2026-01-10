@@ -128,28 +128,28 @@ const testLeads = [
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "Founder",
-    selectedProgram: "consultation-booking",
+    selectedProgram: "initial-consult",
     description: "ConsultationBooking Component"
   },
   {
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "Board Member",
-    selectedProgram: "builder-assessment",
+    selectedProgram: "build",
     description: "Builder Assessment CTA"
   },
   {
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "Advisor",
-    selectedProgram: "friction-map",
+    selectedProgram: "build",
     description: "Friction Map Builder CTA"
   },
   {
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "Investor",
-    selectedProgram: "portfolio-builder",
+    selectedProgram: "initial-consult",
     description: "Portfolio Builder CTA"
   },
   {
@@ -195,7 +195,7 @@ const testLeads = [
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "CTO",
-    selectedProgram: "ai-decision-helper",
+    selectedProgram: "build",
     commitmentLevel: "1hr",
     audienceType: "individual",
     pathType: "build",
@@ -205,7 +205,7 @@ const testLeads = [
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "Founder",
-    selectedProgram: "builder-assessment",
+    selectedProgram: "build",
     commitmentLevel: "4wk",
     audienceType: "individual",
     pathType: "build",
@@ -215,7 +215,7 @@ const testLeads = [
     name: "Krish Raja",
     email: "krish@tesla.com",
     jobTitle: "General Manager",
-    selectedProgram: "friction-map",
+    selectedProgram: "build",
     commitmentLevel: "90d",
     audienceType: "individual",
     pathType: "build",
@@ -250,6 +250,25 @@ const testLeads = [
 ];
 
 async function sendTestEmail(lead) {
+  // Validate required fields before sending
+  if (!lead.name || !lead.email || !lead.jobTitle || !lead.selectedProgram) {
+    return {
+      success: false,
+      lead,
+      error: `Missing required fields: name=${!!lead.name}, email=${!!lead.email}, jobTitle=${!!lead.jobTitle}, selectedProgram=${!!lead.selectedProgram}`
+    };
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(lead.email)) {
+    return {
+      success: false,
+      lead,
+      error: `Invalid email format: ${lead.email}`
+    };
+  }
+
   try {
     const response = await fetch(`${SUPABASE_URL}/functions/v1/send-lead-email`, {
       method: "POST",
@@ -276,13 +295,34 @@ async function sendTestEmail(lead) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`HTTP ${response.status}: ${errorText}`);
+      let errorMessage = `HTTP ${response.status}: ${errorText}`;
+      
+      // Try to parse error JSON for better error messages
+      try {
+        const errorJson = JSON.parse(errorText);
+        if (errorJson.error) {
+          errorMessage = errorJson.error;
+        }
+        if (errorJson.details) {
+          errorMessage += ` - Details: ${JSON.stringify(errorJson.details)}`;
+        }
+      } catch (e) {
+        // Keep original error message if parsing fails
+      }
+      
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
+    
+    // Check for error in response body
+    if (data.error) {
+      return { success: false, lead, error: data.error };
+    }
+    
     return { success: true, lead, data };
   } catch (error) {
-    return { success: false, lead, error: error.message };
+    return { success: false, lead, error: error.message || String(error) };
   }
 }
 

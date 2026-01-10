@@ -1,7 +1,7 @@
 # ROOT CAUSE ANALYSIS
 
 **Date:** 2026-01-03  
-**Related:** DIAGNOSIS.md, MOBILE_HERO_OVERFLOW_DIAGNOSIS.md
+**Related:** DIAGNOSIS.md, MOBILE_HERO_OVERFLOW_DIAGNOSIS.md, EMAIL_SYSTEM_FIXES.md
 
 ---
 
@@ -185,6 +185,132 @@ In dark mode:
 
 ---
 
+---
+
+## Email System Failures (FIXED - 2025-01-XX)
+
+### Issue 7: Unsafe Domain Extraction
+
+**Root Cause:**
+Edge function used `email.split("@")[1]` without validation, causing crashes when email format was invalid.
+
+**Evidence:**
+- Line 134 in `supabase/functions/send-lead-email/index.ts`: Direct split without null check
+- Zod validates email format but split assumes structure exists
+- If email somehow passed validation but lacked "@", function would crash
+
+**Fix Applied:**
+- Created `extractDomain()` utility with null checks
+- Returns 400 error if domain cannot be extracted
+- All domain accesses now safe
+
+---
+
+### Issue 8: Missing RESEND_API_KEY Validation
+
+**Root Cause:**
+API key used without null check, causing "Bearer undefined" errors when env var missing.
+
+**Evidence:**
+- Line 28, 560: `RESEND_API_KEY` used directly without validation
+- If env var missing, `Bearer undefined` sent to Resend API → 401 error
+- No early detection of configuration issues
+
+**Fix Applied:**
+- Early validation at handler start
+- Returns 500 with clear error if missing
+- Fails fast instead of retrying with invalid key
+
+---
+
+### Issue 9: Unsafe companyResearch.companyName Access
+
+**Root Cause:**
+Company name could be undefined if domain extraction failed, causing template string errors.
+
+**Evidence:**
+- Multiple template string interpolations (lines 379, 393, 436, 567)
+- If domain extraction failed, `companyName` could be undefined
+- Template strings would show "undefined" or throw errors
+
+**Fix Applied:**
+- Created `ensureString()` utility with fallbacks
+- All company name accesses guaranteed to be strings
+- Fallback to "Unknown Company" if extraction fails
+
+---
+
+### Issue 10: No Timeout on External API Calls
+
+**Root Cause:**
+Gemini and Resend API calls had no timeout, causing edge function to hang indefinitely.
+
+**Evidence:**
+- Gemini API call (line 184): No timeout → could hang
+- Resend API call (line 557): No timeout → could hang
+- Edge function default timeout (60s) → user sees timeout error
+
+**Fix Applied:**
+- Created `fetchWithTimeout()` utility
+- Gemini API: 30 second timeout
+- Resend API: 10 second timeout
+- Proper timeout errors instead of hanging
+
+---
+
+### Issue 11: Frontend Proceeds to Calendly Despite Email Failure
+
+**Root Cause:**
+Email errors logged but flow continued to Calendly, causing silent failures.
+
+**Evidence:**
+- Line 103-114: Error logged but Calendly still opened
+- User books but you never get notified
+- No user feedback about email failure
+
+**Fix Applied:**
+- Email failure now blocks Calendly
+- User must retry if email fails
+- Clear error messages with actionable guidance
+- Retry button in UI
+
+---
+
+### Issue 12: No Timeout Handling in Frontend
+
+**Root Cause:**
+Edge function call had no timeout, user waits indefinitely if function hangs.
+
+**Evidence:**
+- Line 90: `supabase.functions.invoke` with no timeout
+- If edge function hangs, user waits forever
+- No user feedback
+
+**Fix Applied:**
+- 30 second timeout on edge function call
+- Promise.race with timeout promise
+- Clear timeout error message
+
+---
+
+### Issue 13: Invalid Test Script Program Values
+
+**Root Cause:**
+Test script used invalid `selectedProgram` values that don't match schema.
+
+**Evidence:**
+- Lines 131-153: Values like "consultation-booking", "builder-assessment" don't match schema
+- Test emails fail validation
+- Cannot test all CTA paths
+
+**Fix Applied:**
+- All invalid values mapped to valid schema values
+- Pre-send validation added
+- Better error reporting
+
+---
+
 **See Also:**
 - `DIAGNOSIS.md` - Problem summary and architecture
 - `MOBILE_HERO_OVERFLOW_DIAGNOSIS.md` - Detailed mobile hero analysis
+- `EMAIL_SYSTEM_FIXES.md` - Complete email system fix documentation

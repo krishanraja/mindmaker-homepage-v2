@@ -34,6 +34,7 @@ export const InitialConsultModal = ({
   const [jobTitle, setJobTitle] = useState("");
   const [selectedPath, setSelectedPath] = useState(preselectedProgram || "");
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const { sessionData } = useSessionData();
@@ -79,6 +80,7 @@ export const InitialConsultModal = ({
     }
 
     setIsLoading(true);
+    setEmailError(null);
 
     try {
       const selectedPathData = pathOptions.find(p => p.value === selectedPath);
@@ -87,7 +89,12 @@ export const InitialConsultModal = ({
       const programValue = preselectedProgram || selectedPath || 'not-sure';
       
       // Send enriched lead email with all context
-      const { data: emailData, error: emailError } = await supabase.functions.invoke('send-lead-email', {
+      // Add timeout: 30 seconds
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Request timeout - please try again')), 30000);
+      });
+
+      const emailPromise = supabase.functions.invoke('send-lead-email', {
         body: {
           name,
           email,
@@ -100,20 +107,36 @@ export const InitialConsultModal = ({
         }
       });
 
+      let emailData, emailError;
+      try {
+        const result = await Promise.race([emailPromise, timeoutPromise]) as any;
+        emailData = result.data;
+        emailError = result.error;
+      } catch (timeoutError) {
+        emailError = timeoutError instanceof Error ? timeoutError : new Error('Request timeout');
+        emailData = null;
+      }
+
       // Check for errors in multiple places
       const emailFailed = emailError || (emailData && emailData.error);
       
       if (emailFailed) {
-        console.error('Email error:', emailError || emailData?.error);
+        const errorMessage = emailError?.message || emailData?.error || 'Unknown error';
+        console.error('Email error:', errorMessage);
+        setEmailError(errorMessage);
+        
         toast({
-          title: "Email notification failed",
-          description: "Your booking will proceed, but we couldn't send a confirmation email. Please contact us if needed.",
+          title: "Unable to process your request",
+          description: "We couldn't send your booking notification. Please try again or contact us directly at krish@themindmaker.ai",
           variant: "destructive",
         });
-        // Still proceed to Calendly, but user is informed
+        
+        // BLOCK Calendly - user must retry
+        setIsLoading(false);
+        return;
       }
       
-      // Open Calendly popup with commitmentLevel
+      // Email succeeded - proceed to Calendly
       try {
         await openCalendlyPopup({
           name,
@@ -246,6 +269,16 @@ export const InitialConsultModal = ({
             </div>
           </div>
         </div>
+
+        {/* Error Message Display */}
+        {emailError && (
+          <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 space-y-2">
+            <p className="text-sm font-semibold text-destructive">Error: {emailError}</p>
+            <p className="text-xs text-muted-foreground">
+              Please try again. If the problem persists, contact us at krish@themindmaker.ai
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Fixed Submit Button - Always visible */}
@@ -259,6 +292,11 @@ export const InitialConsultModal = ({
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               Processing...
+            </>
+          ) : emailError ? (
+            <>
+              Try Again
+              <ArrowRight className="ml-2 h-5 w-5" />
             </>
           ) : (
             <>

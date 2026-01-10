@@ -24,9 +24,21 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { createLogger, extractRequestContext } from '../_shared/logger.ts';
+import { fetchWithTimeout } from '../_shared/timeout.ts';
+import { extractDomain, validateEnvVars, ensureString } from '../_shared/validation.ts';
 
+// Validate required environment variables at startup
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const googleAIApiKey = Deno.env.get("GOOGLE_AI_API_KEY");
+
+const envValidation = validateEnvVars({
+  RESEND_API_KEY: RESEND_API_KEY,
+});
+
+if (!envValidation.isValid) {
+  console.error("CRITICAL: Missing required environment variables:", envValidation.missing);
+  // Don't throw here - we'll handle it in the handler to return proper error response
+}
 
 // Initialize Supabase client for database operations
 // In Supabase Edge Functions, these are available via environment variables
@@ -115,6 +127,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Validate RESEND_API_KEY early - fail fast if missing
+    if (!RESEND_API_KEY || RESEND_API_KEY.trim() === '') {
+      console.error("CRITICAL: RESEND_API_KEY is not configured");
+      return new Response(
+        JSON.stringify({ error: "Email service configuration error. Please contact support." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const body = await req.json();
     
     // Validate input
@@ -130,8 +151,15 @@ const handler = async (req: Request): Promise<Response> => {
     const { name, email, jobTitle, selectedProgram, commitmentLevel, audienceType, pathType, sessionData } = parseResult.data;
     console.log("Processing lead:", { name, email, jobTitle, commitmentLevel, audienceType, pathType });
 
-    // Extract domain from email
-    const domain = email.split("@")[1];
+    // Safely extract domain from email
+    const domain = extractDomain(email);
+    if (!domain) {
+      console.error("Invalid email format - cannot extract domain:", email);
+      return new Response(
+        JSON.stringify({ error: "Invalid email format" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
     
     // Calculate engagement score early (needed for database insert)
     const engagementFactors = [
@@ -145,8 +173,9 @@ const handler = async (req: Request): Promise<Response> => {
     const engagementScore = Math.round(engagementFactors.reduce((a, b) => a + b, 0));
     
     // Research company using Gemini with Google Search grounding
+    // Ensure companyName is always a string (never undefined)
     let companyResearch = {
-      companyName: domain,
+      companyName: ensureString(domain, "Unknown Company"),
       industry: "Unknown",
       companySize: "unknown",
       latestNews: "Unable to verify company information",
@@ -181,28 +210,33 @@ Format your response as a JSON object with these exact keys:
   "confidence": "high|medium|low"
 }`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${googleAIApiKey}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        // Use timeout wrapper for Gemini API (30 second timeout)
+        const response = await fetchWithTimeout(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${googleAIApiKey}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: researchPrompt
+                }]
+              }],
+              tools: [{
+                googleSearchRetrieval: {} // Enable Google Search grounding
+              }],
+              generationConfig: {
+                temperature: 0.3,
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 1024,
+              }
+            }),
           },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: researchPrompt
-              }]
-            }],
-            tools: [{
-              googleSearchRetrieval: {} // Enable Google Search grounding
-            }],
-            generationConfig: {
-              temperature: 0.3,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 1024,
-            }
-          }),
-        });
+          30000 // 30 second timeout
+        );
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -229,12 +263,12 @@ Format your response as a JSON object with these exact keys:
             try {
               const parsed = JSON.parse(jsonMatch[0]);
               companyResearch = {
-                companyName: parsed.companyName || domain,
-                industry: parsed.industry || "Unknown",
-                companySize: parsed.companySize || "unknown",
-                latestNews: parsed.latestNews || "Unable to verify company information",
-                suggestedScope: parsed.suggestedScope || "Discovery call to understand specific needs",
-                confidence: parsed.confidence || "low"
+                companyName: ensureString(parsed.companyName, domain || "Unknown Company"),
+                industry: ensureString(parsed.industry, "Unknown"),
+                companySize: ensureString(parsed.companySize, "unknown"),
+                latestNews: ensureString(parsed.latestNews, "Unable to verify company information"),
+                suggestedScope: ensureString(parsed.suggestedScope, "Discovery call to understand specific needs"),
+                confidence: ensureString(parsed.confidence, "low")
               };
               console.log("Successfully parsed company research:", companyResearch);
             } catch (parseError) {
@@ -245,7 +279,7 @@ Format your response as a JSON object with these exact keys:
                                   responseText.match(/company["\s:]+"([^"]+)"/i) ||
                                   responseText.match(/company["\s:]+([A-Z][^,\.\n]+)/i);
               if (companyMatch && companyMatch[1]) {
-                companyResearch.companyName = companyMatch[1].trim();
+                companyResearch.companyName = ensureString(companyMatch[1].trim(), domain || "Unknown Company");
                 console.log("Extracted company name from text:", companyResearch.companyName);
               }
             }
@@ -254,7 +288,7 @@ Format your response as a JSON object with these exact keys:
             // Try basic text extraction
             const companyMatch = responseText.match(/(?:company|companyName)[\s:]+([A-Z][^,\.\n]+)/i);
             if (companyMatch && companyMatch[1]) {
-              companyResearch.companyName = companyMatch[1].trim();
+              companyResearch.companyName = ensureString(companyMatch[1].trim(), domain || "Unknown Company");
             }
           }
         } else {
@@ -318,6 +352,15 @@ Format your response as a JSON object with these exact keys:
 
     const timeMinutes = Math.floor(sessionData.timeOnSite / 60);
     const timeSeconds = sessionData.timeOnSite % 60;
+
+    // Final safety check: Ensure companyResearch.companyName is ALWAYS a string
+    // This prevents any "Cannot read properties of undefined (reading 'replace')" errors
+    companyResearch.companyName = ensureString(companyResearch.companyName, domain || "Unknown Company");
+    companyResearch.industry = ensureString(companyResearch.industry, "Unknown");
+    companyResearch.companySize = ensureString(companyResearch.companySize, "unknown");
+    companyResearch.latestNews = ensureString(companyResearch.latestNews, "Unable to verify company information");
+    companyResearch.suggestedScope = ensureString(companyResearch.suggestedScope, "Discovery call to understand specific needs");
+    companyResearch.confidence = ensureString(companyResearch.confidence, "low");
 
     // Insert lead to database FIRST (before email send)
     // This ensures we capture the lead even if email fails
@@ -554,20 +597,25 @@ Format your response as a JSON object with these exact keys:
       try {
         console.log(`Email send attempt ${attempt}/${maxRetries}`);
         
-        const emailResponse = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${RESEND_API_KEY}`,
-            'Content-Type': 'application/json',
+        // Use timeout wrapper for Resend API (10 second timeout)
+        const emailResponse = await fetchWithTimeout(
+          'https://api.resend.com/emails',
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${RESEND_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'Mindmaker Leads <leads@themindmaker.ai>',
+              to: ['krish@themindmaker.ai'],
+              reply_to: email, // Allow replying directly to the lead
+              subject: `🎯 Lead: ${name} from ${companyResearch.companyName} - ${sessionTypeLabel}`,
+              html: emailHtml,
+            }),
           },
-          body: JSON.stringify({
-            from: 'Mindmaker Leads <leads@themindmaker.ai>',
-            to: ['krish@themindmaker.ai'],
-            reply_to: email, // Allow replying directly to the lead
-            subject: `🎯 Lead: ${name} from ${companyResearch.companyName} - ${sessionTypeLabel}`,
-            html: emailHtml,
-          }),
-        });
+          10000 // 10 second timeout
+        );
 
         if (!emailResponse.ok) {
           const errorText = await emailResponse.text();
