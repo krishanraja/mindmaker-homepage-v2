@@ -33,19 +33,43 @@ export const InitialConsultModal = ({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [jobTitle, setJobTitle] = useState("");
-  const [selectedPath, setSelectedPath] = useState(preselectedProgram || "");
+  const [selectedPath, setSelectedPath] = useState("");
+  const [selectedCommitment, setSelectedCommitment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const { sessionData } = useSessionData();
 
-  // Auto-select path if provided
+  // Get qualification data from context or props (props take precedence)
+  const qualificationData = sessionData?.qualificationData;
+  const effectivePreselectedProgram = preselectedProgram || qualificationData?.preselectedProgram;
+  const effectiveCommitmentLevel = commitmentLevel || qualificationData?.commitmentLevel;
+  const effectiveAudienceType = audienceType || qualificationData?.audienceType;
+  const effectivePathType = pathType || qualificationData?.pathType;
+
+  // Auto-populate from props or context when modal opens
   useEffect(() => {
-    if (preselectedProgram && !selectedPath) {
-      setSelectedPath(preselectedProgram);
+    if (open) {
+      // Set path from props or context
+      if (effectivePreselectedProgram && !selectedPath) {
+        setSelectedPath(effectivePreselectedProgram);
+      }
+      
+      // Set commitment from props or context (only if not already set by user)
+      if (effectiveCommitmentLevel && !selectedCommitment && !commitmentLevel) {
+        setSelectedCommitment(effectiveCommitmentLevel);
+      }
+    } else {
+      // Reset form when modal closes
+      setName("");
+      setEmail("");
+      setJobTitle("");
+      setSelectedPath("");
+      setSelectedCommitment("");
+      setEmailError(null);
     }
-  }, [preselectedProgram, selectedPath]);
+  }, [open, effectivePreselectedProgram, effectiveCommitmentLevel, selectedPath, selectedCommitment, commitmentLevel]);
 
   // Run health check on mount (only in dev)
   useEffect(() => {
@@ -78,13 +102,22 @@ export const InitialConsultModal = ({
     },
   ];
 
+  const commitmentOptions = [
+    { value: "1hr", label: "1 Hour Session", description: "Quick consultation or drop-in session" },
+    { value: "3hr", label: "3 Hour Session", description: "Extended alignment or deep dive session" },
+    { value: "4wk", label: "4 Week Program", description: "Weekly cadence with async support" },
+    { value: "90d", label: "90 Day Program", description: "Full transformation program" },
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // If preselectedProgram is provided, selectedPath is optional
-    const pathRequired = !preselectedProgram;
+    // If preselectedProgram is provided (from props or context), selectedPath is optional
+    const pathRequired = !effectivePreselectedProgram;
+    // Commitment is required if we're showing the commitment question (no effective commitment from props/context)
+    const commitmentRequired = !effectiveCommitmentLevel;
     
-    if (!name || !email || !jobTitle || (pathRequired && !selectedPath)) {
+    if (!name || !email || !jobTitle || (pathRequired && !selectedPath) || (commitmentRequired && !selectedCommitment)) {
       toast({
         title: "Missing information",
         description: "Please fill in all fields",
@@ -99,8 +132,11 @@ export const InitialConsultModal = ({
     try {
       const selectedPathData = pathOptions.find(p => p.value === selectedPath);
       
-      // Determine the program value to send
-      const programValue = preselectedProgram || selectedPath || 'not-sure';
+      // Determine the program value to send (use effective values or user selection)
+      const programValue = effectivePreselectedProgram || selectedPath || 'not-sure';
+      const finalCommitmentLevel = effectiveCommitmentLevel || selectedCommitment;
+      const finalAudienceType = effectiveAudienceType || (selectedPath === "team" ? "team" : "individual");
+      const finalPathType = effectivePathType || (selectedPath === "build" ? "build" : selectedPath === "orchestrate" ? "orchestrate" : undefined);
       
       // Log request details for debugging
       console.log('📧 Sending lead email request:', {
@@ -110,9 +146,9 @@ export const InitialConsultModal = ({
           email,
           jobTitle,
           selectedProgram: programValue,
-          commitmentLevel,
-          audienceType,
-          pathType,
+          commitmentLevel: finalCommitmentLevel,
+          audienceType: finalAudienceType,
+          pathType: finalPathType,
           sessionDataKeys: Object.keys(sessionData || {})
         },
         supabaseUrl: (supabase as any).supabaseUrl?.substring(0, 30) + '...',
@@ -131,9 +167,9 @@ export const InitialConsultModal = ({
           email,
           jobTitle,
           selectedProgram: programValue,
-          commitmentLevel: commitmentLevel,
-          audienceType: audienceType,
-          pathType: pathType,
+          commitmentLevel: finalCommitmentLevel,
+          audienceType: finalAudienceType,
+          pathType: finalPathType,
           sessionData
         }
       });
@@ -198,7 +234,7 @@ export const InitialConsultModal = ({
           email,
           source: 'initial-consult',
           preselectedProgram: programValue,
-          commitmentLevel: commitmentLevel,
+          commitmentLevel: finalCommitmentLevel,
         });
         
         onOpenChange(false);
@@ -230,9 +266,9 @@ export const InitialConsultModal = ({
   const formContent = (
     <form onSubmit={handleSubmit} className="flex flex-col h-full">
       {/* Scrollable content area */}
-      <div className="flex-1 overflow-y-auto space-y-6 mt-4 px-4 sm:px-6">
+      <div className="flex-1 overflow-y-auto space-y-6 mt-4 px-1 sm:px-0 pr-1">
         {/* Path Selection - Required First Question (only show if not pre-selected) */}
-        {!preselectedProgram && (
+        {!effectivePreselectedProgram && (
           <div className="space-y-3">
             <Label className="text-sm font-semibold">How do you want to work with AI?</Label>
             <RadioGroup value={selectedPath} onValueChange={setSelectedPath}>
@@ -262,16 +298,39 @@ export const InitialConsultModal = ({
           </div>
         )}
         
-        {/* Show commitment level if provided */}
-        {commitmentLevel && (
+        {/* Time Commitment Question - Show if not provided via props or context */}
+        {!effectiveCommitmentLevel && (
+          <div className="space-y-3">
+            <Label className="text-sm font-semibold">What time commitment are you looking for?</Label>
+            <RadioGroup value={selectedCommitment} onValueChange={setSelectedCommitment}>
+              {commitmentOptions.map((commitment) => (
+                <div key={commitment.value} className="flex items-start space-x-3 space-y-0">
+                  <RadioGroupItem value={commitment.value} id={commitment.value} className="mt-1" />
+                  <Label 
+                    htmlFor={commitment.value} 
+                    className="font-normal cursor-pointer flex-1 leading-tight"
+                  >
+                    <div>
+                      <span className="font-semibold block">{commitment.label}</span>
+                      <span className="text-xs text-muted-foreground block mt-0.5">{commitment.description}</span>
+                    </div>
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        )}
+        
+        {/* Show commitment level if provided (read-only display) */}
+        {effectiveCommitmentLevel && (
           <div className="bg-mint/10 border border-mint/30 rounded-lg p-4">
             <p className="text-sm font-semibold text-foreground mb-1">Selected Commitment:</p>
             <p className="text-sm text-muted-foreground">
-              {commitmentLevel === "1hr" ? "1 Hour Session" :
-               commitmentLevel === "3hr" ? "3 Hour Session" :
-               commitmentLevel === "4wk" ? "4 Week Program" :
-               commitmentLevel === "90d" ? "90 Day Program" :
-               commitmentLevel}
+              {effectiveCommitmentLevel === "1hr" ? "1 Hour Session" :
+               effectiveCommitmentLevel === "3hr" ? "3 Hour Session" :
+               effectiveCommitmentLevel === "4wk" ? "4 Week Program" :
+               effectiveCommitmentLevel === "90d" ? "90 Day Program" :
+               effectiveCommitmentLevel}
             </p>
           </div>
         )}
@@ -286,6 +345,7 @@ export const InitialConsultModal = ({
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
               required
+              className="w-[99%]"
             />
           </div>
           <div className="space-y-2">
@@ -296,6 +356,7 @@ export const InitialConsultModal = ({
               onChange={(e) => setJobTitle(e.target.value)}
               placeholder="e.g. CEO, VP of Operations"
               required
+              className="w-[99%]"
             />
           </div>
           <div className="space-y-2">
@@ -307,6 +368,7 @@ export const InitialConsultModal = ({
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
               required
+              className="w-[99%]"
             />
           </div>
         </div>

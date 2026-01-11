@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Calendar, CheckCircle, AlertCircle, Clock, Zap } from "lucide-react";
-import { ConsultationBooking } from "@/components/ConsultationBooking";
+import { InitialConsultModal } from "@/components/InitialConsultModal";
 import { SEO } from "@/components/SEO";
 import { ModuleExplorer } from "@/components/ModuleExplorer";
 import { Link, useSearchParams } from "react-router-dom";
@@ -121,6 +122,7 @@ const BuilderSprint = () => {
   const depth = (searchParams.get("depth") as DepthType) || "90d";
   const content = depthContent[depth];
   const IconComponent = content.icon;
+  const [consultModalOpen, setConsultModalOpen] = useState(false);
 
   const setDepth = (newDepth: DepthType) => {
     setSearchParams({ depth: newDepth });
@@ -326,14 +328,38 @@ const BuilderSprint = () => {
           <ModuleExplorer context="individual" />
           
           {/* CTA */}
-          <ConsultationBooking variant="default" />
+          <div className="text-center mt-12 mb-24">
+            <Button
+              size="lg"
+              variant="mint"
+              className="px-12 py-6 text-lg font-bold"
+              onClick={() => setConsultModalOpen(true)}
+            >
+              Book Your Session
+            </Button>
+          </div>
         </div>
       </section>
       
       <Footer />
       
       {/* Floating Book CTA for mobile */}
-      <FloatingBookCTA preselectedProgram="builder-sprint" />
+      <FloatingBookCTA 
+        preselectedProgram="build"
+        commitmentLevel={depth}
+        audienceType="individual"
+        pathType="build"
+      />
+      
+      {/* Consult Modal */}
+      <InitialConsultModal
+        open={consultModalOpen}
+        onOpenChange={setConsultModalOpen}
+        preselectedProgram="build"
+        commitmentLevel={depth}
+        audienceType="individual"
+        pathType="build"
+      />
     </main>
   );
 };
