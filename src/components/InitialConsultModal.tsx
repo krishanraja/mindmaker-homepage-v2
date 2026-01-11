@@ -230,7 +230,7 @@ export const InitialConsultModal = ({
   const formContent = (
     <form onSubmit={handleSubmit} className="flex flex-col h-full">
       {/* Scrollable content area */}
-      <div className="flex-1 overflow-y-auto space-y-6 mt-4 px-1 sm:px-0 pr-1">
+      <div className="flex-1 overflow-y-auto space-y-6 mt-4 px-4 sm:px-6">
         {/* Path Selection - Required First Question (only show if not pre-selected) */}
         {!preselectedProgram && (
           <div className="space-y-3">
@@ -286,7 +286,6 @@ export const InitialConsultModal = ({
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
               required
-              className="w-[99%]"
             />
           </div>
           <div className="space-y-2">
@@ -297,7 +296,6 @@ export const InitialConsultModal = ({
               onChange={(e) => setJobTitle(e.target.value)}
               placeholder="e.g. CEO, VP of Operations"
               required
-              className="w-[99%]"
             />
           </div>
           <div className="space-y-2">
@@ -309,7 +307,6 @@ export const InitialConsultModal = ({
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@company.com"
               required
-              className="w-[99%]"
             />
           </div>
         </div>
