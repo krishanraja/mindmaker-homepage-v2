@@ -281,8 +281,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     const currentProgress = progressRef.current;
     let newProgress = clamp(currentProgress + clampedDelta, 0, 1);
     
-<<<<<<< HEAD
-=======
     // CRITICAL: Check for completion FIRST, before boundary overflow logic
     // Use floating point safe threshold (>= 0.9999) to ensure completion is detected
     const completionThreshold = 0.9999;
@@ -369,7 +367,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
         releaseBoundary('top');
         return;
       }
-<<<<<<< HEAD
     } else if (scrollingPastBottom) {
       // v6: FORCE progress to exactly 1.0 before allowing bottom boundary release
       // This is the key fix - ensures the animation completes before unlock
@@ -389,8 +386,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
         releaseBoundary('bottom');
         return;
       }
-=======
->>>>>>> f64ab08 (Fix: Remove debug code, fix grammar, and resolve duplicate imports)
     } else {
       // Not at a boundary or scrolling away from boundary - reset overflow tracking
       if (boundaryHitRef.current !== null) {
