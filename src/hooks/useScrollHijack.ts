@@ -1,21 +1,21 @@
 /**
- * @file useScrollHijack Hook v5
- * @description BULLETPROOF scroll hijacking with permanent completion + smooth exit
+ * @file useScrollHijack Hook v6
+ * @description BULLETPROOF scroll hijacking with guaranteed completion
  * 
  * Key architectural changes:
  * - v2: Body fixed positioning (caused blank screen bug)
  * - v3: Overflow-based lock with RAF position maintenance (fixed blank screen)
  * - v4: Boundary-based auto-release (fixes "stuck" UX issue)
  * - v5: Permanent completion - once done, NEVER re-engage (fixes re-engagement UX)
+ * - v6: Guaranteed progress completion before boundary release (fixes 99% stuck bug)
  * 
- * The v4 bug: Users completing the animation could get trapped again when
- * scrolling back up because hasExitedViewportRef allowed re-engagement.
+ * The v5 bug: Users scrolling past bottom boundary could trigger release before
+ * progress actually reached 1.0, leaving the animation incomplete.
  * 
- * v5 fix:
- * - Add `completedRef` for permanent completion state
- * - Remove `hasExitedViewportRef` re-engagement logic entirely
- * - Lower `overflowThreshold` default to 80px for smoother exit
- * - Once complete, section behaves as normal page element forever
+ * v6 fix:
+ * - Force progress to 1.0 before allowing bottom boundary release
+ * - Force progress to 0.0 before allowing top boundary release
+ * - Ensures onProgress callback fires with final value before unlock
  * 
  * @dependencies None (standalone hook)
  */
@@ -98,12 +98,10 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     progressDivisor = 600,
     enabled = true,
     maxDeltaPerFrame = 0.08,
-    // v4: Lowered from 15 to 8 - more forgiving escape velocity
     escapeVelocityThreshold = 8,
     onEscapeVelocity,
     targetOffset = 0,
     triggerBuffer = 100,
-    // v5: Lowered from 150 to 80 - smoother boundary exit
     overflowThreshold = 80,
     onBoundaryRelease,
   } = options;
@@ -143,7 +141,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   // v5: Permanent completion tracking - once true, NEVER re-engage
   const completedRef = useRef(false);
   
-  // v5: Boundary overflow tracking (lowered threshold for smoother exit)
+  // v5: Boundary overflow tracking
   const overflowDeltaRef = useRef(0);
   const boundaryHitRef = useRef<'top' | 'bottom' | null>(null);
   
@@ -210,12 +208,9 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     // Save the EXACT scroll position we want to maintain
     savedScrollYRef.current = scrollY;
     
-    // Apply CSS classes (these now only set overflow:hidden, NOT position:fixed)
+    // Apply CSS classes
     document.documentElement.classList.add(CSS_CLASS_LOCKED);
     document.documentElement.classList.add(CSS_CLASS_LEGACY);
-    
-    // v3: NO body.style.top manipulation - this was causing the blank screen!
-    // Instead, we use RAF to maintain scroll position
     
     isLockedRef.current = true;
     setIsLocked(true);
@@ -227,7 +222,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     velocityHistoryRef.current = [];
     accumulatedDeltaRef.current = 0;
     
-    // v4: Reset overflow tracking
+    // Reset overflow tracking
     overflowDeltaRef.current = 0;
     boundaryHitRef.current = null;
   }, [startPositionMaintenance]);
@@ -241,8 +236,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     // Remove CSS classes
     document.documentElement.classList.remove(CSS_CLASS_LOCKED);
     document.documentElement.classList.remove(CSS_CLASS_LEGACY);
-    
-    // v3: No body.style.top to clear
     
     isLockedRef.current = false;
     setIsLocked(false);
@@ -278,7 +271,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   }, [unlockBody]);
 
   // ============================================================
-  // PROGRESS UPDATE WITH SMOOTHING + v4 BOUNDARY OVERFLOW TRACKING
+  // PROGRESS UPDATE WITH SMOOTHING + v6 GUARANTEED COMPLETION
   // ============================================================
   
   const updateProgress = useCallback((rawDelta: number, direction: 'up' | 'down') => {
@@ -288,47 +281,50 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     const currentProgress = progressRef.current;
     const newProgress = clamp(currentProgress + clampedDelta, 0, 1);
     
-    // v4: Track overflow at boundaries
-    // When at a boundary and user keeps scrolling in that direction,
-    // accumulate the "overflow" delta. Once it exceeds threshold, release.
-    
     // Check if we're AT a boundary
     const atTopBoundary = newProgress === 0;
     const atBottomBoundary = newProgress === 1;
     
     // Check if user is trying to scroll PAST the boundary
-    const scrollingPastTop = atTopBoundary && rawDelta < 0; // At 0%, scrolling up
-    const scrollingPastBottom = atBottomBoundary && rawDelta > 0; // At 100%, scrolling down
+    const scrollingPastTop = atTopBoundary && rawDelta < 0;
+    const scrollingPastBottom = atBottomBoundary && rawDelta > 0;
     
     if (scrollingPastTop) {
-      // User is at top boundary, trying to scroll up (exit upward)
+      // v6: Force progress to exactly 0 before allowing top boundary release
+      if (progressRef.current !== 0) {
+        progressRef.current = 0;
+        setProgress(0);
+        onProgressRef.current(0, -maxDeltaPerFrame, 'up');
+      }
+      
       if (boundaryHitRef.current !== 'top') {
-        // First time hitting this boundary, reset overflow
         boundaryHitRef.current = 'top';
         overflowDeltaRef.current = 0;
       }
-      // Accumulate overflow (use absolute value since rawDelta is negative)
       overflowDeltaRef.current += Math.abs(rawDelta);
       
-      // Check if overflow threshold reached
       if (overflowDeltaRef.current >= overflowThreshold) {
         releaseBoundary('top');
-        return; // Don't update progress, we're releasing
+        return;
       }
     } else if (scrollingPastBottom) {
-      // User is at bottom boundary, trying to scroll down (exit downward)
+      // v6: FORCE progress to exactly 1.0 before allowing bottom boundary release
+      // This is the key fix - ensures the animation completes before unlock
+      if (progressRef.current !== 1) {
+        progressRef.current = 1;
+        setProgress(1);
+        onProgressRef.current(1, maxDeltaPerFrame, 'down');
+      }
+      
       if (boundaryHitRef.current !== 'bottom') {
-        // First time hitting this boundary, reset overflow
         boundaryHitRef.current = 'bottom';
         overflowDeltaRef.current = 0;
       }
-      // Accumulate overflow
       overflowDeltaRef.current += rawDelta;
       
-      // Check if overflow threshold reached
       if (overflowDeltaRef.current >= overflowThreshold) {
         releaseBoundary('bottom');
-        return; // Don't update progress, we're releasing
+        return;
       }
     } else {
       // Not at a boundary or scrolling away from boundary - reset overflow tracking
@@ -481,7 +477,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   }, []);
 
   // ============================================================
-  // CONTINUOUS SCROLL MONITORING - THE KEY FIX
+  // CONTINUOUS SCROLL MONITORING
   // ============================================================
   
   const handleScroll = useCallback(() => {
@@ -505,30 +501,23 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     // Skip if in cooldown
     if (releaseCooldownRef.current) return;
     
-    // v5: Once completed, NEVER re-engage - treat as normal page element
+    // v5: Once completed, NEVER re-engage
     if (completedRef.current) return;
     
     // Calculate the ideal scroll position for locking
-    // This is where the section top = targetOffset
     const sectionTopFromDocumentTop = scrollY + sectionTop;
     const idealScrollY = sectionTopFromDocumentTop - targetOffset;
     
     // Check if section is in the lock trigger zone
-    // Lock when section top is between targetOffset and targetOffset + triggerBuffer
     const isInTriggerZone = sectionTop <= (targetOffset + triggerBuffer) && sectionTop >= (targetOffset - triggerBuffer);
-    
-    // Check if we're scrolling down into the section
     const isApproachingSection = sectionTop <= (targetOffset + triggerBuffer * 2) && sectionTop > targetOffset;
     
     if (isInTriggerZone || isApproachingSection) {
-      // SNAP to the ideal position, then lock
       if (Math.abs(scrollY - idealScrollY) > 2) {
-        // Need to snap first
         window.scrollTo({
           top: idealScrollY,
           behavior: 'instant'
         });
-        // Lock after snap settles
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             if (!isLockedRef.current && !releaseCooldownRef.current) {
@@ -537,12 +526,9 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
           });
         });
       } else {
-        // Already at ideal position, lock immediately
         lockBody(idealScrollY);
       }
     }
-    
-    // v5: Removed hasExitedViewportRef logic - no re-engagement after completion
   }, [enabled, sectionRef, targetOffset, triggerBuffer, lockBody]);
 
   // ============================================================
@@ -552,18 +538,13 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   useEffect(() => {
     if (!enabled) return;
     
-    // CRITICAL: Use scroll event for CONTINUOUS monitoring
-    // This is what was missing in v1 - IntersectionObserver alone is not enough
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Event blocking (only active when locked)
     window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: false, capture: true });
     window.addEventListener('keydown', handleKeyDown, { capture: true });
     window.addEventListener('popstate', handlePopState);
     
-    // Initial check in case page loads with section already in view
     handleScroll();
     
     return () => {
@@ -591,7 +572,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   
   useEffect(() => {
     if (isComplete) {
-      // v5: Mark as permanently completed - will NEVER re-engage
       completedRef.current = true;
       
       if (isLockedRef.current) {
@@ -606,7 +586,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
   
   useEffect(() => {
     return () => {
-      // Stop position maintenance RAF
       if (positionMaintenanceRafRef.current !== null) {
         cancelAnimationFrame(positionMaintenanceRafRef.current);
         positionMaintenanceRafRef.current = null;
@@ -615,7 +594,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
       if (isLockedRef.current) {
         document.documentElement.classList.remove(CSS_CLASS_LOCKED);
         document.documentElement.classList.remove(CSS_CLASS_LEGACY);
-        // v3: No body.style.top to clear
       }
     };
   }, []);
@@ -635,7 +613,6 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     setProgress(0);
     velocityHistoryRef.current = [];
     accumulatedDeltaRef.current = 0;
-    // v5: Reset completion state (allows re-engagement if explicitly reset)
     completedRef.current = false;
     onProgressRef.current(0, 0, 'up');
   }, []);
