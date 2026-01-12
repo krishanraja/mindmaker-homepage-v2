@@ -40,7 +40,13 @@ export const MindmakerIcon = ({
           width={iconSize}
           height={iconSize}
           className="shrink-0 object-contain animate-pulse relative z-10"
-          style={{ aspectRatio: 'auto' }}
+          style={{ 
+            aspectRatio: '1 / 1',  // Force square
+            maxWidth: `${iconSize}px`,  // Explicit max
+            maxHeight: `${iconSize}px`, // Explicit max
+            width: `${iconSize}px`,     // Explicit width
+            height: `${iconSize}px`     // Explicit height
+          }}
         />
       </div>
     );
@@ -56,7 +62,13 @@ export const MindmakerIcon = ({
         "shrink-0 object-contain",
         className
       )}
-      style={{ aspectRatio: 'auto' }}
+      style={{ 
+        aspectRatio: '1 / 1',  // Force square
+        maxWidth: `${size}px`,  // Explicit max
+        maxHeight: `${size}px`, // Explicit max
+        width: `${size}px`,     // Explicit width
+        height: `${size}px`     // Explicit height
+      }}
     />
   );
 };

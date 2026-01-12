@@ -540,6 +540,7 @@ const ChaosToClarity = () => {
           style={{
             opacity: 'var(--ticker-opacity, 0)',
             transform: 'translateY(var(--ticker-y, 30px))',
+            isolation: 'isolate', // Create new stacking context explicitly
           }}
         >
           <div className="text-center mb-4 md:mb-6">

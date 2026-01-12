@@ -21,16 +21,21 @@ const TestimonialCard = ({ testimonial, onExpandChange }: TestimonialCardProps) 
   };
 
   return (
-    <div className="minimal-card hover-lift bg-background h-full flex flex-col min-h-[280px]">
+    <div className="minimal-card hover-lift bg-background h-full flex flex-col min-h-[280px] max-h-[400px]">
       <Quote className="h-6 w-6 text-mint mb-4 flex-shrink-0" />
       
-      <div className="flex-grow">
+      <div 
+        className={cn(
+          "flex-grow overflow-hidden",
+          !isExpanded && isLongQuote && "h-[120px]" // Fixed height when collapsed
+        )}
+      >
         <motion.p 
           className={cn(
             "text-sm leading-relaxed text-foreground",
             !isExpanded && isLongQuote && "line-clamp-4"
           )}
-          layout
+          layout={false} // Disable layout animation to prevent height jumps
           transition={{ duration: 0.3 }}
         >
           "{testimonial.quote}"
@@ -222,7 +227,7 @@ const TrustSection = () => {
             {testimonials.map((testimonial, index) => (
               <CarouselItem 
                 key={index} 
-                className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 lg:basis-1/3"
+                className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 lg:basis-1/3 h-full"
               >
                 <div 
                   className="fade-in-up"

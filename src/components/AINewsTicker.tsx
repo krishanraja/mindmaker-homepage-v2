@@ -26,20 +26,22 @@ const AINewsTicker = () => {
   const [contentWidth, setContentWidth] = useState(0);
   
   // v2: Measure content width on mount and when headlines change
+  // v3: Use getBoundingClientRect() for accurate measurement including gaps
   const measureWidth = useCallback(() => {
     if (contentRef.current && headlines.length > 0) {
-      // Get the width of one set of headlines (not duplicated)
-      const children = contentRef.current.children;
-      let singleSetWidth = 0;
+      const container = contentRef.current;
+      // Measure actual rendered width including gaps
+      const firstChild = container.children[0] as HTMLElement;
+      const lastChild = container.children[headlines.length - 1] as HTMLElement;
       
-      // Measure first half of children (one complete set)
-      const singleSetCount = headlines.length;
-      for (let i = 0; i < singleSetCount && i < children.length; i++) {
-        const child = children[i] as HTMLElement;
-        singleSetWidth += child.offsetWidth + 48; // 48px = gap-12 (3rem)
+      if (firstChild && lastChild) {
+        const firstRect = firstChild.getBoundingClientRect();
+        const lastRect = lastChild.getBoundingClientRect();
+        // Actual width = last child right edge - first child left edge + gap
+        // gap-12 = 3rem = 48px
+        const actualWidth = lastRect.right - firstRect.left + 48;
+        setContentWidth(actualWidth);
       }
-      
-      setContentWidth(singleSetWidth);
     }
   }, [headlines.length]);
   
@@ -134,8 +136,8 @@ const AINewsTicker = () => {
       </div>
       
       {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent pointer-events-none" style={{ zIndex: 'var(--z-elevated)' }} />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent pointer-events-none" style={{ zIndex: 'var(--z-elevated)' }} />
       
       {/* Ticker content */}
       <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
@@ -168,16 +170,20 @@ const AINewsTicker = () => {
           {duplicatedHeadlines.map((headline, index) => (
             <div
               key={`${headline.title}-${index}`}
-              className="flex items-center gap-4 text-sm md:text-base group select-none flex-shrink-0"
+              className="flex items-center gap-4 text-sm md:text-base group select-none flex-shrink-0 overflow-hidden"
+              style={{ 
+                maxWidth: 'min(100vw - 8rem, 600px)',
+                zIndex: 'var(--z-content)'
+              }}
             >
-              <MindmakerIcon size={16} className="text-primary flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
-              <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              <MindmakerIcon size={16} className="text-primary flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" style={{ zIndex: 'var(--z-content)' }} />
+              <span className="font-semibold text-foreground group-hover:text-primary transition-colors" style={{ zIndex: 'var(--z-content)' }}>
                 {headline.title}
               </span>
-              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 flex-shrink-0">
+              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 flex-shrink-0" style={{ zIndex: 'var(--z-content)' }}>
                 {headline.source}
               </span>
-              <span className="text-muted-foreground mx-4 flex-shrink-0">•</span>
+              <span className="text-muted-foreground mx-4 flex-shrink-0" style={{ zIndex: 'var(--z-content)' }}>•</span>
             </div>
           ))}
         </motion.div>
