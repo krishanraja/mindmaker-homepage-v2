@@ -122,6 +122,7 @@
   #hero .hero-content-wrapper {
     contain: layout style;
     overflow-x: hidden;
+    overflow-y: hidden;
     max-width: 100%;
   }
   

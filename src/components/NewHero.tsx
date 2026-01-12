@@ -124,7 +124,7 @@ const NewHero = () => {
       {/* Content - padding-top styles moved to index.css @layer hero */}
       <div className="container-width relative z-10 pb-12 sm:pb-16 md:pb-20 overflow-x-hidden hero-content-wrapper">
         {/* Hero Content */}
-        <div className="max-w-5xl overflow-x-hidden">
+        <div className="max-w-5xl overflow-x-hidden overflow-y-hidden">
           <div className="space-y-6 sm:space-y-8 md:space-y-10 fade-in-up" style={{animationDelay: '0.1s'}}>
             {/* Two-line hero layout: rotating text on line 1, static text on line 2 */}
             <div 
