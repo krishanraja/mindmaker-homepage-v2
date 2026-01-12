@@ -279,15 +279,77 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
     const clampedDelta = clamp(normalizedDelta, -maxDeltaPerFrame, maxDeltaPerFrame);
     
     const currentProgress = progressRef.current;
-    const newProgress = clamp(currentProgress + clampedDelta, 0, 1);
+    let newProgress = clamp(currentProgress + clampedDelta, 0, 1);
+    
+<<<<<<< HEAD
+=======
+    // CRITICAL: Check for completion FIRST, before boundary overflow logic
+    // Use floating point safe threshold (>= 0.9999) to ensure completion is detected
+    const completionThreshold = 0.9999;
+    const isAtCompletion = newProgress >= completionThreshold;
+    
+    // If we've reached completion threshold, clamp to exactly 1.0 and ensure completion callback runs
+    if (isAtCompletion && newProgress < 1.0) {
+      newProgress = 1.0;
+    }
+    
+    // If at completion, trigger completion callback immediately
+    // This ensures isComplete state is set before any boundary release logic
+    if (isAtCompletion && currentProgress < completionThreshold) {
+      // First time reaching completion - ensure we call onProgress with exactly 1.0
+      progressRef.current = 1.0;
+      setProgress(1.0);
+      onProgressRef.current(1.0, clampedDelta, direction);
+      // Reset overflow tracking since we're at completion
+      boundaryHitRef.current = null;
+      overflowDeltaRef.current = 0;
+      return; // Don't process boundary overflow yet - let completion state propagate first
+    }
+    
+    // If already at completion (isComplete should be true), check if user wants to exit
+    // Only process boundary overflow if we're already at completion
+    if (isAtCompletion) {
+      // We're at completion, check if user is trying to scroll past (boundary overflow)
+      const scrollingPastBottom = rawDelta > 0; // At 100%, scrolling down
+      
+      if (scrollingPastBottom) {
+        // User is at bottom boundary (completion), trying to scroll down (exit downward)
+        if (boundaryHitRef.current !== 'bottom') {
+          // First time hitting this boundary, reset overflow
+          boundaryHitRef.current = 'bottom';
+          overflowDeltaRef.current = 0;
+        }
+        // Accumulate overflow
+        overflowDeltaRef.current += rawDelta;
+        
+        // Check if overflow threshold reached
+        if (overflowDeltaRef.current >= overflowThreshold) {
+          releaseBoundary('bottom');
+          return; // Don't update progress, we're releasing
+        }
+      } else {
+        // Scrolling up from completion - reset overflow tracking
+        if (boundaryHitRef.current !== null) {
+          boundaryHitRef.current = null;
+          overflowDeltaRef.current = 0;
+        }
+      }
+      
+      // At completion, don't update progress further (keep at 1.0)
+      return;
+    }
+    
+    // v4: Track overflow at boundaries (only when NOT at completion)
+    // When at a boundary and user keeps scrolling in that direction,
+    // accumulate the "overflow" delta. Once it exceeds threshold, release.
     
     // Check if we're AT a boundary
     const atTopBoundary = newProgress === 0;
     const atBottomBoundary = newProgress === 1;
     
     // Check if user is trying to scroll PAST the boundary
-    const scrollingPastTop = atTopBoundary && rawDelta < 0;
-    const scrollingPastBottom = atBottomBoundary && rawDelta > 0;
+    const scrollingPastTop = atTopBoundary && rawDelta < 0; // At 0%, scrolling up
+    const scrollingPastBottom = atBottomBoundary && rawDelta > 0; // At 100%, scrolling down
     
     if (scrollingPastTop) {
       // v6: Force progress to exactly 0 before allowing top boundary release
@@ -307,6 +369,7 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
         releaseBoundary('top');
         return;
       }
+<<<<<<< HEAD
     } else if (scrollingPastBottom) {
       // v6: FORCE progress to exactly 1.0 before allowing bottom boundary release
       // This is the key fix - ensures the animation completes before unlock
@@ -326,6 +389,8 @@ export const useScrollHijack = (options: UseScrollHijackOptions): UseScrollHijac
         releaseBoundary('bottom');
         return;
       }
+=======
+>>>>>>> f64ab08 (Fix: Remove debug code, fix grammar, and resolve duplicate imports)
     } else {
       // Not at a boundary or scrolling away from boundary - reset overflow tracking
       if (boundaryHitRef.current !== null) {

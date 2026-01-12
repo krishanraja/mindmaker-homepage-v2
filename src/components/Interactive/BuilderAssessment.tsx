@@ -9,7 +9,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MindmakerIcon } from '@/components/ui/MindmakerIcon';
 import { ToolDrawerHeader } from '@/components/ui/tool-drawer-header';
 import { InitialConsultModal } from '@/components/InitialConsultModal';
-import { useSessionData } from '@/contexts/SessionDataContext';
 import { useVoiceInput } from '@/hooks/useVoiceInput';
 import { VoiceInputButton } from '@/components/ui/VoiceInputButton';
 

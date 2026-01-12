@@ -16,10 +16,6 @@ export const MindmakerIcon = ({
   className,
   animated = false,
 }: MindmakerIconProps) => {
-  // #region agent log
-  fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MindmakerIcon.tsx:19',message:'MindmakerIcon rendered',data:{size,animated,iconSrc:mindmakerIcon?.toString().substring(0,50) || 'MISSING',hasIcon:!!mindmakerIcon},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-  // #endregion
-  
   if (animated) {
     // For animated version, make icon smaller so ring can go around it
     const iconSize = Math.max(16, size * 0.6); // Icon is 60% of requested size

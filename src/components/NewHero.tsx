@@ -12,7 +12,7 @@ const NewHero = () => {
     "Boss the boardroom with",
     "Build your knowledge instead of relying on IT with",
     "Create product strategy that sells in the new era with",
-    "Become leader your board needs with",
+    "Become the leader your board needs with",
     "Activate your best dormant ideas with",
     "Remove your blind spots as a leader with",
     "Build your own AI assistants that 10X YOU",

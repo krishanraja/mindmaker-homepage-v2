@@ -62,24 +62,34 @@ const BeforeAfterSplit = () => {
   const handleProgress = useCallback((progress: number, _delta: number, _direction: 'up' | 'down') => {
     progressRef.current = progress;
     
+    // Clamp progress to ensure it doesn't exceed 1.0
+    const clampedProgress = Math.min(progress, 1.0);
+    
     // Update CSS variable for GPU-accelerated clipPath
     if (containerRef.current) {
-      containerRef.current.style.setProperty('--wipe-progress', `${progress * 100}%`);
+      containerRef.current.style.setProperty('--wipe-progress', `${clampedProgress * 100}%`);
     }
+    
+    // Check completion - use floating point safe threshold (>= 0.9999)
+    // This must happen BEFORE any boundary release logic in the hook
+    const isAtCompletion = clampedProgress >= 0.9999;
+    const finalProgress = isAtCompletion ? 1.0 : clampedProgress;
     
     // Only update React state for discrete UI changes (every 10%)
-    const displayBucket = Math.floor(progress * 10);
+    // Always update if at completion to ensure UI shows 100%
+    const displayBucket = Math.floor(finalProgress * 10);
     const currentBucket = Math.floor(displayProgressRef.current * 10);
-    if (displayBucket !== currentBucket || progress >= 1) {
-      displayProgressRef.current = progress;
-      setDisplayProgress(progress);
+    if (displayBucket !== currentBucket || isAtCompletion) {
+      displayProgressRef.current = finalProgress;
+      setDisplayProgress(finalProgress);
     }
     
-    // Check completion
-    if (progress >= 1 && !isCompleteRef.current) {
+    // Set completion state immediately and synchronously when threshold is reached
+    if (isAtCompletion && !isCompleteRef.current) {
+      // Set completion immediately and synchronously
       isCompleteRef.current = true;
       setIsComplete(true);
-    } else if (progress < 1 && isCompleteRef.current) {
+    } else if (!isAtCompletion && isCompleteRef.current) {
       isCompleteRef.current = false;
       setIsComplete(false);
     }

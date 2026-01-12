@@ -97,10 +97,6 @@ export const useAssessment = () => {
     }).join('\n');
 
     try {
-      // #region agent log
-      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:84',message:'Calling chat-with-krish',data:{answerSummary,totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-      // #endregion
-      
       const { data, error: apiError } = await supabase.functions.invoke('chat-with-krish', {
         body: {
           messages: [
@@ -221,18 +217,10 @@ CRITICAL: This profile should feel like it was written by a professional consult
         }
       });
 
-      // #region agent log
-      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:115',message:'Response received',data:{hasData:!!data,hasError:!!apiError,errorMsg:apiError?.message,messageLength:data?.message?.length,metadataFallback:data?.metadata?.fallback},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-      // #endregion
-
       if (apiError) throw new Error(apiError.message || 'API error');
 
       // Parse the AI response with robust extraction
       const responseText = data?.message || '';
-      
-      // #region agent log
-      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:125',message:'Parsing response',data:{responseTextLength:responseText.length,first200:responseText.substring(0,200),isFallbackMessage:responseText.includes("I'm having trouble connecting")},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-      // #endregion
       
       // Try multiple JSON extraction strategies
       let parsed: any = null;
@@ -261,17 +249,10 @@ CRITICAL: This profile should feel like it was written by a professional consult
         }
       }
       
-      // #region agent log
-      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:155',message:'Parse result',data:{parsedSuccess:!!parsed,hasType:!!parsed?.type,hasStrengths:!!parsed?.strengths,hasNextSteps:!!parsed?.nextSteps},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-      // #endregion
-      
       if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
 
       // Validate the parsed object has required fields
       if (parsed && parsed.type && (parsed.strengths || parsed.nextSteps)) {
-        // #region agent log
-        fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:162',message:'AI profile SUCCESS',data:{type:parsed.type,strengthsCount:parsed.strengths?.length,nextStepsCount:parsed.nextSteps?.length},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-        // #endregion
         if (!cancelRef.current && isMountedRef.current) {
           setProfile({
             type: parsed.type || 'AI Builder',
@@ -289,9 +270,6 @@ CRITICAL: This profile should feel like it was written by a professional consult
       throw new Error('Invalid AI response structure');
     } catch (err) {
       if (cancelRef.current || !isMountedRef.current) return; // Component unmounted or cancelled, don't update state
-      // #region agent log
-      fetch('http://127.0.0.1:7247/ingest/d84be03b-cc5f-4a51-8624-1abff965b9ec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'useAssessment.ts:180',message:'FALLBACK triggered',data:{errorMessage:err instanceof Error ? err.message : String(err),totalScore},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'FRONTEND'})}).catch(()=>{});
-      // #endregion
       console.error('AI profile generation failed:', err);
       
       // Try LLM-generated fallback with simplified prompt (maintains CEO-grade standards)
