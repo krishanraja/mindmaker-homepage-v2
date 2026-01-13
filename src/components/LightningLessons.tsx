@@ -10,7 +10,7 @@ export const LightningLessons = () => {
   const lessons = [
     {
       title: "Learn How To Program Your AI Tools",
-      url: "https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools?utm_medium=ll_share_link&utm_source=instructor",
+      url: "https://maven.com/p/6c1d16/learn-how-to-program-your-ai-tools",
       image: "/lesson-program-ai-tools.png",
       duration: "45 min",
       cta: "Sign Up",

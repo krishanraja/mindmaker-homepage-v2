@@ -272,7 +272,7 @@ const Navigation = () => {
                                 {lessonsExpanded && (
                                   <div className="flex flex-col space-y-1 mt-2 ml-4">
                                     <a 
-                                      href="https://maven.com/p/1eb66a/learn-how-to-program-your-ai-tools?utm_medium=ll_share_link&utm_source=instructor" 
+                                      href="https://maven.com/p/6c1d16/learn-how-to-program-your-ai-tools" 
                                       target="_blank" 
                                       rel="noopener noreferrer"
                                       className="min-h-[44px] flex items-center justify-between px-4 py-3 
