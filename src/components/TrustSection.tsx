@@ -138,7 +138,7 @@ const TrustSection = () => {
       icon: CheckCircle2,
     },
     {
-      quote: "I actually built two workflows in the sprint that I now use every day. Not demos. Not experiments. Real systems that made my week calmer almost immediately.",
+      quote: "I actually built two workflows in the sprint that I now use every day. Not experiments. Real systems that made my week calmer almost immediately.",
       name: "Head of Ops",
       role: "Operations Leader",
       company: "Scale-up",
@@ -154,7 +154,7 @@ const TrustSection = () => {
       icon: TrendingUp,
     },
     {
-      quote: "You didn't turn into our internal AI person. You helped build the first set properly, then made it clear how we continue without you. That boundary matters, and it's rare.",
+      quote: "Krish didn't turn into our internal AI person. Krish helped build the first set properly, then made it clear how we continue without you. That boundary is rare.",
       name: "GM",
       role: "General Manager",
       company: "Enterprise Division",
@@ -162,7 +162,7 @@ const TrustSection = () => {
       icon: Award,
     },
     {
-      quote: "We used this with our exec team and it stopped the circular debates. We left with a clear pilot charter, owners, and success criteria. No slides. No fluff.",
+      quote: "We used this with our exec team and it stopped the circular debates. We left with a clear pilot charter, owners, and success criteria. No fluff.",
       name: "Exec Team Sponsor",
       role: "Strategy Lead",
       company: "Global Organisation",
