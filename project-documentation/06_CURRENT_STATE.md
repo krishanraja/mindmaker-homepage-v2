@@ -2421,14 +2421,25 @@ characters).
   errors**. Cards (18 on `/`, 33 on the archive), screens (8 sizes, 4 pages)
   and no-JS (5 pages, 50 answers) green on the built output.
 
-### Still open
+### The story deck follows, 7 September 2026
 
-- The story deck in `src/data/rebuildProof.ts` and the eight stories in
-  `04_PROOF.md` quote three of the same people in older words: the media CRO
-  ("One day. One decision. No more Monday debates."), the adtech founder ("Now
-  they can. Including me.") and the data-infrastructure CRO ("He set up", where
-  the revised testimonial reads "We set up"). Those pull-quotes were approved
-  on 11 August 2026 under `04_PROOF_RECORDS.md` and were not part of the
-  revision, so they were left as they are. Whether the deck follows the
-  revised testimonials is Krish's call, and the media CRO's story rests on the
-  older line.
+The deck in `src/data/rebuildProof.ts` and the eight stories in `04_PROOF.md`
+quoted the same people in older words: anglicised, name-stripped, and in three
+cases a different sentence (the media CRO's "One day. One decision.", the
+adtech founder's "Now they can. Including me.", and "He set up" where the
+revised testimonial reads "We set up"). Krish's call: the deck follows the
+testimonials.
+
+- Each story now names its `voice` and reads `quote` and `attribution` from
+  `testimonials.ts` at import, so there is one copy of every quote and a story
+  naming a voice that does not exist fails the build rather than rendering an
+  empty card. `testimonials.test.ts` holds each story to the whole quote of an
+  `outcome` voice.
+- The quotes on the deck, the archive and both door pages are verbatim now,
+  founder's name and spellings included. Story 2's attribution followed its
+  voice from "Partner, Venture Capital Firm" to "Partner, media advisory", and
+  the pull-quotes in `04_PROOF_RECORDS.md` were brought to the same text.
+- The name gate still reads `rebuildProof.ts` as the practice's own voice and
+  passes, because the file no longer carries a quote; the name reaches the
+  page only inside a verbatim quote, which is the one place the canon allows
+  it.

@@ -1,4 +1,5 @@
 import type { InstrumentKind } from "@/components/mindmake/Instrument";
+import { testimonials } from "@/data/testimonials";
 import bbcLogo from "@/assets/brands/bbc.svg";
 import hearstLogo from "@/assets/brands/hearst.svg";
 import condeNastLogo from "@/assets/brands/conde-nast.svg";
@@ -37,6 +38,9 @@ export type ClientStory = {
   id: string;
   title: string;
   outcome: string;
+  /** The voice in `src/data/testimonials.ts` this story quotes, by id. */
+  voice: string;
+  /** Read from that voice: the whole quote, verbatim, and the role it was given under. */
   quote: string;
   attribution: string;
   /** Headline for the proof archive, and the diagram that goes with it. */
@@ -56,6 +60,22 @@ export const attendeeBrands = [
   { name: "Condé Nast", logo: condeNastLogo },
 ] as const;
 
+/**
+ * What a story quotes, read from the thirty-three rather than written twice.
+ *
+ * Until 7 September 2026 each story carried its own copy of the quote, and the
+ * copies drifted: anglicised, name-stripped, and in three cases older words
+ * than the person's own file held. A quote is canon in one place, so a story
+ * names its voice and takes the quote and the role from there. A story naming
+ * a voice that does not exist fails here, at import, rather than rendering an
+ * empty card.
+ */
+const spoken = (voice: string) => {
+  const found = testimonials.find((entry) => entry.id === voice);
+  if (!found) throw new Error(`No testimonial with id "${voice}"`);
+  return { voice, quote: found.full, attribution: found.role };
+};
+
 export const clientStories: ClientStory[] = [
   {
     id: "expensive-decision",
@@ -63,8 +83,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "span", from: 365, to: 1, fromLabel: "About a year on the wrong path", toLabel: "One day to the decision" },
     title: "Settle the expensive decision",
     outcome: "One day to a clear build-or-partner decision. This avoided about a year of work on the wrong path.",
-    quote: "One day. One decision. No more Monday debates. That's the entire review.",
-    attribution: "Chief Revenue Officer, media company",
+    ...spoken("media-cro"),
     homepage: {
       sector: "Media company",
       title: "One day to stop a year of the wrong build.",
@@ -78,10 +97,9 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "offer", before: "Ideas everyone respected", after: "One offer, and a plan to launch it" },
     title: "Turn expertise into something clients can buy",
     outcome: "A respected advisory firm turned its ideas into a clear offer and a plan to launch it.",
-    quote: "We had expertise everyone respected and nothing they could buy. He turned the talking into something sellable.",
-    attribution: "Partner, Venture Capital Firm",
+    ...spoken("media-advisory-partner"),
     homepage: {
-      sector: "Investment firm",
+      sector: "Media advisory",
       title: "Expertise became an offer people could buy.",
       body: "A respected advice business moved from good ideas to one clear offer and a defined investment plan.",
       visual: "offer",
@@ -93,8 +111,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "count", value: 2, label: "pilots signed", within: "inside the thirty days" },
     title: "Make the product simple enough to sell",
     outcome: "The position and price were rebuilt in 30 days. The first two pilots were signed during the work.",
-    quote: "We had a brilliant product nobody could buy, because nobody could explain it. Now they can. Including me.",
-    attribution: "Founder, adtech firm",
+    ...spoken("martech-founder"),
     homepage: {
       sector: "Advertising technology",
       title: "Two pilots signed during the work.",
@@ -108,8 +125,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "count", value: 5, label: "videos shipped", within: "in week one of eight" },
     title: "Rebuild the business, then hand it back",
     outcome: "An eight-week rebuild covered the brand, offers, lead capture, content and outreach. Five videos shipped in week one.",
-    quote: "He uses deep knowledge of AI and tech to help me with genuinely human problems. I had an AI mentor before and they were far too technical. He thinks about me and the results I need.",
-    attribution: "Founder and CEO, executive coaching practice",
+    ...spoken("coaching-founder"),
   },
   {
     id: "own-system",
@@ -117,8 +133,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "cadence", from: 1, to: 22, fromLabel: "About once a month", toLabel: "Most days" },
     title: "Own the system instead of renting the operator",
     outcome: "A founder-owned content system cut publishing time from days to under an hour. Publishing moved from about monthly to most days.",
-    quote: "I've learnt to push through barriers I didn't know I could, and the systems make me more effective and more motivated. I used to post once a month, now it's most days. It's helping my customers see me.",
-    attribution: "Founder, research and content brand",
+    ...spoken("wellness-founder"),
   },
   {
     id: "team-decides",
@@ -126,8 +141,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "focus", from: 14, to: 3, keep: "few", fromLabel: "Fourteen competing vendors", toLabel: "Three decisions" },
     title: "Change how the team decides",
     outcome: "A publisher moved from 14 competing AI vendors to three decisions. Its own team then shipped the chosen work with no new hires.",
-    quote: "We started with immersive AI sessions, which led to a broader project where our team took ownership and accountability. He led it and landed it.",
-    attribution: "Head of Operations, top-10 US digital publisher",
+    ...spoken("publisher-ops"),
   },
   {
     id: "business-first",
@@ -135,8 +149,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "focus", from: 14, to: 3, keep: "few", fromLabel: "Fourteen tools running", toLabel: "Three kept, eleven stopped" },
     title: "Tie every AI choice back to the business",
     outcome: "Eleven of fourteen tools were stopped. The budget was kept and the first working system went live inside 90 days.",
-    quote: "It's been a good journey to bring him problems that match our business goals and leadership needs, and watch them come together in a very thoughtful programme.",
-    attribution: "President, legacy broadcast business",
+    ...spoken("broadcast-president"),
   },
   {
     id: "market-moves",
@@ -144,8 +157,7 @@ export const clientStories: ClientStory[] = [
     figure: { shape: "offer", before: "Selling the way the old web paid", after: "A paid test with a major US publisher" },
     title: "Change direction before the market moves",
     outcome: "A data company changed how it sold as AI changed the web. The work led to a paid test with a major US publisher.",
-    quote: "He set up an AI-native go-to-market system that made us rethink who we hire and what they do. He works experimentally yet transparently. We trusted he would deliver.",
-    attribution: "Chief Revenue Officer, data-infrastructure company",
+    ...spoken("data-infra-cro"),
   },
 ];
 
