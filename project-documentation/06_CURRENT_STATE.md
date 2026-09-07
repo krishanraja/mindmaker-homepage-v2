@@ -1,6 +1,6 @@
 # Mindmake current state
 
-Last updated: 5 September 2026.
+Last updated: 7 September 2026.
 
 This file is the current delivery truth for `mindmake.co`: what is live, at which identifiers, and what remains open. Why the business exists is in `00_NORTH_STAR.md`. Commercial truth is in `01_CANON.md`. Design truth is in `03_DESIGN_CONTRACT.md`.
 
@@ -2361,3 +2361,85 @@ shipped and what was measured.
   brand to a different founder's name and product. That is the enrichment
   provider's answer for that domain and predates this change; it is the
   read a lead from that domain would see today.
+
+## 7 September 2026: the thirty-three, revised
+
+Krish revised `src/data/testimonials.ts` and declared the file canon. Twenty
+lines changed: four session quotes corrected to what was written, one client
+quote corrected (Louisa Thrave weighed a life coach, a business coach and an AI
+coach, not a marketing professional and a sales expert), eight outcome quotes
+replaced or extended with what the person actually said, two ids renamed
+(`adtech-founder` to `martech-founder`, `breathwork-founder` to
+`wellness-founder`) and one role corrected (`fintech-founder` is a founder of
+an early-stage creator business). The founder's name stays inside the quotes
+that use it, and so do the spellings: `contnues`, `aroudn` and `realize` are
+what was written.
+
+### What the revision broke, and the fix
+
+Ten excerpts stopped being substrings of the quotes they were cut from. Two
+fell out by case alone (Ellsworth and Yazdani now begin their sentences with a
+capital). Eight were paraphrases: the revision changed the full quote and the
+excerpt was rewritten to say what it meant rather than cut from what it said,
+and one of them ran to 118 characters against the 108 cap. Both rules in
+`04_PROOF.md` are meant to catch exactly this, and `testimonials.test.ts` did.
+
+Every excerpt is an exact substring of the revised quote again, cut to keep the
+beat the revision reached for:
+
+| | excerpt now |
+|---|---|
+| James Gately | "With mind/make, I was empowered on how to own the what I do next" |
+| Louisa Thrave | "weighing up between a life coach, business coach, or an AI coach, choose mindmake. You'll get all three." |
+| martech founder | "nobody could buy, because nobody could explain it. We're now clear on who we are in the new world." |
+| media CRO | "Krish knows how to add value immediately which contnues to compound" |
+| media advisory | "He turned the pitch into something sellable, which then evolved our pitch." |
+| wellness founder | "I used to post once a month; now it's most days because I focus on building an AI engine" |
+| B2B COO | "We killed a vendor proposal in about a day because the assumptions were weak and I didn't realize they were." |
+| creator founder | "He gave me the framework and support to decide for myself." |
+
+The B2B COO's excerpt sits exactly on the cap. The revision wanted both the
+vendor proposal and the ChatGPT line on the card, and they are not contiguous
+in what he wrote, so the card carries the result and the reason and the panel
+carries the rest.
+
+### Measured
+
+The rail was read at nine widths from 320 to 1920 on `/` and `/case-studies/`,
+each card's height, whether any excerpt or attribution overflowed its row, and
+the opened panel for the longest full quote (Vincent Pelillo's, at 456
+characters).
+
+- Every card equal at every width: **177.3px from 360 up**, which is the
+  height recorded on 28 August, so the longer excerpts cost the rail nothing on
+  any measured phone or laptop. At 320 the cards are 266px wide, the longest
+  excerpts take a fourth line and every card is 199px.
+- Nothing clipped: no excerpt, no attribution, and no opened panel, at any
+  width. The panel grows past the rail (492px over a 199px rail at 320) rather
+  than scrolling inside itself, as designed.
+- Tests **450 across 29 files**, lint **0 errors, 2 warnings**, typecheck **0
+  errors**. Cards (18 on `/`, 33 on the archive), screens (8 sizes, 4 pages)
+  and no-JS (5 pages, 50 answers) green on the built output.
+
+### The story deck follows, 7 September 2026
+
+The deck in `src/data/rebuildProof.ts` and the eight stories in `04_PROOF.md`
+quoted the same people in older words: anglicised, name-stripped, and in three
+cases a different sentence (the media CRO's "One day. One decision.", the
+adtech founder's "Now they can. Including me.", and "He set up" where the
+revised testimonial reads "We set up"). Krish's call: the deck follows the
+testimonials.
+
+- Each story now names its `voice` and reads `quote` and `attribution` from
+  `testimonials.ts` at import, so there is one copy of every quote and a story
+  naming a voice that does not exist fails the build rather than rendering an
+  empty card. `testimonials.test.ts` holds each story to the whole quote of an
+  `outcome` voice.
+- The quotes on the deck, the archive and both door pages are verbatim now,
+  founder's name and spellings included. Story 2's attribution followed its
+  voice from "Partner, Venture Capital Firm" to "Partner, media advisory", and
+  the pull-quotes in `04_PROOF_RECORDS.md` were brought to the same text.
+- The name gate still reads `rebuildProof.ts` as the practice's own voice and
+  passes, because the file no longer carries a quote; the name reaches the
+  page only inside a verbatim quote, which is the one place the canon allows
+  it.

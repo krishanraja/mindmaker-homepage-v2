@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { testimonials, publishableTestimonials, type Testimonial } from "@/data/testimonials";
+import { clientStories } from "@/data/rebuildProof";
 
 /**
  * The promise this file enforces is that a shortened quote is still the
@@ -76,6 +77,19 @@ describe("testimonials", () => {
     const filtered = [...testimonials, withoutConsent]
       .filter((voice) => voice.family !== "client" || voice.consent === "recorded");
     expect(filtered.some((voice) => voice.id === "unconsented")).toBe(false);
+  });
+
+  /* The story deck quotes eight of these people. Each story names its voice
+     and reads the quote from here, so the deck cannot carry an older or an
+     edited copy of what someone wrote. This holds it there. */
+  it("gives every client story the whole quote of a voice in this file", () => {
+    for (const story of clientStories) {
+      const voice = testimonials.find((entry) => entry.id === story.voice);
+      expect(`${story.id}: ${voice?.id}`).toBe(`${story.id}: ${story.voice}`);
+      expect(`${story.id}: ${story.quote === voice?.full}`).toBe(`${story.id}: true`);
+      expect(`${story.id}: ${story.attribution === voice?.role}`).toBe(`${story.id}: true`);
+      expect(`${story.id}: ${voice?.family}`).toBe(`${story.id}: outcome`);
+    }
   });
 
   it("keeps the four families apart", () => {

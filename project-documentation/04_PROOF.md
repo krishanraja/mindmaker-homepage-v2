@@ -1,6 +1,6 @@
 # Mindmake brand and testimonial proof
 
-Last updated: 27 August 2026. Proof permissions approved 2026-08-11; career-reference set extended by Krish 2026-08-27.
+Last updated: 7 September 2026. Proof permissions approved 2026-08-11; career-reference set extended by Krish 2026-08-27; the thirty-three revised by Krish 2026-09-07.
 
 This file is the single project source for attendee brands, client outcomes, Steph Darmanin's consent-gated excerpts, and named career references. Other project documents must point here rather than copy these lists. The rendered data lives in `src/data/rebuildProof.ts` and must match this file.
 
@@ -24,6 +24,14 @@ not a quote.
 different lengths cannot share a rail, and the alternative to an excerpt is a
 paraphrase attributed to a named person. Every excerpt is checked against its
 full text by a test, so a rewrite cannot pass as an extract.
+
+Both rules earned their keep on 7 September 2026. Krish revised the thirty-three
+to what people actually wrote, and ten excerpts stopped being substrings of the
+quotes they came from: two by a capital letter, eight because the excerpt had
+been rewritten to say what the new quote meant. The test caught all ten and
+every excerpt was cut again from the revised text. The story deck's eight
+pull-quotes are a separate, older approval and were not revised; see the open
+item in `06_CURRENT_STATE.md`.
 
 **Named clients, consent-gated.** Steph Darmanin and Dipti Divekar are named
 clients with recorded consent, which crosses the "client outcomes stay
@@ -82,69 +90,75 @@ Use official logo artwork in a compact one-line strip. The strip may move gently
 
 The words in quotation marks are verbatim. Keep each client anonymous at role and sector unless a later consent record explicitly changes that. The internal engagement records behind these stories are in `04_PROOF_RECORDS.md`.
 
+From 7 September 2026 each story names its voice in `src/data/testimonials.ts`
+and reads the quote and the role from there, so the deck cannot carry a second
+copy of what somebody wrote. The quotes below are the same text; the id in
+brackets after each attribution is the voice. Story 2's attribution followed
+the voice to "Partner, media advisory".
+
 ### 1. Settle the expensive decision
 
 One day to a clear build-or-partner decision, avoiding roughly a year of engineering on the wrong path.
 
-> “One day. One decision. No more Monday debates. That's the entire review.”
+> “Krish knows how to add value immediately which contnues to compound, and is honest about the benefits of continuing to work with him. He doesn't want to loiter.”
 >
-> CRO, media company
+> CRO, media company (`media-cro`)
 
 ### 2. Turn expertise into something clients can buy
 
 A respected advisory firm moved from ideas to a clear offer clients could buy and launched a defined investment plan.
 
-> “We had expertise everyone respected and nothing they could buy. He turned the talking into something sellable.”
+> “We had expertise everyone respected but needed to add products aroudn that. He turned the pitch into something sellable, which then evolved our pitch.”
 >
-> Partner, Venture Capital Firm
+> Partner, media advisory (`media-advisory-partner`)
 
 ### 3. Make the product simple enough to sell
 
 Positioning and pricing were rebuilt in 30 days. The first two pilots were signed during the work.
 
-> “We had a brilliant product nobody could buy, because nobody could explain it. Now they can. Including me.”
+> “We had a brilliant product nobody could buy, because nobody could explain it. We're now clear on who we are in the new world.”
 >
-> Founder, adtech firm
+> Founder, adtech firm (`martech-founder`)
 
 ### 4. Rebuild the business, then hand it back
 
 An eight-week rebuild covered brand, offers, lead capture, content and outreach. Five videos shipped in week one.
 
-> “He uses deep knowledge of AI and tech to help me with genuinely human problems. I had an AI mentor before and they were far too technical. He thinks about me and the results I need.”
+> “The reason I'm loving Krish's sprints is the unique approach. He uses his incredible knowledge of AI and tech to help me with really human problems. I'd had an AI mentor before who was way too technical. Krish thinks about me and the results I need.”
 >
-> Founder and CEO, executive coaching practice
+> Founder and CEO, executive coaching practice (`coaching-founder`)
 
 ### 5. Own the system instead of renting the operator
 
 A founder-owned content system cut research-backed publishing from days to under an hour. Publishing moved from roughly monthly to most days.
 
-> “I've learnt to push through barriers I didn't know I could, and the systems make me more effective and more motivated. I used to post once a month, now it's most days. It's helping my customers see me.”
+> “Since working with Krish I've learnt to push through basic barriers I didn't realise I could, and he set up systems that make me more effective and more motivated. I used to post once a month; now it's most days because I focus on building an AI engine around what I do and what I get bottlenecked by. It's helping me be seen by my customers.”
 >
-> Founder, research and content brand
+> Founder, research and content brand (`wellness-founder`)
 
 ### 6. Change how the team decides
 
 A publisher moved from 14 competing AI vendors to three decisions, then shipped the chosen workflow with its own team and no new hires.
 
-> “We started with immersive AI sessions, which led to a broader project where our team took ownership and accountability. He led it and landed it.”
+> “We started with immersive AI sessions, which led to a broader project where our team took ownership and accountability. Cheers to Krish for leading and landing.”
 >
-> Head of Operations, top-10 US digital publisher
+> Head of Operations, top-10 US digital publisher (`publisher-ops`)
 
 ### 7. Tie every AI choice back to the business
 
 Eleven of fourteen tools were stopped, the budget was defended and the first working system went live inside 90 days.
 
-> “It's been a good journey to bring him problems that match our business goals and leadership needs, and watch them come together in a very thoughtful programme.”
+> “It's been a good journey to bring Krish problems that match our business goals and leadership needs, and watch them come together in a very thoughtful program.”
 >
-> President, legacy broadcast business
+> President, legacy broadcast business (`broadcast-president`)
 
 ### 8. Change direction before the market moves
 
 A data company changed how it sold as AI changed the web. The work led to a paid test with a major US publisher.
 
-> “He set up an AI-native go-to-market system that made us rethink who we hire and what they do. He works experimentally yet transparently. We trusted he would deliver.”
+> “We set up an AI-native go-to-market system that made us rethink who we hire and what they do. He works experimentally yet transparently. We trusted he would deliver.”
 >
-> CRO, data-infrastructure company
+> CRO, data-infrastructure company (`data-infra-cro`)
 
 ## Steph Darmanin, consent-gated named proof
 
