@@ -1,6 +1,6 @@
 # Mindmake brand and testimonial proof
 
-Last updated: 27 August 2026. Proof permissions approved 2026-08-11; career-reference set extended by Krish 2026-08-27.
+Last updated: 7 September 2026. Proof permissions approved 2026-08-11; career-reference set extended by Krish 2026-08-27; the thirty-three revised by Krish 2026-09-07.
 
 This file is the single project source for attendee brands, client outcomes, Steph Darmanin's consent-gated excerpts, and named career references. Other project documents must point here rather than copy these lists. The rendered data lives in `src/data/rebuildProof.ts` and must match this file.
 
@@ -24,6 +24,14 @@ not a quote.
 different lengths cannot share a rail, and the alternative to an excerpt is a
 paraphrase attributed to a named person. Every excerpt is checked against its
 full text by a test, so a rewrite cannot pass as an extract.
+
+Both rules earned their keep on 7 September 2026. Krish revised the thirty-three
+to what people actually wrote, and ten excerpts stopped being substrings of the
+quotes they came from: two by a capital letter, eight because the excerpt had
+been rewritten to say what the new quote meant. The test caught all ten and
+every excerpt was cut again from the revised text. The story deck's eight
+pull-quotes are a separate, older approval and were not revised; see the open
+item in `06_CURRENT_STATE.md`.
 
 **Named clients, consent-gated.** Steph Darmanin and Dipti Divekar are named
 clients with recorded consent, which crosses the "client outcomes stay

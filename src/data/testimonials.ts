@@ -60,7 +60,7 @@ export const testimonials: Testimonial[] = [
     family: "session",
     name: "Shveta Ellsworth",
     role: "Session attendee",
-    excerpt: "one of the most clearly structured sessions on building with AI today",
+    excerpt: "One of the most clearly structured sessions on building with AI today",
     full: "One of the most clearly structured sessions on building with AI today! Thank you!",
   },
   {
@@ -76,7 +76,7 @@ export const testimonials: Testimonial[] = [
     family: "session",
     name: "Arash Yazdani",
     role: "Session attendee",
-    excerpt: "a great wake-up call that there is much work to be done",
+    excerpt: "A great wake-up call that there is much work to be done",
     full: "A great wake-up call that there is much work to be done before experimenting with open-source agent swarms",
   },
 
@@ -105,7 +105,7 @@ export const testimonials: Testimonial[] = [
     name: "James Gately",
     role: "Founder, FinTech",
     consent: "recorded",
-    excerpt: "With mind/make, I was empowered instead of relying on support",
+    excerpt: "With mind/make, I was empowered on how to own the what I do next",
     full: "Previous support came to a halt once the paid engagement ended, and ultimately I had to pull the plug and start over. With mind/make, I was empowered on how to own the what I do next, which has brought me immense pride and satisfaction.",
   },
   {
@@ -114,7 +114,7 @@ export const testimonials: Testimonial[] = [
     name: "Louisa Thrave",
     role: "CEO, Media",
     consent: "recorded",
-    excerpt: "choose mindmake if you're deciding between a life coach, business coach or AI coach. You'll get all 3",
+    excerpt: "weighing up between a life coach, business coach, or an AI coach, choose mindmake. You'll get all three.",
     full: "If you're deciding what next step to take to drive stronger business outcomes, and weighing up between a life coach, business coach, or an AI coach, choose mindmake. You'll get all three.",
   },
 
@@ -130,21 +130,21 @@ export const testimonials: Testimonial[] = [
     id: "martech-founder",
     family: "outcome",
     role: "Founder, adtech firm",
-    excerpt: "We had a brilliant product nobody could buy, because nobody could explain it. Now they can. Including me.",
+    excerpt: "nobody could buy, because nobody could explain it. We're now clear on who we are in the new world.",
     full: "We had a brilliant product nobody could buy, because nobody could explain it. We're now clear on who we are in the new world.",
   },
   {
     id: "media-cro",
     family: "outcome",
     role: "Chief Revenue Officer, media company",
-    excerpt: "Adds value immediately and continues to compound.",
+    excerpt: "Krish knows how to add value immediately which contnues to compound",
     full: "Krish knows how to add value immediately which contnues to compound, and is honest about the benefits of continuing to work with him. He doesn't want to loiter.",
   },
   {
     id: "media-advisory-partner",
     family: "outcome",
     role: "Partner, media advisory",
-    excerpt: "He turned the pitch into something sellable, which changed our pitch.",
+    excerpt: "He turned the pitch into something sellable, which then evolved our pitch.",
     full: "We had expertise everyone respected but needed to add products aroudn that. He turned the pitch into something sellable, which then evolved our pitch.",
   },
   {
@@ -172,7 +172,7 @@ export const testimonials: Testimonial[] = [
     id: "wellness-founder",
     family: "outcome",
     role: "Founder, research and content brand",
-    excerpt: "I used to post once a month; now it's most days because I built an AI engine.",
+    excerpt: "I used to post once a month; now it's most days because I focus on building an AI engine",
     full: "Since working with Krish I've learnt to push through basic barriers I didn't realise I could, and he set up systems that make me more effective and more motivated. I used to post once a month; now it's most days because I focus on building an AI engine around what I do and what I get bottlenecked by. It's helping me be seen by my customers.",
   },
   {
@@ -186,14 +186,14 @@ export const testimonials: Testimonial[] = [
     id: "b2b-coo",
     family: "outcome",
     role: "Chief Operating Officer, B2B technology",
-    excerpt: "We killed a vendor proposal in about a day because the assumptions were weak and standard ChatGPT was not deep enough.",
+    excerpt: "We killed a vendor proposal in about a day because the assumptions were weak and I didn't realize they were.",
     full: "I expected another AI discussion. It wasn't. We killed a vendor proposal in about a day because the assumptions were weak and I didn't realize they were. ChatGPT outputs were just not deep enough.",
   },
   {
     id: "fintech-founder",
     family: "outcome",
     role: "Founder, early-stage creator business",
-    excerpt: "He gave me the framework to decide for myself.",
+    excerpt: "He gave me the framework and support to decide for myself.",
     full: "I'd been going in circles for six months. Do we build our own AI brain or use a vendor? Krish didn't hand me a recommendation. He gave me the framework and support to decide for myself.",
   },
   {
