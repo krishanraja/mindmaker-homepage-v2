@@ -96,9 +96,9 @@ copy of what somebody wrote. The quotes below are the same text; the id in
 brackets after each attribution is the voice. Story 2's attribution followed
 the voice to "Partner, media advisory".
 
-### 1. Settle the expensive decision
+### 1. Land the answer in a day, then leave
 
-One day to a clear build-or-partner decision, avoiding roughly a year of engineering on the wrong path.
+Two quarters of argument over build or partner ended in one day in the room. The partner agreement was signed the following month, and build comes back for review in twelve months, once the data is stronger. (Swapped 7 September 2026 to fit the quote, from the same record, R-08; the story used to lead on the year of engineering not spent.)
 
 > “Krish knows how to add value immediately which contnues to compound, and is honest about the benefits of continuing to work with him. He doesn't want to loiter.”
 >
