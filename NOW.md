@@ -70,7 +70,6 @@ The pattern is worth naming: 111 commits in fourteen days, 87 by Claude, and eve
 - Waiting on Krish: the method wording on the brain door and "How it learns you." on `/ai-brain`, proposed 3 September for sign-off. The method is described, never named.
 - Waiting on Krish (canon, "Open commercial work"): the evidence trail for a "leaders helped" figure; one Brain-shaped and one GTM-shaped story with consent; current-source research before any new AI GTM market claim; the pricing revisit trigger.
 - Waiting on CTRL: `affects` and `stance` in the headline cache, and a `pov` line in a voice this site can publish. Nothing on this side is waiting.
-- Waiting on Krish for the steward: `CLAUDE_CODE_OAUTH_TOKEN` as a repository secret so `.github/workflows/docs-steward.yml` can run unattended.
 - Next for the site: the first day-14 follow-up on 11 September 2026, and the owed items in the state doc.
 
 ## Read next
