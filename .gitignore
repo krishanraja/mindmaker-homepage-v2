@@ -49,3 +49,6 @@ deno.lock
 handoff-*.png
 entrance-*.png
 shell-*.png
+
+# Docs steward working files (control-center scripts checked out by the workflow)
+.steward/

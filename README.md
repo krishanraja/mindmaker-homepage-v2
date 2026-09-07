@@ -16,8 +16,9 @@ which is the only place that answers it.
 - **Build your AI GTM**: create an AI-native GTM model across product, price,
   positioning or people.
 
-Either door can lead to the other. Work begins with one privately priced
-thirty-day proof. There is no public diary and no public price.
+Either door can lead to the other. Work begins with one paid proof: the price
+is private, the length is agreed with it, and neither appears on the site. There
+is no public diary.
 
 ## Start here
 
@@ -40,13 +41,15 @@ a name. The full rule is the naming law in the north star.
 
 The only primary action is `Start here`.
 
-1. The visitor gives a company website.
+1. The visitor gives four details: first name, last name, work email and the
+   part of the business they work in. The company comes out of the email's
+   domain, so nobody types it twice.
 2. Mindmake shows a declarative company read and, when the read is strong enough,
    pressure choices tailored to that company. "Something else" reveals the locked
    list.
 3. They choose where better use of their time would create value.
 4. Mindmake shows the recommendation: what AI can carry, what stays with the
-   leader, and one useful thirty-day proof.
+   leader, and what a first proof could test.
 5. The visitor can keep the brief by verified work email, and receives the
    branded proposal on screen, by email and as a self-contained attachment. A
    private fit digest reaches the operator.
@@ -65,7 +68,7 @@ full contract is in
 | Route | Purpose |
 |---|---|
 | `/` | The threshold, the two doors, the enemy pair, live proof, the close |
-| `/ai-brain` | Amplify and absorb, CTRL as proof, the personal read, the fork, the ladder |
+| `/ai-brain` | Amplify and absorb, CTRL as proof, the personal read, two client stories, how it learns you |
 | `/ai-gtm` | The three places money moves, the live board, the company read, engagement shapes |
 | `/case-studies` | Eight verified customer stories |
 | `/blog`, `/blog/:slug` | Checked public ideas archive |
@@ -85,8 +88,8 @@ publication.
 - `src/pages/`: public page compositions.
 - `src/components/mindmake/`: the shell, the film plate, the marquee, the live
   board, the two journeys, the fork, the ask bar, the brief and the proposal.
-- `src/hooks/useScrollDriver.ts`: the one scroll primitive. Nothing else reads
-  scroll position, and `IntersectionObserver` appears nowhere.
+- `src/hooks/useScrollDriver.ts`: the one scroll primitive for builds driven by
+  position. `src/hooks/useReveal.ts`: the one entrance primitive.
 - `src/hooks/useAmbientMotion.ts`: decides whether a visitor is served moving
   footage at all.
 - `src/styles/`: `mindmake.css` (tokens, base, chrome), `mindmake-instruments.css`
@@ -105,7 +108,8 @@ publication.
 - No eyebrow text above any heading, anywhere.
 - No em dashes. British English. No "judgment".
 - No banned vocabulary, and no "not X, but Y" antithesis.
-- No entrance choreography, and no `IntersectionObserver` in a rebuilt surface.
+- Entrance choreography only through `src/hooks/useReveal.ts` (the ban was lifted
+  on 29 August 2026), and the page is whole if the reveal never fires.
 - Every viewport-height of every page holds at least one moving element, unless
   the visitor asked for reduced motion, in which case the whole ambient layer
   stops and the stills stand in.

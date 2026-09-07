@@ -1,8 +1,12 @@
 # Mindmake documentation
 
-Everything in this directory describes the live Mindmake business and site **as
-it is today**. There is no history file. If a fact here is out of date, it is a
-bug, not a record. History lives in git.
+Everything in this directory, apart from `history/`, describes the live Mindmake
+business and site **as it is today**. If a fact here is out of date, it is a
+bug, not a record. As of 7 September 2026, by Krish's decision, history lives in
+[`history/LOG.md`](history/LOG.md): the dated record of past deployments,
+repairs and readings, newest first, moved out of `06_CURRENT_STATE.md` so that
+file holds only what is true now. Nothing in the log describes today. Git still
+holds everything.
 
 ## Read in this order
 
@@ -18,6 +22,8 @@ bug, not a record. History lives in git.
 | 06 | [`06_CURRENT_STATE.md`](06_CURRENT_STATE.md) | What is live right now, at which identifiers, with the verification baselines. |
 | 07 | [`07_DEPLOYMENT.md`](07_DEPLOYMENT.md) | How the site, domains, backend and email identity are deployed and rolled back. |
 | 07 | [`07_DEPLOY_RUNBOOK.md`](07_DEPLOY_RUNBOOK.md) | What was deployed for the rebuild, how it was verified, and the ordered launch steps. |
+| | [`history/LOG.md`](history/LOG.md) | The dated record: what was deployed, repaired and measured, and when. Never current guidance. |
+| | [`../NOW.md`](../NOW.md) | The router at the repository root for an agent arriving cold: what this is, where it is right now, what changed, what is waiting on Krish, and where the detail and the history live. Maintained by the docs steward; where it disagrees with the numbered files, they are right. |
 
 ## Precedence
 
