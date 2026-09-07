@@ -2443,3 +2443,15 @@ testimonials.
   passes, because the file no longer carries a quote; the name reaches the
   page only inside a verbatim quote, which is the one place the canon allows
   it.
+
+### The media CRO's story, swapped, 7 September 2026
+
+The story under the media CRO's quote led on the year of engineering not
+spent on the wrong build, and the revised quote is about value landing on day
+one, compounding after, and nobody loitering. Krish's call: swap the story for
+one that fits the quote. The record is the same engagement, R-08, and nothing
+in the new story is new: two quarters of refereeing, one day in the room, the
+partner agreement signed the following month, build back for review in twelve
+months. The figure draws the two quarters against the day; the year saved is
+no longer the headline. Story id `expensive-decision` is now `day-one`; no
+door page referenced it.

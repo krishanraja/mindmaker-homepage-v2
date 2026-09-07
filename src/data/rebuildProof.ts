@@ -77,17 +77,23 @@ const spoken = (voice: string) => {
 };
 
 export const clientStories: ClientStory[] = [
+  /* Swapped on 7 September 2026 to fit the quote it carries. The record is the
+     same engagement (R-08): the story used to lead on the year of engineering
+     not spent, and the client's own words are about value landing on day one,
+     compounding after, and nobody loitering. So the story is the day, the
+     partner signed the month after, and the review booked twelve months out.
+     The two quarters and the one day are the record's; no number is new. */
   {
-    id: "expensive-decision",
-    result: "One day stopped a year of the wrong build.",
-    figure: { shape: "span", from: 365, to: 1, fromLabel: "About a year on the wrong path", toLabel: "One day to the decision" },
-    title: "Settle the expensive decision",
-    outcome: "One day to a clear build-or-partner decision. This avoided about a year of work on the wrong path.",
+    id: "day-one",
+    result: "A day's work, and a partner signed the month after.",
+    figure: { shape: "span", from: 180, to: 1, fromLabel: "Two quarters refereeing the argument", toLabel: "One day in the room" },
+    title: "Land the answer in a day, then leave",
+    outcome: "Two quarters of argument over build or partner ended in one day in the room. The partner agreement was signed the following month, and build comes back for review in twelve months, once the data is stronger.",
     ...spoken("media-cro"),
     homepage: {
       sector: "Media company",
-      title: "One day to stop a year of the wrong build.",
-      body: "A clear build-or-partner choice ended months of debate and avoided roughly a year of work on the wrong path.",
+      title: "A day's work, and a partner signed the month after.",
+      body: "Two quarters of argument over build or partner ended in one day. The partner agreement was signed the following month.",
       visual: "time",
     },
   },
