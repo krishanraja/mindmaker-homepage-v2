@@ -6,7 +6,10 @@ import { PageLoading, ScrollToLocation } from "@/App";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import NotFound from "@/pages/NotFound";
+import Answers from "@/pages/Answers";
+import Answer from "@/pages/Answer";
 import { blogPosts } from "@/data/blogPosts";
+import { answers } from "@/lib/answers";
 
 const renderWithAppProviders = (node: React.ReactNode, route = "/") => {
   const queryClient = new QueryClient({
@@ -96,6 +99,57 @@ describe("public route resilience", () => {
     renderWithAppProviders(<NotFound />, "/not-a-real-page");
 
     expect(screen.getByRole("heading", { name: "There is nothing here." })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+    });
+  });
+
+  it("lists every answer page with the question it answers", () => {
+    renderWithAppProviders(<Answers />, "/answers");
+
+    for (const answer of answers) {
+      expect(screen.getByRole("heading", { name: answer.title })).toBeInTheDocument();
+      expect(screen.getByText(answer.targetQuery)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: new RegExp(answer.title.slice(0, 30), "i") }))
+        .toHaveAttribute("href", `/answers/${answer.slug}`);
+    }
+  });
+
+  it("puts the answer above the argument, and the FAQ in real headings", () => {
+    /* The order is the whole point of the surface: an assistant fetching the
+       page reads the first chunk and stops, so the liftable answer is the
+       first prose in the markup rather than the payoff at the end. */
+    const [answer] = answers;
+    const { container } = renderWithAppProviders(
+      <Routes>
+        <Route path="/answers/:slug" element={<Answer />} />
+      </Routes>,
+      `/answers/${answer.slug}`,
+    );
+
+    expect(screen.getByRole("heading", { level: 1, name: answer.title })).toBeInTheDocument();
+    const prose = [...container.querySelectorAll("main p")].map((node) => node.textContent);
+    expect(prose[0]).toBe(answer.answer);
+    expect(prose[1]).toBe(answer.claim);
+
+    for (const entry of answer.faq) {
+      expect(screen.getByRole("heading", { name: entry.q })).toBeInTheDocument();
+      expect(screen.getByText(entry.a)).toBeInTheDocument();
+    }
+    for (const line of answer.firstParty) {
+      expect(screen.getByText(line)).toBeInTheDocument();
+    }
+  });
+
+  it("marks an answer that is no longer published as noindex", async () => {
+    renderWithAppProviders(
+      <Routes>
+        <Route path="/answers/:slug" element={<Answer />} />
+      </Routes>,
+      "/answers/a-question-nobody-asked",
+    );
+
+    expect(screen.getByRole("heading", { name: "This answer is no longer here." })).toBeInTheDocument();
     await waitFor(() => {
       expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
     });

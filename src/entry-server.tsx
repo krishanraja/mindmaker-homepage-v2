@@ -20,6 +20,8 @@ import NewAgeLeadership from "./pages/NewAgeLeadership";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Questions from "./pages/Library";
+import Answers from "./pages/Answers";
+import Answer from "./pages/Answer";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -61,6 +63,10 @@ function SiteRoutes() {
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/faq" element={<Questions />} />
+      {/* `/answers/:slug` reads `useParams` for the same reason `/blog/:slug`
+          does, so it is a route here rather than a component per path. */}
+      <Route path="/answers" element={<Answers />} />
+      <Route path="/answers/:slug" element={<Answer />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />

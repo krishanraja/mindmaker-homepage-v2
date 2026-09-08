@@ -34,6 +34,15 @@ const PUBLIC_SURFACES = [
   "src/pages/NewAgeLeadership.tsx",
   "src/pages/Blog.tsx",
   "src/pages/BlogPost.tsx",
+  "src/pages/Answers.tsx",
+  "src/pages/Answer.tsx",
+  /* Every answer page's markdown, read by directory rather than named one by
+     one. Publishing on that surface is dropping a file in, so a list of file
+     names here would be a second list to keep in step and the first page
+     somebody forgot would be the first page outside the copy gates. */
+  ...readdirSync(resolve(ROOT, "src/content/answers"))
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => `src/content/answers/${file}`),
   "src/pages/Privacy.tsx",
   "src/pages/Terms.tsx",
   "src/pages/NotFound.tsx",
@@ -897,7 +906,7 @@ describe("the crawler surfaces stay in step", () => {
     /* The prerender writes its pages from scripts/lib/pages.mjs since
        4 September 2026, the list the social plates are painted from too. */
     const prerender = read("scripts/lib/pages.mjs");
-    for (const route of ["/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/new-age-leadership"]) {
+    for (const route of ["/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/answers", "/new-age-leadership"]) {
       expect(sitemap).toContain(route);
       expect(prerender).toContain(route);
     }

@@ -3,7 +3,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { blogPosts } from "@/data/blogPosts";
 import plates from "@/content/socialPlates.json";
-import { staticPages, stillForCategory, plateWords } from "../../scripts/lib/pages.mjs";
+import { answers } from "@/lib/answers";
+import { answerJsonLd, answerPath } from "@/lib/answerFormat";
+import { staticPages, stillForCategory, plateWords, answerStill } from "../../scripts/lib/pages.mjs";
 
 const ROOT = resolve(__dirname, "../..");
 const read = (relative: string) => readFileSync(resolve(ROOT, relative), "utf8");
@@ -42,6 +44,7 @@ describe("the social plates, one per indexed page, painted from the page's words
   const indexed = [
     ...staticPages.map((page) => ({ path: page.path, still: page.still, ...plateWords(page) })),
     ...blogPosts.map((post) => ({ path: `/blog/${post.slug}`, still: stillForCategory[post.category], headline: post.title, claim: "" })),
+    ...answers.map((answer) => ({ path: answerPath(answer.slug), still: answerStill, headline: answer.title, claim: "" })),
   ];
 
   it("covers every indexed page and nothing else", () => {
@@ -158,5 +161,109 @@ describe("what the crawlers are told", () => {
       expect(page.title.length, page.path).toBeGreaterThan(0);
       expect(page.description.length, page.path).toBeLessThan(160);
     }
+  });
+});
+
+/**
+ * The answer surface, which exists to be fetched and quoted.
+ *
+ * `/answers` is not the blog and shares nothing with it but the design system:
+ * the blog is a curated editorial archive, and these are one page per buyer
+ * question, machine-first, published by dropping a markdown file into
+ * `src/content/answers/`. Because there is no manifest to keep in step, what
+ * has to be checked instead is that the file the author wrote is what every
+ * crawler surface ends up carrying.
+ */
+describe("the answer pages", () => {
+  it("publishes at least one, and every one carries what a retriever needs", () => {
+    expect(answers.length).toBeGreaterThan(0);
+    for (const answer of answers) {
+      expect(answer.slug, answer.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+      expect(answer.title.length, answer.slug).toBeGreaterThan(10);
+      expect(answer.description.length, answer.slug).toBeLessThan(160);
+      /* Two or three sentences: long enough to stand alone when it is lifted
+         out of the page, short enough to be lifted at all. */
+      const sentences = answer.answer.split(/(?<=[.?!])\s+/).filter(Boolean);
+      expect(sentences.length, answer.slug).toBeGreaterThanOrEqual(2);
+      expect(sentences.length, answer.slug).toBeLessThanOrEqual(3);
+      expect(answer.claim.length, answer.slug).toBeGreaterThan(40);
+      expect(answer.targetQuery.length, answer.slug).toBeGreaterThan(10);
+      expect(answer.firstParty.length, answer.slug).toBeGreaterThan(0);
+      expect(answer.faq.length, answer.slug).toBeGreaterThan(0);
+      expect(answer.body.length, answer.slug).toBeGreaterThan(1000);
+    }
+  });
+
+  it("carries a real date apiece, newest first", () => {
+    /* A page's date is when it was written, and a surface where every page
+       shares one timestamp reads as a dump rather than a publication. The
+       floor is the launch of the site, because nothing here can honestly
+       predate it, and the ceiling is today. */
+    const today = new Date().toISOString().slice(0, 10);
+    for (const answer of answers) {
+      expect(answer.publishedAt >= "2026-08-26", `${answer.slug} predates the site`).toBe(true);
+      expect(answer.publishedAt <= today, `${answer.slug} is dated ahead of today`).toBe(true);
+    }
+    const dates = answers.map((answer) => answer.publishedAt);
+    expect(dates).toEqual([...dates].sort().reverse());
+  });
+
+  it("says the answer and the FAQ in structured data", () => {
+    for (const answer of answers) {
+      const graph = answerJsonLd(answer)["@graph"] as Array<Record<string, unknown>>;
+      const article = graph.find((node) => node["@type"] === "Article")!;
+      const faq = graph.find((node) => node["@type"] === "FAQPage")!;
+      expect(article.headline).toBe(answer.title);
+      expect(article.abstract).toBe(answer.answer);
+      expect(article.datePublished).toBe(answer.publishedAt);
+      expect(article.mainEntityOfPage).toEqual({
+        "@type": "WebPage",
+        "@id": `https://mindmake.co${answerPath(answer.slug)}`,
+      });
+      expect((faq.mainEntity as unknown[]).length).toBe(answer.faq.length);
+    }
+  });
+
+  it("is routed on both sides of the static render", () => {
+    /* The prerender writes markup with `src/entry-server.tsx` and the browser
+       hydrates it with `src/App.tsx`. A route in one and not the other is an
+       answer page that ships as an empty #root or fails to hydrate. */
+    for (const [file, path] of [
+      ["src/App.tsx", "/answers"],
+      ["src/entry-server.tsx", "/answers"],
+      ["src/App.tsx", "/answers/:slug"],
+      ["src/entry-server.tsx", "/answers/:slug"],
+    ]) {
+      expect(read(file), `${file} routes ${path}`).toContain(`path="${path}"`);
+    }
+  });
+
+  it("reaches every crawler surface from the one loader", () => {
+    for (const script of [
+      "scripts/generate-sitemap.mjs",
+      "scripts/generate-llms.mjs",
+      "scripts/prerender.mjs",
+      "scripts/social-plates.mjs",
+    ]) {
+      expect(read(script), script).toContain("./lib/answers-loader.mjs");
+    }
+    /* One parser, compiled for the scripts rather than written twice. */
+    expect(read("scripts/lib/answers-loader.mjs")).toContain("src/lib/answerFormat.ts");
+  });
+
+  it("is in the sitemap, in llms.txt and open to crawlers", () => {
+    const sitemap = read("public/sitemap.xml");
+    const llms = read("public/llms.txt");
+    expect(sitemap).toContain("<loc>https://mindmake.co/answers</loc>");
+    for (const answer of answers) {
+      expect(sitemap, answer.slug).toContain(`<loc>https://mindmake.co${answerPath(answer.slug)}</loc>`);
+      expect(llms, answer.slug).toContain(answerPath(answer.slug));
+      /* The question, not only the link: a page is worth fetching because of
+         what it answers, and the title is only our wording of that. */
+      expect(llms, answer.slug).toContain(answer.targetQuery);
+    }
+    const robots = read("public/robots.txt");
+    expect(robots).toContain("Allow: /answers");
+    expect(robots).not.toMatch(/Disallow: \/answers/);
   });
 });

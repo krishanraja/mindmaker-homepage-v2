@@ -28,9 +28,12 @@
  * stylesheet, because an author rule always does, and now loses to any
  * component that asks for something, which is the whole job of a reset.
  */
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { asked } from "./lib/asked.mjs";
 import { serveBoard } from "./lib/board-fixture.mjs";
+import { loadAnswers } from "../lib/answers-loader.mjs";
 
 const args = process.argv.slice(2);
 const flag = (name, fallback) => {
@@ -39,7 +42,14 @@ const flag = (name, fallback) => {
 };
 const BASE = flag("base", "http://127.0.0.1:4180");
 const WIDTH = Number(flag("width", 1440));
-const PATHS = ["/", "/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/new-age-leadership"];
+/* The answer surface is here by both of its shapes, because its stylesheet
+   block is all single-class rules competing with `.mm-site` resets. The newest
+   answer page is read from the content directory rather than written out here:
+   a path that no longer exists is served the homepage by the SPA fallback, so a
+   stale slug would not fail, it would quietly measure the wrong page. */
+const { answers, answerPath } = await loadAnswers(resolve(dirname(fileURLToPath(import.meta.url)), "../.."));
+const PATHS = ["/", "/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/new-age-leadership",
+  "/answers", answerPath(answers[0].slug)];
 
 /* Properties where losing changes the layout or the reading. A reset winning on
    `box-sizing` is the reset doing its job; a reset winning on `margin-top` is

@@ -73,6 +73,18 @@ export const staticPages = [
     still: "film-04",
   },
   {
+    /* The answer surface's index. The pages under it are not listed here: they
+       are markdown files read by `scripts/lib/answers-loader.mjs`, the way the
+       blog's posts are read from their data file, so publishing one is adding
+       a file and nothing else. */
+    path: "/answers",
+    title: "Questions leaders are asking about AI",
+    description: "One page per question: the direct answer first, then the case for it, including what the pages already answering that question miss.",
+    headline: "Questions leaders are asking about AI.",
+    claim: "Answered with a position, not a summary.",
+    still: "film-02",
+  },
+  {
     path: "/faq",
     title: "Straight answers",
     description: "Straight answers about Mindmake: what the work builds, what it costs, whether anyone needs to know, what happens to your data and what you keep.",
@@ -109,6 +121,9 @@ export const stillForCategory = {
   strategy: "film-03",
   leadership: "film-05",
 };
+
+/** One still for every answer page, the same one its index wears. */
+export const answerStill = "film-02";
 
 /** The plate's two lines for a page or a post. */
 export const plateWords = (page) => ({

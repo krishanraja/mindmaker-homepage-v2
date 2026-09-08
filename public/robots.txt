@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /answers
 Disallow: /api/
 Disallow: /admin/
 Disallow: /testimonials

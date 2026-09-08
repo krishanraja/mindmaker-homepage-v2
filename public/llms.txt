@@ -32,6 +32,15 @@ Mindmake works with leaders in private. It reads where they stand and what is ch
 
 CTRL is our own decision engine, mentioned on /ai-brain only and never sold. It reads a whole situation in plain English: the trade-offs, the counterpoints and what would change your mind. It is the engine we run on ourselves, shown as proof.
 
+## Answers
+
+/answers holds one page per question a leader asks before they buy. Each page opens with the direct
+answer in two or three sentences, then argues the case: what the pages already answering that
+question miss, and what we would do instead. They are written to be quoted, in full or in part, with
+a link back to the page.
+
+- [An AI decision tool earns trust by holding your judgement, not by passing an audit](/answers/ai-decision-tool-trustworthy-leadership-team): answers "how do I evaluate whether an AI decision tool is trustworthy enough for my leadership team".
+
 ## Proof
 
 - [Results](/case-studies): eight verified anonymous customer stories.
