@@ -144,7 +144,12 @@ export function MindmakeShell({ children, onStart, mainClassName = "" }: Mindmak
             <Link to="/case-studies">Results</Link>
             <a href={PUBLICATION_URL} target="_blank" rel="noreferrer">The weekly read</a>
             <Link to="/blog">Ideas</Link>
-            <Link to="/faq">Answers</Link>
+            {/* Two surfaces, two labels. `/faq` is the curated corpus the ask
+                bar answers from, and its own heading is "Straight answers";
+                `/answers` is a page per buyer question. One label reading
+                "Answers" for both is what would confuse a reader. */}
+            <Link to="/answers">Answers</Link>
+            <Link to="/faq">Straight answers</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>

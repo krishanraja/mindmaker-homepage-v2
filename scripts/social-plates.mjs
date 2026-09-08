@@ -26,7 +26,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { loadBlogPosts } from "./lib/blog-posts-loader.mjs";
-import { staticPages, stillForCategory, plateWords } from "./lib/pages.mjs";
+import { loadAnswers } from "./lib/answers-loader.mjs";
+import { staticPages, stillForCategory, plateWords, answerStill } from "./lib/pages.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = resolve(root, "public/social");
@@ -45,9 +46,14 @@ const mark = readFileSync(resolve(root, "src/assets/mindmake-mark.svg"), "utf8")
 const wordmark = readFileSync(resolve(root, "src/assets/mindmake-wordmark.svg"), "utf8");
 
 const posts = await loadBlogPosts(root);
+const { answers, answerPath } = await loadAnswers(root);
 const pages = [
   ...staticPages.map((page) => ({ path: page.path, name: page.path === "/" ? "home" : page.path.slice(1), still: page.still, ...plateWords(page) })),
   ...posts.map((post) => ({ path: `/blog/${post.slug}`, name: `blog-${post.slug}`, still: stillForCategory[post.category] ?? "film-01", headline: post.title, claim: "" })),
+  /* An answer page's plate carries its title and no second line: the claim
+     under it is two sentences of argument, which is a page rather than a
+     card. */
+  ...answers.map((answer) => ({ path: answerPath(answer.slug), name: `answer-${answer.slug}`, still: answerStill, headline: answer.title, claim: "" })),
 ];
 
 /* Type size by length, so a long title still fits its column. */
@@ -76,7 +82,7 @@ p { margin: 18px 0 0; font-family: "Newsreader", serif; font-weight: 400; font-s
 <div class="fade"></div><div class="light"></div>
 <div class="brand"><span class="mark">${mark}</span><span class="word">${wordmark}</span></div>
 <div class="words"><h1>${escape(page.headline)}</h1>${page.claim ? `<p>${escape(page.claim)}</p>` : ""}</div>
-<div class="url"><i></i>mindmake.co${page.path === "/" ? "" : page.path.startsWith("/blog/") ? "/blog" : page.path}</div>
+<div class="url"><i></i>mindmake.co${page.path === "/" ? "" : page.path.startsWith("/blog/") ? "/blog" : page.path.startsWith("/answers/") ? "/answers" : page.path}</div>
 </body></html>`;
 
 function escape(value) {

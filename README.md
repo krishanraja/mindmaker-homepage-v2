@@ -72,6 +72,7 @@ full contract is in
 | `/ai-gtm` | The three places money moves, the live board, the company read, engagement shapes |
 | `/case-studies` | Eight verified customer stories |
 | `/blog`, `/blog/:slug` | Checked public ideas archive |
+| `/answers`, `/answers/:slug` | One page per buyer question, written to be quoted: the liftable answer first, then the argument |
 | `/faq` | Practical answers about fit, work and what the client keeps |
 | `/new-age-leadership` | Worked people-and-agent org chart example |
 | `/contact` | General messages |
@@ -98,6 +99,11 @@ publication.
   its own first frame.
 - `src/data/rebuildProof.ts`: proof data. `src/content/answers.json`: the live
   public answers.
+- `src/content/answers/*.md`: the `/answers` surface, one markdown file per
+  question, read by `src/lib/answers.ts` for the site and by
+  `scripts/lib/answers-loader.mjs` for the crawler surfaces. Separate from the
+  blog archive in `src/data/blogPosts.ts` on purpose, and neither reads the
+  other.
 - `supabase/functions/`: the six functions the site owns.
 - `scripts/generate-sitemap.mjs`, `scripts/generate-llms.mjs`,
   `scripts/prerender.mjs`: crawler surfaces.

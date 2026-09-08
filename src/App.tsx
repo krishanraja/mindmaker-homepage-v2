@@ -16,6 +16,8 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Questions = lazy(() => import("./pages/Library"));
+const Answers = lazy(() => import("./pages/Answers"));
+const AnswerPage = lazy(() => import("./pages/Answer"));
 const Alumni = lazy(() => import("./pages/Alumni"));
 const AiBrain = lazy(() => import("./pages/AiBrain"));
 const AiGtm = lazy(() => import("./pages/AiGtm"));
@@ -114,6 +116,14 @@ function AppRoutes() {
             <Route path="/blog/building-ai-systems-in-30-days-sprint-approach" element={<Navigate to="/blog/a-useful-first-30-days-building-with-ai" replace />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/library" element={<Navigate to="/blog" replace />} />
+
+            {/* The answer surface, and it is not the blog. `/blog` is the
+                curated editorial archive; these are one page per buyer
+                question, written to be fetched and quoted. They share the
+                design system and no data, so neither can drift into the
+                other. */}
+            <Route path="/answers" element={<Answers />} />
+            <Route path="/answers/:slug" element={<AnswerPage />} />
             <Route path="/new-age-leadership" element={<NewAgeLeadership />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />

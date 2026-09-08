@@ -13,4 +13,5 @@ export interface IndexedPage {
 export const site: string;
 export const staticPages: IndexedPage[];
 export const stillForCategory: Record<string, string>;
+export const answerStill: string;
 export function plateWords(page: { title: string; headline?: string; claim?: string }): { headline: string; claim: string };

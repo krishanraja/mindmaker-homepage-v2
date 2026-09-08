@@ -1,8 +1,18 @@
 import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { loadAnswers } from "./lib/answers-loader.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
+const rootDir = resolve(here, "..");
+
+/* The answer pages, listed with the question each one answers, because the
+   question is what a reader arrives with and the title is only our wording of
+   it. Newest first, the order /answers itself uses. */
+const { answers, answerPath } = await loadAnswers(rootDir);
+const answerLines = answers
+  .map((answer) => `- [${answer.title}](${answerPath(answer.slug)}): answers "${answer.targetQuery}".`)
+  .join("\n");
 
 const llms = `# Mindmake
 
@@ -37,6 +47,15 @@ Mindmake works with leaders in private. It reads where they stand and what is ch
 ## CTRL
 
 CTRL is our own decision engine, mentioned on /ai-brain only and never sold. It reads a whole situation in plain English: the trade-offs, the counterpoints and what would change your mind. It is the engine we run on ourselves, shown as proof.
+
+## Answers
+
+/answers holds one page per question a leader asks before they buy. Each page opens with the direct
+answer in two or three sentences, then argues the case: what the pages already answering that
+question miss, and what we would do instead. They are written to be quoted, in full or in part, with
+a link back to the page.
+
+${answerLines}
 
 ## Proof
 

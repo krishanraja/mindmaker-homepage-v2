@@ -41,6 +41,13 @@
     "claim": "",
     "still": "film-04"
   },
+  "/answers": {
+    "file": "/social/answers.jpg",
+    "version": "2d6214cf",
+    "headline": "Questions leaders are asking about AI.",
+    "claim": "Answered with a position, not a summary.",
+    "still": "film-02"
+  },
   "/faq": {
     "file": "/social/faq.jpg",
     "version": "b15203a1",
@@ -145,5 +152,12 @@
     "headline": "Put AI Inside Clear Business Rules",
     "claim": "",
     "still": "film-05"
+  },
+  "/answers/ai-decision-tool-trustworthy-leadership-team": {
+    "file": "/social/answer-ai-decision-tool-trustworthy-leadership-team.jpg",
+    "version": "bcfedcb4",
+    "headline": "An AI decision tool earns trust by holding your judgement, not by passing an audit",
+    "claim": "",
+    "still": "film-02"
   }
 }

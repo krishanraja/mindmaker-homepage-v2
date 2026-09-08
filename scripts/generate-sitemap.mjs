@@ -13,6 +13,7 @@ import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadBlogPosts } from "./lib/blog-posts-loader.mjs";
+import { loadAnswers } from "./lib/answers-loader.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(__dirname, "..");
@@ -29,6 +30,7 @@ const staticRoutes = [
   { path: "/case-studies", changefreq: "monthly", priority: "0.8" },
   { path: "/new-age-leadership", changefreq: "monthly", priority: "0.5" },
   { path: "/blog", changefreq: "daily", priority: "0.8" },
+  { path: "/answers", changefreq: "weekly", priority: "0.8" },
   { path: "/faq", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "yearly", priority: "0.5" },
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
@@ -41,6 +43,7 @@ const staticRoutes = [
 async function generateSitemap() {
   const today = new Date().toISOString().split("T")[0];
   const blogPosts = await loadBlogPosts(rootDir);
+  const { answers, answerPath } = await loadAnswers(rootDir);
 
   const urls = [];
 
@@ -64,6 +67,17 @@ async function generateSitemap() {
     <priority>0.7</priority>
   </url>`);
     }
+
+    // Answer pages. A separate surface from the blog, and a separate loop:
+    // one page per buyer question, dated by when it was written.
+    for (const answer of answers) {
+      urls.push(`  <url>
+    <loc>${domain}${answerPath(answer.slug)}</loc>
+    <lastmod>${answer.publishedAt}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`);
+    }
   }
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -83,7 +97,7 @@ ${urls.join("\n")}
   const totalUrls = urls.length;
   const domainsCount = DOMAINS.length;
   console.log(
-    `Sitemap generated: ${staticRoutes.length} pages + ${blogPosts.length} blog posts across ${domainsCount} domains (${totalUrls} total URLs)`
+    `Sitemap generated: ${staticRoutes.length} pages + ${blogPosts.length} blog posts + ${answers.length} answers across ${domainsCount} domains (${totalUrls} total URLs)`
   );
 }
 

@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, resolve } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { loadBlogPosts } from "./lib/blog-posts-loader.mjs";
+import { loadAnswers } from "./lib/answers-loader.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(here, "..");
@@ -77,7 +78,20 @@ const articlePages = blogPosts.map((post) => ({
   },
 }));
 
-const pages = [...staticPages, ...articlePages];
+/* The answer pages. Their structured data is built by the same function the
+   page component passes to `SEO`, so the record in the served head and the one
+   a client-side navigation writes cannot disagree: an Article with the liftable
+   answer as its abstract, and the front matter's FAQ beside it in one graph. */
+const { answers, answerPath, answerJsonLd } = await loadAnswers(rootDir);
+const answerPages = answers.map((answer) => ({
+  path: answerPath(answer.slug),
+  title: answer.title,
+  description: answer.description,
+  ogType: "article",
+  jsonLd: answerJsonLd(answer),
+}));
+
+const pages = [...staticPages, ...articlePages, ...answerPages];
 
 /* The built server bundle. `npm run build` builds it immediately before this
    script runs; a stale one would silently prerender the previous commit's
@@ -209,4 +223,4 @@ if (missing.length || unexpected.length) {
   throw new Error(`Prerender and sitemap differ. Missing: ${missing.join(", ") || "none"}. Unexpected: ${unexpected.join(", ") || "none"}.`);
 }
 
-console.log(`Prerendered ${pages.length} indexed pages (${staticPages.length} pages + ${articlePages.length} articles)`);
+console.log(`Prerendered ${pages.length} indexed pages (${staticPages.length} pages + ${articlePages.length} articles + ${answerPages.length} answers)`);

@@ -24,9 +24,10 @@ import { render as serverRender } from "@/entry-server";
  * and a string that never reaches a page cannot either.
  */
 
-/* Every indexed route the prerender writes, except the article pages, whose
-   body is written prose rather than site copy. */
-const ROUTES = ["/", "/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/about", "/contact", "/new-age-leadership"];
+/* Every indexed route the prerender writes, except the article pages and the
+   answer pages, whose bodies are written prose rather than site copy. The
+   answer index is site copy and is read here. */
+const ROUTES = ["/", "/ai-brain", "/ai-gtm", "/case-studies", "/faq", "/answers", "/about", "/contact", "/new-age-leadership"];
 
 /** Text a visitor reads, with the markup and the hidden elements taken out. */
 function visible(html: string, tags = "p|li|h1|h2|h3|h4|legend|small|blockquote|cite") {
