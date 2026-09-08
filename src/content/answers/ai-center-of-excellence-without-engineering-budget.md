@@ -5,7 +5,7 @@ description: "Every AI CoE framework from Microsoft, Oracle and Tredence assumes
 answer: "Mindmake's position: a Center of Excellence without an engineering budget is not a shrunk version of the enterprise model, it is a different function entirely, one leader with standards and a decision system instead of a team with a build backlog. Every framework from Microsoft, Oracle and Tredence assumes headcount you do not have. Mindmake builds the alternative, an AI brain that carries the judgement a CoE was supposed to centralise, without hiring anyone to centralise it."
 claim: "Every cited source sells a CoE framework built for teams with engineering budget. This page is for the leader who has judgement and standards but no build team, and treats that as the actual operating condition, not a temporary shortfall."
 target_query: "how do I build an AI center of excellence without a dedicated engineering budget"
-published_at: "2026-09-01T15:30:00.000Z"
+published_at: "2026-09-01"
 first_party:
   - "Mindmake's build your AI brain product exists specifically to carry a leader's standards and judgement as a running system, which is the function a CoE is meant to perform without needing a build team to do it."
   - "Mindmake's CTRL product runs the practice itself, which is the same model being proposed here: standards encoded and running, not a committee reviewing other people's work."
@@ -18,7 +18,9 @@ faq:
     a: "When the standards need to be enforced automatically across large volumes of output, or when the organisation is building its own AI tools rather than governing the use of existing ones. Most leaders asking this question are doing the latter."
   - q: "What should the first thing a leader builds be, if not a team?"
     a: "A running system that encodes what good AI-assisted decisions look like in the two or three areas where a bad call actually costs something, and that gets checked before, not after, the decision is made."
----The instinct to wait until there's budget for a real team is the mistake. A Center of Excellence was never supposed to be a headcount line. It was supposed to be the place where an organisation's judgement about AI lives, so every team doesn't relearn the same lessons and repeat the same mistakes. Somewhere along the way, the enterprise vendors turned that into a staffing plan.
+---
+
+The instinct to wait until there's budget for a real team is the mistake. A Center of Excellence was never supposed to be a headcount line. It was supposed to be the place where an organisation's judgement about AI lives, so every team doesn't relearn the same lessons and repeat the same mistakes. Somewhere along the way, the enterprise vendors turned that into a staffing plan.
 
 Open the frameworks from Microsoft, Oracle or Tredence and the assumption is buried in the first paragraph: a CoE has a lead, a group of engineers, a platform team, and a roadmap for building internal tools. That's a fine model if a company already has forty engineers and a mandate to hire ten more. It is useless to the leader who has none of that and isn't getting it this year. The frameworks don't fail because they're wrong. They fail because they answer a question nobody in this position actually asked.
 
