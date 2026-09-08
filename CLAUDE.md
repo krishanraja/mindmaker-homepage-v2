@@ -7,6 +7,8 @@ is `project-documentation/`, and it is read in order: `00_NORTH_STAR.md` first,
 then `01_CANON.md`. Where this file, a code comment, or anything else disagrees
 with those two, those two are right.
 
+Read [`AGENTS.md`](./AGENTS.md) alongside it: it points at `NOW.md` for current state and carries the cross-repository Krish canon on approval, verification, secrets and destructive actions. `project-documentation/` still outranks both on anything about this business.
+
 Before changing a public page, read `00_NORTH_STAR.md`, `01_CANON.md`,
 `03_DESIGN_CONTRACT.md`, `04_PROOF.md` and `06_CURRENT_STATE.md`.
 
