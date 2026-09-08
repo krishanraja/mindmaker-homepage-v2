@@ -5,7 +5,7 @@ description: "Adtech never competed on the model. A five-line defensibility audi
 answer: "Adtech companies never competed on the model, they competed on who controlled the data, the distribution and the workflow around it. Once AI can build a targeting model from a laptop, that fiction ends, and Mindmake's position is that PE-backed adtech leaders need a line-by-line audit of the three things AI still cannot take: proprietary signal, embedded distribution, and workflow lock-in, not another trend piece explaining that disruption is coming."
 claim: "Cited sources describe the shift for a general adtech readership; Mindmake writes it as an operator checklist for the specific PE/VC-backed buyer deciding what to defend in the next 18 months, which none of them address."
 target_query: "how do adtech companies compete once AI can build targeting models without them"
-published_at: "2026-09-08T13:02:49.278Z"
+published_at: "2026-09-08"
 first_party:
   - "Mindmake's framework separates adtech defensibility into three checkable assets: proprietary signal, embedded distribution, workflow lock-in, and treats the model itself as a commodity line item, not a moat"
   - "Mindmake runs this as a one-decision proof: pick the single line of the P&L most exposed to model commoditisation, build the audit, hand it to the leadership team with a call on what to cut, keep, or re-price"
@@ -16,7 +16,9 @@ faq:
     a: "Exclusive data contracts by name, measured client switching cost in dollars and weeks, and the share of revenue tied to workflows a client's own AI team couldn't rebuild in a quarter."
   - q: "How fast are AI-native platforms like Landbase actually taking share from incumbent adtech?"
     a: "No reliable public figure exists yet. Treat any specific number here as unverified until an operator sees it in their own client churn data."
----The panic was always aimed at the wrong target. Adtech leaders have spent two years worrying about someone building a better model. Nobody is going to build a better model. Foundation labs already did that, and they gave it away for free, wrapped inside an API call. The model was never the moat. It was the story adtech told itself so it didn't have to answer the harder question: what exactly are we selling once the model is a commodity.
+---
+
+The panic was always aimed at the wrong target. Adtech leaders have spent two years worrying about someone building a better model. Nobody is going to build a better model. Foundation labs already did that, and they gave it away for free, wrapped inside an API call. The model was never the moat. It was the story adtech told itself so it didn't have to answer the harder question: what exactly are we selling once the model is a commodity.
 
 Here's what nobody selling into this market wants to say plainly, so it gets said here. If the pitch deck lists 'proprietary AI' or 'proprietary targeting model' as a top-three differentiator, that line is already worth zero. Landbase and the AI-native entrants prove the point just by existing, they built targeting infrastructure without the twenty years of adtech incumbency everyone assumed was required. That's not a threat to react to. That's a fact to price in.
 

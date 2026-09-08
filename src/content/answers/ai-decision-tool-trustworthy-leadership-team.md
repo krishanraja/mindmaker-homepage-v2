@@ -5,7 +5,7 @@ description: Governance tells a leadership team that a tool was built carefully.
 answer: An AI decision tool is trustworthy enough for a leadership team when it can show which of that team's own standards and past decisions shaped an answer, and when a person can follow that trail back and argue with it. Governance checks such as documented testing, audit logs and a named human owner tell you the tool was built carefully, and they say nothing about whether its advice fits this business. The test that separates the two is a replay: the tool is given a decision the team has already made, with the outcome hidden, and its reasoning is compared with the reasoning the team actually used.
 claim: The pages answering this question today treat trust as a governance and compliance problem. Trust in a decision tool is also a question of memory, and no framework asks whether the tool holds the record of how this leadership team has decided before.
 target_query: how do I evaluate whether an AI decision tool is trustworthy enough for my leadership team
-published_at: 2026-09-05
+published_at: "2026-09-05"
 first_party:
   - Mindmake builds AI systems that hold a leader's own standards, decisions and context, inside the client's own accounts, so what the system learns stays with the client.
   - A tool that cannot name which of your past decisions shaped an answer cannot be checked by the person whose judgement is on the line.

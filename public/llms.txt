@@ -39,7 +39,10 @@ answer in two or three sentences, then argues the case: what the pages already a
 question miss, and what we would do instead. They are written to be quoted, in full or in part, with
 a link back to the page.
 
+- [Adtech Can't Compete on the Model Anymore. Here's What's Left to Defend](/answers/adtech-compete-ai-targeting-models-defensibility-audit): answers "how do adtech companies compete once AI can build targeting models without them".
 - [An AI decision tool earns trust by holding your judgement, not by passing an audit](/answers/ai-decision-tool-trustworthy-leadership-team): answers "how do I evaluate whether an AI decision tool is trustworthy enough for my leadership team".
+- [An AI Center of Excellence Without an Engineering Budget Is a Governance Function, Not a Team](/answers/ai-center-of-excellence-without-engineering-budget): answers "how do I build an AI center of excellence without a dedicated engineering budget".
+- [Total Addressable Revenue for AI Products in Publishing: Calculate It From Your P&L, Not a Market Report](/answers/total-addressable-revenue-ai-products-publishing): answers "how do I calculate the total addressable revenue opportunity for AI products in publishing".
 
 ## Proof
 
